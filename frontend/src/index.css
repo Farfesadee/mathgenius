@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,900;1,300&family=JetBrains+Mono:wght@400;600&family=DM+Sans:wght@300;400;500;600&display=swap');
+@import 'katex/dist/katex.min.css';
+@import "tailwindcss";
+
+/* ── Custom Design Tokens ── */
+@theme {
+  --color-ink:        #0e0c0a;
+  --color-paper:      #f5f0e8;
+  --color-cream:      #ede8dc;
+  --color-gold:       #c8941a;
+  --color-gold-light: #f0c84a;
+  --color-teal:       #1a6b6b;
+  --color-teal-light: #2a9090;
+  --color-border:     #c8c0b0;
+  --color-muted:      #6b6155;
+
+  --font-sans:  'DM Sans', sans-serif;
+  --font-mono:  'JetBrains Mono', monospace;
+  --font-serif: 'Fraunces', serif;
+
+  --animate-blink: blink 1s step-end infinite;
+  --animate-drift: drift 20s linear infinite;
+}
+
+/* ── Keyframes ── */
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@keyframes drift {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+
+/* ── Base Styles ── */
+@layer base {
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 3px;
+  }
+}
+
+/* ── Reusable Component Classes ── */
+@layer components {
+  .btn-primary {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 10px;
+    border: 2px solid var(--color-ink);
+    transition: all 0.15s ease;
+    cursor: pointer;
+  }
+  .btn-primary:hover {
+    background-color: var(--color-teal);
+    border-color: var(--color-teal);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-ink);
+    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: 10px;
+    border: 2px solid var(--color-border);
+    transition: all 0.15s ease;
+    cursor: pointer;
+  }
+  .btn-secondary:hover {
+    border-color: var(--color-ink);
+    background-color: var(--color-cream);
+  }
+
+  .card {
+    border: 2px solid var(--color-ink);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+}
+
+@layer base {
+  /* Pointer cursor on everything clickable */
+  button,
+  a,
+  [role="button"],
+  label,
+  select,
+  summary {
+    cursor: pointer;
+  }
+}

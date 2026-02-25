@@ -3,3 +3,4 @@ echo venv/ >> .gitignore
 echo __pycache__/ >> .gitignore
 echo node_modules/ >> .gitignore
 echo .env.local >> .gitignore
+.env
