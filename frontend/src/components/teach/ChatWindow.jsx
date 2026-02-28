@@ -37,12 +37,12 @@ function getQuickQuestions(topic) {
 
 export default function ChatWindow({ topic, level, conversation, onConversationUpdate }) {
   const { user } = useAuth()
-  const [messages,  setMessages]  = useState([])
-  const [input,     setInput]     = useState('')
-  const [loading,   setLoading]   = useState(false)
-  const [copied,    setCopied]    = useState(false)
+  const [messages, setMessages] = useState([])
+  const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [copied, setCopied] = useState(false)
   const bottomRef = useRef(null)
-  const inputRef  = useRef(null)
+  const inputRef = useRef(null)
   const prevConvRef = useRef(null)
 
   // Load messages when conversation changes
@@ -68,8 +68,8 @@ export default function ChatWindow({ topic, level, conversation, onConversationU
     const { data } = await getMessages(conversation.id)
     if (data && data.length > 0) {
       setMessages(data.map(m => ({
-        id:      m.id,
-        role:    m.role,
+        id: m.id,
+        role: m.role,
         content: m.content,
       })))
     } else if (topic) {
@@ -106,7 +106,7 @@ export default function ChatWindow({ topic, level, conversation, onConversationU
     setInput('')
 
     const userMsg = { id: `u_${Date.now()}`, role: 'user', content: question }
-    const loadId  = `l_${Date.now()}`
+    const loadId = `l_${Date.now()}`
     setMessages(prev => [...prev, userMsg, { id: loadId, role: 'assistant', loading: true }])
     setLoading(true)
 
@@ -117,12 +117,12 @@ export default function ChatWindow({ topic, level, conversation, onConversationU
 
     // Build history (last 6 messages)
     const history = messages.slice(-6).map(m => ({
-      role:    m.role,
+      role: m.role,
       content: m.content || ''
     }))
 
     try {
-      const res     = await askTutor(question, topic, level, history)
+      const res = await askTutor(question, topic, level, history, user?.id || null)
       const content = res.data.response
 
       setMessages(prev => prev.map(m =>
@@ -208,7 +208,7 @@ export default function ChatWindow({ topic, level, conversation, onConversationU
 
   return (
     <div className="card flex flex-col"
-         style={{ height: 'calc(100vh - 120px)', position: 'sticky', top: '90px' }}>
+      style={{ height: 'calc(100vh - 120px)', position: 'sticky', top: '90px' }}>
 
       {/* Header */}
       <div className="bg-[var(--color-teal)] px-5 py-3 shrink-0

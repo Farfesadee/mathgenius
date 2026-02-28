@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
+import { useSearchParams } from 'react-router-dom'
 import { generateQuestion, gradeAnswer } from '../services/api'
 import { createSession, saveAttempt, completeSession, getSessionHistory } from '../lib/practice'
 import { updateTopicProgress } from '../lib/progress'
 import { ExplanationBody } from '../utils/RenderMath'
 
 const DIFFICULTY_CONFIG = {
-  easy:   { label: 'Easy',   color: 'text-green-600 bg-green-50 border-green-200', emoji: '🟢' },
+  easy: { label: 'Easy', color: 'text-green-600 bg-green-50 border-green-200', emoji: '🟢' },
   medium: { label: 'Medium', color: 'text-yellow-600 bg-yellow-50 border-yellow-200', emoji: '🟡' },
-  hard:   { label: 'Hard',   color: 'text-red-600 bg-red-50 border-red-200', emoji: '🔴' },
+  hard: { label: 'Hard', color: 'text-red-600 bg-red-50 border-red-200', emoji: '🔴' },
 }
 
 const TOPICS = [
@@ -25,8 +26,8 @@ const TOPICS = [
 ]
 
 function ResultBadge({ result }) {
-  if (result === 'CORRECT')  return <span className="text-green-600 font-bold text-lg">✅ Correct!</span>
-  if (result === 'PARTIAL')  return <span className="text-yellow-600 font-bold text-lg">🌗 Partially Correct</span>
+  if (result === 'CORRECT') return <span className="text-green-600 font-bold text-lg">✅ Correct!</span>
+  if (result === 'PARTIAL') return <span className="text-yellow-600 font-bold text-lg">🌗 Partially Correct</span>
   return <span className="text-red-500 font-bold text-lg">❌ Incorrect</span>
 }
 
@@ -34,35 +35,57 @@ export default function Practice() {
   const { user } = useAuth()
 
   // Setup state
-  const [topic,      setTopic]      = useState('')
+  const [topic, setTopic] = useState('')
   const [difficulty, setDifficulty] = useState('easy')
-  const [started,    setStarted]    = useState(false)
+  const [started, setStarted] = useState(false)
 
   // Session state
-  const [sessionId,      setSessionId]      = useState(null)
+  const [sessionId, setSessionId] = useState(null)
   const [questionNumber, setQuestionNumber] = useState(1)
-  const [question,       setQuestion]       = useState('')
-  const [answer,         setAnswer]         = useState('')
-  const [hint,           setHint]           = useState('')
-  const [studentAnswer,  setStudentAnswer]  = useState('')
-  const [showHint,       setShowHint]       = useState(false)
-  const [submitted,      setSubmitted]      = useState(false)
-  const [gradeResult,    setGradeResult]    = useState(null)
-  const [showAnswer,     setShowAnswer]     = useState(false)
+  const [question, setQuestion] = useState('')
+  const [answer, setAnswer] = useState('')
+  const [hint, setHint] = useState('')
+  const [studentAnswer, setStudentAnswer] = useState('')
+  const [showHint, setShowHint] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [gradeResult, setGradeResult] = useState(null)
+  const [showAnswer, setShowAnswer] = useState(false)
 
   // Progress
-  const [score,     setScore]     = useState(0)
-  const [loading,   setLoading]   = useState(false)
-  const [finished,  setFinished]  = useState(false)
-  const [history,   setHistory]   = useState([])
+  const [score, setScore] = useState(0)
+  const [loading, setLoading] = useState(false)
+  const [finished, setFinished] = useState(false)
+  const [history, setHistory] = useState([])
 
   // Timer
-  const [elapsed,   setElapsed]   = useState(0)
+  const [elapsed, setElapsed] = useState(0)
   const timerRef = useRef(null)
+  const [searchParams] = useSearchParams()
 
   useEffect(() => {
     if (user) loadHistory()
+    // Pre-populate from URL params (e.g. from Quick Drill on Dashboard)
+    const urlTopic = searchParams.get('topic')
+    const autoStart = searchParams.get('auto') === 'true'
+    if (urlTopic) {
+      setTopic(urlTopic)
+      if (autoStart) {
+        // slight delay so state is set before startSession reads it
+        setTimeout(() => {
+          setTopic(urlTopic) // ensure state is set
+        }, 50)
+      }
+    }
   }, [user])
+
+  // Auto-start when topic is pre-populated from URL
+  useEffect(() => {
+    const urlTopic = searchParams.get('topic')
+    const autoStart = searchParams.get('auto') === 'true'
+    if (urlTopic && autoStart && topic === urlTopic && !started && user) {
+      startSession()
+    }
+  }, [topic])
 
   useEffect(() => {
     if (started && !submitted && !finished) {
@@ -125,12 +148,12 @@ export default function Practice() {
     // Save attempt
     if (sessionId) {
       await saveAttempt(sessionId, {
-        questionText:  question,
+        questionText: question,
         studentAnswer: studentAnswer,
         correctAnswer: answer,
-        isCorrect:     grade.is_correct,
-        feedback:      grade.feedback,
-        timeTaken:     elapsed,
+        isCorrect: grade.is_correct,
+        feedback: grade.feedback,
+        timeTaken: elapsed,
       })
     }
 
@@ -161,7 +184,7 @@ export default function Practice() {
     setQuestionNumber(1)
   }
 
-  const formatTime = (s) => `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`
+  const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
 
   // ── SETUP SCREEN ──────────────────────────────────────────
   if (!started) {
@@ -281,7 +304,7 @@ export default function Practice() {
                     <div className={`text-lg font-black font-serif
                       ${session.score >= 80 ? 'text-green-600'
                         : session.score >= 50 ? 'text-yellow-600'
-                        : 'text-red-500'}`}>
+                          : 'text-red-500'}`}>
                       {session.score}%
                     </div>
                   </div>
@@ -297,14 +320,14 @@ export default function Practice() {
   // ── FINISHED SCREEN ──────────────────────────────────────
   if (finished) {
     const finalPct = Math.round(score / 5)
-    const grade    = finalPct >= 80 ? 'A' : finalPct >= 60 ? 'B' : finalPct >= 40 ? 'C' : 'D'
-    const message  = finalPct >= 80
+    const grade = finalPct >= 80 ? 'A' : finalPct >= 60 ? 'B' : finalPct >= 40 ? 'C' : 'D'
+    const message = finalPct >= 80
       ? "Excellent work! You've mastered this topic! 🎉"
       : finalPct >= 60
-      ? "Good job! Keep practising to improve further! 💪"
-      : finalPct >= 40
-      ? "You're getting there! Review the topic and try again! 📚"
-      : "Don't give up! Study the worked examples and try again! 🌟"
+        ? "Good job! Keep practising to improve further! 💪"
+        : finalPct >= 40
+          ? "You're getting there! Review the topic and try again! 📚"
+          : "Don't give up! Study the worked examples and try again! 🌟"
 
     return (
       <div className="max-w-lg mx-auto px-6 py-16 text-center">

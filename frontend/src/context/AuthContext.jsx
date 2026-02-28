@@ -4,7 +4,7 @@ import { supabase } from '../lib/supabase'
 const AuthContext = createContext({})
 
 export function AuthProvider({ children }) {
-  const [user,    setUser]    = useState(null)
+  const [user, setUser] = useState(null)
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -18,27 +18,27 @@ export function AuthProvider({ children }) {
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-  async (event, session) => {
-    setUser(session?.user ?? null)
-    if (session?.user) {
-      await fetchProfile(session.user.id)
-      // Redirect new users to onboarding
-      if (event === 'SIGNED_IN') {
-        const { data } = await supabase
-          .from('profiles')
-          .select('onboarded')
-          .eq('id', session.user.id)
-          .single()
-        if (data && !data.onboarded) {
-          window.location.href = '/onboarding'
+      async (event, session) => {
+        setUser(session?.user ?? null)
+        if (session?.user) {
+          await fetchProfile(session.user.id)
+          // Redirect new users to onboarding
+          if (event === 'SIGNED_IN') {
+            const { data } = await supabase
+              .from('profiles')
+              .select('onboarded')
+              .eq('id', session.user.id)
+              .single()
+            if (data && !data.onboarded) {
+              window.location.href = '/onboarding'
+            }
+          }
+        } else {
+          setProfile(null)
+          setLoading(false)
         }
       }
-    } else {
-      setProfile(null)
-      setLoading(false)
-    }
-  }
-)
+    )
 
     return () => subscription.unsubscribe()
   }, [])
@@ -76,6 +76,7 @@ export function AuthProvider({ children }) {
     await supabase.auth.signOut()
     setUser(null)
     setProfile(null)
+    window.location.replace('/')
   }
 
   return (

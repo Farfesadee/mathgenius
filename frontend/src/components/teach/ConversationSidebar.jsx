@@ -9,13 +9,13 @@ import {
 
 function timeAgo(dateStr) {
   const diff = Date.now() - new Date(dateStr).getTime()
-  const mins  = Math.floor(diff / 60000)
+  const mins = Math.floor(diff / 60000)
   const hours = Math.floor(diff / 3600000)
-  const days  = Math.floor(diff / 86400000)
-  if (mins  < 1)   return 'Just now'
-  if (mins  < 60)  return `${mins}m ago`
-  if (hours < 24)  return `${hours}h ago`
-  if (days  < 7)   return `${days}d ago`
+  const days = Math.floor(diff / 86400000)
+  if (mins < 1) return 'Just now'
+  if (mins < 60) return `${mins}m ago`
+  if (hours < 24) return `${hours}h ago`
+  if (days < 7) return `${days}d ago`
   return new Date(dateStr).toLocaleDateString()
 }
 
@@ -28,10 +28,10 @@ export default function ConversationSidebar({
 }) {
   const { user } = useAuth()
   const [conversations, setConversations] = useState([])
-  const [loading,       setLoading]       = useState(true)
-  const [menuOpen,      setMenuOpen]      = useState(null)  // conversation id
-  const [renaming,      setRenaming]      = useState(null)  // conversation id
-  const [renameValue,   setRenameValue]   = useState('')
+  const [loading, setLoading] = useState(true)
+  const [menuOpen, setMenuOpen] = useState(null)
+  const [renaming, setRenaming] = useState(null)
+  const [renameValue, setRenameValue] = useState('')
 
   useEffect(() => {
     if (user) loadConversations()
@@ -72,7 +72,7 @@ export default function ConversationSidebar({
 
   return (
     <div className="card flex flex-col"
-         style={{ maxHeight: 'calc(100vh - 120px)', position: 'sticky', top: '90px' }}>
+      style={{ maxHeight: 'calc(100vh - 120px)', position: 'sticky', top: '90px' }}>
 
       {/* Header */}
       <div className="bg-[var(--color-ink)] px-4 py-3 flex items-center
@@ -94,8 +94,8 @@ export default function ConversationSidebar({
         {loading ? (
           <div className="p-4 space-y-2">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="h-12 bg-[var(--color-border)]
-                                      rounded-xl animate-pulse" />
+              <div key={i}
+                className="h-12 bg-[var(--color-ink)]/10 rounded-xl animate-pulse" />
             ))}
           </div>
         ) : conversations.length === 0 ? (
@@ -122,7 +122,7 @@ export default function ConversationSidebar({
                       value={renameValue}
                       onChange={e => setRenameValue(e.target.value)}
                       onKeyDown={e => {
-                        if (e.key === 'Enter')  handleRename(conv.id)
+                        if (e.key === 'Enter') handleRename(conv.id)
                         if (e.key === 'Escape') { setRenaming(null); setRenameValue('') }
                       }}
                       className="flex-1 text-sm border-2 border-[var(--color-teal)]
@@ -137,13 +137,17 @@ export default function ConversationSidebar({
                     </button>
                   </div>
                 ) : (
-                  <button
+                  // ── Changed from <button> to <div> to avoid nested buttons ──
+                  <div
                     onClick={() => onSelectConversation(conv)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={e => e.key === 'Enter' && onSelectConversation(conv)}
                     className={`w-full text-left px-3 py-2.5 rounded-xl
-                                transition-all duration-100 border-l-2
+                                transition-all duration-100 border-l-2 cursor-pointer
                       ${currentConversationId === conv.id
-                        ? 'bg-[#e8f4f4] border-[var(--color-teal)]'
-                        : 'border-transparent hover:bg-[var(--color-cream)]'
+                        ? 'bg-[var(--color-teal)]/10 border-[var(--color-teal)]'
+                        : 'border-transparent hover:bg-[var(--color-ink)]/5'
                       }`}
                   >
                     <div className="flex items-start justify-between gap-2">
@@ -161,7 +165,7 @@ export default function ConversationSidebar({
                         </p>
                       </div>
 
-                      {/* Context menu button */}
+                      {/* Context menu button — now safely inside a div, not a button */}
                       <button
                         onClick={e => {
                           e.stopPropagation()
@@ -169,18 +173,18 @@ export default function ConversationSidebar({
                         }}
                         className="opacity-0 group-hover:opacity-100 shrink-0
                                    w-6 h-6 rounded-md hover:bg-[var(--color-border)]
-                                   flex items-center justify-center text-[var(--color-muted)]
-                                   transition-all text-xs"
+                                   flex items-center justify-center
+                                   text-[var(--color-muted)] transition-all text-xs"
                       >
                         ···
                       </button>
                     </div>
-                  </button>
+                  </div>
                 )}
 
                 {/* Dropdown menu */}
                 {menuOpen === conv.id && (
-                  <div className="absolute right-2 top-10 z-50 bg-white
+                  <div className="absolute right-2 top-10 z-50 bg-[var(--color-paper)]
                                   border-2 border-[var(--color-ink)] rounded-xl
                                   shadow-lg overflow-hidden w-40">
                     <button

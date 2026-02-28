@@ -2,6 +2,8 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import Optional, List
 from app.services.groq_service import ask_groq
+import os, json, re, httpx
+from datetime import date
 
 router = APIRouter(prefix="/cbt", tags=["CBT"])
 
@@ -31,6 +33,12 @@ class CBTReportRequest(BaseModel):
     time_taken_secs: int
     exam_type: str
     topic: Optional[str] = None
+
+
+class MCQRequest(BaseModel):
+    topic: str
+    difficulty: str = "medium"
+    level: str = "secondary"
 
 
 def parse_option(text: str, letter: str) -> str:
@@ -185,5 +193,177 @@ Write a short (3-4 sentence) personalised report:
 
 Be warm, specific and encouraging like a caring Nigerian teacher."""
 
+
     summary = ask_groq(prompt)
     return {"success": True, "summary": summary, "percentage": pct}
+
+
+class ClassifyDifficultyRequest(BaseModel):
+    questions: list  # list of { id, question_text, option_a, option_b, option_c, option_d }
+    batch_size: int = 10
+
+
+@router.post("/classify-difficulty")
+async def classify_difficulty(request: ClassifyDifficultyRequest):
+    """
+    Use Groq to classify questions as easy / medium / hard.
+    Processes in batches and returns { id: difficulty } map.
+    """
+    import json
+
+    results = {}
+    questions = request.questions
+    batch_size = min(request.batch_size, 20)
+
+    for i in range(0, len(questions), batch_size):
+        batch = questions[i:i + batch_size]
+
+        formatted = "\n\n".join([
+            f"Q{j+1} [id:{q['id']}]\n"
+            f"Question: {q['question_text']}\n"
+            f"A. {q.get('option_a','')}\n"
+            f"B. {q.get('option_b','')}\n"
+            f"C. {q.get('option_c','')}\n"
+            f"D. {q.get('option_d','')}"
+            for j, q in enumerate(batch)
+        ])
+
+        prompt = f"""You are a Nigerian mathematics examiner classifying WAEC/NECO/JAMB questions by difficulty.
+
+Classify each question as exactly one of: easy, medium, hard
+
+Criteria:
+- easy: straightforward recall, single-step, basic arithmetic or definitions
+- medium: requires 2-3 steps, moderate application of formula or concept  
+- hard: multi-step reasoning, complex algebra, unfamiliar setup, or tricky options
+
+Questions:
+{formatted}
+
+Return ONLY a valid JSON object mapping each id to its difficulty. Example:
+{{"abc-123": "easy", "def-456": "hard"}}
+
+No explanation. No markdown. Just the JSON object."""
+
+        response = ask_groq(prompt)
+
+        # Clean and parse
+        clean = response.strip()
+        if clean.startswith("```"):
+            parts = clean.split("```")
+            for part in parts:
+                part = part.strip()
+                if part.startswith("json"):
+                    part = part[4:].strip()
+                if part.startswith("{"):
+                    clean = part
+                    break
+        clean = clean.strip().rstrip("```").strip()
+
+        try:
+            batch_results = json.loads(clean)
+            results.update(batch_results)
+        except Exception as e:
+            # Fallback: assign medium to all in failed batch
+            for q in batch:
+                results[q['id']] = 'medium'
+
+    return {"success": True, "classifications": results, "total": len(results)}
+
+@router.post("/verify-answers")
+async def verify_answers(request: Request):
+    body = await request.json()
+    questions = body.get("questions", [])  # list of {id, question_text, option_a..d, correct_answer}
+    
+    verified = []
+    for q in questions[:20]:  # batch max 20
+        prompt = f"""You are a Nigerian mathematics expert checking WAEC/JAMB/NECO answers.
+
+Question: {q['question_text']}
+A) {q['option_a']}
+B) {q['option_b']}  
+C) {q['option_c']}
+D) {q['option_d']}
+
+Stored answer: {q['correct_answer']}
+
+Is the stored answer correct? Reply ONLY with this JSON:
+{{"correct": true/false, "actual_answer": "A/B/C/D", "confidence": "high/medium/low"}}"""
+
+        response = groq_client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=100,
+        )
+        try:
+            result = json.loads(response.choices[0].message.content)
+            verified.append({
+                "id": q["id"],
+                "stored_answer": q["correct_answer"],
+                "ai_answer": result.get("actual_answer"),
+                "match": result.get("correct"),
+                "confidence": result.get("confidence"),
+            })
+        except:
+            verified.append({"id": q["id"], "error": "parse_failed"})
+    
+    return {"verified": verified}
+
+
+# ── Daily Challenge ───────────────────────────────────────────
+@router.get("/daily-challenge")
+async def get_daily_challenge(exam_type: str = "JAMB"):
+    """Return today's deterministic daily challenge question."""
+    sb_url = os.getenv("SUPABASE_URL", "")
+    sb_key = os.getenv("SUPABASE_SERVICE_KEY", "")
+    hdrs   = {"apikey": sb_key, "Authorization": f"Bearer {sb_key}"}
+
+    res = httpx.get(
+        f"{sb_url}/rest/v1/exam_questions",
+        params={
+            "select": "*",
+            "exam_type": f"eq.{exam_type}",
+            "option_a": "not.is.null",
+            "correct_answer": "not.is.null",
+            "order": "id",
+            "limit": "500",
+        },
+        headers=hdrs,
+        timeout=15,
+    )
+    questions = res.json()
+    if not questions:
+        raise HTTPException(status_code=404, detail="No questions available")
+
+    day_num  = (date.today() - date(2024, 1, 1)).days
+    today_q  = questions[day_num % len(questions)]
+    return {"question": today_q, "date": date.today().isoformat()}
+
+
+# ── AI MCQ Generator ──────────────────────────────────────────
+@router.post("/generate-mcq")
+async def generate_mcq(request: MCQRequest):
+    """Use Groq to generate a multiple-choice question on any topic."""
+    prompt = f"""Generate one multiple-choice mathematics question for a Nigerian {request.level} school student.
+Topic: {request.topic}
+Difficulty: {request.difficulty}
+
+Return ONLY valid JSON (no markdown, no extra text):
+{{
+  "question_text": "...",
+  "option_a": "...",
+  "option_b": "...",
+  "option_c": "...",
+  "option_d": "...",
+  "correct_answer": "A",
+  "explanation": "Step-by-step working showing how to arrive at the answer..."
+}}"""
+
+    text = ask_groq(prompt, [])
+    m    = re.search(r'\{{[\s\S]*\}}', text)
+    if not m:
+        raise HTTPException(status_code=500, detail="AI did not return valid JSON")
+    try:
+        return json.loads(m.group())
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=500, detail="Could not parse AI response")

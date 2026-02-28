@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 from app.services.groq_service import ask_groq
+from app.routers.tracking import log_teach_interaction, TeachLogRequest
 
 router = APIRouter(prefix="/teach", tags=["Teach"])
 
@@ -9,6 +10,7 @@ class TeachRequest(BaseModel):
     topic: str = "General Mathematics"
     level: str = "secondary"
     conversation_history: list = []
+    user_id: str = None  # optional — if provided, interaction is logged
 
 class TopicRequest(BaseModel):
     topic: str
@@ -21,6 +23,21 @@ Student Level: {request.level}
 Student's question: {request.question}
 Please explain thoroughly with step-by-step working, using LaTeX for all math."""
     response = ask_groq(prompt, request.conversation_history)
+
+    # Log interaction if user_id provided (non-fatal)
+    if request.user_id:
+        import asyncio
+        try:
+            await log_teach_interaction(TeachLogRequest(
+                user_id=request.user_id,
+                topic=request.topic,
+                question=request.question,
+                response_length=len(response),
+                level=request.level,
+            ))
+        except Exception:
+            pass  # Don't break teaching flow if logging fails
+
     return {"success": True, "response": response, "topic": request.topic}
 
 @router.post("/overview")
@@ -236,3 +253,31 @@ async def get_topics():
         }
     }
     return {"success": True, "topics": topics}
+
+
+@router.get("/wiki/{topic}")
+async def get_topic_wiki(topic: str):
+    """Generate structured study notes for a topic (displayed in Topic Wiki page)."""
+    prompt = f"""Create concise study notes for Nigerian secondary school students on: {topic}
+
+Use clear markdown formatting with these exact sections:
+
+## Overview
+Brief plain-English explanation (2-3 sentences max).
+
+## Key Concepts
+- Bullet list of the most important ideas
+
+## Core Formulas
+List each formula with a short label. Use LaTeX notation (e.g. $$x = \\frac{{-b \\pm \\sqrt{{b^2 - 4ac}}}}{{2a}}$$).
+
+## Worked Example
+One clear step-by-step worked example with a final boxed answer.
+
+## Common Exam Mistakes
+- 2-3 mistakes students commonly make in WAEC/JAMB/NECO
+
+Keep each section brief and exam-focused. Target: WAEC/JAMB/NECO level."""
+
+    content = ask_groq(prompt, [])
+    return {"topic": topic, "content": content}

@@ -13,14 +13,14 @@ const QUICK_TOPICS = [
 export default function FloatChat() {
   const { user, profile } = useAuth()
   const navigate = useNavigate()
-  const [open,     setOpen]     = useState(false)
+  const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState([])
-  const [input,    setInput]    = useState('')
-  const [loading,  setLoading]  = useState(false)
-  const [convId,   setConvId]   = useState(null)
-  const [topic,    setTopic]    = useState('General Mathematics')
+  const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [convId, setConvId] = useState(null)
+  const [topic, setTopic] = useState('General Mathematics')
   const bottomRef = useRef(null)
-  const inputRef  = useRef(null)
+  const inputRef = useRef(null)
 
   useEffect(() => {
     if (open) {
@@ -66,7 +66,7 @@ export default function FloatChat() {
         role: m.role, content: m.content
       }))
 
-      const res   = await askTutor(msg, topic, 'secondary', history)
+      const res = await askTutor(msg, topic, 'secondary', history)
       const reply = res.data.answer || res.data.response || res.data.explanation || ''
 
       setMessages(prev => [
@@ -118,11 +118,12 @@ export default function FloatChat() {
 
       {/* Chat window */}
       {open && (
-        <div className="fixed bottom-24 right-6 z-50 w-[360px]
-                        max-w-[calc(100vw-2rem)] bg-white border-2
-                        border-[var(--color-ink)] rounded-2xl shadow-2xl
-                        flex flex-col overflow-hidden"
-             style={{ height: '520px' }}>
+        <div
+          className="fixed bottom-24 right-6 z-50
+                     w-80 sm:w-96
+                     bg-white border-2 border-[var(--color-ink)]
+                     rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+          style={{ height: 'min(520px, calc(100vh - 128px))' }}>
 
           {/* Header */}
           <div className="bg-[var(--color-teal)] px-4 py-3 flex items-center
@@ -174,14 +175,17 @@ export default function FloatChat() {
             {messages.length === 0 && (
               <div className="text-center py-8">
                 <div className="text-4xl mb-2">🧮</div>
-                <p className="text-sm text-[var(--color-muted)]">
-                  Pick a topic above or ask Euler anything!
+                <p className="text-sm font-semibold text-[var(--color-ink)] mb-1">
+                  Hi {firstName}! I'm Euler 👋
+                </p>
+                <p className="text-xs text-[var(--color-muted)] leading-relaxed max-w-[200px] mx-auto">
+                  Pick a topic above or ask me any maths question — I track your progress as you learn!
                 </p>
               </div>
             )}
             {messages.map((msg, i) => (
               <div key={i}
-                   className={`flex gap-2
+                className={`flex gap-2
                      ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 {msg.role === 'assistant' && (
                   <div className="w-6 h-6 rounded-full bg-[var(--color-teal)]
@@ -197,11 +201,11 @@ export default function FloatChat() {
                   }`}>
                   {msg.loading ? (
                     <div className="flex gap-1 py-1">
-                      {[0,1,2].map(j => (
+                      {[0, 1, 2].map(j => (
                         <span key={j}
-                              className="w-1.5 h-1.5 rounded-full
+                          className="w-1.5 h-1.5 rounded-full
                                          bg-[var(--color-teal)] animate-bounce"
-                              style={{ animationDelay: `${j * 0.15}s` }} />
+                          style={{ animationDelay: `${j * 0.15}s` }} />
                       ))}
                     </div>
                   ) : msg.role === 'user' ? (
@@ -224,7 +228,7 @@ export default function FloatChat() {
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && !loading && handleSend()}
-                placeholder="Ask Euler anything..."
+                placeholder={`Ask me about ${topic === 'General Mathematics' ? 'any maths topic' : topic}...`}
                 className="flex-1 bg-[var(--color-paper)] border
                            border-[var(--color-border)]
                            focus:border-[var(--color-teal)] rounded-xl

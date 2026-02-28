@@ -98,3 +98,80 @@
     cursor: pointer;
   }
 }
+
+
+[data-theme="dark"] {
+  --color-paper:   #0f1117;
+  --color-cream:   #1a1d27;
+  --color-ink:     #f0f0f0;
+  --color-muted:   #8b8fa8;
+  --color-border:  #2a2d3e;
+  --color-teal:    #2dd4bf;
+  --color-gold:    #f59e0b;
+  --color-gold-light: #fcd34d;
+
+  color-scheme: dark;
+}
+
+[data-theme="dark"] body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+
+[data-theme="dark"] .card {
+  background-color: #1a1d27;
+  border-color: #2a2d3e;
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background-color: #1a1d27 !important;
+  color: #f0f0f0 !important;
+  border-color: #2a2d3e !important;
+}
+
+[data-theme="dark"] .bg-white {
+  background-color: #1a1d27 !important;
+}
+
+[data-theme="dark"] .bg-\[var\(--color-paper\)\] {
+  background-color: #0f1117 !important;
+}
+
+/* Cream backgrounds become slightly elevated dark surfaces */
+[data-theme="dark"] .bg-\[var\(--color-cream\)\] {
+  background-color: #1a1d27 !important;
+}
+
+/* Text that uses hard-coded gray should still read well */
+[data-theme="dark"] .text-gray-500,
+[data-theme="dark"] .text-gray-600 {
+  color: #8b8fa8 !important;
+}
+
+/* Ensure borders are visible on dark surfaces */
+[data-theme="dark"] .border-\[var\(--color-border\)\] {
+  border-color: #2a2d3e !important;
+}
+
+/* Dropdown/popup menus always use elevated surface */
+[data-theme="dark"] .shadow-lg {
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6) !important;
+}
+
+/* Make red-50 / green-50 result panels readable in dark mode */
+[data-theme="dark"] .bg-red-50   { background-color: rgba(239,68,68, 0.1)  !important; }
+[data-theme="dark"] .bg-green-50 { background-color: rgba(34,197,94, 0.1)  !important; }
+[data-theme="dark"] .bg-orange-50 { background-color: rgba(249,115,22, 0.1) !important; }
+[data-theme="dark"] .bg-yellow-50 { background-color: rgba(234,179,8, 0.1)  !important; }
+[data-theme="dark"] .bg-blue-50   { background-color: rgba(59,130,246, 0.1) !important; }
+[data-theme="dark"] .bg-purple-50  { background-color: rgba(168,85,247,0.1) !important; }
+
+/* prose content in dark mode */
+[data-theme="dark"] .prose { color: var(--color-ink); }
+[data-theme="dark"] .prose strong,
+[data-theme="dark"] .prose h1,
+[data-theme="dark"] .prose h2,
+[data-theme="dark"] .prose h3 { color: var(--color-ink); }
+[data-theme="dark"] .prose code { background-color: #1a1d27; color: #2dd4bf; }

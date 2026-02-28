@@ -192,22 +192,29 @@ export async function getAvailableYears(examType) {
 
 // ── Get question bank stats ───────────────────────────────
 export async function getQuestionBankStats() {
-  const { data } = await supabase
-    .from('exam_questions')
-    .select('exam_type, year')
-
-  if (!data) return {}
-
+  const examTypes = ['JAMB', 'WAEC', 'NECO']
   const stats = {}
-  data.forEach(q => {
-    if (!stats[q.exam_type]) stats[q.exam_type] = { total: 0, years: new Set() }
-    stats[q.exam_type].total++
-    if (q.year) stats[q.exam_type].years.add(q.year)
-  })
 
-  Object.keys(stats).forEach(k => {
-    stats[k].years = stats[k].years.size
-  })
+  await Promise.all(examTypes.map(async (examType) => {
+    // Get total count using Supabase count feature
+    const { count: total } = await supabase
+      .from('exam_questions')
+      .select('*', { count: 'exact', head: true })
+      .eq('exam_type', examType)
+
+    // Get distinct years
+    const { data: yearData } = await supabase
+      .from('exam_questions')
+      .select('year')
+      .eq('exam_type', examType)
+      .not('year', 'is', null)
+
+    const years = new Set((yearData || []).map(r => r.year)).size
+
+    if (total > 0) {
+      stats[examType] = { total, years }
+    }
+  }))
 
   return stats
 }

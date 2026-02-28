@@ -1,7 +1,9 @@
 import axios from 'axios'
 
+export const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: API_BASE,
   headers: { 'Content-Type': 'application/json' }
 })
 
@@ -16,8 +18,8 @@ export const solveFromImage = (image_base64, image_type, extra_instruction = nul
   API.post('/solve/image', { image_base64, image_type, extra_instruction })
 
 // ── TEACH ──────────────────────────────────────
-export const askTutor = (question, topic, level, conversation_history = []) =>
-  API.post('/teach/ask', { question, topic, level, conversation_history })
+export const askTutor = (question, topic, level, conversation_history = [], user_id = null) =>
+  API.post('/teach/ask', { question, topic, level, conversation_history, user_id })
 
 export const getTopicOverview = (topic, level) =>
   API.post('/teach/overview', { topic, level })
@@ -37,13 +39,13 @@ export const gradeAnswer = (topic, question, correctAnswer, studentAnswer) =>
   })
 
 
-export const askExamQuestion  = (question, examType, year, topic) =>
+export const askExamQuestion = (question, examType, year, topic) =>
   API.post('/exams/ask', { question, exam_type: examType, year, topic })
 
-export const listExamPapers   = () =>
+export const listExamPapers = () =>
   API.get('/exams/papers')
 
-export const ingestExamPaper  = (pdfBase64, title, examType, year) =>
+export const ingestExamPaper = (pdfBase64, title, examType, year) =>
   API.post('/exams/ingest', {
     pdf_base64: pdfBase64,
     title,
@@ -52,16 +54,30 @@ export const ingestExamPaper  = (pdfBase64, title, examType, year) =>
   })
 
 
-  export const parseQuestions     = (markdownContent, examType, year) =>
+export const parseQuestions = (markdownContent, examType, year) =>
   API.post('/cbt/parse', { markdown_content: markdownContent, exam_type: examType, year })
 
-export const explainCBTAnswer   = (question, studentAnswer) =>
+export const explainCBTAnswer = (question, studentAnswer) =>
   API.post('/cbt/explain', question)
 
-export const generateCBTReport  = (questions, score, total, timeSecs, examType, topic) =>
+export const generateCBTReport = (questions, score, total, timeSecs, examType, topic) =>
   API.post('/cbt/report-summary', {
     questions, score, total,
     time_taken_secs: timeSecs,
     exam_type: examType,
     topic,
   })
+
+// ── TRACKING ───────────────────────────────────────────────
+export const getUserProfile = (userId) =>
+  API.get(`/tracking/profile/${userId}`)
+
+export const updateUserProfile = (userId, data) =>
+  API.put(`/tracking/profile/${userId}`, data)
+
+// ── DAILY CHALLENGE & MCQ ───────────────────────────────
+export const getDailyChallenge = (examType = 'JAMB') =>
+  API.get('/cbt/daily-challenge', { params: { exam_type: examType } })
+
+export const generateMCQ = (topic, difficulty = 'medium', level = 'secondary') =>
+  API.post('/cbt/generate-mcq', { topic, difficulty, level })

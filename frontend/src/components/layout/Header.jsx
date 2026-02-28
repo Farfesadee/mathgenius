@@ -1,27 +1,52 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import NotificationBell from '../NotificationBell'
+import { useTheme } from '../../context/ThemeContext'
 
 const NAV_LINKS = [
-  { path: '/',              label: 'Home',           icon: '🏠', auth: false },
-  { path: '/solve',         label: 'Solve',          icon: '⚙️', auth: false },
-  { path: '/teach',         label: 'Teach',          icon: '📚', auth: true  },
-  { path: '/past-questions',label: 'Past Questions', icon: '📝', auth: true  },
-  { path: '/practice',      label: 'Practice',       icon: '🎯', auth: true  },
-  { path: '/dashboard',     label: 'Dashboard',      icon: '📊', auth: true  },
+  { path: '/home', label: 'Home', icon: '🏠', auth: false },
+  { path: '/solve', label: 'Solve', icon: '⚙️', auth: false },
+  { path: '/teach', label: 'Teach', icon: '📚', auth: true },
+  { path: '/cbt', label: 'CBT', icon: '🖥️', auth: true },
+  { path: '/practice', label: 'Practice', icon: '🎯', auth: true },
+  { path: '/dashboard', label: 'Dashboard', icon: '📊', auth: true },
 ]
 
 export default function Header() {
-  const location  = useLocation()
-  const navigate  = useNavigate()
+  const location = useLocation()
+  const navigate = useNavigate()
   const { user, profile, signOut } = useAuth()
-  const [menuOpen,   setMenuOpen]   = useState(false)
-  const [userMenu,   setUserMenu]   = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [userMenu, setUserMenu] = useState(false)
+  const dropdownRef = useRef(null)
+  const { isDark, toggleTheme } = useTheme()
+
   const active = (path) => location.pathname === path
+
+  // Close dropdown when clicking anywhere outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setUserMenu(false)
+      }
+    }
+    if (userMenu) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [userMenu])
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMenuOpen(false)
+    setUserMenu(false)
+  }, [location.pathname])
 
   const handleSignOut = async () => {
     await signOut()
     setMenuOpen(false)
+    setUserMenu(false)
     navigate('/')
   }
 
@@ -58,8 +83,20 @@ export default function Header() {
 
           {/* Right side */}
           <div className="flex items-center gap-2">
+            {/* Dark mode toggle */}
+            <button
+              onClick={toggleTheme}
+              className="w-10 h-10 flex items-center justify-center
+             rounded-xl border-2 border-[var(--color-border)]
+             hover:border-[var(--color-ink)] transition-all
+             bg-[var(--color-cream)] text-lg"
+              title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {isDark ? '☀️' : '🌙'}
+            </button>
+            {user && <NotificationBell />}
             {user ? (
-              <div className="relative">
+              <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setUserMenu(m => !m)}
                   className="flex items-center gap-2 bg-[var(--color-cream)]
@@ -71,21 +108,26 @@ export default function Header() {
                                   flex items-center justify-center text-white
                                   font-bold text-xs shrink-0">
                     {profile?.full_name?.[0]?.toUpperCase() ||
-                     user.email[0].toUpperCase()}
+                      user.email[0].toUpperCase()}
                   </div>
                   <span className="hidden sm:block text-sm font-medium
                                    text-[var(--color-ink)] max-w-[100px] truncate">
                     {profile?.full_name?.split(' ')[0] || 'Account'}
                   </span>
-                  <span className="text-[var(--color-muted)] text-xs hidden sm:block">▼</span>
+                  <span className="text-[var(--color-muted)] text-xs hidden sm:block">
+                    {userMenu ? '▲' : '▼'}
+                  </span>
                 </button>
 
                 {userMenu && (
                   <div className="absolute right-0 top-full mt-2 w-52 bg-white
                                   border-2 border-[var(--color-ink)] rounded-2xl
-                                  shadow-xl overflow-hidden z-50">
+                                  shadow-xl overflow-hidden z-50
+                                  flex flex-col"
+                    style={{ maxHeight: 'calc(100vh - 80px)' }}>
+                    {/* User info — always visible */}
                     <div className="px-4 py-3 bg-[var(--color-cream)]
-                                    border-b border-[var(--color-border)]">
+                                    border-b border-[var(--color-border)] shrink-0">
                       <p className="font-semibold text-sm text-[var(--color-ink)] truncate">
                         {profile?.full_name || 'Student'}
                       </p>
@@ -93,24 +135,45 @@ export default function Header() {
                         {user.email}
                       </p>
                     </div>
-                    {[
-                      { path: '/bookmarks',     icon: '🔖', label: 'My Bookmarks'   },
-                      { path: '/practice',      icon: '🎯', label: 'Practice'        },
-                      { path: '/dashboard',     icon: '📊', label: 'Dashboard'       },
-                      { path: '/past-questions',icon: '📝', label: 'Past Questions'  },
-                      { path: '/cbt', label: 'CBT', icon: '🖥️', auth: true },
-                    ].map(item => (
-                      <Link
-                        key={item.path}
-                        to={item.path}
-                        onClick={() => setUserMenu(false)}
-                        className="flex items-center gap-2 px-4 py-2.5 text-sm
-                                   hover:bg-[var(--color-cream)] transition-colors"
-                      >
-                        {item.icon} {item.label}
-                      </Link>
-                    ))}
-                    <div className="border-t border-[var(--color-border)]">
+
+                    {/* Scrollable links */}
+                    <div className="overflow-y-auto flex-1">
+                      {[
+                        { path: '/bookmarks', icon: '🔖', label: 'My Bookmarks' },
+                        { path: '/daily', icon: '🔥', label: 'Daily Challenge' },
+                        { path: '/practice', icon: '🎯', label: 'Practice' },
+                        { path: '/ai-quiz', icon: '🤖', label: 'AI Quiz' },
+                        { path: '/review', icon: '🧠', label: 'Spaced Review' },
+                        { path: '/challenge', icon: '⚔️', label: 'Challenge Friend' },
+                        { path: '/groups', icon: '👥', label: 'Study Groups' },
+                        { path: '/weekly-report', icon: '📊', label: 'Weekly Report' },
+                        { path: '/certificate', icon: '🏆', label: 'Certificate' },
+                        { path: '/wiki/Quadratic+Equations', icon: '📖', label: 'Topic Wiki' },
+                        { path: '/dashboard', icon: '📈', label: 'Dashboard' },
+                        { path: '/past-questions', icon: '📝', label: 'Past Questions' },
+                        { path: '/cbt', icon: '🖥️', label: 'CBT' },
+                        { path: '/leaderboard', icon: '🏆', label: 'Leaderboard' },
+                        { path: '/mastery', icon: '🗺️', label: 'Mastery' },
+                        { path: '/notes', icon: '📝', label: 'Notes' },
+                        { path: '/planner', icon: '📅', label: 'Study Planner' },
+                        { path: '/cbt-history', icon: '🗂️', label: 'CBT History' },
+                        { path: '/profile', icon: '👤', label: 'My Profile' },
+                        { path: '/formulas', icon: '📐', label: 'Formula Sheet' },
+                      ].map(item => (
+                        <Link
+                          key={item.path}
+                          to={item.path}
+                          onClick={() => setUserMenu(false)}
+                          className="flex items-center gap-2 px-4 py-2.5 text-sm
+                                     hover:bg-[var(--color-cream)] transition-colors"
+                        >
+                          {item.icon} {item.label}
+                        </Link>
+                      ))}
+                    </div>
+
+                    {/* Sign out — always visible */}
+                    <div className="border-t border-[var(--color-border)] shrink-0">
                       <button
                         onClick={handleSignOut}
                         className="w-full flex items-center gap-2 px-4 py-2.5
@@ -154,10 +217,10 @@ export default function Header() {
       {/* Mobile drawer */}
       {menuOpen && (
         <div className="lg:hidden fixed inset-0 z-40 bg-black/50"
-             onClick={() => setMenuOpen(false)}>
+          onClick={() => setMenuOpen(false)}>
           <div className="absolute top-16 left-0 right-0 bg-white
                           border-b-2 border-[var(--color-ink)] shadow-xl"
-               onClick={e => e.stopPropagation()}>
+            onClick={e => e.stopPropagation()}>
 
             <nav className="p-4 space-y-1">
               {visibleLinks.map(link => (
@@ -178,7 +241,6 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* Mobile auth */}
             <div className="px-4 pb-4 border-t border-[var(--color-border)] pt-3">
               {user ? (
                 <div className="space-y-2">
@@ -187,7 +249,7 @@ export default function Header() {
                                     flex items-center justify-center text-white
                                     font-bold text-sm">
                       {profile?.full_name?.[0]?.toUpperCase() ||
-                       user.email[0].toUpperCase()}
+                        user.email[0].toUpperCase()}
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-[var(--color-ink)]">

@@ -1,17 +1,19 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import Calculator from '../components/solve/Calculator'
 import ResultDisplay from '../components/solve/ResultDisplay'
 import ImageSolver from '../components/solve/ImageSolver'
 import { solveExpression, explainSolution } from '../services/api'
 
 export default function Solve() {
-  const [tab, setTab]               = useState('calculator') // calculator | image
-  const [mode, setMode]             = useState('solve')
-  const [result, setResult]         = useState(null)
-  const [loading, setLoading]       = useState(false)
+  const [searchParams] = useSearchParams()
+  const [tab, setTab] = useState(searchParams.get('tab') === 'image' ? 'image' : 'calculator')
+  const [mode, setMode] = useState('solve')
+  const [result, setResult] = useState(null)
+  const [loading, setLoading] = useState(false)
   const [explaining, setExplaining] = useState(false)
   const [explanation, setExplanation] = useState('')
-  const [error, setError]           = useState('')
+  const [error, setError] = useState('')
 
   const handleSolve = async (expr, currentMode) => {
     if (!expr.trim()) return
@@ -65,7 +67,7 @@ export default function Solve() {
       <div className="flex border-b-2 border-[var(--color-ink)] mb-8">
         {[
           { id: 'calculator', label: '⌨️ Type Expression' },
-          { id: 'image',      label: '📷 Upload Photo / Screenshot' },
+          { id: 'image', label: '📷 Upload Photo / Screenshot' },
         ].map(t => (
           <button
             key={t.id}
@@ -120,13 +122,13 @@ export default function Solve() {
                 <div className="bg-white p-6 grid grid-cols-2 gap-3">
                   {[
                     ['x^2 + 5*x + 6 = 0', 'Quadratic equation'],
-                    ['sqrt(144)',          'Square root'],
-                    ['sin(pi/6)',          'Trigonometry'],
-                    ['diff(x^3, x)',       'Differentiate x³'],
+                    ['sqrt(144)', 'Square root'],
+                    ['sin(pi/6)', 'Trigonometry'],
+                    ['diff(x^3, x)', 'Differentiate x³'],
                     ['integrate(x^2, x)', 'Integrate x²'],
-                    ['log(100)',           'Logarithm base 10'],
-                    ['factorial(5)',       '5!'],
-                    ['(2+3)*4 - 1',        'Arithmetic'],
+                    ['log(100)', 'Logarithm base 10'],
+                    ['factorial(5)', '5!'],
+                    ['(2+3)*4 - 1', 'Arithmetic'],
                   ].map(([expr, desc]) => (
                     <div key={expr} className="bg-[var(--color-paper)] rounded-xl p-3">
                       <p className="font-mono text-xs text-[var(--color-teal)] font-semibold">{expr}</p>
