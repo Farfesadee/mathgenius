@@ -80,9 +80,9 @@ const GRADE_OPTIONS = [
   { value: 'graduate',   label: 'Graduate'         },
 ]
 
-export default function Login() {
+export default function Login({ defaultTab = 'login' }) {
   const navigate = useNavigate()
-  const [tab, setTab] = useState('login')
+  const [tab, setTab] = useState(defaultTab)
 
   // Login fields
   const [loginEmail,    setLoginEmail]    = useState('')
@@ -134,6 +134,9 @@ export default function Login() {
     setLoading(true)
     const fullName = `${firstName.trim()} ${surname.trim()}`
 
+    // Check if onboarding stored a level preference
+    const onboardingLevel = sessionStorage.getItem('onboarding_level')
+
     const { error } = await supabase.auth.signUp({
       email:    signupEmail,
       password: signupPassword,
@@ -147,8 +150,13 @@ export default function Login() {
       }
     })
 
-    if (error) setError(error.message)
-    else setSuccess('Account created! You can now sign in.')
+    if (error) {
+      setError(error.message)
+    } else {
+      // Clear onboarding storage
+      sessionStorage.removeItem('onboarding_level')
+      setSuccess('Account created! You can now sign in.')
+    }
     setLoading(false)
   }
 

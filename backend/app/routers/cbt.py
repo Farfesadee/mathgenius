@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 from typing import Optional, List
 from app.services.groq_service import ask_groq
@@ -87,10 +87,7 @@ Here is the content:
 {request.markdown_content[:8000]}
 ---"""
 
-    response = ask_groq(prompt)
-
-    import json
-    import re
+    response = await ask_groq(prompt)   # ← was missing await
 
     # Strip markdown fences
     clean = response.strip()
@@ -103,8 +100,6 @@ Here is the content:
 
     # Remove control characters that break JSON parsing
     clean = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]', '', clean)
-
-    # Fix common JSON issues
     clean = clean.replace('\t', ' ')
 
     try:
@@ -159,7 +154,7 @@ Student chose: {request.student_answer}
 Also briefly explain why each wrong option is incorrect.
 Be warm, encouraging and concise. Show any working needed."""
 
-    explanation = ask_groq(prompt)
+    explanation = await ask_groq(prompt)   # ← was missing await
     return {"success": True, "explanation": explanation}
 
 
@@ -193,8 +188,7 @@ Write a short (3-4 sentence) personalised report:
 
 Be warm, specific and encouraging like a caring Nigerian teacher."""
 
-
-    summary = ask_groq(prompt)
+    summary = await ask_groq(prompt)   # ← was missing await — THIS was the 500 error
     return {"success": True, "summary": summary, "percentage": pct}
 
 
@@ -209,8 +203,6 @@ async def classify_difficulty(request: ClassifyDifficultyRequest):
     Use Groq to classify questions as easy / medium / hard.
     Processes in batches and returns { id: difficulty } map.
     """
-    import json
-
     results = {}
     questions = request.questions
     batch_size = min(request.batch_size, 20)
@@ -245,7 +237,7 @@ Return ONLY a valid JSON object mapping each id to its difficulty. Example:
 
 No explanation. No markdown. Just the JSON object."""
 
-        response = ask_groq(prompt)
+        response = await ask_groq(prompt)   # ← was missing await
 
         # Clean and parse
         clean = response.strip()
@@ -263,18 +255,22 @@ No explanation. No markdown. Just the JSON object."""
         try:
             batch_results = json.loads(clean)
             results.update(batch_results)
-        except Exception as e:
+        except Exception:
             # Fallback: assign medium to all in failed batch
             for q in batch:
                 results[q['id']] = 'medium'
 
     return {"success": True, "classifications": results, "total": len(results)}
 
+
 @router.post("/verify-answers")
 async def verify_answers(request: Request):
     body = await request.json()
     questions = body.get("questions", [])  # list of {id, question_text, option_a..d, correct_answer}
-    
+
+    sb_url = os.getenv("SUPABASE_URL", "")
+    sb_key = os.getenv("SUPABASE_SERVICE_KEY", "")
+
     verified = []
     for q in questions[:20]:  # batch max 20
         prompt = f"""You are a Nigerian mathematics expert checking WAEC/JAMB/NECO answers.
@@ -290,23 +286,19 @@ Stored answer: {q['correct_answer']}
 Is the stored answer correct? Reply ONLY with this JSON:
 {{"correct": true/false, "actual_answer": "A/B/C/D", "confidence": "high/medium/low"}}"""
 
-        response = groq_client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=100,
-        )
         try:
-            result = json.loads(response.choices[0].message.content)
+            response = await ask_groq(prompt)   # ← use ask_groq consistently
+            result = json.loads(response)
             verified.append({
-                "id": q["id"],
-                "stored_answer": q["correct_answer"],
-                "ai_answer": result.get("actual_answer"),
-                "match": result.get("correct"),
-                "confidence": result.get("confidence"),
+                "id":             q["id"],
+                "stored_answer":  q["correct_answer"],
+                "ai_answer":      result.get("actual_answer"),
+                "match":          result.get("correct"),
+                "confidence":     result.get("confidence"),
             })
-        except:
+        except Exception:
             verified.append({"id": q["id"], "error": "parse_failed"})
-    
+
     return {"verified": verified}
 
 
@@ -359,8 +351,8 @@ Return ONLY valid JSON (no markdown, no extra text):
   "explanation": "Step-by-step working showing how to arrive at the answer..."
 }}"""
 
-    text = ask_groq(prompt, [])
-    m    = re.search(r'\{{[\s\S]*\}}', text)
+    text = await ask_groq(prompt, [])   # ← was missing await
+    m    = re.search(r'\{[\s\S]*\}', text)
     if not m:
         raise HTTPException(status_code=500, detail="AI did not return valid JSON")
     try:

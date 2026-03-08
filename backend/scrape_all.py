@@ -27,6 +27,7 @@ from datetime import datetime
 
 JOBS = [
     # ── JAMB ─────────────────────────────────────────────────────────
+    { "exam": "jamb", "year": "2025", "pages": 11 },
     { "exam": "jamb", "year": "2024", "pages": 10 },
     { "exam": "jamb", "year": "2023", "pages": 16 },
     { "exam": "jamb", "year": "2022", "pages": 8 },

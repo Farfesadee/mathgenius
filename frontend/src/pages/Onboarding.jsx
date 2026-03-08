@@ -49,17 +49,16 @@ export default function Onboarding() {
   const [level, setLevel] = useState('')
 
   const handleNext = async () => {
-    if (step === 1 && level) {
-      await updateProfile({ level })
-    }
-    if (step < STEPS.length - 1) {
-      setStep(s => s + 1)
-    } else {
-      // Mark onboarding complete
-      await updateProfile({ onboarded: true })
-      navigate('/teach')
-    }
+  // Store level in sessionStorage — will be saved after signup
+  if (step === 1 && level) {
+    sessionStorage.setItem('onboarding_level', level)
   }
+  if (step < STEPS.length - 1) {
+    setStep(s => s + 1)
+  } else {
+    window.location.href = '/signup'
+  }
+}
 
   const current = STEPS[step]
   const progress = ((step + 1) / STEPS.length) * 100
@@ -225,7 +224,7 @@ export default function Onboarding() {
             {/* Skip */}
             {step < STEPS.length - 1 && (
               <button
-                onClick={() => navigate('/teach')}
+                onClick={() => navigate('/signup')}
                 className="w-full text-center text-xs text-[var(--color-muted)]
                            hover:text-[var(--color-ink)] mt-3 transition-colors"
               >

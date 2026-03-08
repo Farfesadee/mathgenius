@@ -88,7 +88,6 @@
 }
 
 @layer base {
-  /* Pointer cursor on everything clickable */
   button,
   a,
   [role="button"],
@@ -100,29 +99,92 @@
 }
 
 
+/* ════════════════════════════════════════════════════════
+   DARK MODE
+   ════════════════════════════════════════════════════════ */
+
 [data-theme="dark"] {
-  --color-paper:   #0f1117;
-  --color-cream:   #1a1d27;
-  --color-ink:     #f0f0f0;
-  --color-muted:   #8b8fa8;
-  --color-border:  #2a2d3e;
-  --color-teal:    #2dd4bf;
-  --color-gold:    #f59e0b;
+  --color-paper:      #0f1117;
+  --color-cream:      #1a1d27;
+  --color-ink:        #f0f0f0;
+  --color-muted:      #8b8fa8;
+  --color-border:     #2a2d3e;
+  --color-teal:       #2dd4bf;
+  --color-teal-light: #5eead4;
+  --color-gold:       #f59e0b;
   --color-gold-light: #fcd34d;
 
   color-scheme: dark;
 }
 
+/* ── Body & base ── */
 [data-theme="dark"] body {
   background-color: var(--color-paper);
   color: var(--color-ink);
 }
 
+/* ── All white backgrounds → dark surface ── */
+[data-theme="dark"] .bg-white {
+  background-color: #1a1d27 !important;
+  color: #f0f0f0 !important;
+}
+
+/* ── Card component ── */
 [data-theme="dark"] .card {
   background-color: #1a1d27;
   border-color: #2a2d3e;
 }
 
+/* ── Paper / cream backgrounds ── */
+[data-theme="dark"] .bg-\[var\(--color-paper\)\] {
+  background-color: #0f1117 !important;
+}
+[data-theme="dark"] .bg-\[var\(--color-cream\)\] {
+  background-color: #1a1d27 !important;
+}
+
+/* ── Ink backgrounds (dark header bars) become elevated ── */
+[data-theme="dark"] .bg-\[var\(--color-ink\)\] {
+  background-color: #2a2d3e !important;
+}
+
+/* ── Teal backgrounds keep teal ── */
+[data-theme="dark"] .bg-\[var\(--color-teal\)\] {
+  background-color: #0d9488 !important;
+}
+[data-theme="dark"] .bg-\[\#e8f4f4\] {
+  background-color: rgba(45,212,191,0.12) !important;
+}
+
+/* ── Text colors ── */
+[data-theme="dark"] .text-\[var\(--color-ink\)\] {
+  color: #f0f0f0 !important;
+}
+[data-theme="dark"] .text-\[var\(--color-muted\)\] {
+  color: #8b8fa8 !important;
+}
+[data-theme="dark"] .text-gray-500,
+[data-theme="dark"] .text-gray-600,
+[data-theme="dark"] .text-gray-700 {
+  color: #8b8fa8 !important;
+}
+[data-theme="dark"] .text-gray-800,
+[data-theme="dark"] .text-gray-900 {
+  color: #f0f0f0 !important;
+}
+
+/* ── Borders ── */
+[data-theme="dark"] .border-\[var\(--color-border\)\] {
+  border-color: #2a2d3e !important;
+}
+[data-theme="dark"] .border-\[var\(--color-ink\)\] {
+  border-color: #3a3d4e !important;
+}
+[data-theme="dark"] .divide-\[var\(--color-border\)\] > * + * {
+  border-color: #2a2d3e !important;
+}
+
+/* ── Form inputs ── */
 [data-theme="dark"] input,
 [data-theme="dark"] select,
 [data-theme="dark"] textarea {
@@ -130,48 +192,108 @@
   color: #f0f0f0 !important;
   border-color: #2a2d3e !important;
 }
-
-[data-theme="dark"] .bg-white {
-  background-color: #1a1d27 !important;
-}
-
-[data-theme="dark"] .bg-\[var\(--color-paper\)\] {
-  background-color: #0f1117 !important;
-}
-
-/* Cream backgrounds become slightly elevated dark surfaces */
-[data-theme="dark"] .bg-\[var\(--color-cream\)\] {
-  background-color: #1a1d27 !important;
-}
-
-/* Text that uses hard-coded gray should still read well */
-[data-theme="dark"] .text-gray-500,
-[data-theme="dark"] .text-gray-600 {
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
   color: #8b8fa8 !important;
 }
 
-/* Ensure borders are visible on dark surfaces */
-[data-theme="dark"] .border-\[var\(--color-border\)\] {
+/* ── Sticky header / nav bar ── */
+[data-theme="dark"] header,
+[data-theme="dark"] nav {
+  background-color: #0f1117 !important;
   border-color: #2a2d3e !important;
 }
 
-/* Dropdown/popup menus always use elevated surface */
-[data-theme="dark"] .shadow-lg {
-  box-shadow: 0 10px 40px rgba(0,0,0,0.6) !important;
+/* ── Dropdown menus ── */
+[data-theme="dark"] .shadow-xl,
+[data-theme="dark"] .shadow-lg,
+[data-theme="dark"] .shadow-2xl {
+  box-shadow: 0 10px 40px rgba(0,0,0,0.7) !important;
 }
 
-/* Make red-50 / green-50 result panels readable in dark mode */
-[data-theme="dark"] .bg-red-50   { background-color: rgba(239,68,68, 0.1)  !important; }
-[data-theme="dark"] .bg-green-50 { background-color: rgba(34,197,94, 0.1)  !important; }
-[data-theme="dark"] .bg-orange-50 { background-color: rgba(249,115,22, 0.1) !important; }
-[data-theme="dark"] .bg-yellow-50 { background-color: rgba(234,179,8, 0.1)  !important; }
-[data-theme="dark"] .bg-blue-50   { background-color: rgba(59,130,246, 0.1) !important; }
-[data-theme="dark"] .bg-purple-50  { background-color: rgba(168,85,247,0.1) !important; }
+/* ── Status colour chips (bg-X-50, text-X-600 etc.) ── */
+[data-theme="dark"] .bg-red-50    { background-color: rgba(239,68,68,   0.15) !important; }
+[data-theme="dark"] .bg-green-50  { background-color: rgba(34,197,94,   0.15) !important; }
+[data-theme="dark"] .bg-orange-50 { background-color: rgba(249,115,22,  0.15) !important; }
+[data-theme="dark"] .bg-yellow-50 { background-color: rgba(234,179,8,   0.15) !important; }
+[data-theme="dark"] .bg-blue-50   { background-color: rgba(59,130,246,  0.15) !important; }
+[data-theme="dark"] .bg-purple-50 { background-color: rgba(168,85,247,  0.15) !important; }
+[data-theme="dark"] .bg-teal-50   { background-color: rgba(45,212,191,  0.15) !important; }
+[data-theme="dark"] .bg-indigo-50 { background-color: rgba(99,102,241,  0.15) !important; }
 
-/* prose content in dark mode */
-[data-theme="dark"] .prose { color: var(--color-ink); }
+/* Keep vivid text colours readable on dark tinted backgrounds */
+[data-theme="dark"] .text-red-600    { color: #f87171 !important; }
+[data-theme="dark"] .text-green-600  { color: #4ade80 !important; }
+[data-theme="dark"] .text-blue-600   { color: #60a5fa !important; }
+[data-theme="dark"] .text-orange-500 { color: #fb923c !important; }
+[data-theme="dark"] .text-yellow-600 { color: #facc15 !important; }
+[data-theme="dark"] .text-purple-600 { color: #c084fc !important; }
+[data-theme="dark"] .text-indigo-600 { color: #818cf8 !important; }
+
+/* ── Progress / skill bars ── */
+[data-theme="dark"] .bg-gray-100,
+[data-theme="dark"] .bg-gray-200 {
+  background-color: #2a2d3e !important;
+}
+[data-theme="dark"] .bg-gray-50 {
+  background-color: #1a1d27 !important;
+}
+
+/* ── Table rows ── */
+[data-theme="dark"] tr:hover {
+  background-color: rgba(255,255,255,0.03) !important;
+}
+[data-theme="dark"] thead {
+  background-color: #2a2d3e !important;
+}
+
+/* ── Modal / overlay backgrounds ── */
+[data-theme="dark"] .bg-black\/50 {
+  background-color: rgba(0,0,0,0.7) !important;
+}
+
+/* ── Prose / rich text ── */
+[data-theme="dark"] .prose {
+  color: var(--color-ink);
+}
 [data-theme="dark"] .prose strong,
 [data-theme="dark"] .prose h1,
 [data-theme="dark"] .prose h2,
-[data-theme="dark"] .prose h3 { color: var(--color-ink); }
-[data-theme="dark"] .prose code { background-color: #1a1d27; color: #2dd4bf; }
+[data-theme="dark"] .prose h3 {
+  color: var(--color-ink);
+}
+[data-theme="dark"] .prose code {
+  background-color: #1a1d27;
+  color: #2dd4bf;
+}
+
+/* ── Teal highlight box (used in CBT, Teach etc.) ── */
+[data-theme="dark"] .bg-\[\#e8f4f4\] {
+  background-color: rgba(45,212,191,0.1) !important;
+  color: #f0f0f0 !important;
+}
+[data-theme="dark"] .border-\[var\(--color-teal\)\] {
+  border-color: #2dd4bf !important;
+}
+
+/* ── Cream / paper nav items ── */
+[data-theme="dark"] .bg-\[var\(--color-cream\)\].border-\[var\(--color-border\)\] {
+  background-color: #1a1d27 !important;
+  border-color: #2a2d3e !important;
+}
+
+/* ── Active nav pill (ink bg + paper text) ── */
+[data-theme="dark"] .bg-\[var\(--color-ink\)\].text-\[var\(--color-paper\)\] {
+  background-color: #f0f0f0 !important;
+  color: #0f1117 !important;
+}
+
+/* ── Scrollbar in dark mode ── */
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #2a2d3e;
+}
+
+/* ── Opacity helpers that go invisible in dark ── */
+[data-theme="dark"] .opacity-60 {
+  opacity: 0.7 !important;
+}

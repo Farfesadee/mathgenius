@@ -127,7 +127,7 @@ export default function DailyChallenge() {
       {/* Exam Type Selector */}
       {!submitted && (
         <div className="flex gap-2 mb-6">
-          {['JAMB', 'WAEC', 'NECO'].map((t) => (
+          {['JAMB', 'WAEC', 'NECO', 'BECE'].map((t) => (
             <button
               key={t}
               onClick={() => {

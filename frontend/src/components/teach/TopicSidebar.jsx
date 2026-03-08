@@ -1,6 +1,105 @@
 import { useState } from 'react'
 
 const LEVEL_TOPICS = {
+  primary: {
+    'Number & Numeration': [
+      'Counting and Place Value',
+      'Addition and Subtraction',
+      'Multiplication and Division',
+      'Fractions (Half, Quarter, Third)',
+      'Decimals and Money',
+      'Percentages',
+      'Factors and Multiples',
+      'HCF and LCM',
+      'Prime Numbers',
+      'Roman Numerals',
+    ],
+    'Basic Geometry': [
+      '2D Shapes (Triangle, Rectangle, Circle, Square)',
+      '3D Shapes (Cube, Cuboid, Sphere, Cylinder)',
+      'Angles (Right Angle, Acute, Obtuse)',
+      'Lines (Parallel, Perpendicular)',
+      'Symmetry',
+      'Perimeter and Area',
+    ],
+    'Measurement': [
+      'Length, Mass and Capacity',
+      'Time and Calendars',
+      'Temperature',
+      'Money and Currency',
+    ],
+    'Data & Statistics': [
+      'Pictograms and Bar Charts',
+      'Simple Tables and Tally Charts',
+      'Reading Data from Graphs',
+    ],
+  },
+
+  jss: {
+    'Number & Numeration': [
+      'Whole Numbers and Place Value',
+      'Fractions: Proper, Improper, Mixed Numbers',
+      'Decimals and Decimal Places',
+      'Percentages and Applications',
+      'Ratio and Proportion',
+      'HCF and LCM',
+      'Prime Numbers and Factorisation',
+      'Number Bases (Base 2, 8, 10)',
+      'Approximation and Significant Figures',
+      'Directed Numbers (Positive and Negative)',
+      'Standard Form (Introduction)',
+    ],
+    'Basic Operations': [
+      'Order of Operations (BODMAS/BIDMAS)',
+      'Word Problems — Basic Operations',
+      'Estimation and Rounding',
+    ],
+    'Algebra': [
+      'Algebraic Expressions and Simplification',
+      'Simple Equations in One Variable',
+      'Simple Inequalities',
+      'Substitution into Formulae',
+      'Word Problems Leading to Equations',
+      'Factorisation — Common Factors',
+      'Expansion of Brackets',
+      'Introduction to Simultaneous Equations',
+    ],
+    'Geometry': [
+      'Types of Angles: Acute, Obtuse, Reflex, Right',
+      'Angles on a Straight Line and at a Point',
+      'Vertically Opposite Angles',
+      'Angles in a Triangle',
+      'Types of Triangles: Equilateral, Isosceles, Scalene',
+      'Quadrilaterals: Square, Rectangle, Parallelogram, Rhombus, Trapezium',
+      'Circles: Radius, Diameter, Circumference, Chord, Arc',
+      'Construction: Bisecting Lines and Angles',
+      'Symmetry: Line and Rotational',
+      'Bearings (Introduction)',
+    ],
+    'Mensuration': [
+      'Perimeter of Plane Shapes',
+      'Area of Rectangles, Triangles, Circles, Trapeziums',
+      'Volume of Cuboids and Cylinders',
+      'Surface Area of Cuboids',
+      'Units of Measurement and Conversion',
+    ],
+    'Statistics': [
+      'Data Collection and Presentation',
+      'Bar Charts, Pie Charts, Pictograms',
+      'Frequency Tables',
+      'Mean, Median, Mode for Ungrouped Data',
+      'Range',
+    ],
+    'Everyday Mathematics': [
+      'Profit and Loss',
+      'Simple Interest',
+      'Hire Purchase (Introduction)',
+      'Rates, Taxes and Bills',
+      'Foreign Exchange (Introduction)',
+      'Venn Diagrams with Two Sets',
+    ],
+  },
+
   secondary: {
     'Number & Numeration': [
       'Number Bases (Binary, Octal, Hexadecimal)',
@@ -96,6 +195,7 @@ const LEVEL_TOPICS = {
       'Area Under a Curve',
     ],
   },
+
   university: {
     'Algebra & Pre-Calculus': [
       'Sets, Relations and Functions',
@@ -195,8 +295,16 @@ const LEVEL_TOPICS = {
       'Cauchy\'s Integral Theorem',
       'Residues and Poles',
     ],
-  }
+  },
 }
+
+// ── Level tab config ──────────────────────────────────────────────────
+const LEVELS = [
+  { value: 'primary',    label: '📚 Primary'   },
+  { value: 'jss',        label: '🏫 JSS'        },
+  { value: 'secondary',  label: '🎓 Secondary'  },
+  { value: 'university', label: '🏛️ University' },
+]
 
 export default function TopicSidebar({ selectedTopic, selectedLevel, onTopicSelect, onLevelChange }) {
   const [openGroups, setOpenGroups] = useState({ 'Algebra': true })
@@ -205,7 +313,7 @@ export default function TopicSidebar({ selectedTopic, selectedLevel, onTopicSele
     setOpenGroups(prev => ({ ...prev, [group]: !prev[group] }))
   }
 
-  const topics = LEVEL_TOPICS[selectedLevel]
+  const topics = LEVEL_TOPICS[selectedLevel] || LEVEL_TOPICS['secondary']
 
   return (
     <div className="card flex flex-col" style={{ maxHeight: 'calc(100vh - 120px)', position: 'sticky', top: '90px' }}>
@@ -215,19 +323,22 @@ export default function TopicSidebar({ selectedTopic, selectedLevel, onTopicSele
         <p className="font-serif font-bold text-white text-lg">📚 Topics</p>
       </div>
 
-      {/* Level switcher */}
+      {/* Level switcher — 4 tabs in 2×2 grid */}
       <div className="grid grid-cols-2 border-b-2 border-[var(--color-ink)] shrink-0">
-        {['secondary', 'university'].map(level => (
+        {LEVELS.map(lvl => (
           <button
-            key={level}
-            onClick={() => onLevelChange(level)}
-            className={`py-2.5 text-sm font-semibold capitalize transition-all duration-150
-              ${selectedLevel === level
+            key={lvl.value}
+            onClick={() => {
+              onLevelChange(lvl.value)
+              setOpenGroups({})
+            }}
+            className={`py-2.5 text-sm font-semibold transition-all duration-150
+              ${selectedLevel === lvl.value
                 ? 'bg-[var(--color-ink)] text-[var(--color-paper)]'
                 : 'bg-[var(--color-cream)] text-[var(--color-muted)] hover:text-[var(--color-ink)]'
               }`}
           >
-            {level === 'secondary' ? '🏫 Secondary' : '🎓 University'}
+            {lvl.label}
           </button>
         ))}
       </div>
@@ -277,4 +388,4 @@ export default function TopicSidebar({ selectedTopic, selectedLevel, onTopicSele
       </div>
     </div>
   )
-} 
+}

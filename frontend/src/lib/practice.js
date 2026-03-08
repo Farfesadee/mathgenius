@@ -3,7 +3,14 @@ import { supabase } from './supabase'
 export async function createSession(userId, topic, level, difficulty) {
   const { data, error } = await supabase
     .from('practice_sessions')
-    .insert({ user_id: userId, topic, level, difficulty, total_questions: 5 })
+    .insert({
+      user_id:    userId,
+      topic,
+      level,
+      difficulty,
+      status:     'ongoing',
+      started_at: new Date().toISOString(),
+    })
     .select()
     .single()
   return { data, error }
@@ -20,18 +27,20 @@ export async function saveAttempt(sessionId, {
       student_answer:  studentAnswer,
       correct_answer:  correctAnswer,
       is_correct:      isCorrect,
-      feedback:        feedback,
-      time_taken_secs: timeTaken,
+      feedback,
+      time_taken_secs: timeTaken || 0,
     })
-    .select()
-    .single()
   return { data, error }
 }
 
 export async function completeSession(sessionId, score) {
   const { data, error } = await supabase
     .from('practice_sessions')
-    .update({ score, completed_at: new Date().toISOString() })
+    .update({
+      status:       'completed',
+      score,
+      completed_at: new Date().toISOString(),
+    })
     .eq('id', sessionId)
     .select()
     .single()
@@ -41,9 +50,9 @@ export async function completeSession(sessionId, score) {
 export async function getSessionHistory(userId) {
   const { data, error } = await supabase
     .from('practice_sessions')
-    .select('*, practice_attempts(*)')
+    .select('*')
     .eq('user_id', userId)
-    .not('completed_at', 'is', null)
+    .eq('status', 'completed')
     .order('completed_at', { ascending: false })
     .limit(20)
   return { data, error }

@@ -192,7 +192,7 @@ export async function getAvailableYears(examType) {
 
 // ── Get question bank stats ───────────────────────────────
 export async function getQuestionBankStats() {
-  const examTypes = ['JAMB', 'WAEC', 'NECO']
+  const examTypes = ['JAMB', 'WAEC', 'NECO', 'BECE']
   const stats = {}
 
   await Promise.all(examTypes.map(async (examType) => {

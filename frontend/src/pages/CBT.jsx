@@ -11,9 +11,21 @@ import { recordCBTResult, updateStreak } from '../lib/stats'
 import XPToast from '../components/XPToast'
 import { createNotification } from '../lib/notifications'
 
-const EXAM_TYPES = ['JAMB', 'WAEC', 'NECO', 'Mixed']
-const DURATIONS = [10, 20, 30, 45, 60]
-const COUNTS = [10, 20, 30, 40, 50]
+const EXAM_TYPES = ['JAMB', 'WAEC', 'NECO', 'BECE', 'NABTEB']
+
+// NABTEB is theory-only — no objective questions
+const THEORY_ONLY_EXAMS = ['NABTEB']
+
+const EXAM_INFO = {
+  JAMB:   { label: 'Joint Admissions & Matriculation Board', level: 'University Entry' },
+  WAEC:   { label: 'West African Examinations Council',      level: 'Senior Secondary' },
+  NECO:   { label: 'National Examinations Council',          level: 'Senior Secondary' },
+  BECE:   { label: 'Basic Education Certificate Exam',       level: 'JSS 3'            },
+  NABTEB: { label: 'National Business & Technical Exams',    level: 'Vocational / SSS' },
+}
+
+const DURATIONS = [5, 10, 15, 20, 25, 30, 45, 60]
+const COUNTS = [5, 10, 15, 20, 25, 30, 35, 40, 50, 60]
 const DIFFICULTIES = [
   { value: 'mixed', label: 'Mixed', emoji: '🎲' },
   { value: 'easy', label: 'Easy', emoji: '🟢' },
@@ -152,6 +164,9 @@ export default function CBT() {
   const [aiSummary, setAiSummary] = useState('')
   const [toast, setToast] = useState(null)
 
+  // Derived — is selected exam theory-only?
+  const isTheoryOnly = THEORY_ONLY_EXAMS.includes(examType)
+
   useEffect(() => { if (user) { loadSetupData(); loadHistory(); loadPreferredTopics() } }, [user])
   useEffect(() => { if (examType) loadTopicsAndYears() }, [examType])
 
@@ -188,6 +203,9 @@ export default function CBT() {
     setTopics(prev => prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t])
 
   const startExam = async () => {
+    // Guard: NABTEB is theory-only, redirect user
+    if (isTheoryOnly) return
+
     setLoadingSetup(true)
     const { data: qs } = await fetchCBTQuestions({
       examType: examType === 'Mixed' ? null : examType,
@@ -238,7 +256,6 @@ export default function CBT() {
 
     const timeTaken = Math.round((Date.now() - startTime) / 1000)
 
-    // ── FIX 1: include option_e in answerRows ──────────────────────
     const answerRows = questions.map(q => ({
       question_id: q.id,
       question_text: q.question_text,
@@ -255,7 +272,6 @@ export default function CBT() {
 
     const { score, percentage } = await completeCBTSession(sessionId, answerRows, timeTaken)
 
-    // Award XP + update streak
     try {
       const [statResult, streakResult] = await Promise.all([
         recordCBTResult(user.id, {
@@ -350,7 +366,7 @@ export default function CBT() {
             Computer Based Test
           </h1>
           <p className="text-[var(--color-muted)] mt-2 text-lg">
-            Timed exam simulation with real WAEC, NECO and JAMB questions.
+            Timed exam simulation with real WAEC, NECO, JAMB and BECE questions.
           </p>
         </div>
 
@@ -397,127 +413,154 @@ export default function CBT() {
                     </button>
                   ))}
                 </div>
-              </div>
-
-              {/* Topic multi-select */}
-              <div>
-                <label className="font-mono text-[10px] uppercase tracking-widest
-                                   text-[var(--color-muted)] block mb-2">
-                  Topics — select one or more (blank = all topics)
-                </label>
-                {availTopics.length === 0 ? (
-                  <p className="text-xs text-[var(--color-muted)] italic">
-                    Upload questions first to see available topics
+                {/* Exam description */}
+                {EXAM_INFO[examType] && (
+                  <p className="text-xs text-[var(--color-muted)] mt-2">
+                    {EXAM_INFO[examType].label} · {EXAM_INFO[examType].level}
                   </p>
-                ) : (
-                  <div className="flex flex-wrap gap-2 max-h-40 overflow-y-auto
-                                  border-2 border-[var(--color-border)] rounded-xl p-3">
-                    {availTopics.map(t => (
-                      <button key={t} type="button" onClick={() => toggleTopic(t)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-semibold border-2 transition-all
-                          ${topics.includes(t)
-                            ? 'border-[var(--color-teal)] bg-[#e8f4f4] text-[var(--color-teal)]'
-                            : 'border-[var(--color-border)] text-[var(--color-muted)] hover:border-[var(--color-ink)]'}`}>
-                        {topics.includes(t) ? '✓ ' : ''}{t}
-                      </button>
-                    ))}
-                  </div>
-                )}
-                {topics.length > 0 && (
-                  <div className="flex items-center justify-between mt-2">
-                    <span className="text-xs text-[var(--color-teal)] font-medium">
-                      {topics.length} topic{topics.length !== 1 ? 's' : ''} selected
-                    </span>
-                    <button onClick={() => setTopics([])}
-                      className="text-xs text-[var(--color-muted)] hover:text-red-500 transition-colors">
-                      Clear all
-                    </button>
-                  </div>
                 )}
               </div>
 
-              {/* Year */}
-              <div>
-                <label className="font-mono text-[10px] uppercase tracking-widest
-                                   text-[var(--color-muted)] block mb-2">
-                  Year (Optional)
-                </label>
-                <select value={year} onChange={e => setYear(e.target.value)}
-                  className="w-full bg-[var(--color-paper)] border-2 border-[var(--color-border)]
-                             focus:border-[var(--color-teal)] rounded-xl px-4 py-3 text-sm transition-colors">
-                  <option value="">Any Year</option>
-                  {availYears.map(y => <option key={y} value={y}>{y}</option>)}
-                </select>
-              </div>
-
-              {/* Difficulty */}
-              <div>
-                <label className="font-mono text-[10px] uppercase tracking-widest
-                                   text-[var(--color-muted)] block mb-2">
-                  Difficulty
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  {DIFFICULTIES.map(d => (
-                    <button key={d.value} onClick={() => setDifficulty(d.value)}
-                      className={`py-2.5 rounded-xl text-xs font-semibold border-2 transition-all text-center
-                        ${difficulty === d.value
-                          ? 'border-[var(--color-teal)] bg-[#e8f4f4] text-[var(--color-teal)]'
-                          : 'border-[var(--color-border)] text-[var(--color-muted)]'}`}>
-                      {d.emoji} {d.label}
-                    </button>
-                  ))}
+              {/* NABTEB theory-only notice */}
+              {isTheoryOnly ? (
+                <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-5">
+                  <p className="font-semibold text-amber-800 text-sm mb-1">
+                    📖 NABTEB is Theory Only
+                  </p>
+                  <p className="text-amber-700 text-xs leading-relaxed">
+                    NABTEB past questions are essay/theory format — there are no
+                    multiple-choice CBT questions for this exam type.
+                  </p>
+                  <a href="/theory"
+                    className="inline-block mt-3 px-4 py-2 rounded-xl bg-amber-600
+                               text-white text-xs font-semibold hover:bg-amber-700
+                               transition-colors">
+                    Go to Theory Practice →
+                  </a>
                 </div>
-              </div>
-
-              {/* Duration + Count */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="font-mono text-[10px] uppercase tracking-widest
-                                     text-[var(--color-muted)] block mb-2">
-                    Duration (mins)
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    {DURATIONS.map(d => (
-                      <button key={d} onClick={() => setDuration(d)}
-                        className={`px-3 py-2 rounded-xl text-xs font-semibold border-2 transition-all
-                          ${duration === d
-                            ? 'border-[var(--color-teal)] bg-[#e8f4f4] text-[var(--color-teal)]'
-                            : 'border-[var(--color-border)] text-[var(--color-muted)]'}`}>
-                        {d}m
-                      </button>
-                    ))}
+              ) : (
+                <>
+                  {/* Topic multi-select */}
+                  <div>
+                    <label className="font-mono text-[10px] uppercase tracking-widest
+                                       text-[var(--color-muted)] block mb-2">
+                      Topics — select one or more (blank = all topics)
+                    </label>
+                    {availTopics.length === 0 ? (
+                      <p className="text-xs text-[var(--color-muted)] italic">
+                        Upload questions first to see available topics
+                      </p>
+                    ) : (
+                      <div className="flex flex-wrap gap-2 max-h-40 overflow-y-auto
+                                      border-2 border-[var(--color-border)] rounded-xl p-3">
+                        {availTopics.map(t => (
+                          <button key={t} type="button" onClick={() => toggleTopic(t)}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-semibold border-2 transition-all
+                              ${topics.includes(t)
+                                ? 'border-[var(--color-teal)] bg-[#e8f4f4] text-[var(--color-teal)]'
+                                : 'border-[var(--color-border)] text-[var(--color-muted)] hover:border-[var(--color-ink)]'}`}>
+                            {topics.includes(t) ? '✓ ' : ''}{t}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    {topics.length > 0 && (
+                      <div className="flex items-center justify-between mt-2">
+                        <span className="text-xs text-[var(--color-teal)] font-medium">
+                          {topics.length} topic{topics.length !== 1 ? 's' : ''} selected
+                        </span>
+                        <button onClick={() => setTopics([])}
+                          className="text-xs text-[var(--color-muted)] hover:text-red-500 transition-colors">
+                          Clear all
+                        </button>
+                      </div>
+                    )}
                   </div>
-                </div>
-                <div>
-                  <label className="font-mono text-[10px] uppercase tracking-widest
-                                     text-[var(--color-muted)] block mb-2">
-                    No. of Questions
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    {COUNTS.map(c => (
-                      <button key={c} onClick={() => setCount(c)}
-                        className={`px-3 py-2 rounded-xl text-xs font-semibold border-2 transition-all
-                          ${count === c
-                            ? 'border-[var(--color-teal)] bg-[#e8f4f4] text-[var(--color-teal)]'
-                            : 'border-[var(--color-border)] text-[var(--color-muted)]'}`}>
-                        {c}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
 
-              <button onClick={startExam} disabled={loadingSetup}
-                className="w-full btn-primary py-4 text-base justify-center
-                           flex items-center gap-2 disabled:opacity-50">
-                {loadingSetup ? (
-                  <>
-                    <span className="w-4 h-4 border-2 border-white/30
-                                     border-t-white rounded-full animate-spin" />
-                    Preparing questions...
-                  </>
-                ) : `🚀 Start ${count}-Question ${examType} Exam`}
-              </button>
+                  {/* Year */}
+                  <div>
+                    <label className="font-mono text-[10px] uppercase tracking-widest
+                                       text-[var(--color-muted)] block mb-2">
+                      Year (Optional)
+                    </label>
+                    <select value={year} onChange={e => setYear(e.target.value)}
+                      className="w-full bg-[var(--color-paper)] border-2 border-[var(--color-border)]
+                                 focus:border-[var(--color-teal)] rounded-xl px-4 py-3 text-sm transition-colors">
+                      <option value="">Any Year</option>
+                      {availYears.map(y => <option key={y} value={y}>{y}</option>)}
+                    </select>
+                  </div>
+
+                  {/* Difficulty */}
+                  <div>
+                    <label className="font-mono text-[10px] uppercase tracking-widest
+                                       text-[var(--color-muted)] block mb-2">
+                      Difficulty
+                    </label>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                      {DIFFICULTIES.map(d => (
+                        <button key={d.value} onClick={() => setDifficulty(d.value)}
+                          className={`py-2.5 rounded-xl text-xs font-semibold border-2 transition-all text-center
+                            ${difficulty === d.value
+                              ? 'border-[var(--color-teal)] bg-[#e8f4f4] text-[var(--color-teal)]'
+                              : 'border-[var(--color-border)] text-[var(--color-muted)]'}`}>
+                          {d.emoji} {d.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Duration + Count */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="font-mono text-[10px] uppercase tracking-widest
+                                         text-[var(--color-muted)] block mb-2">
+                        Duration (mins)
+                      </label>
+                      <div className="flex flex-wrap gap-2">
+                        {DURATIONS.map(d => (
+                          <button key={d} onClick={() => setDuration(d)}
+                            className={`px-3 py-2 rounded-xl text-xs font-semibold border-2 transition-all
+                              ${duration === d
+                                ? 'border-[var(--color-teal)] bg-[#e8f4f4] text-[var(--color-teal)]'
+                                : 'border-[var(--color-border)] text-[var(--color-muted)]'}`}>
+                            {d}m
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <label className="font-mono text-[10px] uppercase tracking-widest
+                                         text-[var(--color-muted)] block mb-2">
+                        No. of Questions
+                      </label>
+                      <div className="flex flex-wrap gap-2">
+                        {COUNTS.map(c => (
+                          <button key={c} onClick={() => setCount(c)}
+                            className={`px-3 py-2 rounded-xl text-xs font-semibold border-2 transition-all
+                              ${count === c
+                                ? 'border-[var(--color-teal)] bg-[#e8f4f4] text-[var(--color-teal)]'
+                                : 'border-[var(--color-border)] text-[var(--color-muted)]'}`}>
+                            {c}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <button onClick={startExam} disabled={loadingSetup}
+                    className="w-full btn-primary py-4 text-base justify-center
+                               flex items-center gap-2 disabled:opacity-50">
+                    {loadingSetup ? (
+                      <>
+                        <span className="w-4 h-4 border-2 border-white/30
+                                         border-t-white rounded-full animate-spin" />
+                        Preparing questions...
+                      </>
+                    ) : `🚀 Start ${count}-Question ${examType} Exam`}
+                  </button>
+                </>
+              )}
             </div>
           </div>
 
@@ -643,7 +686,6 @@ export default function CBT() {
                   {currentQ.question_text}
                 </p>
 
-                {/* Question image */}
                 {currentQ.image_url && (
                   <div className="mb-5 flex justify-center">
                     <img
@@ -656,7 +698,6 @@ export default function CBT() {
                   </div>
                 )}
 
-                {/* ── FIX 2: option E support in live exam ── */}
                 <div className="space-y-2.5">
                   {['A', 'B', 'C', 'D', ...(currentQ.option_e ? ['E'] : [])].map(letter => (
                     <OptionBtn key={letter} letter={letter}
@@ -741,7 +782,6 @@ export default function CBT() {
     return (
       <div className="max-w-4xl mx-auto px-4 py-10">
 
-        {/* XP Toast */}
         {toast && (
           <XPToast
             xpGained={toast.xpGained}
@@ -796,7 +836,6 @@ export default function CBT() {
           </div>
         </div>
 
-        {/* Question review */}
         <div className="card overflow-hidden">
           <div className="bg-[var(--color-ink)] px-6 py-4 flex items-center justify-between">
             <p className="font-serif font-bold text-white text-lg">📋 Question Review</p>
@@ -849,7 +888,6 @@ export default function CBT() {
                   <div className="px-5 pb-5 bg-[var(--color-paper)]
                                   border-t border-[var(--color-border)]">
 
-                    {/* Question image in review */}
                     {questions.find(q => q.id === a.question_id)?.image_url && (
                       <div className="mt-4 mb-2 flex justify-center">
                         <img
@@ -862,7 +900,6 @@ export default function CBT() {
                       </div>
                     )}
 
-                    {/* ── FIX 3: use a.option_e not currentQ.option_e ── */}
                     <div className="space-y-2 mt-4 mb-4">
                       {['A', 'B', 'C', 'D', ...(a.option_e ? ['E'] : [])].map(letter => (
                         <OptionBtn key={letter} letter={letter}

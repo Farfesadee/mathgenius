@@ -1,3 +1,4 @@
+import asyncio
 from fastapi import APIRouter
 from pydantic import BaseModel
 from app.services.groq_service import ask_groq
@@ -5,52 +6,207 @@ from app.routers.tracking import log_teach_interaction, TeachLogRequest
 
 router = APIRouter(prefix="/teach", tags=["Teach"])
 
+
 class TeachRequest(BaseModel):
     question: str
     topic: str = "General Mathematics"
-    level: str = "secondary"
+    level: str = "sss"
     conversation_history: list = []
-    user_id: str = None  # optional — if provided, interaction is logged
+    user_id: str = None
+
 
 class TopicRequest(BaseModel):
     topic: str
-    level: str = "secondary"
+    level: str = "sss"
+
+
+# ── Level descriptions ────────────────────────────────────────────────
+
+def get_level_description(level: str) -> str:
+    descriptions = {
+        "primary":    "primary school student (Primary 1–6, ages 6–12). Use very simple language, relatable real-life examples, and avoid jargon.",
+        "jss":        "junior secondary school student (JSS 1–3, ages 11–15). Use clear simple explanations, build on primary knowledge, and introduce new concepts step by step with plenty of examples.",
+        "sss":        "senior secondary school student (SSS 1–3, ages 15–18) preparing for WAEC, NECO, or JAMB. Use proper mathematical notation, show full working, and reference exam-relevant techniques.",
+        "secondary":  "senior secondary school student preparing for WAEC, NECO, or JAMB. Use proper mathematical notation, show full working, and reference exam-relevant techniques.",
+        "university": "university student. Use advanced mathematical concepts, rigorous notation where appropriate, and academic-level explanations.",
+    }
+    return descriptions.get(level, descriptions["sss"])
+
+
+def get_textbook(level: str) -> str:
+    books = {
+        "primary":    "New General Mathematics for Primary Schools",
+        "jss":        "New General Mathematics for Junior Secondary Schools (Books 1–3)",
+        "sss":        "New General Mathematics for Senior Secondary Schools (Books 1–3)",
+        "secondary":  "New General Mathematics for Senior Secondary Schools (Books 1–3)",
+        "university": "relevant university mathematics textbooks",
+    }
+    return books.get(level, books["sss"])
+
+
+# ── Endpoints ─────────────────────────────────────────────────────────
 
 @router.post("/ask")
 async def ask_tutor(request: TeachRequest):
-    prompt = f"""Topic: {request.topic}
-Student Level: {request.level}
-Student's question: {request.question}
-Please explain thoroughly with step-by-step working, using LaTeX for all math."""
-    response = ask_groq(prompt, request.conversation_history)
+    level_desc = get_level_description(request.level)
+    prompt = f"""You are Euler, an expert Nigerian mathematics tutor.
+You are teaching a {level_desc}.
+Textbook reference: {get_textbook(request.level)}
 
-    # Log interaction if user_id provided (non-fatal)
+Topic: {request.topic}
+Student's question: {request.question}
+
+Please explain thoroughly with step-by-step working.
+Use LaTeX for all mathematical expressions (e.g. \\(x^2\\) inline, $$....$$ for display).
+Be encouraging and patient."""
+
+    response = await ask_groq(prompt, request.conversation_history)
+
     if request.user_id:
-        import asyncio
         try:
-            await log_teach_interaction(TeachLogRequest(
+            asyncio.create_task(log_teach_interaction(TeachLogRequest(
                 user_id=request.user_id,
                 topic=request.topic,
                 question=request.question,
                 response_length=len(response),
                 level=request.level,
-            ))
+            )))
         except Exception:
-            pass  # Don't break teaching flow if logging fails
+            pass
 
     return {"success": True, "response": response, "topic": request.topic}
 
+
 @router.post("/overview")
 async def topic_overview(request: TopicRequest):
-    prompt = f"""Give a clear structured overview of '{request.topic}' for a {request.level} student.
-Include: 1. Simple definition  2. Real world use  3. Key formulas in LaTeX  4. Worked example  5. Common mistakes"""
-    response = ask_groq(prompt)
+    level_desc = get_level_description(request.level)
+    prompt = f"""Give a clear structured overview of '{request.topic}' for a {level_desc}.
+Include:
+1. Simple plain-English definition
+2. Real-world use or application
+3. Key formulas in LaTeX
+4. One fully worked example
+5. Common mistakes to avoid"""
+    response = await ask_groq(prompt)
     return {"success": True, "overview": response, "topic": request.topic}
+
 
 @router.get("/topics")
 async def get_topics():
     topics = {
-        "secondary": {
+
+        # ── Primary ───────────────────────────────────────────────────
+        "primary": {
+            "Number & Numeration": [
+                "Counting and Place Value",
+                "Addition and Subtraction",
+                "Multiplication and Division",
+                "Fractions (Half, Quarter, Third)",
+                "Decimals and Money",
+                "Percentages",
+                "Factors and Multiples",
+                "HCF and LCM",
+                "Prime Numbers",
+                "Roman Numerals",
+            ],
+            "Basic Geometry": [
+                "2D Shapes (Triangle, Rectangle, Circle, Square)",
+                "3D Shapes (Cube, Cuboid, Sphere, Cylinder)",
+                "Angles (Right Angle, Acute, Obtuse)",
+                "Lines (Parallel, Perpendicular)",
+                "Symmetry",
+                "Perimeter and Area",
+            ],
+            "Measurement": [
+                "Length (cm, m, km)",
+                "Mass (g, kg)",
+                "Capacity (ml, l)",
+                "Time (Hours, Minutes, Seconds)",
+                "Temperature",
+                "Money and Change",
+            ],
+            "Data Handling": [
+                "Pictograms and Bar Charts",
+                "Tally Charts",
+                "Simple Tables",
+                "Reading Graphs",
+            ],
+            "Everyday Maths": [
+                "Buying and Selling",
+                "Profit and Loss (Introduction)",
+                "Simple Interest (Introduction)",
+                "Distance, Speed and Time (Basic)",
+            ],
+        },
+
+        # ── JSS ───────────────────────────────────────────────────────
+        "jss": {
+            "Number & Numeration": [
+                "Whole Numbers and Place Value",
+                "Fractions: Proper, Improper, Mixed Numbers",
+                "Decimals and Decimal Places",
+                "Percentages and Applications",
+                "Ratio and Proportion",
+                "HCF and LCM",
+                "Prime Numbers and Factorisation",
+                "Number Bases (Base 2, 8, 10)",
+                "Approximation and Significant Figures",
+                "Directed Numbers (Positive and Negative)",
+                "Standard Form (Introduction)",
+            ],
+            "Basic Operations": [
+                "Order of Operations (BODMAS/BIDMAS)",
+                "Word Problems — Basic Operations",
+                "Estimation and Rounding",
+            ],
+            "Algebra": [
+                "Algebraic Expressions and Simplification",
+                "Simple Equations in One Variable",
+                "Simple Inequalities",
+                "Substitution into Formulae",
+                "Word Problems Leading to Equations",
+                "Factorisation — Common Factors",
+                "Expansion of Brackets",
+                "Introduction to Simultaneous Equations",
+            ],
+            "Geometry": [
+                "Types of Angles: Acute, Obtuse, Reflex, Right",
+                "Angles on a Straight Line and at a Point",
+                "Vertically Opposite Angles",
+                "Angles in a Triangle",
+                "Types of Triangles: Equilateral, Isosceles, Scalene",
+                "Quadrilaterals: Square, Rectangle, Parallelogram, Rhombus, Trapezium",
+                "Circles: Radius, Diameter, Circumference, Chord, Arc",
+                "Construction: Bisecting Lines and Angles",
+                "Symmetry: Line and Rotational",
+                "Bearings (Introduction)",
+            ],
+            "Mensuration": [
+                "Perimeter of Plane Shapes",
+                "Area of Rectangles, Triangles, Circles, Trapeziums",
+                "Volume of Cuboids and Cylinders",
+                "Surface Area of Cuboids",
+                "Units of Measurement and Conversion",
+            ],
+            "Statistics": [
+                "Data Collection and Presentation",
+                "Bar Charts, Pie Charts, Pictograms",
+                "Frequency Tables",
+                "Mean, Median, Mode for Ungrouped Data",
+                "Range",
+            ],
+            "Everyday Mathematics": [
+                "Profit and Loss",
+                "Simple Interest",
+                "Hire Purchase (Introduction)",
+                "Rates, Taxes and Bills",
+                "Foreign Exchange (Introduction)",
+                "Venn Diagrams with Two Sets",
+            ],
+        },
+
+        # ── SSS ───────────────────────────────────────────────────────
+        "sss": {
             "Number & Numeration": [
                 "Number Bases (Binary, Octal, Hexadecimal)",
                 "Fractions, Decimals and Percentages",
@@ -145,6 +301,11 @@ async def get_topics():
                 "Area Under a Curve",
             ],
         },
+
+        # ── Backwards compatibility alias ─────────────────────────────
+        "secondary": None,  # filled below
+
+        # ── University ────────────────────────────────────────────────
         "university": {
             "Algebra & Pre-Calculus": [
                 "Sets, Relations and Functions",
@@ -250,34 +411,39 @@ async def get_topics():
                 "Cauchy's Integral Theorem",
                 "Residues and Poles",
             ],
-        }
+        },
     }
+
+    # 'secondary' is an alias for 'sss' — backwards compat
+    topics["secondary"] = topics["sss"]
+
     return {"success": True, "topics": topics}
 
 
 @router.get("/wiki/{topic}")
-async def get_topic_wiki(topic: str):
-    """Generate structured study notes for a topic (displayed in Topic Wiki page)."""
-    prompt = f"""Create concise study notes for Nigerian secondary school students on: {topic}
+async def get_topic_wiki(topic: str, level: str = "sss"):
+    level_desc = get_level_description(level)
+    prompt = f"""Create concise study notes on: {topic}
+Target student: {level_desc}
 
-Use clear markdown formatting with these exact sections:
+Use clear markdown with these exact sections:
 
 ## Overview
-Brief plain-English explanation (2-3 sentences max).
+Brief plain-English explanation (2–3 sentences max).
 
 ## Key Concepts
 - Bullet list of the most important ideas
 
 ## Core Formulas
-List each formula with a short label. Use LaTeX notation (e.g. $$x = \\frac{{-b \\pm \\sqrt{{b^2 - 4ac}}}}{{2a}}$$).
+List each formula with a short label. Use LaTeX (e.g. $$x = \\frac{{-b \\pm \\sqrt{{b^2-4ac}}}}{{2a}}$$).
 
 ## Worked Example
 One clear step-by-step worked example with a final boxed answer.
 
 ## Common Exam Mistakes
-- 2-3 mistakes students commonly make in WAEC/JAMB/NECO
+- 2–3 mistakes students commonly make
 
-Keep each section brief and exam-focused. Target: WAEC/JAMB/NECO level."""
+Keep each section brief and exam-focused."""
 
-    content = ask_groq(prompt, [])
+    content = await ask_groq(prompt, [])
     return {"topic": topic, "content": content}

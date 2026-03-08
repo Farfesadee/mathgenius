@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+const TEACH_LEVEL_KEY = 'mathgenius_teach_level'
 import TopicSidebar from '../components/teach/TopicSidebar'
 import ChatWindow from '../components/teach/ChatWindow'
 import ConversationSidebar from '../components/teach/ConversationSidebar'
@@ -6,15 +8,24 @@ import { useAuth } from '../context/AuthContext'
 import { createConversation } from '../lib/conversations'
 
 export default function Teach() {
-  const { user } = useAuth()
+  const { user, profile, updateProfile } = useAuth()
   const [selectedTopic,        setSelectedTopic]        = useState(null)
-  const [selectedLevel,        setSelectedLevel]        = useState('secondary')
+  const [selectedLevel, setSelectedLevel] = useState(
+    () => { try { return localStorage.getItem(TEACH_LEVEL_KEY) || 'secondary' } catch { return 'secondary' } }
+  )
+
+  // Persist whenever level changes → localStorage (fast) + Supabase profile (cross-device)
+  useEffect(() => {
+    try { localStorage.setItem(TEACH_LEVEL_KEY, selectedLevel) } catch {}
+    if (profile && profile.level !== selectedLevel) {
+      updateProfile({ level: selectedLevel }).catch(() => {})
+    }
+  }, [selectedLevel])
   const [currentConversation,  setCurrentConversation]  = useState(null)
   const [convRefreshKey,       setConvRefreshKey]        = useState(0)
 
   const handleTopicSelect = async (topic) => {
     setSelectedTopic(topic)
-    // Auto-create a new conversation for this topic
     if (user) {
       const { data } = await createConversation(user.id, topic, selectedLevel)
       if (data) setCurrentConversation(data)
@@ -32,7 +43,6 @@ export default function Teach() {
 
   return (
     <div className="max-w-[1400px] mx-auto px-6 py-10">
-
       {/* Page header */}
       <div className="mb-8">
         <p className="font-mono text-xs tracking-widest uppercase

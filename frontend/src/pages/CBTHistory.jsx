@@ -4,7 +4,7 @@ import { supabase } from '../lib/supabase'
 import { useNavigate } from 'react-router-dom'
 
 function getGrade(pct) {
-  if (pct >= 70) return { grade: 'A', color: 'text-green-600',  bg: 'bg-green-500'  }
+  if (pct >= 75) return { grade: 'A', color: 'text-green-600',  bg: 'bg-green-500'  }
   if (pct >= 60) return { grade: 'B', color: 'text-blue-600',   bg: 'bg-blue-500'   }
   if (pct >= 50) return { grade: 'C', color: 'text-yellow-600', bg: 'bg-yellow-500' }
   if (pct >= 45) return { grade: 'D', color: 'text-orange-500', bg: 'bg-orange-400' }
@@ -112,6 +112,7 @@ export default function CBTHistory() {
           { value: 'JAMB', label: 'JAMB' },
           { value: 'WAEC', label: 'WAEC' },
           { value: 'NECO', label: 'NECO' },
+          { value: 'BECE', label: 'BECE' },
           { value: 'pass', label: '✅ Passed' },
           { value: 'fail', label: '❌ Failed' },
         ].map(f => (

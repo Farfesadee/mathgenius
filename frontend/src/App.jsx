@@ -33,6 +33,11 @@ import Review from './pages/Review'
 import Challenge from './pages/Challenge'
 import ShareProfile from './pages/ShareProfile'
 import Groups from './pages/Groups'
+import TheoryPractice from './pages/TheoryPractice'
+// ── New pages ──────────────────────────────────────────────────────
+import MockExam from './pages/MockExam'
+import Classroom from './pages/Classroom'
+import TeacherParentDashboard from './pages/TeacherParentDashboard'
 
 function AppRoutes() {
   const { user } = useAuth()
@@ -41,18 +46,14 @@ function AppRoutes() {
       <InstallBanner />
       <Routes>
         {/* Public auth pages — no layout */}
-        <Route path="/login" element={<Login />} />
+        <Route path="/login"           element={<Login defaultTab="login"   />} />
+        <Route path="/signup"          element={<Login defaultTab="signup"  />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/reset-password"  element={<ResetPassword />} />
+        <Route path="/onboarding"      element={<Onboarding />} />
 
-        {/* Redirect /signup to /onboarding */}
-        <Route path="/signup" element={<Navigate to="/onboarding" replace />} />
-
-        {/* Landing — redirects to /home if logged in */}
-        <Route path="/" element={
-           <Landing />
-        } />
+        {/* Landing */}
+        <Route path="/" element={<Landing />} />
 
         {/* Main app — with header layout */}
         <Route element={<Layout />}>
@@ -116,7 +117,22 @@ function AppRoutes() {
           <Route path="/challenge" element={<ProtectedRoute><Challenge /></ProtectedRoute>} />
           <Route path="/challenge/:seed" element={<ProtectedRoute><Challenge /></ProtectedRoute>} />
           <Route path="/groups" element={<ProtectedRoute><Groups /></ProtectedRoute>} />
+          <Route path="/theory" element={
+            <ProtectedRoute><TheoryPractice /></ProtectedRoute>
+          } />
+
+          {/* ── New routes ────────────────────────────────────────── */}
+          <Route path="/mock-exam" element={
+            <ProtectedRoute><MockExam /></ProtectedRoute>
+          } />
+          <Route path="/classroom" element={
+            <ProtectedRoute><Classroom /></ProtectedRoute>
+          } />
+          <Route path="/monitor" element={
+            <ProtectedRoute><TeacherParentDashboard /></ProtectedRoute>
+          } />
         </Route>
+
         {/* Public routes — no login needed */}
         <Route path="/share/:userId" element={<ShareProfile />} />
 

@@ -12,6 +12,17 @@ Usage:
   python scraper.py --subject mathematics --exam_type jamb --year 2024 --start 1 --end 10 --debug
 """
 
+# ── Fix Windows CP1252 encoding issues (must be first) ───────────────────────
+import sys
+import io
+if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
+                                  errors="replace", line_buffering=True)
+if sys.stderr.encoding and sys.stderr.encoding.lower() != "utf-8":
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8",
+                                  errors="replace", line_buffering=True)
+# ─────────────────────────────────────────────────────────────────────────────
+
 import time
 import re
 import os
@@ -28,21 +39,84 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 # ════════════════════════════════════════════════════════════════════════
+#  IMAGE FILTER CONSTANTS
+# ════════════════════════════════════════════════════════════════════════
+
+SKIP_IMAGE_KW = [
+    "pixel", "tracking", "icon", "logo", "banner", "adsense",
+    "google", "facebook", "twitter", "whatsapp", "youtube",
+    "play-store", "app-store", "download", "arrow", "button",
+    "jamb-cbt", "mobile-app", "get-ready", "software",
+    "emoji", "emojione", "sprite", "avatar", "gravatar",
+    "spinner", "loading", "placeholder", "blank", "spacer",
+    "1x1", "transparent", "cdnjs", "jsdelivr", "cloudflare",
+    "jquery", "bootstrap", "fontawesome", "wp-content/themes",
+    "wp-includes", "wp-admin",
+]
+
+# Only trust images from these domains
+ALLOWED_IMAGE_DOMAINS = [
+    "myschool.ng",
+    "myschool-ng.s3",
+    "s3.amazonaws.com",
+    "cloudinary.com",
+    "res.cloudinary",
+]
+
+# URL must contain one of these path segments to be a real math diagram
+# (excludes ad banners that are also hosted on S3/Cloudinary)
+MATH_IMAGE_PATH_KW = [
+    "/uploads/", "/questions/", "/solutions/", "/answers/",
+    "/diagrams/", "/math/", "/images/q", "/classroom/",
+    "/storage/serve/", "/storage/",
+    "question_image", "solution_image", "answer_image",
+    "theory", "waec", "neco", "jamb", "mathematics",
+]
+
+# Minimum bytes for a real diagram image (~10 KB)
+MIN_IMAGE_BYTES = 10_000
+
+
+# ════════════════════════════════════════════════════════════════════════
 #  DRIVER SETUP
 # ════════════════════════════════════════════════════════════════════════
 
 def setup_driver(headless=True):
-    chrome_options = Options()
+    opts = Options()
     if headless:
-        chrome_options.add_argument("--headless=new")
-    chrome_options.add_argument("--start-maximized")
-    chrome_options.add_argument("--disable-blink-features=AutomationControlled")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--log-level=3")
+        opts.add_argument("--headless=new")
+    opts.add_argument("--no-sandbox")
+    opts.add_argument("--disable-dev-shm-usage")
+    opts.add_argument("--log-level=3")
+    opts.add_argument("--disable-blink-features=AutomationControlled")
+    opts.add_argument("--window-size=1920,1080")
+
+    # Try system ChromeDriver first (avoids network download)
+    try:
+        service = Service()  # uses chromedriver from PATH
+        driver  = webdriver.Chrome(service=service, options=opts)
+        return driver
+    except Exception:
+        pass
+
+    # Fallback: look in common Windows locations
+    common_paths = [
+        r"C:\Users\USER\.wdm\drivers\chromedriver\win64\chromedriver.exe",
+        r"C:\chromedriver\chromedriver.exe",
+        r"C:\Program Files\Google\Chrome\chromedriver.exe",
+    ]
+    for path in common_paths:
+        if os.path.exists(path):
+            try:
+                service = Service(executable_path=path)
+                driver  = webdriver.Chrome(service=service, options=opts)
+                return driver
+            except Exception:
+                continue
+
+    # Last resort: try webdriver_manager (needs internet)
     service = Service(ChromeDriverManager().install())
-    driver  = webdriver.Chrome(service=service, options=chrome_options)
-    return driver
+    return webdriver.Chrome(service=service, options=opts)
 
 
 # ════════════════════════════════════════════════════════════════════════
@@ -94,24 +168,24 @@ def _latex_to_readable(s: str) -> str:
         return f"[{' '.join(inner.split())}]"
 
     s = re.sub(r'\\frac\{([^}]+)\}\{([^}]+)\}', r'(\1/\2)', s)
-    s = re.sub(r'\\sqrt\{([^}]+)\}',             r'√(\1)',   s)
-    s = re.sub(r'\\sqrt\[([^\]]+)\]\{([^}]+)\}', r'(\1)√(\2)', s)
+    s = re.sub(r'\\sqrt\{([^}]+)\}',             r'sqrt(\1)',   s)
+    s = re.sub(r'\\sqrt\[([^\]]+)\]\{([^}]+)\}', r'(\1)sqrt(\2)', s)
     s = re.sub(r'\^\{([^}]+)\}',                 r'^\1',     s)
     s = re.sub(r'_\{([^}]+)\}',                  r'_\1',     s)
 
     replacements = {
-        r'\times': '×',  r'\div': '÷',    r'\pm': '±',    r'\mp': '∓',
-        r'\leq':   '≤',  r'\geq': '≥',    r'\neq': '≠',   r'\approx': '≈',
-        r'\infty': '∞',  r'\pi':  'π',    r'\theta': 'θ', r'\alpha': 'α',
-        r'\beta':  'β',  r'\gamma': 'γ',  r'\delta': 'δ', r'\sigma': 'σ',
-        r'\mu':    'μ',  r'\lambda': 'λ', r'\in': '∈',    r'\cup': '∪',
-        r'\cap':   '∩',  r'\log': 'log',  r'\ln': 'ln',   r'\sin': 'sin',
-        r'\cos':   'cos',r'\tan': 'tan',  r'\cdot': '·',  r'\ldots': '...',
+        r'\times': 'x',   r'\div': '/',     r'\pm': '+/-',  r'\mp': '-/+',
+        r'\leq':   '<=',  r'\geq': '>=',    r'\neq': '!=',  r'\approx': '~=',
+        r'\infty': 'inf', r'\pi':  'pi',    r'\theta': 'theta', r'\alpha': 'alpha',
+        r'\beta':  'beta',r'\gamma': 'gamma',r'\delta': 'delta',r'\sigma': 'sigma',
+        r'\mu':    'mu',  r'\lambda': 'lambda',r'\in': 'in', r'\cup': 'union',
+        r'\cap':   'intersect',r'\log': 'log',r'\ln': 'ln', r'\sin': 'sin',
+        r'\cos':   'cos', r'\tan': 'tan',   r'\cdot': '*',  r'\ldots': '...',
     }
     for k, v in replacements.items():
         s = s.replace(k, v)
 
-    s = re.sub(r'\^0\b', '°', s)
+    s = re.sub(r'\^0\b', ' deg', s)
     s = s.replace('{', '').replace('}', '')
     return ' '.join(s.split())
 
@@ -127,30 +201,31 @@ def download_image(src: str, images_dir: str, exam_type: str, year: str,
     Returns the relative path string to embed in markdown, or None on failure.
     """
     try:
-        # ── Skip non-downloadable image types ────────────────────────
-        if src.startswith("data:"):
-            return None  # base64 embedded — can't download
+        if not src or src.startswith("data:") or src.startswith("blob:"):
+            return None
 
-        if src.startswith("blob:"):
-            return None  # temporary browser blob — can't download
-
-        # Fix relative URLs
         if not src.startswith("http"):
             src = "https://myschool.ng" + src
 
-        # Reject if URL still contains blob: or data: after prefix fix
-        if "blob:" in src or "data:" in src:
+        src_lower = src.lower()
+
+        # Block by keyword in URL
+        if any(kw in src_lower for kw in SKIP_IMAGE_KW):
             return None
 
-        # Skip tracking pixels and icons by URL keyword
-        if any(x in src for x in ["pixel", "tracking", "icon", "logo", "banner"]):
+        # Only allow trusted image domains
+        if not any(domain in src_lower for domain in ALLOWED_IMAGE_DOMAINS):
+            return None
+
+        # URL must look like a real math/question image, not an ad banner
+        if not any(kw in src_lower for kw in MATH_IMAGE_PATH_KW):
             return None
 
         # Determine file extension
-        ext      = ".png"
-        url_path = src.split("?")[0]
+        url_path = src.split("?")[0].lower()
+        ext = ".png"
         for candidate in [".png", ".jpg", ".jpeg", ".gif", ".webp"]:
-            if url_path.lower().endswith(candidate):
+            if url_path.endswith(candidate):
                 ext = candidate
                 break
 
@@ -159,25 +234,36 @@ def download_image(src: str, images_dir: str, exam_type: str, year: str,
 
         # Skip if already downloaded
         if os.path.exists(local_path):
-            return os.path.join("images", exam_type.lower(), str(year), filename).replace("\\", "/")
+            rel_path = os.path.join("images", exam_type.lower(), str(year), filename).replace("\\", "/")
+            print(f"      [CACHED] {filename}")
+            return rel_path
 
-        headers  = {"User-Agent": "Mozilla/5.0"}
-        response = requests.get(src, headers=headers, timeout=10)
+        headers  = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                          "AppleWebKit/537.36 Chrome/120 Safari/537.36",
+            "Referer": "https://myschool.ng/",
+        }
+        response = requests.get(src, headers=headers, timeout=15)
         response.raise_for_status()
 
-        # Skip very small files — likely tracking pixels
-        if len(response.content) < 500:
+        # Must be a real image content type
+        content_type = response.headers.get("Content-Type", "")
+        if "image" not in content_type:
+            return None
+
+        # Must meet minimum size for a real diagram
+        if len(response.content) < MIN_IMAGE_BYTES:
             return None
 
         with open(local_path, "wb") as f:
             f.write(response.content)
 
         rel_path = os.path.join("images", exam_type.lower(), str(year), filename).replace("\\", "/")
-        print(f"      ↓ Image: {rel_path}")
+        print(f"      [SAVED] {filename} ({len(response.content)//1024}KB)")
         return rel_path
 
     except Exception as e:
-        print(f"      ⚠ Image failed: {e}")
+        print(f"      [WARN] Image failed ({src[:60]}): {e}")
         return None
 
 
@@ -262,24 +348,49 @@ def extract_objective_questions(html: str, images_dir: str,
         for tag in block_copy.find_all("span", class_=re.compile(r"badge")):
             tag.decompose()
 
+        # Remove ALL MathJax rendered output (causes duplicate text)
+        # Keep only the raw LaTeX source from script[type="math/tex"]
+        for tag in block_copy.find_all(True,
+                class_=re.compile(
+                    r"MathJax|mjx-|MathJax_SVG|MathJax_Display|MathJax_nocache",
+                    re.IGNORECASE)):
+            tag.decompose()
+        # Promote LaTeX source scripts to plain text
+        for script in block_copy.find_all("script",
+                type=re.compile(r"math/tex")):
+            latex = script.get_text(strip=True)
+            if latex:
+                script.replace_with(block_copy.new_string(f" {latex} "))
+            else:
+                script.decompose()
+        for tag in block_copy.find_all("script"):
+            tag.decompose()
+        # Remove leftover empty MathJax_Preview wrappers
+        for preview in block_copy.find_all(True,
+                class_=re.compile(r"MathJax_Preview", re.IGNORECASE)):
+            preview.decompose()
+
         # ── Download each image and replace tag with markdown link ───
         image_paths = []
         img_index   = 1
+        seen_srcs   = set()
         for img in block_copy.find_all("img"):
-            src = img.get("src", "").strip()
-            if not src:
+            src = (
+                img.get("src", "") or img.get("data-src", "") or
+                img.get("data-lazy-src", "") or img.get("data-original", "")
+            ).strip()
+            if not src or src in seen_srcs:
                 img.decompose()
                 continue
+            seen_srcs.add(src)
 
             rel_path = download_image(
                 src, images_dir, exam_type, year, question_num, img_index
             )
             if rel_path:
                 image_paths.append(rel_path)
-                # Embed full relative path in markdown
-                img.replace_with(
-                    block_copy.new_string(f" ![diagram]({rel_path}) ")
-                )
+                from bs4 import NavigableString
+                img.replace_with(NavigableString(f" ![diagram]({rel_path}) "))
                 img_index += 1
             else:
                 img.decompose()
@@ -363,12 +474,9 @@ def generate_markdown(questions: list[dict], subject: str,
     ]
 
     for q in questions:
-        # Inline images are already embedded in question text from extraction
-        # but we also write them explicitly after the question line for clarity
         lines.append(f"**{q['question_num']}.** {q['question']}")
         lines.append("")
 
-        # Write any image paths that weren't already inline
         for img_path in q.get("images", []):
             if img_path not in q["question"]:
                 lines.append(f"![diagram]({img_path})")
@@ -379,7 +487,7 @@ def generate_markdown(questions: list[dict], subject: str,
         lines.append("")
 
         ans = q.get("answer", "?")
-        lines.append(f"✓ **Answer:** {ans if ans else '?'}")
+        lines.append(f"Answer: {ans if ans else '?'}")
         lines.append("")
         lines.append("---")
         lines.append("")
@@ -398,17 +506,14 @@ def scrape(subject_slug: str, exam_type: str, year: str,
     driver   = setup_driver(headless=headless)
     base_url = f"https://myschool.ng/classroom/{subject_slug}"
 
-    # Output folder: e.g. jamb/mathematics/
     output_dir = os.path.join(exam_type.lower(), subject_slug.replace("-", "_"))
-
-    # Images folder: e.g. images/jamb/2025/
     images_dir = os.path.join("images", exam_type.lower(), str(year))
 
-    os.makedirs(output_dir,  exist_ok=True)
-    os.makedirs(images_dir,  exist_ok=True)
+    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(images_dir, exist_ok=True)
 
-    print(f"\n📁 Output  : {output_dir}/")
-    print(f"🖼  Images  : {images_dir}/")
+    print(f"\n[OUTPUT]  {output_dir}/")
+    print(f"[IMAGES]  {images_dir}/")
 
     all_questions   = []
     question_offset = 0
@@ -433,7 +538,7 @@ def scrape(subject_slug: str, exam_type: str, year: str,
                 )
             )
         except Exception:
-            print(f"  ⚠ Page {page} timed out or has no questions — skipping")
+            print(f"  [SKIP] Page {page} timed out or has no questions")
             debug_path = os.path.join(output_dir, f"debug_page_{page}.html")
             with open(debug_path, "w", encoding="utf-8") as f:
                 f.write(driver.page_source)
@@ -449,24 +554,24 @@ def scrape(subject_slug: str, exam_type: str, year: str,
             debug=debug,
         )
 
-        print(f"  → {len(page_questions)} questions found")
+        print(f"  -> {len(page_questions)} questions found")
         question_offset += len(page_questions)
         all_questions.extend(page_questions)
 
     # ── Fetch answers ────────────────────────────────────────────────
     no_answer = 0
-    print(f"\n🔍 Fetching answers for {len(all_questions)} questions...")
+    print(f"\n[ANSWERS] Fetching answers for {len(all_questions)} questions...")
     for q in all_questions:
         label = f"Q{q['question_num']}/{len(all_questions)}"
         if q.get("answer_url"):
             ans = scrape_answer(driver, q["answer_url"])
             if ans:
                 q["answer"] = ans
-                print(f"  {label} → {ans}")
+                print(f"  {label} -> {ans}")
             else:
                 q["answer"] = "?"
                 no_answer  += 1
-                print(f"  {label} → ⚠ answer not found")
+                print(f"  {label} -> [WARN] answer not found")
         else:
             q["answer"] = "?"
             no_answer  += 1
@@ -474,9 +579,9 @@ def scrape(subject_slug: str, exam_type: str, year: str,
     driver.quit()
 
     print(f"\n{'='*50}")
-    print(f"✅ Total questions scraped : {len(all_questions)}")
-    print(f"⚠  No answer found        : {no_answer}")
-    print(f"⏭  Pages skipped          : {skipped_pages}")
+    print(f"[DONE] Total questions scraped : {len(all_questions)}")
+    print(f"[WARN] No answer found         : {no_answer}")
+    print(f"[INFO] Pages skipped           : {skipped_pages}")
     print(f"{'='*50}")
 
     return all_questions, output_dir, images_dir
@@ -517,7 +622,7 @@ def main():
     )
 
     if not questions:
-        print("\n❌ No questions scraped — check the URL or try --visible --debug")
+        print("\n[ERROR] No questions scraped — check the URL or try --visible --debug")
         return
 
     subject_title = args.subject.replace("-", " ").title()
@@ -531,15 +636,14 @@ def main():
     with open(filepath, "w", encoding="utf-8") as f:
         f.write(md_content)
 
-    # Summary
     with_answer = sum(1 for q in questions if q.get("answer") not in (None, "?"))
     with_image  = sum(1 for q in questions if q.get("images"))
 
-    print(f"\n✅ Saved to      : {filepath}")
-    print(f"🖼  With images  : {with_image}")
-    print(f"✓  With answers : {with_answer}")
-    print(f"📁 Images folder: {images_dir}/")
-    print(f"\nNext step — upload to Supabase:")
+    print(f"\n[SAVED]  {filepath}")
+    print(f"[INFO]   With images  : {with_image}")
+    print(f"[INFO]   With answers : {with_answer}")
+    print(f"[INFO]   Images folder: {images_dir}/")
+    print(f"\nNext step -- upload to Supabase:")
     print(f"  python upload_questions.py {filepath} {args.exam_type.upper()} {args.year}")
 
 
