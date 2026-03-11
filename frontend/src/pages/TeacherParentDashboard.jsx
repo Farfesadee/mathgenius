@@ -5,6 +5,8 @@ import {
   getMyClassrooms, getJoinedClassrooms,
   getClassroomLeaderboard, getStudentStats, getChildren, linkChild,
 } from '../lib/classroom'
+import { getStrugglingAlerts, resolveAlert } from '../lib/social2'
+import { downloadProgressReport } from '../services/api'
 
 // ── Tiny helpers ────────────────────────────────────────────────────
 const MASTERY_CFG = {
@@ -92,7 +94,7 @@ function StudentCard({ student, rank, onClick, isTeacher }) {
 }
 
 // ── Student detail panel ───────────────────────────────────────────
-function StudentDetail({ student, stats, onBack }) {
+function StudentDetail({ student, stats, onBack, onDownloadPDF, downloadingPDF }) {
   const [tab, setTab] = useState('overview')  // overview | topics | sessions
 
   if (!stats) return (
@@ -128,13 +130,26 @@ function StudentDetail({ student, stats, onBack }) {
               #{student.rank} in class · {streak.current_streak || 0} day streak 🍌
             </p>
           </div>
-          <div className="text-right">
-            <div className={`font-serif font-black text-5xl ${scoreColor(avgScore)} 
-                             [--tw-text-opacity:1]`}
-                 style={{ color: avgScore >= 75 ? '#10b981' : avgScore >= 55 ? '#f59e0b' : '#ef4444' }}>
-              {avgScore}%
+          <div className="text-right space-y-3">
+            <div>
+              <div className={`font-serif font-black text-5xl ${scoreColor(avgScore)} 
+                               [--tw-text-opacity:1]`}
+                   style={{ color: avgScore >= 75 ? '#10b981' : avgScore >= 55 ? '#f59e0b' : '#ef4444' }}>
+                {avgScore}%
+              </div>
+              <p className="text-white/40 text-xs mt-1">avg score</p>
             </div>
-            <p className="text-white/40 text-xs mt-1">avg score</p>
+            <button
+              onClick={onDownloadPDF}
+              disabled={downloadingPDF}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl
+                         bg-white/10 hover:bg-white/20 text-white text-xs
+                         font-semibold transition-colors disabled:opacity-50">
+              {downloadingPDF
+                ? <><span className="w-3 h-3 border border-white/40 border-t-white
+                                     rounded-full animate-spin" /> Generating…</>
+                : <>📄 Download Report</>}
+            </button>
           </div>
         </div>
       </div>
@@ -298,6 +313,11 @@ export default function TeacherParentDashboard() {
   const [students,    setStudents]    = useState([])       // leaderboard-style list
   const [selStudent,  setSelStudent]  = useState(null)
   const [studentStats, setStudentStats] = useState(null)
+  const [downloadingPDF, setDownloadingPDF] = useState(false)
+
+  // Struggling student alerts
+  const [alerts,      setAlerts]      = useState([])
+  const [alertsLoaded,setAlertsLoaded]= useState(false)
 
   // Parent: link child
   const [childEmail,  setChildEmail]  = useState('')
@@ -328,7 +348,51 @@ export default function TeacherParentDashboard() {
       // Auto-load first child
       if (kids[0]) loadSingleStudent(kids[0])
     }
+    // Load struggling alerts for this teacher/parent
+    const { data: alertData } = await getStrugglingAlerts(user.id)
+    setAlerts(alertData || [])
+    setAlertsLoaded(true)
     setLoading(false)
+  }
+
+  const handleDownloadPDF = async () => {
+    if (!selStudent || !studentStats) return
+    setDownloadingPDF(true)
+    try {
+      const sessions  = studentStats.sessions || []
+      const mastery   = studentStats.mastery  || []
+      const streak    = studentStats.streak   || {}
+      const attempted = mastery.reduce((s, t) => s + (t.questions_attempted || 0), 0)
+      const correct   = mastery.reduce((s, t) => s + (t.questions_correct   || 0), 0)
+      const avgScore  = sessions.length
+        ? Math.round(sessions.reduce((s, x) => s + (x.score || 0), 0) / sessions.length) : 0
+      const weakTopics   = mastery.filter(t => (t.avg_score || 0) < 50).slice(0, 5)
+        .map(t => ({ topic: t.topic, avg_score: t.avg_score || 0 }))
+      const strongTopics = mastery.filter(t => (t.avg_score || 0) >= 80).slice(0, 5)
+        .map(t => ({ topic: t.topic, avg_score: t.avg_score || 0 }))
+
+      await downloadProgressReport({
+        student_name:  selStudent.name,
+        teacher_name:  profile?.display_name || profile?.email?.split('@')[0] || 'Teacher',
+        period_label:  'Last 30 Days',
+        sessions:      sessions.slice(0, 10),
+        mastery,
+        streak,
+        weak_topics:   weakTopics,
+        strong_topics: strongTopics,
+        accuracy:      attempted > 0 ? Math.round((correct / attempted) * 100) : 0,
+        avg_score:     avgScore,
+      })
+    } catch (err) {
+      console.error('PDF generation failed:', err)
+    } finally {
+      setDownloadingPDF(false)
+    }
+  }
+
+  const handleResolveAlert = async (alertId) => {
+    await resolveAlert(alertId)
+    setAlerts(prev => prev.filter(a => a.id !== alertId))
   }
 
   const loadClass = async (cls) => {
@@ -500,10 +564,65 @@ export default function TeacherParentDashboard() {
               student={selStudent}
               stats={studentStats}
               onBack={() => { setSelStudent(null); setStudentStats(null) }}
+              onDownloadPDF={handleDownloadPDF}
+              downloadingPDF={downloadingPDF}
             />
           ) : students.length > 0 ? (
             // Class grid
             <div>
+              {/* ── Struggling Student Alerts ── */}
+              {alertsLoaded && alerts.length > 0 && (
+                <div className="mb-6 space-y-2">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                    <p className="font-mono text-[10px] uppercase tracking-widest text-red-600 font-bold">
+                      ⚠️ {alerts.length} Struggling Student{alerts.length > 1 ? 's' : ''}
+                    </p>
+                  </div>
+                  {alerts.map(a => {
+                    const name = a.profiles?.display_name
+                      || a.profiles?.email?.split('@')[0] || 'Student'
+                    return (
+                      <div key={a.id}
+                        className="flex items-center justify-between gap-3 px-4 py-3
+                                   bg-red-50 border-2 border-red-200 rounded-2xl">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-red-100 border border-red-300
+                                          flex items-center justify-center text-sm font-bold
+                                          text-red-600">
+                            {name[0]?.toUpperCase()}
+                          </div>
+                          <div>
+                            <p className="font-semibold text-sm text-red-800">{name}</p>
+                            <p className="text-xs text-red-600 mt-0.5">
+                              3 sessions averaging <b>{a.avg_score}%</b>
+                              {a.topics ? ` · ${a.topics}` : ''}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <button
+                            onClick={() => {
+                              const student = students.find(s => s.userId === a.student_id)
+                              if (student) loadSingleStudent(student)
+                            }}
+                            className="text-xs px-3 py-1.5 rounded-xl bg-red-500
+                                       hover:bg-red-600 text-white font-semibold transition-colors">
+                            View →
+                          </button>
+                          <button
+                            onClick={() => handleResolveAlert(a.id)}
+                            className="text-xs px-3 py-1.5 rounded-xl border border-red-300
+                                       text-red-600 hover:bg-red-100 transition-colors">
+                            Dismiss
+                          </button>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+
               <div className="flex items-center justify-between mb-4">
                 <h2 className="font-serif font-bold text-xl">
                   {selectedCls?.name || 'Students'}

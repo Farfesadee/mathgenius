@@ -12,29 +12,29 @@ B. 0.049
 C. 0.050
 D. 0.49
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
-**2.** Simplify (5/√(3))-(3/√(2))
+**2.** Simplify (5/sqrt(3))-(3/sqrt(2))
 
-A. (1/6)(5√(3)-3√(2)
-B. (1/6)(15√(3)-6√(2)
-C. (1/6)(3√(2)-√(3)
-D. (1/6)(10√(3)-9√(2)
+A. (1/6)(5sqrt(3)-3sqrt(2)
+B. (1/6)(15sqrt(3)-6sqrt(2)
+C. (1/6)(3sqrt(2)-sqrt(3)
+D. (1/6)(10sqrt(3)-9sqrt(2)
 
-✓ **Answer:** D
+Answer: ?
 
 ---
 
-**3.** Evaluate, correct to the nearest whole number 7(1/2)-\left(2(1/2)+3\right)÷(33/2)
+**3.** Evaluate, correct to the nearest whole number 7(1/2)-\left(2(1/2)+3\right)/(33/2)
 
 A. 33
 B. 8
 C. 7
 D. o
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
@@ -45,7 +45,7 @@ B. 3.112
 C. 2
 D. 1
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
@@ -56,7 +56,7 @@ B. 2x 2 + 5x + 7 = 0
 C. 2x 2 + 5x - 7 = 0
 D. 2x 2 + 3x - 14 = 0
 
-✓ **Answer:** D
+Answer: ?
 
 ---
 
@@ -67,7 +67,7 @@ B. 5
 C. 6
 D. 10
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
@@ -78,7 +78,7 @@ B. 12km
 C. 13km
 D. 17km
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
@@ -89,7 +89,7 @@ B. (2/3)
 C. (1/2)
 D. (1/6)
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
@@ -100,7 +100,7 @@ B. 255 o
 C. 225 o
 D. 210 o
 
-✓ **Answer:** A
+Answer: ?
 
 ---
 
@@ -111,7 +111,7 @@ B. x=(105-3y/2)
 C. x=(105-2y/3)
 D. x=(75-3y/2)
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
@@ -122,7 +122,7 @@ B. 46
 C. 45
 D. 44
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
@@ -133,7 +133,7 @@ B. (8/3)
 C. (3/2)
 D. (15/4)
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
@@ -144,7 +144,7 @@ B. 2x^2 - 13xy - 15y^2
 C. 2x^2 + 13xy + 15y^2
 D. 2x^2 - 13xy + 15y^2
 
-✓ **Answer:** D
+Answer: ?
 
 ---
 
@@ -155,18 +155,18 @@ B. (u-v/t)
 C. t(v+u
 D. (v/u)-t
 
-✓ **Answer:** A
+Answer: ?
 
 ---
 
-**15.** The lengths of the adjacent sides of a right - angled triangle are xcm, (x-1)cm. If the length of the hypotenuse is √(13)cm, find the value of x
+**15.** The lengths of the adjacent sides of a right - angled triangle are xcm, (x-1)cm. If the length of the hypotenuse is sqrt(13)cm, find the value of x
 
 A. 2
 B. 3
 C. 4
 D. 5
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
@@ -177,7 +177,7 @@ B. (3/10)
 C. (9/20)
 D. (11/20)
 
-✓ **Answer:** A
+Answer: ?
 
 ---
 
@@ -188,7 +188,7 @@ B. 17 o
 C. 28 o
 D. 30 o
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
@@ -199,7 +199,7 @@ B. 100 o
 C. 120 o
 D. 150 o
 
-✓ **Answer:** D
+Answer: ?
 
 ---
 
@@ -210,18 +210,18 @@ B. 045 o
 C. 210 o
 D. 240 o
 
-✓ **Answer:** D
+Answer: ?
 
 ---
 
-**20.** What is the diameter of a circle of area 77cm [Take π = (22/7)]
+**20.** What is the diameter of a circle of area 77cm [Take pi = (22/7)]
 
-A. \frac√(2)7cm
+A. \fracsqrt(2)7cm
 B. 3(1/2)cm
 C. 7cm
-D. 7√(2)cm
+D. 7sqrt(2)cm
 
-✓ **Answer:** D
+Answer: ?
 
 ---
 
@@ -232,7 +232,7 @@ B. -4
 C. 4
 D. 5
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
@@ -243,7 +243,7 @@ B. -13
 C. 13
 D. 19
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
@@ -254,7 +254,7 @@ B. 27
 C. 24.5
 D. 13.5
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
@@ -265,7 +265,7 @@ B. 10
 C. 12
 D. 15
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
@@ -276,7 +276,7 @@ B. -2
 C. -1
 D. -(1/4)
 
-✓ **Answer:** A
+Answer: ?
 
 ---
 
@@ -287,18 +287,18 @@ B. 5
 C. 6
 D. 7
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
-**27.** What is the total surface area of a closed cylinder of height 10cm and diameter 7cm? [Take π = (22/7)]
+**27.** What is the total surface area of a closed cylinder of height 10cm and diameter 7cm? [Take ]
 
 A. 77cm 2
 B. 227cm 2
 C. 297cm 2
 D. 374cm 2
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
@@ -309,7 +309,7 @@ B. 42.67cm
 C. 101.33cm
 D. 543.33cm
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
@@ -320,7 +320,7 @@ B. the point of intersection of the two lines
 C. A cone, with two intersecting lines as slant height
 D. A circle, with the point of intersection of the two lines as the center
 
-✓ **Answer:** A
+Answer: ?
 
 ---
 
@@ -331,7 +331,7 @@ B. {5, 7, 9}
 C. {1}
 D. {1, 11}
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
@@ -342,7 +342,7 @@ B. 40 mins
 C. 45 mins
 D. 90 mins
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -353,7 +353,7 @@ B. 58.5%
 C. 17.5%
 D. 14.9%
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -364,40 +364,40 @@ B. 40 o
 C. 90 o
 D. 140 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**34.** Simplify: (2/3xy) - (3/4yz)
+**34.** Simplify:
 
-A. (2-x/12xyz)
-B. (2z-3x/12xyz)
-C. (4z-3x/12xyz)
-D. (8z-9x/12xyz)
+A. 2 − x 12 x y z
+B. 2 z − 3 x 12 x y z
+C. 4 z − 3 x 12 x y z
+D. 8 z − 9 x 12 x y z
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **35.** The total surface area of the walls of a room 7m long, 5m wide and xm high is 96m2. Find the value of x
 
-A. (2/3)
+A. 2 3
 B. 2
 C. 4
 D. 8
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**36.** For what values of y is the expression y − y − y − not defined?
+**36.** For what values of y is the expression (6y-1/y^2 - y-6) not defined?
 
-A. 1 6 , 1 4
+A. (1/6), (1/4)
 B. 3, -2
 C. -3, 2
 D. 0,1
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -408,18 +408,18 @@ B. 4 and 1
 C. 1 and 4
 D. 4 and 4
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **38.** ![diagram](images/waec/2005/q38_1.jpg) What is the equation of the curve?
 
-A. y = x 2 + 6 x + 4
-B. y = x 2 − 5 x − 4
-C. y = x 2 − 5 x + 4
-D. y = x 2 + 5 x − 4
+A. y=x^2+6x+4
+B. y=x^2-5x-4
+C. y=x^2-5x+4
+D. y=x^2+5x-4
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -430,29 +430,29 @@ B. 70 o
 C. 80 o
 D. 140 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **40.** The angle of elevation of the top of a cliff 15 meters high from a landmark is 60º. How far is the landmark from the foot of the cliff? Leave your answer in surd form
 
-A. 15 √ 3 m
-B. 15 √ 2 m
-C. 10 √ 3 m
-D. 5 √ 3 m
+A. 15sqrt(3)m
+B. 15sqrt(2)m
+C. 10sqrt(3)m
+D. 5sqrt(3)m
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**41.** XOY is a real sector of a circle center O of radius 3.5cm which subtends an angle of 144o at the center. Calculate, in term of π, the area of the sector
+**41.** XOY is a real sector of a circle center O of radius 3.5cm which subtends an angle of 144o at the center. Calculate, in term of pi, the area of the sector
 
-A. 1.4πcm 2
-B. 2.8πcm 2
-C. 4.9πcm 2
-D. 9.8πcm 2
+A. 1.4picm 2
+B. 2.8picm 2
+C. 4.9picm 2
+D. 9.8picm 2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -463,18 +463,18 @@ B. 144
 C. 150
 D. 288
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**43.** If y α x^2 and y = 1(1/4) when x = 4, find the value of y when x = (1/2)
+**43.** If y alpha x^2 and y = 1(1/4) when x = 4, find the value of y when x = (1/2)
 
 A. 2(1/2)
 B. 5
 C. 10
 D. 80
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -485,7 +485,7 @@ B. 80,640
 C. 87,360
 D. 87,500
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -496,7 +496,7 @@ B. 15%
 C. 15.6%
 D. 18.5%
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -507,7 +507,7 @@ B. 50 o
 C. 55 o
 D. 75 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -518,6 +518,6 @@ B. PQR is an equilateral triangle
 C. PQRX is a parallelogram
 D. There are two lines of symmetry
 
-✓ **Answer:** B
+Answer: B
 
 ---

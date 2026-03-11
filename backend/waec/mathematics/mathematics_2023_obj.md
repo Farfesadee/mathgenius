@@ -7,36 +7,34 @@ Type: Objective
 
 **1.** ![diagram](images/waec/2023/q1_1.png) In the diagram, O is the center of the circle QRS and ∠SQR = 28°. Find ∠ORS.
 
-![diagram](images/waec/2023/q1_1.png)
+A. 56 deg
+B. 28 deg
+C. 76 deg
+D. 62 deg
 
-A. 56°
-B. 28°
-C. 76°
-D. 62°
-
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**2.** Solve 1 + (3)√( x - 3) = 4
+**2.** Solve 1 + (3)sqrt( x - 3) = 4
 
 A. 30
 B. 6
 C. 12
 D. 66
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**3.** The angle of a sector of a circle of radius 3.4 cm is 115°. Find the area of the sector. (Take π = (22/7))
+**3.** The angle of a sector of a circle of radius 3.4 cm is 115°. Find the area of the sector. (Take pi = (22/7))
 
 A. 11.6cm^2
 B. 12.7cm^2
 C. 10.2cm^2
 D. 9.4cm^2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -47,7 +45,7 @@ B. 11
 C. 5
 D. 9
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -58,7 +56,7 @@ B. 12years
 C. 18years
 D. 15 years
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -69,7 +67,7 @@ B. 104.05m
 C. 161.87m
 D. 192.91m
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -80,42 +78,40 @@ B. 20 and 16
 C. 21 and 15
 D. 23 and 13
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **8.** ![diagram](images/waec/2023/q8_1.png) In the diagram above, M, N, R are points on the circle centre O. ∠ORN = 48° and ∠RNM = 124°. Find ∠OMN.
 
-![diagram](images/waec/2023/q8_1.png)
+A. 58 deg
+B. 64 deg
+C. 48 deg
+D. 76 deg
 
-A. 58 0
-B. 64 0
-C. 48 0
-D. 76 0
-
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**9.** Simplify √ + √ − √
+**9.** Simplify 3sqrt(12) + 10sqrt(3) - (6/sqrt(3))
 
-A. 10 √ 3
-B. 18 √ 3
-C. 14 √ 3
-D. 7 √ 3
+A. 10sqrt(3)
+B. 18sqrt(3)
+C. 14sqrt(3)
+D. 7sqrt(3)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**10.** For what value of x is x + x − x − is undefined?.
+**10.** For what value of x is ( x^2 + 2 / 10x^2 - 13x - 3) is undefined?.
 
-A. 1 5 , 3 2
-B. − 1 5 , 3 2
-C. 1 5 , − 3 2
-D. − 1 5 , − 3 2
+A. (1/5), (3/2)
+B. (-1/5), (3/2)
+C. (1/5), (-3/2)
+D. (-1/5), (-3/2)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -126,7 +122,7 @@ B. 1131_5
 C. 1311_5
 D. 2132_5
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -137,7 +133,7 @@ B. 0.004
 C. 0.361
 D. 0.036
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -148,18 +144,18 @@ B. 15
 C. 10
 D. 14
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**14.** Solve 2^5x ÷ 2^x = (5)√(2^10)
+**14.** Solve 2^5x / 2^x = (5)sqrt(2^10)
 
 A. (3/2)
 B. (1/2)
 C. (1/3)
 D. (5/3)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -170,18 +166,18 @@ B. 2m + p
 C. m + 2p
 D. m + p^2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**16.** Find the roots of the equations: 3m^2 - 2m - 65 = 0
+**16.** Find the roots of the equations:
 
-A. ( -5, (-13/3))
-B. ( 5, (-13/3))
-C. ( 5, (13/3))
-D. ( -5, (13/3))
+A. ( − 5 , − 13 3 )
+B. ( 5 , − 13 3 )
+C. ( 5 , 13 3 )
+D. ( − 5 , 13 3 )
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -192,18 +188,18 @@ B. 7.67m
 C. 7.18m
 D. 6.65m
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**18.** The radius and height of a solid cylinder is 8 cm and 14 cm respectively. Find, correct to two d.p the total surface area. (Take π = (22/7))
+**18.** The radius and height of a solid cylinder is 8 cm and 14 cm respectively. Find, correct to two d.p the total surface area. (Take
 
-A. 1,106.29cm^2
-B. 1,016.29cm^2
-C. 1,106.89cm^2
-D. 1,206.27cm^2
+A. 1 , 106.29 c m 2
+B. 1 , 016.29 c m 2
+C. 1 , 106.89 c m 2
+D. 1 , 206.27 c m 2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -214,73 +210,73 @@ B. 17
 C. 14
 D. 21
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **20.** The radius of a sphere is 3 cm. Find, in terms of π, its volume.
 
-A. 30π cm^3
-B. 108π cm^3
-C. 27π cm^3
-D. 36π cm^3
+A. 30 π c m 3
+B. 108 π c m 3
+C. 27 π c m 3
+D. 36 π c m 3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**21.** m:n = 2(1/3) : 1(1/5) and n : q = 1(1/2) : 1(1/3), find q : m.
+**21.** m:n = and n : q = , find q : m.
 
 A. 35 : 18
 B. 16 : 35
 C. 18 : 35
 D. 35 : 16
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**22.** make x the subject of the relation y = (ax^3 - b/3z)
+**22.** make x the subject of the relation
 
-A. x = \sqrt[3] (ax^3 - b/3z)
-B. x = \sqrt[3] (3yz - b/a)
-C. x = \sqrt[3] (3yz + b/a)
-D. x = \sqrt[3] (3yzb/a)
+A. x = 3 √ a x 3 − b 3 z
+B. x = 3 √ 3 y z − b a
+C. x = 3 √ 3 y z + b a
+D. x = 3 √ 3 y z b a
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**23.** An empty cylindrical tank is 140 cm in diameter. If 200 litres of water was poured into the tank. Calculate, correct to the nearest centimeter, the height of the water in the tank. (Take π = (22/7))
+**23.** An empty cylindrical tank is 140 cm in diameter. If 200 litres of water was poured into the tank. Calculate, correct to the nearest centimeter, the height of the water in the tank. (
 
 A. 91cm
 B. 7cm
 C. 13cm
 D. 57cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**24.** Arrange the following in ascending order of magnitude 110_two, 31_eight, 42_five
+**24.** Arrange the following in ascending order of magnitude
 
-A. 110_two, 31_five, 42_eight
-B. 42_five, 110_two, 31_eight
-C. 42_five, 31_eight, 110_two
-D. 110_two, 42_five, 31_eight
+A. 110 t w o , 31 f i v e , 42 e i g h t
+B. 42 f i v e , 110 t w o , 31 e i g h t
+C. 42 f i v e , 31 e i g h t , 110 t w o
+D. 110 t w o , 42 f i v e , 31 e i g h t
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **25.** A number is chosen at random from 40 and 50 inclusive . Find the probability that the number is prime.
 
-A. (8/11)
-B. (3/11)
-C. (4/11)
-D. (5/11)
+A. 8 11
+B. 3 11
+C. 4 11
+D. 5 11
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -291,103 +287,95 @@ B. S35°W.
 C. N55°E.
 D. N35°W.
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **27.** A line L passing through the point (6, -13) is parallel to the line which passes through (7, 4) and (-3, 9). Find the equation of the line L.
 
-A. y = (1/2)x - 10
-B. y = (-1/2)x + 10
-C. y = (-1/2)x - 10
-D. y = (1/2)x +10
+A. y = 1 2 x − 10
+B. y = − 1 2 x + 10
+C. y = − 1 2 x − 10
+D. y = 1 2 x + 10
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **28.** A bag contains 4 white marbles and 3 blue marbles. Another bag contains 5 red and 6 blue marbles. If a marble is picked at random from each bag, find the probability that they are of the same colour.
 
-A. (9/11)
-B. (18/77)
-C. (1/2)
-D. (11/12)
+A. 9 11
+B. 18 77
+C. 1 2
+D. 11 12
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**29.** The truth set of 8 + 2x - x^2 = 0 is {p, q}. Evaluate p + q.
+**29.** The truth set of = 0 is {p, q}. Evaluate p + q.
 
 A. 4
 B. 2
 C. -6
 D. -2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **30.** ![diagram](images/waec/2023/q30_1.png) The bar chart represents the distribution of marks scored by students in an economics examination. Use the bar chart to answer questions to If the failed mark was 4, what is the probability that a student selected at random passed?
-
-![diagram](images/waec/2023/q30_1.png)
 
 A. 0.36
 B. 0.74
 C. 0.52
 D. 0.64
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **31.** ![diagram](images/waec/2023/q31_1.png) What percentage of the students scored at most 5 marks?
-
-![diagram](images/waec/2023/q31_1.png)
 
 A. 58.5%
 B. 63.2%
 C. 38.3%
 D. 41.5%
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **32.** ![diagram](images/waec/2023/q32_1.png) How many students scored at least 3 marks?
-
-![diagram](images/waec/2023/q32_1.png)
 
 A. 44
 B. 52
 C. 38
 D. 18
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**33.** Factorize completely: x − ( y + z )
+**33.** Factorize completely:
 
 A. (x - y - z)(x - y - z)
 B. (x + y + z)(x - y - z)
 C. (x + y + z)(x + y - z)
 D. (x + y - z)(x - y + z)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **34.** ![diagram](images/waec/2023/q34_1.png) An equilateral triangle has a side 2 cm. Calculate the height of the triangle.
-
-![diagram](images/waec/2023/q34_1.png)
 
 A. 5cm
 B. √ 5 cm
 C. 3cm
 D. √ 3 cm
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -398,7 +386,7 @@ B. 28 0
 C. 20 0
 D. 26 0
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -409,7 +397,7 @@ B. q ⇒ p
 C. p ⇒ q
 D. p ⇔ q
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -420,7 +408,7 @@ B. Isosceles triangle
 C. Right -angle triangle
 D. Equilateral triangle
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -431,42 +419,40 @@ B. $42.30
 C. $72.00
 D. $35.00
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **39.** ![diagram](images/waec/2023/q39_1.png) In the diagram, NR is a diameter, ∠MNR = x° and, ∠SRN = (5x + 20)°. Find the value of 2x.
-
-![diagram](images/waec/2023/q39_1.png)
 
 A. 42 0
 B. 35 0
 C. 20 0
 D. 90 0
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**40.** Solve: l o g x + l o g ( x − ) =
+**40.** Solve:
 
 A. 8
 B. 6
 C. 9
 D. 7
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**41.** Find the quadratic equation whose roots are a n d −
+**41.** Find the quadratic equation whose roots are
 
 A. 12 y 2 − y − 6 = 0
 B. 12 y 2 − y + 6 = 0
 C. 12 y 2 + y − 6 = 0
 D. y 2 + y − 6 = 0
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -477,44 +463,40 @@ B. 48 c m 2
 C. 72 c m 2
 D. 18 c m 2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **43.** ![diagram](images/waec/2023/q43_1.png) In the diagram above, O is the centre of a circle NST. |NT| = |ST| and ∠NTS = 36°. Find the measure of the angle marked t.
-
-![diagram](images/waec/2023/q43_1.png)
 
 A. 72 0
 B. 54 0
 C. 36 0
 D. 108 0
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **44.** ![diagram](images/waec/2023/q44_1.png) Find the value of m in the diagram above.
-
-![diagram](images/waec/2023/q44_1.png)
 
 A. 40 0
 B. 50 0
 C. 130 0
 D. 140 0
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**45.** Find the gradient of the line passing through the points ( , − ) a n d ( , )
+**45.** Find the gradient of the line passing through the points
 
 A. 2 5
 B. 5 2
 C. 2 7
 D. 7 2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -525,7 +507,7 @@ B. 11.71%
 C. 10.71%
 D. 11.21%
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -536,7 +518,7 @@ B. 25
 C. 9
 D. 4
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -547,7 +529,7 @@ C. 8cm
 C. 14cm
 D. 10cm
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -558,7 +540,7 @@ B. 400
 C. 300
 D. 225
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -569,6 +551,6 @@ B. 1.7
 C. 1.5
 D. 3.5
 
-✓ **Answer:** C
+Answer: C
 
 ---

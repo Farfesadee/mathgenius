@@ -1,9 +1,36 @@
 import axios from 'axios'
+import { supabase } from '../lib/supabase'
+
 export const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 const API = axios.create({
   baseURL: API_BASE,
   headers: { 'Content-Type': 'application/json' }
 })
+
+// ── Automatically attach the logged-in user's token to every request ─
+API.interceptors.request.use(async (config) => {
+  try {
+    const { data: { session } } = await supabase.auth.getSession()
+    if (session?.access_token) {
+      config.headers.Authorization = `Bearer ${session.access_token}`
+    }
+  } catch {
+    // Don't block the request if session check fails
+  }
+  return config
+})
+
+// ── If the server says "not logged in", sign out and go to login page ─
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      supabase.auth.signOut()
+      window.location.href = '/login'
+    }
+    return Promise.reject(error)
+  }
+)
 // ── SOLVE ──────────────────────────────────────
 export const solveExpression = (expression, mode = 'solve') =>
   API.post('/solve/', { expression, mode })
@@ -72,3 +99,50 @@ export const getRetryQuestion = (topic, level, originalQuestion, studentWrongAns
     original_question:    originalQuestion,
     student_wrong_answer: studentWrongAnswer,
   })
+
+// ── SOCIAL v2 ──────────────────────────────────────────────────────────────
+export const generateBattleQuestions = (topic, level, difficulty) =>
+  API.post('/solve/battle/questions', { topic, level, difficulty })
+
+export const gradeBattleAnswer = (topic, question, correctAnswer, studentAnswer) =>
+  API.post('/solve/battle/grade', { topic, question, correct_answer: correctAnswer, student_answer: studentAnswer })
+
+export const reviewStudentQuestion = (topic, level, questionText, answerText, hint = '') =>
+  API.post('/solve/question-bank/review', { topic, level, question_text: questionText, answer_text: answerText, hint })
+
+// ── TEACHER/PARENT TOOLS ───────────────────────────────────────────────────
+export const downloadProgressReport = async (payload) => {
+  const { data: { session } } = await supabase.auth.getSession()
+  const res = await fetch(`${API_BASE}/solve/report/pdf`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
+    },
+    body: JSON.stringify(payload),
+  })
+  if (!res.ok) throw new Error('Report generation failed')
+  const blob = await res.blob()
+  const url  = URL.createObjectURL(blob)
+  const a    = document.createElement('a')
+  a.href = url
+  a.download = `MathGenius_Report_${(payload.student_name || 'Student').replace(/ /g,'_')}.pdf`
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+// ── PAST QUESTIONS ──────────────────────────────────────────────────
+export const searchPastQuestions = (filters) =>
+  API.post('/past-questions/search', filters)
+
+export const getPastQuestion = (id) =>
+  API.get(`/past-questions/${id}`)
+
+export const getPastQuestionTopics = () =>
+  API.get('/past-questions/topics')
+
+export const getPastQuestionMeta = () =>
+  API.get('/past-questions/meta')
+
+export const getRandomPastQuestion = (params = {}) =>
+  API.get('/past-questions/random/one', { params })

@@ -12,7 +12,7 @@ B. 105622.00
 C. 105500.00
 D. 105632.00
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -23,7 +23,7 @@ B. 11100_three
 C. 11101_three
 D. 10110_three
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -34,7 +34,7 @@ B. 17
 C. 20
 D. 23
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -45,7 +45,7 @@ B. 2
 C. -2
 D. -4
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -56,7 +56,7 @@ B. 3
 C. 5
 D. 6
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -67,7 +67,7 @@ B. 3
 C. 4
 D. 5
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -78,7 +78,7 @@ B. 140%
 C. 120%
 D. 40%
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -89,7 +89,7 @@ B. -86
 C. 74
 D. 79
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -100,7 +100,7 @@ B. (2n/3p^2)
 C. (2n/3p)
 D. (3n^2/2p^2)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -111,7 +111,7 @@ B. 0.91
 C. -0.19
 D. -0.51
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -122,7 +122,7 @@ B. 5000
 C. 4500
 D. 3500
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -133,7 +133,7 @@ B. 2(6/7)
 C. 2(7/9)
 D. 4(7/9)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -144,7 +144,7 @@ B. 16
 C. 2
 D. 8
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -155,7 +155,7 @@ B. $(2x+8)
 C. $(2x-2)
 D. $(2x+2)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -166,7 +166,7 @@ B. If Stephen is not good at Mathematics, then he is not intelligent
 C. If Stephen is not intelligent, then he is not good at Mathematics
 D. If Stephen is not good at Mathematics, then he is intelligent
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -177,7 +177,7 @@ B. 16
 C. 4
 D. -8
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -188,7 +188,7 @@ B. (1/4)
 C. (-3/2)
 D. (-7/6)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -199,7 +199,7 @@ B. (k^2r + pm^2/m^2)
 C. (k^2r - p/m^2)
 D. (k^2r + p^2/m^2)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -210,33 +210,29 @@ B. 14
 C. 15
 D. 16
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **20.** ![diagram](images/waec/2022/q20_1.jpeg) In the diagram, ∠POQ = 150 and the radius of the circle PSQR is 4.2cm. [take π = 22/7] What is the length of the minor arc?
-
-![diagram](images/waec/2022/q20_1.jpeg)
 
 A. 11cm
 B. 15.4cm
 C. 17.64cm
 D. 23.10cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **21.** ![diagram](images/waec/2022/q21_1.jpeg) Find the area of the sector OPSQ
-
-![diagram](images/waec/2022/q21_1.jpeg)
 
 A. 15.40cm^2
 B. 17.64cm^2
 C. 23.10cm^2
 D. 32.34cm^2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -247,7 +243,7 @@ B. 4.521m
 C. 4.792m
 D. 3.962m
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -258,33 +254,29 @@ B. 165.0cm^2
 C. 212.0cm^2
 D. 214.5cm^2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **24.** ![diagram](images/waec/2022/q24_1.jpeg) In the diagram, ∠ZWZY and WYX are right angles. Find the perimeter of WXYZ.
-
-![diagram](images/waec/2022/q24_1.jpeg)
 
 A. 30cm
 B. 32cm
 C. 35cm
 D. 37cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **25.** ![diagram](images/waec/2022/q25_1.jpeg) The length of a rectangle is 10 cm. If its perimeter is 28 cm, find the area
-
-![diagram](images/waec/2022/q25_1.jpeg)
 
 A. 30cm^2
 B. 40cm^2
 C. 60cm^2
 D. 80cm^2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -295,7 +287,7 @@ B. 47º
 C. 19º
 D. 8º
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -306,33 +298,29 @@ B. 32
 B. 21
 D. 14
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **28.** ![diagram](images/waec/2022/q28_1.jpeg) In the diagram, MNR is a tangent to the circle centre O at N and ∠NOS = 108°. Find ∠OSN
-
-![diagram](images/waec/2022/q28_1.jpeg)
 
 A. 72°
 B. 32°
 C. 36°
 D. 18°
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **29.** ![diagram](images/waec/2022/q29_1.jpeg) Find ∠OSN
-
-![diagram](images/waec/2022/q29_1.jpeg)
 
 A. 36º
 B. 42º
 C. 54º
 D. 72º
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -343,7 +331,7 @@ B. 3 4
 C. 1 8
 D. 1 4
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -354,42 +342,40 @@ B. 65
 C. 55
 D. 45
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**32.** Simplify − m + m
+**32.** Simplify (2-18m^2/1+3m)
 
 A. 2[1+3m]
 B. 2[1-3m]
-C. 2[1-3m 2 ]
-D. 2[1+3m 2 ]
+C. 2[1-3m^2]
+D. 2[1+3m^2]
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **33.** ![diagram](images/waec/2022/q33_1.png) In the diagram, triangle MNR is inscribed in circle MNR, and line PQ is a straight line. ∠MRN = 41 and = 141, find ∠QNR
-
-![diagram](images/waec/2022/q33_1.png)
 
 A. 39º
 B. 80º
 C. 110º
 D. 141º
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**34.** Solve y + - y − > 1
+**34.** Solve (y+2/4) - (y-1/3) > 1
 
 A. y < -10
 B. y < -2
 C. y < 2
 D. y < 10
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -400,7 +386,7 @@ B. 13
 C. 15
 D. 20
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -411,7 +397,7 @@ B. 35.54
 C. 34.45
 D. 36.44
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -422,7 +408,7 @@ B. 88.12cm 3
 C. 10529cm 3
 D. 113.14cm 3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -433,7 +419,7 @@ B. 7cm
 C. 10cm
 D. 15cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -444,7 +430,7 @@ B. 21.0cm 3
 C. 142cm 3
 D. 154cm 3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -455,7 +441,7 @@ B. 0.65
 C. 0.85
 D. 0.95
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -466,7 +452,7 @@ B. 4(1/2)cm
 C. 2 (5/8)cm
 D. 12cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -477,7 +463,7 @@ B. 4
 C. 6
 D. 8
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -488,7 +474,7 @@ B. -3
 C. 3
 D. 5
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -499,7 +485,7 @@ B. 6
 C. -5
 D. -6
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -510,28 +496,28 @@ B. 3:17
 C. 17:20
 D. 20:23
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**46.** Given that log 27 = 2x + 1, find the value of x.
+**46.** Given that log_3 27 = 2x + 1, find the value of x.
 
 A. 0
 B. 1
 C. 2
 D. 3
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**47.** Solve 6x = 5x - 1
+**47.** Solve 6x^2 = 5x - 1
 
 A. x = 2,3
 B. x = 0,3
-C. x = 1 2 1 2 , 1 3 1 3
-D. x = 1 2 1 2 , − 1 3 − 1 3
+C. x = (1/2), (1/3)
+D. x = (1/2), (-1/3)
 
-✓ **Answer:** C
+Answer: C
 
 ---

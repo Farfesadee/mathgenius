@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import ErrorBoundary from './components/ErrorBoundary'
+import OfflineBanner from './components/OfflineBanner'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
 import Layout from './components/layout/Layout'
@@ -38,6 +40,8 @@ import TheoryPractice from './pages/TheoryPractice'
 import MockExam from './pages/MockExam'
 import Classroom from './pages/Classroom'
 import TeacherParentDashboard from './pages/TeacherParentDashboard'
+import Battle from './pages/Battle'
+import QuestionBank from './pages/QuestionBank'
 
 function AppRoutes() {
   const { user } = useAuth()
@@ -131,13 +135,19 @@ function AppRoutes() {
           <Route path="/monitor" element={
             <ProtectedRoute><TeacherParentDashboard /></ProtectedRoute>
           } />
+          <Route path="/battle" element={
+            <ProtectedRoute><Battle /></ProtectedRoute>
+          } />
+          <Route path="/question-bank" element={
+            <ProtectedRoute><QuestionBank /></ProtectedRoute>
+          } />
         </Route>
 
         {/* Public routes — no login needed */}
         <Route path="/share/:userId" element={<ShareProfile />} />
 
-        {/* Catch-all — redirect unknown paths to landing */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        {/* Catch-all — send logged-in users to dashboard, guests to landing */}
+        <Route path="*" element={<Navigate to={user ? "/dashboard" : "/"} replace />} />
       </Routes>
     </>
   )
@@ -145,12 +155,15 @@ function AppRoutes() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <ThemeProvider>
-          <AppRoutes />
-        </ThemeProvider>
-      </AuthProvider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <AuthProvider>
+          <ThemeProvider>
+            <OfflineBanner />
+            <AppRoutes />
+          </ThemeProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   )
 }

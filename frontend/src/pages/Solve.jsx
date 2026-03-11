@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { supabase } from '../lib/supabase'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
@@ -38,14 +39,41 @@ async function callSolve(expression, mode) {
   return res.json()
 }
 
-async function callExplain(expression, result) {
-  const res = await fetch(`${API_BASE}/solve/explain`, {
+// ── Streaming SSE helper ──────────────────────────────────────────────
+// onToken(str) is called for each token; resolves with full text when done.
+async function streamSSE(url, body, onToken) {
+  const { data: { session } } = await supabase.auth.getSession()
+  const res = await fetch(url, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ expression, result }),
+    headers: {
+      'Content-Type': 'application/json',
+      ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
+    },
+    body: JSON.stringify(body),
   })
   if (!res.ok) throw new Error(`HTTP ${res.status}`)
-  return res.json()
+  const reader = res.body.getReader()
+  const decoder = new TextDecoder()
+  let buffer = ''
+  let full = ''
+  while (true) {
+    const { done, value } = await reader.read()
+    if (done) break
+    buffer += decoder.decode(value, { stream: true })
+    const lines = buffer.split('\n')
+    buffer = lines.pop()
+    for (const line of lines) {
+      if (!line.startsWith('data: ')) continue
+      const payload = line.slice(6).trim()
+      if (payload === '[DONE]') return full
+      try {
+        const { token } = JSON.parse(payload)
+        full += token
+        onToken(token)
+      } catch {}
+    }
+  }
+  return full
 }
 
 async function callImageSolve(image_base64, image_type, extra_instruction) {
@@ -188,6 +216,7 @@ function ResultPanel({ raw, mode, expression, onExplain, explaining, explanation
           </p>
           <div className="text-sm text-[var(--color-ink)] leading-relaxed whitespace-pre-wrap font-mono">
             {explanation}
+            {explaining && <span className="inline-block w-2 h-4 ml-0.5 animate-pulse align-text-bottom" style={{ backgroundColor: modeConfig?.color }} />}
           </div>
         </div>
       )}
@@ -219,10 +248,13 @@ function ImageTab() {
 
   const handleSolve = async () => {
     if (!image) return
-    setLoading(true); setError(null); setResult(null)
+    setLoading(true); setError(null); setResult('')
     try {
-      const data = await callImageSolve(image.base64, image.type, instruction || undefined)
-      setResult(data.explanation)
+      await streamSSE(
+        `${API_BASE}/solve/image/stream`,
+        { image_base64: image.base64, image_type: image.type, extra_instruction: instruction || undefined },
+        (token) => setResult(prev => prev + token)
+      )
     } catch {
       setError('Could not connect to backend. Make sure it is running on port 8000.')
     } finally {
@@ -262,7 +294,7 @@ function ImageTab() {
       </div>
 
       <input value={instruction} onChange={e => setInstr(e.target.value)}
-        placeholder='Additional instruction (optional) — e.g. "Only show the graphical method"'
+        placeholder='Optional: e.g. "Solve questions 1–10 only" or "Show working for question 5" (leave blank to solve all)'
         className="w-full border-2 border-[var(--color-border)] focus:border-[var(--color-teal)]
                    rounded-xl px-4 py-3 text-sm bg-[var(--color-paper)] transition-colors" />
 
@@ -279,11 +311,380 @@ function ImageTab() {
           <div className="bg-[var(--color-teal)] px-5 py-3">
             <p className="font-mono text-[10px] uppercase tracking-widest text-white">Solution</p>
           </div>
-          <div className="px-5 py-4 text-sm leading-relaxed whitespace-pre-wrap font-mono">{result}</div>
+          <div className="px-5 py-4 text-sm leading-relaxed whitespace-pre-wrap font-mono">
+            {result}
+            {loading && <span className="inline-block w-2 h-4 bg-[var(--color-teal)] ml-0.5 animate-pulse align-text-bottom" />}
+          </div>
         </div>
       )}
     </div>
   )
+}
+
+// ── Camera snap tab ───────────────────────────────────────────────────
+function CameraTab() {
+  // Phases: 'viewfinder' | 'preview' | 'extracting' | 'edit' | 'solving' | 'result'
+  const [phase,        setPhase]        = useState('viewfinder')
+  const [capturedImg,  setCapturedImg]  = useState(null)   // { base64, type, dataUrl }
+  const [extracted,    setExtracted]    = useState('')      // editable OCR text
+  const [solveResult,  setSolveResult]  = useState(null)
+  const [error,        setError]        = useState(null)
+  const [facingMode,   setFacingMode]   = useState('environment')  // back camera by default
+  const [stream,       setStream]       = useState(null)
+  const [camError,     setCamError]     = useState(null)
+
+  const videoRef   = useRef()
+  const canvasRef  = useRef()
+
+  // ── Start camera ─────────────────────────────────────────────────────
+  const startCamera = async () => {
+    setCamError(null)
+    try {
+      const s = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode, width: { ideal: 1280 }, height: { ideal: 720 } },
+        audio: false,
+      })
+      setStream(s)
+      if (videoRef.current) {
+        videoRef.current.srcObject = s
+        videoRef.current.play()
+      }
+    } catch (err) {
+      setCamError(
+        err.name === 'NotAllowedError'
+          ? 'Camera permission denied. Please allow camera access in your browser settings.'
+          : err.name === 'NotFoundError'
+          ? 'No camera found on this device.'
+          : 'Could not start camera: ' + err.message
+      )
+    }
+  }
+
+  // ── Stop camera ───────────────────────────────────────────────────────
+  const stopCamera = () => {
+    stream?.getTracks().forEach(t => t.stop())
+    setStream(null)
+  }
+
+  // Start camera when entering viewfinder phase
+  useEffect(() => {
+    if (phase === 'viewfinder') startCamera()
+    else stopCamera()
+    return () => stopCamera()
+  }, [phase, facingMode])
+
+  // ── Capture frame from video ──────────────────────────────────────────
+  const capturePhoto = () => {
+    const video  = videoRef.current
+    const canvas = canvasRef.current
+    if (!video || !canvas) return
+
+    canvas.width  = video.videoWidth
+    canvas.height = video.videoHeight
+    canvas.getContext('2d').drawImage(video, 0, 0)
+
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.92)
+    const base64  = dataUrl.split(',')[1]
+    setCapturedImg({ base64, type: 'image/jpeg', dataUrl })
+    setPhase('preview')
+  }
+
+  // ── Send to Claude Vision for OCR extraction ──────────────────────────
+  const extractText = async () => {
+    if (!capturedImg) return
+    setPhase('extracting')
+    setError(null)
+    try {
+      const res = await callImageSolve(
+        capturedImg.base64,
+        capturedImg.type,
+        'Extract ONLY the maths question text from this image. Return just the question text with no extra commentary, no "Here is the question:", no formatting — just the raw question as the student would read it. If there are multiple questions, extract only the clearest one.'
+      )
+      // The backend returns { explanation: "..." } — use that as the extracted text
+      const text = res.explanation || ''
+      setExtracted(text.trim())
+      setPhase('edit')
+    } catch {
+      setError('Could not read the image. Make sure the backend is running.')
+      setPhase('preview')
+    }
+  }
+
+  // ── Send extracted/edited question to Euler ───────────────────────────
+  const solveQuestion = async () => {
+    if (!extracted.trim()) return
+    setPhase('solving')
+    setError(null)
+    setSolveResult('')
+    try {
+      await streamSSE(
+        `${API_BASE}/solve/image/stream`,
+        {
+          image_base64: capturedImg.base64,
+          image_type: capturedImg.type,
+          extra_instruction: `The student has confirmed this is the question: "${extracted.trim()}".\n\nPlease solve it fully with clear step-by-step working. Show all steps a student needs to understand and reproduce the answer.`,
+        },
+        (token) => {
+          setSolveResult(prev => prev + token)
+          // Switch to result phase on first token so user sees output immediately
+          setPhase(p => p === 'solving' ? 'result' : p)
+        }
+      )
+      setPhase('result')
+    } catch {
+      setError('Could not solve the question. Make sure the backend is running.')
+      setPhase('edit')
+    }
+  }
+
+  // ── Reset everything ──────────────────────────────────────────────────
+  const reset = () => {
+    setCapturedImg(null); setExtracted(''); setSolveResult(null)
+    setError(null); setPhase('viewfinder')
+  }
+
+  // ── VIEWFINDER ────────────────────────────────────────────────────────
+  if (phase === 'viewfinder') {
+    return (
+      <div className="max-w-2xl space-y-4">
+        {camError ? (
+          <div className="rounded-2xl border-2 border-red-200 bg-red-50 px-5 py-8 text-center space-y-3">
+            <p className="text-3xl">📷</p>
+            <p className="font-semibold text-red-800 text-sm">{camError}</p>
+            <button onClick={startCamera}
+              className="px-5 py-2 rounded-xl bg-red-500 text-white text-sm font-bold
+                         hover:bg-red-600 transition-colors">
+              Try Again
+            </button>
+          </div>
+        ) : (
+          <>
+            {/* Live viewfinder */}
+            <div className="relative rounded-2xl overflow-hidden bg-black border-2
+                            border-[var(--color-border)]" style={{ aspectRatio: '4/3' }}>
+              <video ref={videoRef} autoPlay playsInline muted
+                className="w-full h-full object-cover" />
+
+              {/* Corner guide lines */}
+              <div className="absolute inset-0 pointer-events-none">
+                {/* Framing corners */}
+                {[
+                  'top-6 left-6 border-t-4 border-l-4 rounded-tl-lg',
+                  'top-6 right-6 border-t-4 border-r-4 rounded-tr-lg',
+                  'bottom-6 left-6 border-b-4 border-l-4 rounded-bl-lg',
+                  'bottom-6 right-6 border-b-4 border-r-4 rounded-br-lg',
+                ].map((cls, i) => (
+                  <div key={i} className={`absolute w-8 h-8 border-white/80 ${cls}`} />
+                ))}
+                {/* Centre cross */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-6 h-px bg-white/40" />
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="h-6 w-px bg-white/40" />
+                </div>
+              </div>
+
+              {/* Flip camera button (top right) */}
+              <button
+                onClick={() => setFacingMode(f => f === 'environment' ? 'user' : 'environment')}
+                className="absolute top-3 right-3 w-10 h-10 rounded-full bg-black/50
+                           text-white flex items-center justify-center text-lg
+                           hover:bg-black/70 transition-colors backdrop-blur-sm">
+                🔄
+              </button>
+
+              {/* Hint text */}
+              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent px-4 py-4">
+                <p className="text-white/80 text-xs text-center font-mono tracking-wide">
+                  Point at the question — keep steady
+                </p>
+              </div>
+            </div>
+
+            {/* Capture button */}
+            <div className="flex justify-center">
+              <button onClick={capturePhoto}
+                className="w-20 h-20 rounded-full border-4 border-[var(--color-teal)]
+                           bg-white hover:bg-[var(--color-teal)] hover:text-white
+                           flex items-center justify-center transition-all shadow-lg group">
+                <div className="w-14 h-14 rounded-full bg-[var(--color-teal)] group-hover:bg-white
+                                flex items-center justify-center transition-all">
+                  <span className="text-2xl">📸</span>
+                </div>
+              </button>
+            </div>
+            <p className="text-center text-xs text-[var(--color-muted)] -mt-1">Tap to capture</p>
+          </>
+        )}
+        <canvas ref={canvasRef} className="hidden" />
+      </div>
+    )
+  }
+
+  // ── PREVIEW ───────────────────────────────────────────────────────────
+  if (phase === 'preview') {
+    return (
+      <div className="max-w-2xl space-y-4">
+        <div className="rounded-2xl overflow-hidden border-2 border-[var(--color-border)]">
+          <img src={capturedImg.dataUrl} alt="Captured" className="w-full object-contain max-h-72" />
+        </div>
+        {error && (
+          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+            ⚠️ {error}
+          </div>
+        )}
+        <div className="grid grid-cols-2 gap-3">
+          <button onClick={reset}
+            className="py-3 rounded-xl border-2 border-[var(--color-border)]
+                       text-sm font-semibold text-[var(--color-muted)]
+                       hover:border-[var(--color-ink)] hover:text-[var(--color-ink)] transition-all">
+            🔄 Retake
+          </button>
+          <button onClick={extractText}
+            className="py-3 rounded-xl bg-[var(--color-teal)] text-white
+                       text-sm font-bold hover:opacity-90 transition-opacity">
+            🔍 Read Question →
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // ── EXTRACTING ────────────────────────────────────────────────────────
+  if (phase === 'extracting') {
+    return (
+      <div className="max-w-2xl space-y-4">
+        <div className="rounded-2xl overflow-hidden border-2 border-[var(--color-border)] opacity-60">
+          <img src={capturedImg.dataUrl} alt="Captured" className="w-full object-contain max-h-72" />
+        </div>
+        <div className="flex items-center gap-3 justify-center py-6">
+          <span className="w-6 h-6 border-3 border-[var(--color-teal)] border-t-transparent
+                           rounded-full animate-spin" />
+          <p className="font-mono text-sm text-[var(--color-muted)]">
+            Euler is reading the question...
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  // ── EDIT EXTRACTED TEXT ───────────────────────────────────────────────
+  if (phase === 'edit') {
+    return (
+      <div className="max-w-2xl space-y-4">
+        {/* Thumbnail */}
+        <div className="rounded-xl overflow-hidden border border-[var(--color-border)] max-h-36">
+          <img src={capturedImg.dataUrl} alt="Captured"
+            className="w-full object-contain max-h-36 opacity-80" />
+        </div>
+
+        {/* Editable extracted text */}
+        <div className="rounded-2xl border-2 border-[var(--color-teal)] overflow-hidden">
+          <div className="bg-[var(--color-teal)] px-4 py-3 flex items-center justify-between">
+            <div>
+              <p className="font-semibold text-white text-sm">✏️ Confirm the Question</p>
+              <p className="text-white/70 text-xs mt-0.5">
+                Euler extracted this — correct any errors before solving
+              </p>
+            </div>
+            <button onClick={reset}
+              className="text-white/60 hover:text-white text-xs font-mono transition-colors">
+              retake ↩
+            </button>
+          </div>
+          <div className="bg-white p-4">
+            <textarea
+              value={extracted}
+              onChange={e => setExtracted(e.target.value)}
+              rows={5}
+              placeholder="Question text will appear here..."
+              className="w-full border-2 border-[var(--color-border)] focus:border-[var(--color-teal)]
+                         rounded-xl px-4 py-3 text-sm text-[var(--color-ink)] resize-none
+                         transition-colors leading-relaxed"
+            />
+          </div>
+        </div>
+
+        {error && (
+          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+            ⚠️ {error}
+          </div>
+        )}
+
+        <button onClick={solveQuestion} disabled={!extracted.trim()}
+          className="w-full py-4 rounded-xl bg-[var(--color-ink)] text-white font-bold
+                     text-sm flex items-center justify-center gap-2
+                     hover:opacity-90 transition-opacity disabled:opacity-40">
+          🧮 Solve This Question →
+        </button>
+      </div>
+    )
+  }
+
+  // ── SOLVING ───────────────────────────────────────────────────────────
+  if (phase === 'solving') {
+    return (
+      <div className="max-w-2xl space-y-4">
+        <div className="rounded-2xl border-2 border-[var(--color-border)] bg-[var(--color-paper)] p-4">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-muted)] mb-2">
+            Question
+          </p>
+          <p className="text-sm text-[var(--color-ink)] leading-relaxed">{extracted}</p>
+        </div>
+        <div className="flex items-center gap-3 justify-center py-8">
+          <span className="w-8 h-8 border-4 border-[var(--color-teal)] border-t-transparent
+                           rounded-full animate-spin" />
+          <p className="font-mono text-sm text-[var(--color-muted)]">
+            Euler is solving...
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  // ── RESULT ────────────────────────────────────────────────────────────
+  if (phase === 'result') {
+    return (
+      <div className="max-w-2xl space-y-4">
+        {/* Question recap */}
+        <div className="rounded-2xl border-2 border-[var(--color-border)] bg-[var(--color-paper)] px-5 py-4">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-muted)] mb-1">
+            Question
+          </p>
+          <p className="text-sm text-[var(--color-ink)] leading-relaxed">{extracted}</p>
+        </div>
+
+        {/* Solution */}
+        <div className="rounded-2xl border-2 border-[var(--color-teal)] overflow-hidden">
+          <div className="bg-[var(--color-teal)] px-5 py-3 flex items-center justify-between">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-white">
+              ✅ Euler's Solution
+            </p>
+            <button onClick={() => setPhase('edit')}
+              className="text-white/60 hover:text-white text-xs font-mono transition-colors">
+              edit question ↩
+            </button>
+          </div>
+          <div className="px-5 py-4 bg-white">
+            <div className="text-sm text-[var(--color-ink)] leading-relaxed whitespace-pre-wrap font-mono">
+              {solveResult}
+              {phase === 'solving' && <span className="inline-block w-2 h-4 bg-[var(--color-teal)] ml-0.5 animate-pulse align-text-bottom" />}
+            </div>
+          </div>
+        </div>
+
+        <button onClick={reset}
+          className="w-full py-3 rounded-xl border-2 border-[var(--color-border)]
+                     text-sm font-semibold text-[var(--color-muted)]
+                     hover:border-[var(--color-ink)] hover:text-[var(--color-ink)] transition-all">
+          📷 Snap Another Question
+        </button>
+      </div>
+    )
+  }
+
+  return null
 }
 
 // ── Main page ─────────────────────────────────────────────────────────
@@ -334,9 +735,13 @@ export default function Solve() {
   const handleExplain = async () => {
     if (!result || !expression) return
     setExplaining(true)
+    setExplanation('')
     try {
-      const data = await callExplain(expression, JSON.stringify(result.data || result))
-      setExplanation(data.explanation)
+      await streamSSE(
+        `${API_BASE}/solve/explain/stream`,
+        { expression, result: JSON.stringify(result.data || result) },
+        (token) => setExplanation(prev => prev + token)
+      )
     } catch {
       setExplanation('Could not generate explanation. Please try again.')
     } finally {
@@ -373,7 +778,11 @@ export default function Solve() {
 
       {/* Tab switcher */}
       <div className="flex border-b-2 border-[var(--color-border)] mb-6">
-        {[{ id: 'type', label: '⌨️  Type Expression' }, { id: 'image', label: '📷  Upload Photo / Screenshot' }].map(t => (
+        {[
+          { id: 'type',   label: '⌨️  Type Expression' },
+          { id: 'camera', label: '📷  Snap a Question' },
+          { id: 'image',  label: '🖼️  Upload Photo' },
+        ].map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
             className={`px-5 py-3 text-sm font-semibold border-b-2 -mb-0.5 transition-all
               ${tab === t.id ? 'border-[var(--color-ink)] text-[var(--color-ink)]'
@@ -383,7 +792,8 @@ export default function Solve() {
         ))}
       </div>
 
-      {tab === 'image' ? <ImageTab /> : (
+      {tab === 'camera' ? <CameraTab /> :
+       tab === 'image'  ? <ImageTab />  : (
         // ── 3-column layout: calculator | result+explain | examples+mode ──
         <div className="grid grid-cols-1 xl:grid-cols-[1fr_300px_260px] gap-5 items-start">
 

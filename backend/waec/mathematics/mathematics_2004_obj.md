@@ -12,7 +12,7 @@ B. 21121
 C. 21112
 D. 21011
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -23,7 +23,7 @@ B. 10111
 C. 11101
 D. 111100
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -34,7 +34,7 @@ B. 21 o
 C. 32 o
 D. 39 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -45,7 +45,7 @@ B. (9/5)
 C. 5
 D. 9(3/5)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -56,18 +56,18 @@ B. (7/12)
 C. (5/12)
 D. (1/6)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**6.** ![diagram](images/waec/2004/q6_1.jpg) In the diagram, R ˆ P Q = Q ˆ R Y, P ˆ Q R = R ˆ Y Q, |QP| = 8 cm, |QY| = 4 cm, and |RY| = 5 cm. Find |QR|.
+**6.** ![diagram](images/waec/2004/q6_1.jpg) In the diagram, R\hatPQ = Q\hatRY, P\hatQR = R\hatYQ, |QP| = 8 cm, |QY| = 4 cm, and |RY| = 5 cm. Find |QR|.
 
 A. 2.0cm
 B. 2.5cm
 C. 6.4cm
 D. 10.0cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -78,29 +78,29 @@ B. 28 o
 C. 36 o
 D. 44 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **8.** There are m boys and 12 girls in a class. What is the probability of selecting at random a girl from the class?
 
-A. m 12
-B. 12 m
-C. 12 m + 12
-D. 12 m − 12
+A. (m/12)
+B. (12/m)
+C. (12/m+12)
+D. (12/m-12)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**9.** Simplify − ( + ) ÷ and correct your answer to the nearest whole number
+**9.** Simplify 7(1/2)-\left(2(1/2)+3\right)/16(1/2)and correct your answer to the nearest whole number
 
 A. 33
 B. 8
 C. 7
 D. 0
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -111,7 +111,7 @@ B. 20.78m
 C. 18.00m
 D. 10.39m
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -122,7 +122,7 @@ B. 12√3cm 2
 C. 16√2cm 2
 D. 16√3cm 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -133,7 +133,7 @@ B. 1
 C. 3
 D. 4
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -144,7 +144,7 @@ B. 70 o
 C. 100 o
 D. 125 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -155,7 +155,7 @@ B. -(1/2).
 C. (1/2)
 D. 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -166,7 +166,7 @@ B. 592cm 2
 C. 296cm 2
 D. 148cm 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -177,7 +177,7 @@ B. (a+1/b(a-x+1))
 C. (a(b-x+1)/b+1)
 D. (b/a(b-x+1))
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -188,7 +188,7 @@ B. p =r q
 C. p = (r/q)
 D. p=q r
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -199,7 +199,7 @@ B. 67,116
 C. 81,140
 D. 91, 140
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -210,7 +210,7 @@ B. 7
 C. 9
 D. 14
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -221,7 +221,7 @@ B. x= -2 or 5
 C. x = 1 or 10
 D. x = 2 or 5
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -232,7 +232,7 @@ B. 17.29
 C. 16.50
 D. 16.33
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -243,7 +243,7 @@ B. 11.2cm
 C. 11.4cm
 D. 28.0cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -254,18 +254,18 @@ B. 3(3px - 4y)(3px - 4y)
 C. 9(px - 4y)(3p x + 4y)
 D. 3(3px -4y)(3px +4y)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**24.** What is the volume of a solid cylinder of diameter 7cm and height 7cm? (Take π = )
+**24.** What is the volume of a solid cylinder of diameter 7cm and height 7cm? (Take )
 
 A. 38.5cm 3
 B. 77cm 3
 C. 269.5cm 3
 D. 1078cm 3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -276,7 +276,7 @@ B. -6
 C. − 9 2
 D. − 3 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -287,7 +287,7 @@ B. {1,9}
 C. {315.7}
 D. {4, 6, 8, 10}
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -298,7 +298,7 @@ B. 80 o
 C. 50 o
 D. 40 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -309,7 +309,7 @@ B. 1.5
 C. 2
 D. 8
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -320,7 +320,7 @@ B. 252 o
 C. 198 o
 D. 162 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -331,7 +331,7 @@ B. 45 o
 C. 55 o
 D. 70 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -342,18 +342,18 @@ B. 19
 C. 17
 D. 15
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**32.** Given that √ + √ − √ K = √ , find K,
+**32.** Given that sqrt(128)+sqrt(18)-sqrt(K) = 7sqrt(2), find K,
 
 A. 8
 B. 16
 C. 32
 D. 48
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -364,7 +364,7 @@ B. 25 o
 C. 35 o
 D. 60 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -375,29 +375,29 @@ B. 2
 C. 3
 D. 4
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **35.** ![diagram](images/waec/2004/q35_1.jpg) The table above gives the marks scored by a group of students in a test Use the table to answer the Question below What is the probability of selecting a student from the group that scored 2 or 3?
 
-A. 1 11
-B. 5 22
-C. 7 22
-D. 6 11
+A. (1/11)
+B. (5/22)
+C. (7/22)
+D. (6/11)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**36.** Find the range of values of x for which(x+2/4)-(x+1/3)>(1/2)
+**36.** Find the range of values of x for which
 
 A. x > 4
 B. x > -4
 C. x < 4
 D. x < -4
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -408,18 +408,18 @@ B. 4
 C. 16
 D. 24
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**38.** Simplify (2/a+b)-(1/a-b)
+**38.** Simplify
 
-A. (3/a+b)
-B. (a-3b/a^2-b^2)
-C. (3a-b/a^2 – b^2)
-D. (a-3b/a^2+b^2)
+A. 3 a + b
+B. a − 3 b a 2 − b 2
+C. \frac{3a-b}{a^2 – b^2}
+D. \frac{a-3b}{a^2+b^2}
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -429,9 +429,9 @@ A. 30 o
 B. 50 o
 C. 61 o
 D. 78 o
-E. 65.5^\circ
+E. 65.5 ^{\circ}
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -442,7 +442,7 @@ B. -1, -4
 C. -1, 4
 D. -4, 1
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -453,18 +453,18 @@ B. -4.6 and 1.5
 C. -3.6 and 0.4
 D. -3.6 and 1.5
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**42.** Which of the following quadratic equations has -(1/2) and (3/4) as its roots?
+**42.** Which of the following quadratic equations has and as its roots?
 
 A. 8x 2 + 11x - 3 = 0
 B. 8x 2 -11x – 3 = 0
 C. 8x 2 + 2x -3 = 0
 D. 8x 2 - 2x – 3 = 0
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -475,18 +475,18 @@ B. a line parallel to the line segment XY
 C. a circle with XY as diameter
 D. the line perpendicular to the line segment XY
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**44.** Given that P\propto (1/√(r)) and p = 3 when r = 16, find the value of r when p = (3/2)
+**44.** Given that and p = 3 when r = 16, find the value of r when p =
 
 A. 48
 B. 64
 C. 72
 D. 324
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -497,7 +497,7 @@ B. II only
 C. III only
 D. I, II and III
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -508,7 +508,7 @@ B. 8: 15
 C. 6:125
 D. 8:125
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -519,7 +519,7 @@ B. 77
 C. 51
 D. -27
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -530,7 +530,7 @@ B. N131,875
 C. N126750
 D. N126250
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -541,7 +541,7 @@ B. (16/625)
 C. (12/25)
 D. (13/25)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -552,6 +552,6 @@ B. 44 o
 C. 46 o
 D. 54 o
 
-✓ **Answer:** D
+Answer: D
 
 ---

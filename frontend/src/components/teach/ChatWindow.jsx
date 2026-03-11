@@ -1,326 +1,569 @@
-import { useState, useRef, useEffect } from 'react'
-import MessageBubble from './MessageBubble'
-import { askTutor, getTopicOverview } from '../../services/api'
-import { saveMessage, getMessages, formatConversationAsText } from '../../lib/conversations'
+// src/components/teach/ChatWindow.jsx
+// Drop-in replacement — streaming, working thumbs up/down, copy button
+
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { useAuth } from '../../context/AuthContext'
+import { supabase } from '../../lib/supabase'
 
-const QUICK_QUESTIONS = {
-  default: [
-    'Explain this topic to me',
-    'Give me a worked example',
-    'What are the key formulas?',
-    'What are common mistakes?',
-  ],
-  'Quadratic Equations': [
-    'What is a quadratic equation?',
-    'Solve x² + 5x + 6 = 0',
-    'When do I use the quadratic formula?',
-    'What are the roots of an equation?',
-  ],
-  'Bearings and Distances': [
-    'What is a bearing?',
-    'How do I find distance from a bearing?',
-    'Difference between true and magnetic bearing?',
-    'Give me a worked example',
-  ],
-  'Surds and Simplification of Surds': [
-    'What is a surd?',
-    'How do I simplify √12?',
-    'How do I rationalise the denominator?',
-    'Give me a worked example',
-  ],
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+
+// ── Streaming helper ──────────────────────────────────────────────────────────
+async function streamTeach({ question, topic, level, history, userId, onToken, onDone, onError }) {
+  try {
+    const { data: { session } } = await supabase.auth.getSession()
+    const res = await fetch(`${API_BASE}/teach/ask/stream`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
+      },
+      body: JSON.stringify({
+        question,
+        topic:                topic || 'General Mathematics',
+        level:                level || 'sss',
+        conversation_history: history,
+        user_id:              userId || null,
+      }),
+    })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+
+    const reader  = res.body.getReader()
+    const decoder = new TextDecoder()
+    let buffer = ''
+
+    while (true) {
+      const { done, value } = await reader.read()
+      if (done) break
+      buffer += decoder.decode(value, { stream: true })
+      const lines = buffer.split('\n')
+      buffer = lines.pop()
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue
+        const payload = line.slice(6).trim()
+        if (payload === '[DONE]') { onDone(); return }
+        try { onToken(JSON.parse(payload).token) } catch {}
+      }
+    }
+    onDone()
+  } catch (err) {
+    onError(err.message || 'Could not connect to backend.')
+  }
 }
 
-function getQuickQuestions(topic) {
-  return QUICK_QUESTIONS[topic] || QUICK_QUESTIONS.default
+// ── Submit feedback ───────────────────────────────────────────────────────────
+async function submitFeedback({ messageId, userId, topic, level, question, responsePreview, rating, comment }) {
+  try {
+    await fetch(`${API_BASE}/teach/feedback`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message_id:       messageId,
+        user_id:          userId,
+        topic,
+        level,
+        question,
+        response_preview: responsePreview,
+        rating,
+        comment,
+      }),
+    })
+  } catch {}   // silent fail — feedback is non-critical
 }
 
+// ── Markdown-lite renderer ────────────────────────────────────────────────────
+// Handles **bold**, `code`, numbered lists, bullet lists, and LaTeX fences.
+// Full KaTeX rendering would need the katex package — this gives readable output.
+function renderMessage(text) {
+  if (!text) return null
+  const lines = text.split('\n')
+  const elements = []
+  let key = 0
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i]
+
+    // Blank line → spacer
+    if (!line.trim()) {
+      elements.push(<div key={key++} className="h-2" />)
+      continue
+    }
+
+    // Numbered list
+    const numMatch = line.match(/^(\d+)\.\s+(.*)/)
+    if (numMatch) {
+      elements.push(
+        <div key={key++} className="flex gap-2 text-sm leading-relaxed">
+          <span className="shrink-0 font-bold text-[var(--color-teal)] w-5">{numMatch[1]}.</span>
+          <span dangerouslySetInnerHTML={{ __html: inlineFormat(numMatch[2]) }} />
+        </div>
+      )
+      continue
+    }
+
+    // Bullet list
+    const bulletMatch = line.match(/^[-*•]\s+(.*)/)
+    if (bulletMatch) {
+      elements.push(
+        <div key={key++} className="flex gap-2 text-sm leading-relaxed">
+          <span className="shrink-0 text-[var(--color-teal)] mt-1">•</span>
+          <span dangerouslySetInnerHTML={{ __html: inlineFormat(bulletMatch[1]) }} />
+        </div>
+      )
+      continue
+    }
+
+    // Heading (##)
+    const headingMatch = line.match(/^#{1,3}\s+(.*)/)
+    if (headingMatch) {
+      elements.push(
+        <p key={key++} className="font-bold text-sm text-[var(--color-ink)] mt-2 mb-1">
+          {headingMatch[1]}
+        </p>
+      )
+      continue
+    }
+
+    // LaTeX display block $$...$$
+    if (line.trim().startsWith('$$')) {
+      elements.push(
+        <div key={key++}
+          className="my-2 px-3 py-2 rounded-lg bg-[var(--color-border)]/40 font-mono text-sm text-center overflow-x-auto">
+          {line.trim()}
+        </div>
+      )
+      continue
+    }
+
+    // Normal paragraph line
+    elements.push(
+      <p key={key++} className="text-sm leading-relaxed"
+        dangerouslySetInnerHTML={{ __html: inlineFormat(line) }} />
+    )
+  }
+
+  return <div className="space-y-0.5">{elements}</div>
+}
+
+function inlineFormat(text) {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,     '<em>$1</em>')
+    .replace(/`([^`]+)`/g,     '<code class="px-1 py-0.5 rounded bg-stone-100 font-mono text-xs text-[var(--color-teal)]">$1</code>')
+}
+
+// ── Message bubble ────────────────────────────────────────────────────────────
+function MessageBubble({ msg, topic, level, lastUserQuestion, onFeedbackSent }) {
+  const { user } = useAuth()
+  const [rating,   setRating]   = useState(msg.rating || null)   // 'up' | 'down' | null
+  const [copied,   setCopied]   = useState(false)
+  const [showNote, setShowNote] = useState(false)
+  const [note,     setNote]     = useState('')
+
+  const isUser = msg.role === 'user'
+  const isStreaming = msg.streaming === true
+
+  const handleThumb = async (thumb) => {
+    if (rating) return   // already rated
+    setRating(thumb)
+    if (showNote && thumb === 'down') return   // wait for note submit
+    await submitFeedback({
+      messageId:       msg.id,
+      userId:          user?.id || 'anonymous',
+      topic,
+      level,
+      question:        lastUserQuestion,
+      responsePreview: msg.content.slice(0, 300),
+      rating:          thumb,
+      comment:         '',
+    })
+    if (thumb === 'down') setShowNote(true)
+    onFeedbackSent?.()
+  }
+
+  const handleNoteSubmit = async () => {
+    await submitFeedback({
+      messageId:       msg.id,
+      userId:          user?.id || 'anonymous',
+      topic,
+      level,
+      question:        lastUserQuestion,
+      responsePreview: msg.content.slice(0, 300),
+      rating:          'down',
+      comment:         note,
+    })
+    setShowNote(false)
+  }
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(msg.content).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
+
+  if (isUser) {
+    return (
+      <div className="flex justify-end">
+        <div className="max-w-[75%] px-4 py-3 rounded-2xl rounded-tr-sm
+                        bg-[var(--color-ink)] text-[var(--color-paper)] text-sm leading-relaxed">
+          {msg.content}
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex flex-col gap-1">
+      {/* Euler avatar + message */}
+      <div className="flex gap-3 items-start">
+        {/* Avatar */}
+        <div className="shrink-0 w-8 h-8 rounded-full bg-[var(--color-teal)]
+                        flex items-center justify-center text-white text-xs font-black">
+          E
+        </div>
+
+        {/* Bubble */}
+        <div className="flex-1 min-w-0 rounded-2xl rounded-tl-sm border
+                        border-[var(--color-border)] bg-[var(--color-paper)] px-4 py-3">
+          {renderMessage(msg.content)}
+          {isStreaming && (
+            <span className="inline-block w-2 h-4 bg-[var(--color-teal)]
+                             ml-0.5 animate-pulse align-text-bottom rounded-sm" />
+          )}
+        </div>
+      </div>
+
+      {/* Action row — only shown when not streaming */}
+      {!isStreaming && msg.content && (
+        <div className="flex items-center gap-2 pl-11">
+          {/* Thumbs up */}
+          <button
+            onClick={() => handleThumb('up')}
+            title="This was helpful"
+            disabled={!!rating}
+            className={`w-7 h-7 rounded-full flex items-center justify-center text-sm
+                        transition-all border
+                        ${rating === 'up'
+                          ? 'bg-emerald-100 border-emerald-300 text-emerald-600'
+                          : rating
+                          ? 'opacity-30 border-[var(--color-border)] text-[var(--color-muted)]'
+                          : 'border-[var(--color-border)] text-[var(--color-muted)] hover:border-emerald-400 hover:text-emerald-500 hover:bg-emerald-50'
+                        }`}>
+            👍
+          </button>
+
+          {/* Thumbs down */}
+          <button
+            onClick={() => handleThumb('down')}
+            title="This wasn't helpful"
+            disabled={!!rating}
+            className={`w-7 h-7 rounded-full flex items-center justify-center text-sm
+                        transition-all border
+                        ${rating === 'down'
+                          ? 'bg-red-100 border-red-300 text-red-500'
+                          : rating
+                          ? 'opacity-30 border-[var(--color-border)] text-[var(--color-muted)]'
+                          : 'border-[var(--color-border)] text-[var(--color-muted)] hover:border-red-300 hover:text-red-400 hover:bg-red-50'
+                        }`}>
+            👎
+          </button>
+
+          {/* Copy */}
+          <button
+            onClick={handleCopy}
+            title="Copy response"
+            className="w-7 h-7 rounded-full flex items-center justify-center text-xs
+                       border border-[var(--color-border)] text-[var(--color-muted)]
+                       hover:border-[var(--color-teal)] hover:text-[var(--color-teal)]
+                       transition-all">
+            {copied ? '✓' : '⎘'}
+          </button>
+
+          {/* Feedback sent confirmation */}
+          {rating && !showNote && (
+            <span className="text-xs text-[var(--color-muted)] ml-1">
+              {rating === 'up' ? 'Thanks! 🎉' : 'Got it, thanks.'}
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* Optional note after thumbs down */}
+      {showNote && (
+        <div className="pl-11 mt-1 flex gap-2">
+          <input
+            value={note}
+            onChange={e => setNote(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && handleNoteSubmit()}
+            placeholder="What was wrong? (optional)"
+            className="flex-1 text-xs border border-[var(--color-border)] rounded-xl
+                       px-3 py-2 bg-[var(--color-paper)] focus:border-[var(--color-teal)]
+                       focus:outline-none transition-colors"
+          />
+          <button
+            onClick={handleNoteSubmit}
+            className="px-3 py-2 rounded-xl bg-[var(--color-teal)] text-white
+                       text-xs font-semibold hover:opacity-90 transition-opacity">
+            Send
+          </button>
+          <button
+            onClick={() => setShowNote(false)}
+            className="px-3 py-2 rounded-xl border border-[var(--color-border)]
+                       text-xs text-[var(--color-muted)] hover:text-[var(--color-ink)]
+                       transition-colors">
+            Skip
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── Main ChatWindow component ─────────────────────────────────────────────────
 export default function ChatWindow({ topic, level, conversation, onConversationUpdate }) {
   const { user } = useAuth()
-  const [messages, setMessages] = useState([])
-  const [input, setInput] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [copied, setCopied] = useState(false)
-  const bottomRef = useRef(null)
-  const inputRef = useRef(null)
-  const prevConvRef = useRef(null)
+  const [messages,  setMessages]  = useState([])
+  const [input,     setInput]     = useState('')
+  const [streaming, setStreaming] = useState(false)
+  const [error,     setError]     = useState(null)
+  const bottomRef   = useRef()
+  const inputRef    = useRef()
+  const textareaRef = useRef()
 
-  // Load messages when conversation changes
+  // Load messages from Supabase when conversation changes
   useEffect(() => {
-    if (!conversation) {
+    if (!conversation?.id) {
       setMessages([])
       return
     }
-    if (conversation.id === prevConvRef.current) return
-    prevConvRef.current = conversation.id
-    loadMessages()
-  }, [conversation])
-
-  // Load overview when topic changes on a new conversation
-  useEffect(() => {
-    if (!topic || !conversation) return
-    if (messages.length > 0) return   // don't overwrite existing chat
-    loadOverview()
-  }, [topic, conversation])
-
-  const loadMessages = async () => {
-    if (!conversation?.id) return
-    const { data } = await getMessages(conversation.id)
-    if (data && data.length > 0) {
-      setMessages(data.map(m => ({
-        id: m.id,
-        role: m.role,
+    // First try messages already attached to the conv object
+    if (conversation?.messages?.length > 0) {
+      setMessages(conversation.messages.map(m => ({
+        id:      m.id || crypto.randomUUID(),
+        role:    m.role,
         content: m.content,
+        rating:  m.rating || null,
       })))
-    } else if (topic) {
-      loadOverview()
+    } else {
+      // Fallback: load from Supabase directly
+      supabase
+        .from('messages')
+        .select('*')
+        .eq('conversation_id', conversation.id)
+        .order('created_at', { ascending: true })
+        .then(({ data }) => {
+          if (data?.length > 0) {
+            setMessages(data.map(m => ({ id: m.id, role: m.role, content: m.content })))
+          }
+        })
     }
-  }
+  }, [conversation?.id])
 
-  const loadOverview = async () => {
-    const loadingId = `loading_${Date.now()}`
-    setMessages([{ id: loadingId, role: 'assistant', loading: true }])
-    try {
-      const res = await getTopicOverview(topic, level)
-      const content = res.data.overview
-      setMessages([{ id: loadingId, role: 'assistant', content }])
-      if (conversation?.id) {
-        await saveMessage(conversation.id, 'assistant', content)
-      }
-    } catch {
-      setMessages([{
-        id: loadingId,
-        role: 'assistant',
-        content: '⚠️ Could not load overview. Make sure backend is running.'
-      }])
-    }
-  }
-
+  // Scroll to bottom whenever messages change
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
-  const sendMessage = async (text) => {
-    const question = text || input.trim()
-    if (!question || loading) return
+  // Auto-resize textarea
+  useEffect(() => {
+    const el = textareaRef.current
+    if (!el) return
+    el.style.height = 'auto'
+    el.style.height = Math.min(el.scrollHeight, 160) + 'px'
+  }, [input])
+
+  // Auto-ask overview when a new topic is selected and no messages yet
+  useEffect(() => {
+    if (topic && messages.length === 0 && !streaming) {
+      sendMessage(`Give me an overview of ${topic}`)
+    }
+  }, [topic, conversation?.id])
+
+  const sendMessage = useCallback(async (text) => {
+    const content = (text || input).trim()
+    if (!content || streaming) return
+
     setInput('')
+    setError(null)
 
-    const userMsg = { id: `u_${Date.now()}`, role: 'user', content: question }
-    const loadId = `l_${Date.now()}`
-    setMessages(prev => [...prev, userMsg, { id: loadId, role: 'assistant', loading: true }])
-    setLoading(true)
+    // Add user message
+    const userMsg = { id: crypto.randomUUID(), role: 'user', content }
+    setMessages(prev => [...prev, userMsg])
 
-    // Save user message to DB
-    if (conversation?.id) {
-      await saveMessage(conversation.id, 'user', question)
-    }
+    // Add placeholder AI message
+    const aiId = crypto.randomUUID()
+    setMessages(prev => [...prev, { id: aiId, role: 'assistant', content: '', streaming: true }])
+    setStreaming(true)
 
-    // Build history (last 6 messages)
-    const history = messages.slice(-6).map(m => ({
-      role: m.role,
-      content: m.content || ''
-    }))
+    // Build history for context (exclude the streaming placeholder)
+    const history = messages.map(m => ({ role: m.role, content: m.content }))
 
-    try {
-      const res = await askTutor(question, topic, level, history, user?.id || null)
-      const content = res.data.response
-
-      setMessages(prev => prev.map(m =>
-        m.id === loadId ? { id: loadId, role: 'assistant', content } : m
-      ))
-
-      // Save assistant message to DB
-      if (conversation?.id) {
-        await saveMessage(conversation.id, 'assistant', content)
+    await streamTeach({
+      question: content,
+      topic:    topic || 'General Mathematics',
+      level:    level || 'sss',
+      history,
+      userId:   user?.id,
+      onToken: (token) => {
+        setMessages(prev => prev.map(m =>
+          m.id === aiId ? { ...m, content: m.content + token } : m
+        ))
+      },
+      onDone: async () => {
+        setMessages(prev => {
+          const updated = prev.map(m =>
+            m.id === aiId ? { ...m, streaming: false } : m
+          )
+          // Save both the user message and completed AI message to Supabase
+          if (conversation?.id) {
+            const toSave = updated.slice(-2) // last user + AI pair
+            toSave.forEach(m => {
+              supabase.from('messages').upsert({
+                id:              m.id,
+                conversation_id: conversation.id,
+                role:            m.role,
+                content:         m.content,
+              }, { onConflict: 'id' }).then(() => {})
+            })
+          }
+          return updated
+        })
+        setStreaming(false)
         onConversationUpdate?.()
-      }
-    } catch {
-      setMessages(prev => prev.map(m =>
-        m.id === loadId
-          ? { id: loadId, role: 'assistant', content: '⚠️ Could not connect to backend.' }
-          : m
-      ))
-    } finally {
-      setLoading(false)
-      inputRef.current?.focus()
-    }
-  }
+      },
+      onError: (msg) => {
+        setMessages(prev => prev.map(m =>
+          m.id === aiId
+            ? { ...m, content: 'Sorry, something went wrong. Please try again.', streaming: false }
+            : m
+        ))
+        setError(msg)
+        setStreaming(false)
+      },
+    })
+  }, [input, streaming, messages, topic, level, user])
 
-  const handleCopy = async () => {
-    const text = messages
-      .filter(m => !m.loading && m.content)
-      .map(m => `${m.role === 'user' ? 'You' : 'Euler'}: ${m.content}`)
-      .join('\n\n')
-    await navigator.clipboard.writeText(text)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
-
-  const handlePrint = () => {
-    const text = messages
-      .filter(m => !m.loading && m.content)
-      .map(m => `${m.role === 'user' ? 'You' : 'Euler'}:\n${m.content}`)
-      .join('\n\n---\n\n')
-
-    const win = window.open('', '_blank')
-    win.document.write(`
-      <html>
-        <head>
-          <title>MathGenius — ${conversation?.title || topic || 'Conversation'}</title>
-          <style>
-            body { font-family: Georgia, serif; max-width: 700px; margin: 40px auto;
-                   padding: 0 20px; line-height: 1.7; color: #1a1a1a; }
-            h1   { font-size: 1.5rem; border-bottom: 2px solid #1a1a1a; padding-bottom: 8px; }
-            .meta { color: #666; font-size: 0.85rem; margin-bottom: 30px; }
-            .msg  { margin-bottom: 24px; }
-            .speaker { font-weight: bold; font-size: 0.8rem;
-                       text-transform: uppercase; letter-spacing: 0.1em;
-                       color: #666; margin-bottom: 4px; }
-            .content { white-space: pre-wrap; }
-            .euler .speaker { color: #2a7c7c; }
-          </style>
-        </head>
-        <body>
-          <h1>MathGenius Conversation</h1>
-          <div class="meta">
-            Topic: ${topic || 'General'} &nbsp;|&nbsp;
-            Date: ${new Date().toLocaleDateString()}
-          </div>
-          ${messages.filter(m => !m.loading && m.content).map(m => `
-            <div class="msg ${m.role === 'assistant' ? 'euler' : ''}">
-              <div class="speaker">${m.role === 'user' ? 'You' : 'Euler'}</div>
-              <div class="content">${m.content}</div>
-            </div>
-          `).join('')}
-        </body>
-      </html>
-    `)
-    win.document.close()
-    win.print()
-  }
-
-  const handleKey = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       sendMessage()
     }
   }
 
+  // Find the last user question (used for feedback context)
+  const lastUserQuestion = [...messages].reverse().find(m => m.role === 'user')?.content || ''
+
+  // ── Empty state ─────────────────────────────────────────────────────────────
+  if (!topic) {
+    return (
+      <div className="rounded-2xl border-2 border-dashed border-[var(--color-border)]
+                      flex flex-col items-center justify-center min-h-[480px] text-center p-8">
+        <p className="text-5xl mb-4">👈</p>
+        <p className="font-bold text-[var(--color-ink)] text-lg">Select a topic to start</p>
+        <p className="text-[var(--color-muted)] text-sm mt-2 max-w-xs">
+          Choose any topic from the sidebar and Euler will explain it, answer your questions,
+          and walk you through examples step by step.
+        </p>
+      </div>
+    )
+  }
+
+  // ── Chat view ───────────────────────────────────────────────────────────────
   return (
-    <div className="card flex flex-col"
-      style={{ height: 'calc(100vh - 120px)', position: 'sticky', top: '90px' }}>
+    <div className="flex flex-col rounded-2xl border-2 border-[var(--color-border)]
+                    bg-[var(--color-paper)] overflow-hidden" style={{ minHeight: '520px' }}>
 
       {/* Header */}
-      <div className="bg-[var(--color-teal)] px-5 py-3 shrink-0
-                      flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-white/20 flex items-center
-                          justify-center text-white font-bold font-serif">
-            E
-          </div>
-          <div>
-            <p className="font-serif font-bold text-white leading-none">Euler</p>
-            <p className="text-white/70 text-xs mt-0.5 flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" />
-              {topic || 'Select a topic'}
-            </p>
-          </div>
+      <div className="px-5 py-3.5 border-b border-[var(--color-border)] flex items-center gap-3
+                      bg-gradient-to-r from-[var(--color-teal)]/5 to-transparent">
+        <div className="w-8 h-8 rounded-full bg-[var(--color-teal)]
+                        flex items-center justify-center text-white text-xs font-black shrink-0">
+          E
         </div>
-
-        {/* Action buttons */}
-        {messages.length > 0 && (
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handleCopy}
-              title="Copy conversation"
-              className="text-white/70 hover:text-white bg-white/10 hover:bg-white/20
-                         rounded-lg px-3 py-1.5 text-xs font-medium transition-all"
-            >
-              {copied ? '✅ Copied' : '📋 Copy'}
-            </button>
-            <button
-              onClick={handlePrint}
-              title="Print conversation"
-              className="text-white/70 hover:text-white bg-white/10 hover:bg-white/20
-                         rounded-lg px-3 py-1.5 text-xs font-medium transition-all"
-            >
-              🖨️ Print
-            </button>
+        <div>
+          <p className="font-bold text-sm text-[var(--color-ink)]">Euler</p>
+          <p className="text-[10px] text-[var(--color-muted)] font-mono uppercase tracking-widest">
+            {topic}
+          </p>
+        </div>
+        {streaming && (
+          <div className="ml-auto flex items-center gap-1.5 text-xs text-[var(--color-teal)]">
+            <span className="w-2 h-2 rounded-full bg-[var(--color-teal)] animate-pulse" />
+            Typing…
           </div>
         )}
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5
-                      bg-[var(--color-paper)]">
-        {messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-center px-8">
-            <div className="text-6xl mb-4">🧮</div>
-            <h3 className="font-serif font-bold text-2xl text-[var(--color-ink)] mb-2">
-              {user ? `Welcome back!` : 'Welcome to Euler'}
-            </h3>
-            <p className="text-[var(--color-muted)] text-base leading-relaxed max-w-sm">
-              Select any topic from the sidebar and Euler will explain it fully,
-              step by step.
-            </p>
+      <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5">
+        {messages.map((msg, i) => (
+          <MessageBubble
+            key={msg.id}
+            msg={msg}
+            topic={topic}
+            level={level}
+            lastUserQuestion={lastUserQuestion}
+            onFeedbackSent={onConversationUpdate}
+          />
+        ))}
+
+        {error && (
+          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+            ⚠️ {error}
           </div>
-        ) : (
-          messages.map(msg => (
-            <MessageBubble key={msg.id} message={msg} />
-          ))
         )}
+
         <div ref={bottomRef} />
       </div>
 
-      {/* Quick questions */}
-      {topic && !loading && messages.length > 0 && (
-        <div className="px-4 py-2 bg-[var(--color-cream)] border-t
-                        border-[var(--color-border)] flex gap-2 flex-wrap shrink-0">
-          {getQuickQuestions(topic).map(q => (
-            <button
-              key={q}
-              onClick={() => sendMessage(q)}
-              className="text-xs px-3 py-1.5 bg-white border border-[var(--color-border)]
-                         rounded-full text-[var(--color-ink)] font-medium
-                         hover:bg-[var(--color-teal)] hover:text-white
-                         hover:border-[var(--color-teal)] transition-all duration-150"
-            >
-              {q}
-            </button>
-          ))}
-        </div>
-      )}
-
       {/* Input */}
-      <div className="px-4 py-3 bg-white border-t-2 border-[var(--color-ink)]
-                      flex gap-3 items-end shrink-0">
-        <textarea
-          ref={inputRef}
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={handleKey}
-          disabled={!topic}
-          rows={1}
-          placeholder={topic ? `Ask anything about ${topic}...` : 'Select a topic first'}
-          className="flex-1 bg-[var(--color-paper)] border-2 border-[var(--color-border)]
-                     focus:border-[var(--color-teal)] rounded-xl px-4 py-2.5 text-sm
-                     text-[var(--color-ink)] placeholder:text-[var(--color-muted)]
-                     resize-none transition-colors duration-150 disabled:opacity-50"
-          style={{ minHeight: '44px', maxHeight: '120px' }}
-        />
-        <button
-          onClick={() => sendMessage()}
-          disabled={!topic || loading || !input.trim()}
-          className="w-11 h-11 bg-[var(--color-teal)] hover:bg-[var(--color-teal-light)]
-                     disabled:opacity-40 rounded-xl flex items-center justify-center
-                     text-white transition-all shrink-0"
-        >
-          {loading
-            ? <span className="w-4 h-4 border-2 border-white/30 border-t-white
-                               rounded-full animate-spin" />
-            : '➤'
-          }
-        </button>
+      <div className="border-t border-[var(--color-border)] px-4 py-3 bg-[var(--color-paper)]">
+        {/* Quick prompts — only shown when no messages */}
+        {messages.length <= 1 && (
+          <div className="flex flex-wrap gap-2 mb-3">
+            {[
+              'Show me a worked example',
+              'What are the key formulas?',
+              'What mistakes should I avoid?',
+              'Give me a practice question',
+            ].map(q => (
+              <button key={q} onClick={() => sendMessage(q)} disabled={streaming}
+                className="px-3 py-1.5 rounded-xl text-xs border border-[var(--color-border)]
+                           text-[var(--color-muted)] hover:border-[var(--color-teal)]
+                           hover:text-[var(--color-teal)] transition-all disabled:opacity-40">
+                {q}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div className="flex gap-3 items-end">
+          <textarea
+            ref={textareaRef}
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder={streaming ? 'Euler is thinking…' : 'Ask Euler anything about this topic…'}
+            disabled={streaming}
+            rows={1}
+            className="flex-1 resize-none rounded-xl border-2 border-[var(--color-border)]
+                       focus:border-[var(--color-teal)] focus:outline-none
+                       px-4 py-3 text-sm bg-[var(--color-paper)] transition-colors
+                       disabled:opacity-60 leading-snug"
+            style={{ maxHeight: '160px' }}
+          />
+          <button
+            onClick={() => sendMessage()}
+            disabled={streaming || !input.trim()}
+            className="shrink-0 w-11 h-11 rounded-xl bg-[var(--color-teal)] text-white
+                       flex items-center justify-center text-lg font-bold
+                       hover:opacity-90 transition-opacity disabled:opacity-40">
+            ↑
+          </button>
+        </div>
+        <p className="text-[10px] text-[var(--color-muted)] mt-1.5 text-right">
+          Enter to send · Shift+Enter for new line
+        </p>
       </div>
     </div>
   )

@@ -12,7 +12,7 @@ B. 0.004
 C. 0.00360
 D. 0.00359
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -23,7 +23,7 @@ B. (2/5)
 C. -(2/5)
 D. -(5/2)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -34,7 +34,7 @@ B. y = -19
 C. y = -29
 D. y = 29
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -45,29 +45,29 @@ B. 612
 C. 611
 D. 610
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**5.** If 7 + y = 4 (mod 8), find the least value of y, 10 ≤ y ≤ 30
+**5.** If 7 + y = 4 (mod 8), find the least value of y, 10 <= y <= 30
 
 A. 11
 B. 13
 C. 19
 D. 21
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**6.** If T = {prime numbers} and M = {odd numbers} are subsets of μ = {x : 0 < x ≤ 10} and x is an integer, find (T^\prime n M^\prime).
+**6.** If T = {prime numbers} and M = {odd numbers} are subsets of mu = {x : 0 < x ≤ 10} and x is an integer, find (T^\prime n M^\prime).
 
 A. {4, 6, 8, 10}
 B. {1. 4, 6, 8, 10}
 C. {1, 2, 4, 6, 8, 10}
 D. {1, 2, 3, 5, 7, 8, 9}
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -78,7 +78,7 @@ B. (1/2)
 C. (1/3)
 D. -(1/2)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -89,7 +89,7 @@ B. 5
 C. 6
 D. 7
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -100,18 +100,18 @@ B. 10
 C. 6
 D. 8
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**10.** Evaluate: 2√(28) - 3√(50) + √(72)
+**10.** Evaluate: 2sqrt(28) - 3sqrt(50) + sqrt(72)
 
-A. 4√(7) - 21 √(2)
-B. 4√(7) - 11 √(2)
-C. 4√(7) - 9 √(2)
-D. 4√(7) + √(2)
+A. 4sqrt(7) - 21 sqrt(2)
+B. 4sqrt(7) - 11 sqrt(2)
+C. 4sqrt(7) - 9 sqrt(2)
+D. 4sqrt(7) + sqrt(2)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -122,7 +122,7 @@ B. (5/3)
 C. (3/4)
 D. (3/5)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -133,7 +133,7 @@ B. H = (2p/y^2)
 C. H = (p/2y^2)
 D. H = (p/y^2)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -144,7 +144,7 @@ B. x = 1(1/2) or x = 2(1/2)
 C. x = 1(1/2) or x = -1(1/2)
 D. x = -1(1/2) or x -2(1/2)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -155,7 +155,7 @@ B. log_10^2
 C. log_10^3
 D. 2 log_10^3
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -166,7 +166,7 @@ B. 10%
 C. 12%
 D. 13%
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -177,7 +177,7 @@ B. 7
 C. -7
 D. -12
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -188,7 +188,7 @@ B. y = -(3/2)
 C. y = (3/2)
 D. y = (5/2)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -199,7 +199,7 @@ B. (1/4)
 C. (2/3)
 D. (1/2)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -210,7 +210,7 @@ B. (x + 7/x - 7)
 C. (x - 2/x + 4)
 D. (x + 2/x - 2)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -221,42 +221,40 @@ B. (1/3)
 C. -(1/3)
 D. -1
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**21.** The total surface area of a solid cylinder 165cm^2. Of the base diameter is 7cm, calculate its height. [Take π = (22/7)]
+**21.** The total surface area of a solid cylinder 165cm^2. Of the base diameter is 7cm, calculate its height. [Take pi = (22/7)]
 
 A. 7.5 cm
 B. 4.5 cm
 C. 4.0 cm
 D. 2.0 cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**22.** If 2^a = √(64) and (b/a) = 3, evaluate a^2 + b^2
+**22.** If 2^a = sqrt(64) and (b/a) = 3, evaluate a^2 + b^2
 
 A. 250
 B. 160
 C. 90
 D. 48
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **23.** ![diagram](images/waec/2019/q23_1.jpeg) In XYZ, |YZ| = 32cm, < YXZ 53^o and XZY = 90^o. Find, correct to the nearest centimetre, |XZ|
-
-![diagram](images/waec/2019/q23_1.jpeg)
 
 A. 31 cm
 B. 25 cm
 C. 20 cm
 D. 13 cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -267,29 +265,29 @@ B. 1.2
 C. 0.9
 D. 0.6
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**25.** An arc subtends an angle of 72^o at the centre of a circle. Find the length of the arc if the radius of the circle is 3.5 cm. [Take π = (22/7)]
+**25.** An arc subtends an angle of 72^o at the centre of a circle. Find the length of the arc if the radius of the circle is 3.5 cm. [Take pi = (22/7)]
 
 A. 6.6 cm
 B. 8.8 cm
 C. 4.4 cm
 D. 2.2 cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**26.** Make b the subject of the relation lb = (a + b)h
+**26.** Make b the subject of the relation lb = (1/2) (a + b)h
 
-A. a h 2 l − h
-B. 2 l − h a l
-C. a l 2 l − h
-D. a l 2 − h
+A. (ah/2l - h)
+B. (2l - h/al)
+C. (al/2l - h)
+D. (al/2 - h)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -300,42 +298,40 @@ B. $128,000.00
 C. $125,000.00
 D. $120,000.00
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**28.** Find the angle at which an arc of length 22 cm subtends at the centre of a circle of radius 15cm. [Take π = ]
+**28.** Find the angle at which an arc of length 22 cm subtends at the centre of a circle of radius 15cm. [Take pi = (22/7)]
 
-A. 70 o
-B. 84 o
-C. 96 o
-D. 156 o
+A. 70^o
+B. 84^o
+C. 96^o
+D. 156^o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **29.** A rectangular board has a length of 15cm and width x cm. If its sides are doubled, find its new area.
 
-A. 60x cm 2
-B. 45x cm 2
-C. 30x cm 2
-D. 15x cm 2
+A. 60x cm^2
+B. 45x cm^2
+C. 30x cm^2
+D. 15x cm^2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **30.** ![diagram](images/waec/2019/q30_1.jpeg) In the diagram, POS and ROT are straight lines. OPQR is a parallelogram, |OS| = |OT| and ∠ OST = 50°. Calculate the value of ∠ OPQ.
 
-![diagram](images/waec/2019/q30_1.jpeg)
+A. 100^o
+B. 120^o
+C. 140^o
+D. 160^o
 
-A. 100 o
-B. 120 o
-C. 140 o
-D. 160 o
-
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -346,7 +342,7 @@ B. (4(x - y)
 C. 2(x - y)(x + y)
 D. 2(x - y)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -357,7 +353,7 @@ B. 60^o
 C. 40^o
 D. 30^o
 
-✓ **Answer:** ?
+Answer: B
 
 ---
 
@@ -368,7 +364,7 @@ B. (3/5)
 C. (7/20)
 D. (12/25)
 
-✓ **Answer:** ?
+Answer: D
 
 ---
 
@@ -379,7 +375,7 @@ B. 3x + 4y +23 = 0
 C. 3x - 4y +23 = 0
 D. 3x - 4y - 23 = 0
 
-✓ **Answer:** ?
+Answer: D
 
 ---
 
@@ -390,18 +386,18 @@ B. 12m
 C. 10m
 D. 7m
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
-**36.** If tan x = , 0 < x < 90 o , evaluate cos x s i n x
+**36.** If tan x = , 0 < x < 90 , evaluate
 
 A. 8 3
 B. 3 2
 C. 4 3
 D. 2 3
 
-✓ **Answer:** ?
+Answer: D
 
 ---
 
@@ -412,46 +408,40 @@ B. 75 o
 C. 16 o
 D. 15 o
 
-✓ **Answer:** ?
+Answer: D
 
 ---
 
-**38.** ![diagram](images/waec/2019/q38_1.jpeg) In the diagram, O is the centre of the circle of radius 18cm. If < zxy = 70 o , calculate the length of arc ZY. [Take π = ]
-
-![diagram](images/waec/2019/q38_1.jpeg)
+**38.** ![diagram](images/waec/2019/q38_1.jpeg) In the diagram, O is the centre of the circle of radius 18cm. If < zxy = 70 , calculate the length of arc ZY. [Take ]
 
 A. 11cm
 B. 22 cm
 C. 44 cm
 D. 80 cm
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
-**39.** ![diagram](images/waec/2019/q39_1.jpeg) In the diagram, RT is a tangent to the circle at R, < PQR = 70 o , < QRT = 52 o , < QSR and < PRQ = x. Find the value of y.
-
-![diagram](images/waec/2019/q39_1.jpeg)
+**39.** ![diagram](images/waec/2019/q39_1.jpeg) In the diagram, RT is a tangent to the circle at R, < PQR = 70 , < QRT = 52 , < QSR and < PRQ = x. Find the value of y.
 
 A. 70 o
 B. 60 o
 C. 52 o
 D. 18 o
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
-**40.** ![diagram](images/waec/2019/q40_1.png) In the diagram, RT is a tangent to the circle at R, < PQR = 70 o , < QRT = 52 o , < QSR and < PRQ = x. Calculate the value of x.
-
-![diagram](images/waec/2019/q40_1.png)
+**40.** ![diagram](images/waec/2019/q40_1.png) In the diagram, RT is a tangent to the circle at R, < PQR = 70 , < QRT = 52 , < QSR and < PRQ = x. Calculate the value of x.
 
 A. 70 o
 B. 58 o
 C. 55 o
 D. 48 o
 
-✓ **Answer:** ?
+Answer: B
 
 ---
 
@@ -462,7 +452,7 @@ B. 6.8
 C. 3.5
 D. 2.6
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -473,33 +463,29 @@ B. 57
 C. 19
 D. 17
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **43.** ![diagram](images/waec/2019/q43_1.jpeg) In the diagram, PQ is parallel to RS, < QFG = 105^o and < FEG = 50^o. Find the value of m.
-
-![diagram](images/waec/2019/q43_1.jpeg)
 
 A. 130^o
 B. 105^o
 C. 75^o
 D. 55^o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **44.** ![diagram](images/waec/2019/q44_1.jpeg) In the diagram, PQ is parallel to RS, < QFG = 105^o and < FEG = 50^o. Find the value of n
-
-![diagram](images/waec/2019/q44_1.jpeg)
 
 A. 40^o
 B. 55^o
 C. 75^o
 D. 130^o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -510,20 +496,18 @@ B. (1/4)
 C. (1/3)
 D. (1/2)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **46.** ![diagram](images/waec/2019/q46_1.jpeg) The pie chart represents fruits on display in a grocery shop. If there are 60 oranges on display, how many apples are there?
-
-![diagram](images/waec/2019/q46_1.jpeg)
 
 A. 90
 B. 80
 C. 70
 D. 40
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -534,7 +518,7 @@ B. 14
 C. 13
 D. 8
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -545,7 +529,7 @@ B. 14.0
 C. 13.5
 D. 13.0
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -556,17 +540,17 @@ B. 9
 C. 8
 D. 7
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**50.** Evaluate: 0.42 ÷ 2.5 0.5 × 2.05 , leaving the answer in the standard form.
+**50.** Evaluate: (0.42 / 2.5/0.5 x 2.05), leaving the answer in the standard form.
 
-A. 1.639 x 10 2
-B. 1.639 x 10 1
-C. 1.639 x 10 − 1
-D. 1.639 x 10 − 2
+A. 1.639 x 10^2
+B. 1.639 x 10^1
+C. 1.639 x 10^-1
+D. 1.639 x 10^-2
 
-✓ **Answer:** C
+Answer: C
 
 ---

@@ -13,7 +13,7 @@ C. x = -2 or 2
 D. x = -1 or 2
 E. x = -1/2 or 2
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -25,7 +25,7 @@ C. 8
 D. 16
 E. 64
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -37,7 +37,7 @@ C. 510.2
 D. 84.99
 E. 51.02
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -49,7 +49,7 @@ C. 180 o < x < 270 o
 D. 270 o < x <360 o
 E. -90 o < x <90 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -61,7 +61,7 @@ C. 213
 D. 210
 E. 21
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -73,7 +73,7 @@ C. 400
 D. 1000
 E. 10000
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -85,7 +85,7 @@ C. 4.18m
 D. 4.20m
 E. 4.788m
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -97,7 +97,7 @@ C. 1500m
 D. 1600m
 E. 1700m
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -109,7 +109,7 @@ C. 100011 two
 D. 110010 two
 E. 110001 two
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -121,7 +121,7 @@ C. 3 / 2 , 3, 1 / 3
 D. 2 / 3 , 3, 8 / 3
 E. 3 / 2 , 0, 6
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -133,7 +133,7 @@ C. 40.04
 D. 400.4
 E. 4004
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -145,19 +145,19 @@ C. 15.00%
 D. 25.00%
 E. 39.30%
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**13.** Simplify (8^\frac2/3) × 27^(-1/3)64^(1/3)
+**13.** Simplify
 
 A. -3
-B. (1/9)
-C. (1/3)
-D. (27/8)
+B. 1 9
+C. 1 3
+D. 27 8
 E. 4
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -169,7 +169,7 @@ C. 1, 1/5
 D. 1, -1/5
 E. -1, 5
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -181,7 +181,7 @@ C. -q < 2p
 D. q < 1/2p
 E. p 2 > 2q 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -193,11 +193,11 @@ C. -1, 3
 D. 3, -2
 E. 1, -3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**17.** Make S the subject of the formula: V = K √ T − S
+**17.** Make S the subject of the formula:
 
 A. T − K 2 V 2 = S
 B. T + K 2 V 2 = S
@@ -205,11 +205,11 @@ C. T − K 2 V = S
 D. T − K V = S
 E. T − K V 2 = S
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**18.** Find the equation whose roots are a n d −
+**18.** Find the equation whose roots are
 
 A. 12 x 2 − 5 x + 2 = 0
 B. 12 x 2 − 11 x + 2 = 0
@@ -217,7 +217,7 @@ C. x 2 − 11 12 x + 2 = 0
 D. x 2 + 11 12 x − 2 = 0
 E. 12 x 2 + 11 x + 2 = 0
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -229,11 +229,11 @@ C. 2
 D. -2
 E. -3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**20.** solve the inequality ( Y − ) < y
+**20.** solve the inequality
 
 A. y > -9
 B. y < 3
@@ -241,67 +241,67 @@ C. y > 4
 D. y < 9
 E. y > 0
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **21.** If h(m+n) = m(h+r) find h in terms of m, n and r
 
-A. h = m r 2 m + n
-B. h = m r n + m
-C. h = m + n n
-D. h = m + n m
-E. h = m r n
+A. h=(mr/2m+n)
+B. h=(mr/n+m)
+C. h=(m+n/n)
+D. h=(m+n/m)
+E. h=(mr/n)
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
-**22.** Given that x − y x + y = , find the value of x y
+**22.** Given that (6x-y/x+2y)=2, find the value of (x/y)
 
-A. 3 8
-B. 5 8
-C. 4 5
-D. 5 4
-E. 8 5
+A. (3/8)
+B. (5/8)
+C. (4/5)
+D. (5/4)
+E. (8/5)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **23.** The radius of a geographical globe is 60cm. Find the length of the parallel of latitude 60 o N
 
-A. 66 π c m
-B. 60 π c m
-C. 30 π c m
-D. 15 π c m
-E. 6 π c m
+A. 66pi cm
+B. 60pi cm
+C. 30pi cm
+D. 15pi cm
+E. 6pi cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **24.** ![diagram](images/waec/1998/q24_1.jpg) In the diagram above, O is the center if the two concentric circle of radii 13cm and 10cm respectively. Find the area of the shaded portion in the sector with angle 120° at the center
 
-A. 1 3 π c m 2
-B. π c m 2
-C. 3 π c m 2
-D. 23 π c m 2
-E. 46 π c m 2
+A. (1/3)pi cm^2
+B. pi cm^2
+C. 3pi cm^2
+D. 23pi cm^2
+E. 46pi cm^2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**25.** Express as a single fraction: x x − − x + x +
+**25.** Express as a single fraction: (x/x-2)-(x+2/x+3)
 
-A. 2 x 2 − 3 x − 4 ( x − 2 ) ( x + 3 )
-B. 2 x 2 + 3 x − 4 ( x − 2 ) ( x + 3 )
-C. 2 ( x − 2 ) ( x + 3 )
-D. 3 x + 4 ( x − 2 ) ( x + 3 )
-E. 3 x − 4 ( x − 2 ) ( x + 3 )
+A. (2x^2 - 3x - 4/(x-2)(x+3))
+B. (2x^2 + 3x - 4/(x-2)(x+3))
+C. (2/(x-2)(x+3))
+D. ( 3x + 4/(x-2)(x+3))
+E. (3x - 4/(x-2)(x+3))
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -313,7 +313,7 @@ C. 37%
 D. 39%
 D. 36%
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -325,7 +325,7 @@ C. (1/3)
 D. (1/2)
 E. (2/3)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -337,7 +337,7 @@ C. 17.5cm
 D. 28cm
 E. 70cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -349,7 +349,7 @@ C. y=x^2 - x - 2
 D. y=x + x + 2
 E. y=x^2 - 2 x - 2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -361,19 +361,19 @@ C. -0.6 and 2.6
 D. -0.6 and 1.6
 E. 1.6 and 1.6
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **31.** A box contain 2 white and 3 blue identical balls. If two balls are picked at random, one after the other, without replacement, what is the probability of picking two balls of different colours?
 
-A. 5 25
-B. 7 20
-C. 3 5
-D. 2 3
-E. 5 6
+A. (5/25)
+B. (7/20)
+C. (3/5)
+D. (2/3)
+E. (5/6)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -382,10 +382,10 @@ E. 5 6
 A. 4√3cm
 B. 4cm
 C. 2√3cm
-D. 4 3 c m
+D. (4/3)cm
 E. 1cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -397,11 +397,11 @@ C. 45 o
 D. 90 o
 E. 120 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**34.** In s i n ( X + ) o = c o s o ,find X
+**34.** In sin(X+30)^o=cos40^o,find X
 
 A. 10 o
 B. 20 o
@@ -409,11 +409,11 @@ C. 50 o
 D. 60 o
 E. 90 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**35.** Find the value of X if c o s x = for o ≤ X ≤ o
+**35.** Find the value of X if cos x = (5/8) for 0^o\le X\le 180^o
 
 A. 141.3 o
 B. 128.7 o
@@ -421,7 +421,7 @@ C. 51.3 o
 D. 48.7 o
 E. 38.7 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -433,7 +433,7 @@ C. 5 √ 3 2 m
 D. 10 √ 3 3 m
 E. 10 √ 3 m
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -445,7 +445,7 @@ C. 32cm
 D. 48cm
 E. 55.72cm
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -457,7 +457,7 @@ C. 55 o
 D. 70 o
 E. 90 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -469,7 +469,7 @@ C. 66 o
 D. 132 o
 E. 192 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -481,7 +481,7 @@ C. 40 o
 D. 60 o
 E. 80 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -493,7 +493,7 @@ C. 35 o
 D. 31.5 o
 E. 27 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -505,7 +505,7 @@ C. 37.7cm
 D. 11.0cm
 E. 3.1cm
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -517,7 +517,7 @@ C. 10.99cm 2
 D. 157.1cm 2
 E. 175.0cm 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -529,7 +529,7 @@ C. 48cm
 D. 72cm
 E. 520cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -541,7 +541,7 @@ C. 8cm 2
 D. 10cm 2
 E. 20cm 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -553,7 +553,7 @@ C. 500
 D. 600
 E. 750
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -565,31 +565,31 @@ C. 20%
 D. 15%
 E. 14%
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **48.** ![diagram](images/waec/1998/q48_1.jpg) The diagram above is a rectangle. If the perimeter is 36m, find the area of the rectangle
 
-A. 64 m 2
-B. 65 m 2
-C. 84 m 2
-D. 124 m 2
-E. 275 m 2
+A. 64m^2
+B. 65m^2
+C. 84m^2
+D. 124m^2
+E. 275m^2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**49.** In △ P Q R . T is a point on QR such that ∠ Q P T = o a n d ∠ P T R = o . C a l c u l a t e ∠ P Q T
+**49.** In \triangle PQR. T is a point on QR such that \angle QPT = 39^o and \angle PTR = 83^o. Calculate \angle PQT
 
-A. 34 o
-B. 44 o
-C. 45 o
-D. 97 o
-E. 107 o
+A. 34^o
+B. 44^o
+C. 45^o
+D. 97^o
+E. 107^o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -601,7 +601,7 @@ C. 6.6cm
 D. 6.5cm
 E. 5.6cm
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -613,22 +613,22 @@ C. 190 o
 D. 130 o
 E. 100 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **52.** The diagonal and one side of a square are x and y units respectively. Find an expression for y in terms of x
 
 A. y=(x/2)
-B. y(x/√(2))
-C. y=√(x)
-D. y=√((x/2))
+B. y(x/sqrt(2))
+C. y=sqrt(x)
+D. y=sqrt((x/2))
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**53.** Find the curved surface area of a cone of radius 3cm and slant height 7cm (take π = (22/7)
+**53.** Find the curved surface area of a cone of radius 3cm and slant height 7cm (take pi = (22/7)
 
 A. 22cm^2
 B. 44cm^2
@@ -636,7 +636,7 @@ C. 66cm^2
 D. 132cm^2
 E. 198cm^2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -648,7 +648,7 @@ C. 45 o
 D. 40 o
 E. 35 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -660,7 +660,7 @@ C. 15
 D. 16
 E. 144
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -672,51 +672,51 @@ C. 60 o
 D. 80 o
 E. 120 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**57.** Evaluate √ × ( √ )
+**57.** Evaluate sqrt(20)x (sqrt(5))^3
 
 A. 10
 B. 20
 C. 25
 D. 50
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **58.** If P = {3, 7, 11, 13} and Q = {2, 4, 8, 16}, which of the following is correct
 
-A. ( P ∩ Q ) l = 2 , 3 , 4 , 13
-B. n ( P ∪ Q ) = 4
-C. P ∪ Q = ∅
-D. P ∩ Q = ∅
+A. (Pintersect Q)^l=2, 3, 4, 13
+B. n(Punion Q)=4
+C. Punion Q = \emptyset
+D. Pintersect Q = \emptyset
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**59.** It is observed that + = , + + = , + + + = . If 1 + 3 + 5 + 7 + 9 + 11 + 13 + 15 = P find P
+**59.** It is observed that 1 + 3 = 2^2, 1 + 3 + 5 = 3^2, 1 + 3 + 5 + 7 = 4^2. If 1 + 3 + 5 + 7 + 9 + 11 + 13 + 15 = P^2 find P
 
 A. 6
 B. 7
 C. 8
 D. 9
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**60.** Evaluate 3.0 × − 2.8 × − leaving the answer in standard form
+**60.** Evaluate 3.0x 10^1 - 2.8x 10^-1leaving the answer in standard form
 
-A. 2 × 10 − 1
-B. 2 × 10 2
-C. 2.972 × 10 1
-D. 2.972 × 10 2
+A. 2x 10^-1
+B. 2x 10^2
+C. 2.972 x 10^1
+D. 2.972 x 10^2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -727,7 +727,7 @@ B. 3:17
 C. 17:20
 D. 20:23
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -738,7 +738,7 @@ B. 9.3%
 C. 10.0%
 D. 10.25%
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -749,6 +749,6 @@ B. 26_8 25_9 36_7
 C. 36_7 26_8 25_9
 D. 36_7 25_9 26_8
 
-✓ **Answer:** B
+Answer: B
 
 ---

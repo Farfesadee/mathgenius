@@ -12,7 +12,7 @@ B. 38cm ≤ P < 42cm
 C. 38.5 ≤ P ≤ 41.5cm
 D. 38.5 ≤ P ≤ 40cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -23,29 +23,29 @@ B. 2log_7 2
 C. 3log_7 2
 D. 4log_7 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**3.** If K√(28)+√(63)-√(7)=0, find K.
+**3.** If Ksqrt(28)+sqrt(63)-sqrt(7)=0, find K.
 
 A. -2
 B. -1
 C. 1
 D. 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**4.** From a set A = [3, √(2), 2√(3), √(9), √(7)], a number is selected at random. Find the probability that is a rational number
+**4.** From a set A = [3, sqrt(2), 2sqrt(3), sqrt(9), sqrt(7)], a number is selected at random. Find the probability that is a rational number
 
 A. (1/5)
 B. (2/5)
 C. (3/5)
 D. (4/5)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -56,7 +56,7 @@ B. 30 o
 C. 60 o
 D. 90 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -67,7 +67,7 @@ B. 5 hours
 C. 8 hours
 D. 12 hours
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -78,7 +78,7 @@ B. (4/11)
 C. (5/11)
 D. (11/13)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -89,7 +89,7 @@ B. 6
 C. 8
 D. 9
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -100,7 +100,7 @@ B. II and III only
 C. I and III only
 D. I, II, and III
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -111,7 +111,7 @@ B. 62 o
 C. 112 o
 D. 115 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -122,7 +122,7 @@ B. 42 o
 C. 48 o
 D. 132 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -133,7 +133,7 @@ B. 25 o
 C. 30 o
 D. 50 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -144,7 +144,7 @@ B. -14
 C. 14
 D. 22
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -155,62 +155,62 @@ B. 2(1+3m^2)
 C. 2(1-3m)
 D. 2(1-3m^2)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**15.** If y = √(ax-b) express x in terms of y, a and b
+**15.** If y = sqrt(ax-b) express x in terms of y, a and b
 
 A. x = (y^2-b/a)
 B. x = (y+b/a)
 C. x = (y-b/a)
 D. x = (y^2 + b/a)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**16.** Given that × n − = K , f i n d √ K
+**16.** Given that 81x 2^2n-2 = K, find sqrt(K)
 
-A. 4.5 × 2 n
-B. 4.5 × 2 2 n
-C. 9 × 2 n − 1
-D. 9 × 2 2 n
+A. 4.5x 2^n
+B. 4.5x 2^2n
+C. 9x 2^n-1
+D. 9x 2^2n
 
-✓ **Answer:** C
-
----
-
-**17.** Simplify x + − x −
-
-A. x + 7 x 2 − 1
-B. x − 7 x 2 + 1
-C. x − 7 x 2 − 1
-D. x − 11 x 2 − 1
-
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**18.** If y varies inversely as x , how does x vary with y?
+**17.** Simplify (4/x+1)-(3/x-1)
+
+A. (x+7/x^2 - 1)
+B. (x-7/x^2 + 1)
+C. (x-7/x^2 - 1)
+D. (x-11/x^2 - 1)
+
+Answer: C
+
+---
+
+**18.** If y varies inversely as x^2, how does x vary with y?
 
 A. x varies inversely as y 2
 B. x varies inversely as √y
 C. x varies directly as y 2
 D. x varies directly as y
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**19.** If t a n x = √ , find cos x - sin x such that o ≤ x ≤ o
+**19.** If tan x = (1/sqrt(3)), find cos x - sin x such that 0^o <= x <= 90^o
 
-A. √ 3 + 1 2
-B. 2 √ 3 + 1
-C. √ 3 − 1 2
-D. 2 √ 3 − 1
+A. \fracsqrt(3)+12
+B. (2/sqrt(3)+1)
+C. \fracsqrt(3)-12
+D. (2/sqrt(3)-1)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -221,7 +221,7 @@ B. 15.5 o
 C. 74.5 o
 D. 75.1 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -232,7 +232,7 @@ B. (x/cos 40^o)
 C. (x/2 sin 40^o)
 D. (x/2 cos 40^o)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -243,18 +243,18 @@ B. 070 o
 C. 110 o
 D. 290 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **23.** A pole of length L leans against a vertical wall so that it makes an angle of 60 o with the horizontal ground. If the top of the pole is 8m above the ground, calculate L.
 
-A. 16√(3)m
-B. 4√(3)m
-C. \frac√(3)16
-D. \frac16√(3)3
+A. 16sqrt(3)m
+B. 4sqrt(3)m
+C. \fracsqrt(3)16
+D. \frac16sqrt(3)3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -265,7 +265,7 @@ B. 50cm 2
 C. 40cm 2
 D. 30cm 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -276,62 +276,62 @@ B. 5.3cm
 C. 4.0cm
 D. 8.0cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **26.** Simplify 3.72 x 0.025 and express your answer in the standard form
 
-A. 9.3 × 10 3
-B. 9.3 × 10 2
-C. 9.3 × 10 − 2
-D. 9.3 × 10 − 3
+A. 9.3x 10^3
+B. 9.3x 10^2
+C. 9.3x 10^-2
+D. 9.3x 10^-3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**27.** Two numbers 24 x and 31 y are equal in value when converted to base ten. Find the equation connecting x and y
+**27.** Two numbers 24_x and 31_y are equal in value when converted to base ten. Find the equation connecting x and y
 
 A. 2x = 3(y - 1)
 B. 4x - y = 1
 C. 3y + 2x = 3
 D. 3y = 2 (x + 3)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **28.** A car travel at x km per hour for 1 hour and at y km per hour for 2 hours. Find its average speed
 
-A. 2 x + 2 y 3 k m h − 1
-B. x + y 3 k m h − 1
-C. x + 2 y 3 k m h − 1
-D. 2 x + y 3 k m h − 1
+A. (2x + 2y/3)kmh^-1
+B. (x + y/3)kmh^-1
+C. (x + 2y/3)kmh^-1
+D. (2x + y/3)kmh^-1
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**29.** The height and base of a triangle are in ratio 1:3 respectively. If the area of the triangle is 216 cm , find the length of the base.
+**29.** The height and base of a triangle are in ratio 1:3 respectively. If the area of the triangle is 216 cm^2, find the length of the base.
 
 A. 24cm
 B. 36cm
 C. 72cm
 D. 144cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**30.** Water flows from a tap into cylindrical container at the rate 5πcm per second. If the radius of the container is 3cm, calculate the level of water in the container at the end of 9 seconds.
+**30.** Water flows from a tap into cylindrical container at the rate 5πcm^3 per second. If the radius of the container is 3cm, calculate the level of water in the container at the end of 9 seconds.
 
 A. 2cm
 B. 5cm
 C. 8cm
 D. 15cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -342,7 +342,7 @@ B. (m/2)-3\ge 10
 C. (m-3/2)\ge10
 D. (m-3/2)\le10
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -353,7 +353,7 @@ B. x\ge -2 and x>1
 C. x\le -2 and x\ge1
 D. x< -2 and x>1
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -364,7 +364,7 @@ B. x = 10
 C. x + 10 = 0
 D. bc = 750
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -375,7 +375,7 @@ B. x^2 - x(m - 2n)-2mn=0
 C. x^2 - x(m - 2n)+2mn=0
 D. x^2 + x(m - 2n)+2mn=0
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -386,7 +386,7 @@ B. (41/50)
 C. (1/2)
 D. 1
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -397,7 +397,7 @@ B. x<(3/7)
 C. x>(3/7)
 D. x>-1
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -408,7 +408,7 @@ B. (x^2/y)
 C. (y/x^2)
 D. (y^2/x)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -419,7 +419,7 @@ B. Locus of points equidistant from X and Z
 C. Locus of points equidistant from \barZX and \barZY
 D. Locus of points equidistant from \barXY and \barZY
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -430,7 +430,7 @@ B. m = n
 C. n > 45 o
 D. m < 45 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -441,7 +441,7 @@ B. 30
 C. 45
 D. 75
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -452,7 +452,7 @@ B. 17
 C. 34
 D. 90
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -463,7 +463,7 @@ B. 30 o
 C. 50 o
 D. 65 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -474,6 +474,6 @@ B. 50°
 C. 45°
 D. 40°
 
-✓ **Answer:** D
+Answer: D
 
 ---

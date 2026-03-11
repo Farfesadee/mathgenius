@@ -12,7 +12,7 @@ B. 6.02 x 10 9
 C. 6.03 x 10 -9
 D. 6.02 x 10 -9
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -23,7 +23,7 @@ B. (x + y)(1 + a)
 C. (x + y)(1 - a)
 D. (x - y)(1 + a)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -34,7 +34,7 @@ B. 405km
 C. 210km
 D. 200km
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -45,18 +45,18 @@ B. 0.0024
 C. 0.00247
 D. 0.0025
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**5.** Simplify 1(1/2) + 2(1/3) × (3/4) - (1/2)
+**5.** Simplify 1(1/2) + 2(1/3) x (3/4) - (1/2)
 
 A. -2(1/3)
 B. -2(1/4)
 C. 2(1/8)
 D. 2(3/4)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -67,7 +67,7 @@ B. 1, 2
 C. 2, 3
 D. 0, 1
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -78,18 +78,18 @@ B. 420g
 C. 520g
 D. 620g
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**8.** Given that P = {x : 1 ≤ x ≤ 6}, and Q = {x : 2 ≤ x ≤ 10} where x is an integer. Find n(P ∩ Q)
+**8.** Given that P = {x : 1 <= x <= 6}, and Q = {x : 2 <= x <= 10} where x is an integer. Find n(P intersect Q)
 
 A. 5
 B. 6
 C. 8
 D. 10
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -100,29 +100,29 @@ B. x = 5
 C. x = 3
 D. x = 2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**10.** Given that = {x: -2 < x ≤ 9}, where x is an integer what is n(T)?
+**10.** Given that = {x: -2 < x <= 9}, where x is an integer what is n(T)?
 
 A. 9
 B. 10
 C. 11
 D. 12
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**11.** Solve the inequality: 3(x + 1) ≤ 5(x + 2) + 15
+**11.** Solve the inequality: 3(x + 1) <= 5(x + 2) + 15
 
-A. x ≥ -14
-B. x ≤ - 14
-C. x ≥ -11
-D. x ≤ - 11
+A. x >= -14
+B. x <= - 14
+C. x >= -11
+D. x <= - 11
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -133,7 +133,7 @@ B. 5.5cm
 C. 5.0cm
 D. 4.5cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -144,7 +144,7 @@ B. n = 2
 C. n = 3
 D. n = 5
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -155,29 +155,29 @@ B. (2/5)
 C. (3/5)
 D. (4/5)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**15.** Simplify 2√(3) - (6/√(3)) + (3/√(27))
+**15.** Simplify 2sqrt(3) - (6/sqrt(3)) + (3/sqrt(27))
 
 A. 1
-B. (1/3)√(3)
-C. 2√(3) - 5(2/3)
-D. 6√(3) - 17
+B. (1/3)sqrt(3)
+C. 2sqrt(3) - 5(2/3)
+D. 6sqrt(3) - 17
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**16.** If sin 3y = cos 2y and 0 o ≤ 90 o , find the value of y
+**16.** If sin 3y = cos 2y and 0 o <= 90 o , find the value of y
 
 A. 18 o
 B. 36 o
 C. 54 o
 D. 90 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -188,18 +188,18 @@ B. 4cm
 C. 4(1/2)cm
 D. 5cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**18.** Given that tan x = 1, where 0 o ≥ x 90 o , evaluate (1 - sin^2 x/cos x)
+**18.** Given that tan x = 1, where 0 o >= x 90 o , evaluate (1 - sin^2 x/cos x)
 
-A. 2√(2)
-B. √(2)
-C. \frac√(2)2
+A. 2sqrt(2)
+B. sqrt(2)
+C. \fracsqrt(2)2
 D. (1/2)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -210,7 +210,7 @@ B. 18cm
 C. 13cm
 D. 9cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -221,7 +221,7 @@ B. (8/4 - x^2)
 C. (4x/4 - x^2)
 D. (8 - 4x/4 - x^2)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -232,18 +232,18 @@ B. 8
 C. 9
 D. 12
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**22.** If y = ( √ x + m ) N , make x the subject of the formular
+**22.** If y = \frac(2sqrt(x^2 + m))3N, make x the subject of the formular
 
-A. √ 9 y 2 N 2 − 2 m 3
-B. √ 9 y 2 N 2 − 4 m 2
-C. √ 9 y 2 N 2 − 3 m 2
-D. √ 9 y 2 N − 3 m 2
+A. \fracsqrt(9y^2 N^2 - 2m)3
+B. \fracsqrt(9y^2 N^2 - 4m)2
+C. \fracsqrt(9y^2 N^2 - 3m)2
+D. \fracsqrt(9y^2 N - 3m)2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -254,7 +254,7 @@ B. T n = (-2) n
 C. T n = (-2n)
 D. T n = n
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -265,7 +265,7 @@ B. 4
 C. 5
 D. 6
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -276,7 +276,7 @@ B. loss of 12%
 C. Profit of 10%
 D. loss of 5%
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -287,18 +287,18 @@ B. 20
 C. 22
 D. 28
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**27.** x y . The table is for the relation y = mx + c where m and c are constants. What is the equation of the line described in the tablet?
+**27.** . The table is for the relation y = mx + c where m and c are constants. What is the equation of the line described in the tablet?
 
 A. y = 2x
 B. y = x + 1
 C. y = x
 D. y = 1 2 x + 1
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -309,7 +309,7 @@ B. 9
 C. 10
 D. 11
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -320,7 +320,7 @@ B. 3
 C. 4
 D. 5
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -331,7 +331,7 @@ B. 1 2
 C. - 3 2
 D. -1 1 2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -342,7 +342,7 @@ B. (7/3)
 C. (5/3)
 D. (2/3)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -353,18 +353,18 @@ B. (11/20)x
 C. (4/15)x
 D. (5/18)x
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **33.** The mean of the numbers 2, 5, 2x and 7 is less than or equal to 5. Find the range of the values of x
 
-A. x ≤ 3
-B. x ≥ 3
+A. x <= 3
+B. x >= 3
 C. x < 3
 D. x > 3
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -375,7 +375,7 @@ B. (7/3)
 C. (5/3)
 D. (5/16)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -386,7 +386,7 @@ B. 100 o
 C. 121 o
 D. 60 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -397,18 +397,18 @@ B. 85
 C. 80
 D. 70
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **37.** ![diagram](images/waec/2010/q37_1.jpg) The bar chart shows the marks distribution in am English test. What percentage of the students had marks ranging from 35 to 50?
 
-A. 55 1 3 %
+A. 55(1/3)%
 B. 60%
 C. 65%
-D. 66 2 3 %
+D. 66(2/3)%
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -419,7 +419,7 @@ B. 30 o
 C. 40 o
 D. 50 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -430,18 +430,18 @@ B. 110 o
 C. 130 o
 D. 150 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**40.** ![diagram](images/waec/2010/q40_1.jpg) In the diagram, triangles HKL and HIJ are similar. Which of the following ratios is equal to L H J H
+**40.** ![diagram](images/waec/2010/q40_1.jpg) In the diagram, triangles HKL and HIJ are similar. Which of the following ratios is equal to (LH/JH)
 
-A. K L J I
-B. H K J K
-C. J I K L
-D. H K L K
+A. (KL/JI)
+B. (HK/JK)
+C. (JI/KL)
+D. (HK/LK)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -452,7 +452,7 @@ B. 11 o
 C. 22 o
 D. 35 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -463,7 +463,7 @@ B. 45 o
 C. 35 o
 D. 25 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -474,7 +474,7 @@ B. 100 o
 C. 80 o
 D. 70 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -485,7 +485,7 @@ B. x + y < 3
 C. x + y > 3
 D. x + y ≥ 3
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -496,7 +496,7 @@ B. 72 o
 C. 64cm o
 D. 32cm o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -507,7 +507,7 @@ B. 112cm 2
 C. 92cm 2
 D. 76cm 2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -518,7 +518,7 @@ B. 99cm 2
 C. 154cm 2
 D. 165cm 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -529,7 +529,7 @@ B. 29
 C. 17
 D. 14
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -540,6 +540,6 @@ B. 240 o
 C. 190 o
 D. 150 o
 
-✓ **Answer:** A
+Answer: A
 
 ---

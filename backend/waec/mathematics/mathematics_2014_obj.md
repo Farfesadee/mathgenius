@@ -12,7 +12,7 @@ B. 6(11/15)
 C. 7(4/15)
 D. 7(11/15)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -23,7 +23,7 @@ B. 6
 C. 5
 D. 4
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -34,31 +34,29 @@ B. 7cm
 C. 8cm
 D. 9cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **4.** ![diagram](images/waec/2014/q4_1.png) The bar chart above shows the scores of some students in a test. Use it to answer this question If one student is selected at random, find the probability that he/she scored at most 2 marks
-
-![diagram](images/waec/2014/q4_1.png)
 
 A. (11/18)
 B. (11/20)
 C. (7/22)
 D. (5/19)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**5.** Simplify: √(12) ( √(48) - √(3))
+**5.** Simplify: sqrt(12) ( sqrt(48) - sqrt(3))
 
 A. 18
 B. 16
 C. 14
 D. 12
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -69,7 +67,7 @@ B. i and ii
 C. i and iii
 D. i, ii and iii
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -80,18 +78,18 @@ B. 5
 C. 6
 D. 7
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**8.** If x = {0, 2, 4, 6}, y = {1, 2, 3, 4} and z = {1, 3} are subsets of u = {x:0 ≥ x ≥ 6}, find x ∩ (Y' ∪ Z)
+**8.** If x = {0, 2, 4, 6}, y = {1, 2, 3, 4} and z = {1, 3} are subsets of u = {x:0 >= x >= 6}, find x intersect (Y' union Z)
 
 A. {0, 2, 6}
 B. {1, 3}
 C. {0, 6)
 D. {9}
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -102,40 +100,40 @@ B. {x : x = -3, x = -9}
 C. {x : x = 3, x = -9}
 D. {x : x = -3, x = 9}
 
-✓ **Answer:** ?
+Answer: D
 
 ---
 
 **10.** The coordinates of points P and Q are (4, 3) and (2, -1) respectively. Find the shortest distance between P and Q.
 
-A. 10 s q r t 2
-B. 4 s q r t 5
-C. 5 s q r t 2
-D. 2 s q r t 5
+A. 10sqrt2
+B. 4sqrt5
+C. 5sqrt2
+D. 2sqrt5
 
-✓ **Answer:** ?
+Answer: D
 
 ---
 
-**11.** Make u the subject of formula, E = m g (v - u )
+**11.** Make u the subject of formula, E = (m/2g)(v - u )
 
-A. u = √ v 2 − 2 E g m
-B. u = √ v 2 m − 2 E g 4
-C. u = √ v − 2 E g m
-D. u = √ 2 v 2 E g m
+A. u = sqrt(v^2 - (2Eg/m))
+B. u = sqrt((v^2/m) - (2Eg/4))
+C. u = sqrt(v- (2Eg/m))
+D. u = sqrt((2v^2Eg/m))
 
-✓ **Answer:** ?
+Answer: A
 
 ---
 
 **12.** F x varies inversely as y and y varies directly as Z, what is the relationship between x and z?
 
-A. x α z
-B. x α 1 z
-C. x α z 2
+A. x alpha z
+B. x alpha (1/z)
+C. x alpha z^2
 D. x \(\alpha \frac{1}{z^2}\0
 
-✓ **Answer:** ?
+Answer: B
 
 ---
 
@@ -146,7 +144,7 @@ B. 1
 C. 2
 D. undefined
 
-✓ **Answer:** ?
+Answer: D
 
 ---
 
@@ -157,29 +155,29 @@ B. (x - b)
 C. (a + b)
 D. (a - b)
 
-✓ **Answer:** ?
+Answer: A
 
 ---
 
-**15.** h e i g h t f r e q u e n c y The table shows the distribution of the height of plants in a nursery. Calculate the mean height of the plants.
+**15.** \beginarrayc|cheight & 2 & 3 & 4 & 5 & 6 \\ \hline frequency & 2 & 4 & 5 & 3 & 1 \endarray The table shows the distribution of the height of plants in a nursery. Calculate the mean height of the plants.
 
 A. 3.8
 B. 3.0
 C. 2.8
 D. 2.3
 
-✓ **Answer:** ?
+Answer: A
 
 ---
 
-**16.** The area of a sector a circle with diameter 12cm is 66cm . If the sector is folded to form a cone, calculate the radius of the base of the cone [Take π = (22/7)]
+**16.** The area of a sector a circle with diameter 12cm is 66cm . If the sector is folded to form a cone, calculate the radius of the base of the cone [Take pi = (22/7)]
 
 A. 3.0cm
 B. 3.5cm
 C. 7.0cm
 D. 7.5cm
 
-✓ **Answer:** ?
+Answer: B
 
 ---
 
@@ -190,7 +188,7 @@ B. 1.2cm
 C. 2.0cm
 D. 2.5cm
 
-✓ **Answer:** ?
+Answer: B
 
 ---
 
@@ -201,7 +199,7 @@ B. percentile
 C. median
 D. quartile
 
-✓ **Answer:** ?
+Answer: A
 
 ---
 
@@ -212,7 +210,7 @@ B. 090 o
 C. 135 o
 D. 225 o
 
-✓ **Answer:** ?
+Answer: A
 
 ---
 
@@ -223,7 +221,7 @@ B. 6
 C. 8
 D. 9
 
-✓ **Answer:** ?
+Answer: D
 
 ---
 
@@ -234,18 +232,18 @@ B. 10
 C. 15
 D. 20
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
-**22.** Given that cos x = , evaluate − tan x tan x
+**22.** Given that cos x = (12/13), evaluate (1 - tan x/tan x)
 
-A. 5 13
-B. 5 7
-C. 7 5
-D. 13 5
+A. (5/13)
+B. (5/7)
+C. (7/5)
+D. (13/5)
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
@@ -256,29 +254,29 @@ B. 0.338
 C. 0.00338
 D. 0.003
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
-**24.** Simplify √ × n + n ×
+**24.** Simplify sqrt(\frac8^2 x 4^n + 1)2^2n x 16
 
 A. 16
 B. 8
 C. 4
 D. 1
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
-**25.** If x − − x − is equal to p ( x − ) ( x − ) , find p
+**25.** If (2/x - 3) - (3/x - 2) is equal to (p/(x - 3)(x - 2)), find p
 
 A. -x - 5
 B. -(x + 3)
 C. 5x - 13
 D. 5 - x
 
-✓ **Answer:** ?
+Answer: D
 
 ---
 
@@ -289,7 +287,7 @@ B. (1/2) (a - b - c)
 C. (1/2) (a - b + c)
 D. (1/2) (a + b - c)
 
-✓ **Answer:** ?
+Answer: A
 
 ---
 
@@ -300,18 +298,18 @@ B. 32 o
 C. 27 o
 D. 26 o
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
-**28.** A chord subtends an angle of 120 o at the centre of a circle of radius 3.5cm. Find the perimeter of the minor sector containing the chord, [Take π = (22/7)]
+**28.** A chord subtends an angle of 120 o at the centre of a circle of radius 3.5cm. Find the perimeter of the minor sector containing the chord, [Take pi = (22/7)]
 
 A. 14(1/3)cm
 B. 12(5/6)cm
 C. 8(1/7)cm
 D. 7(1/3)cm
 
-✓ **Answer:** ?
+Answer: A
 
 ---
 
@@ -322,7 +320,7 @@ B. (1/3)
 C. (2/3)
 D. (3/4)
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
@@ -333,7 +331,7 @@ B. 35%
 C. 65%
 D. 85%
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
@@ -344,18 +342,18 @@ B. (4/9)
 C. (1/3)
 D. (2/9)
 
-✓ **Answer:** ?
+Answer: B
 
 ---
 
-**32.** If log 5.957 = 0.7750, find log 3 √(0.0005957)
+**32.** If log 5.957 = 0.7750, find log 3 sqrt(0.0005957)
 
 A. \overline4.1986
 B. \overline2.9250
 C. \overline1.5917
 D. \overline1.075
 
-✓ **Answer:** ?
+Answer: D
 
 ---
 
@@ -366,7 +364,7 @@ B. (3/4)
 C. (3/5)
 D. (1/20)
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
@@ -377,7 +375,7 @@ B. 720 o
 C. 1080 o
 D. 1800 o
 
-✓ **Answer:** ?
+Answer: D
 
 ---
 
@@ -388,7 +386,7 @@ B. 12
 C. 13
 D. 14
 
-✓ **Answer:** ?
+Answer: D
 
 ---
 
@@ -399,7 +397,7 @@ B. mod 11
 C. mod 12
 D. mod 13
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
@@ -410,162 +408,138 @@ B. 5.0cm
 C. 7.5cm
 D. 20.0cm
 
-✓ **Answer:** ?
+Answer: A
 
 ---
 
 **38.** ![diagram](images/waec/2014/q38_1.jpg) The bar chart shows the scores of some students in a test. How many students took the test?
-
-![diagram](images/waec/2014/q38_1.jpg)
 
 A. 18
 B. 19
 C. 20
 D. 22
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
 **39.** ![diagram](images/waec/2014/q39_1.png) The bar chart shows the scores of some students in a test. If one students is selected at random, find the probability that he/she scored at most 2 marks
-
-![diagram](images/waec/2014/q39_1.png)
 
 A. 11 18
 B. 11 20
 C. 7 22
 D. 5 19
 
-✓ **Answer:** ?
+Answer: B
 
 ---
 
 **40.** ![diagram](images/waec/2014/q40_1.jpg) In the diagram, the value of x + y = 220 o . Find the value of n
-
-![diagram](images/waec/2014/q40_1.jpg)
 
 A. 20 o
 B. 40 o
 C. 60 o
 D. 80 o
 
-✓ **Answer:** ?
+Answer: B
 
 ---
 
 **41.** ![diagram](images/waec/2014/q41_1.jpg) In the diagram, PQR is straight line, ( m + n) = 120o and ( n + r) = 100o. Find (m + r).
 
-![diagram](images/waec/2014/q41_1.jpg)
-
 A. 110 o
 B. 120 o
 C. 140 o
 D. 160 o
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
 **42.** ![diagram](images/waec/2014/q42_1.jpg) In the diagram, PQR is a straight line, (m + n) = 120 o and (n + r) = 100 o . Find (m + r)
 
-![diagram](images/waec/2014/q42_1.jpg)
-
 A. 110 o
 B. 120 o
 C. 140 o
 D. 160 o
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
 **43.** ![diagram](images/waec/2014/q43_1.jpg) In the diagram, ST is parallel to UW, < WVT = x o , < VUT = y o , < RSV = 45 o and < VTU = 20 o . Find the value of x
-
-![diagram](images/waec/2014/q43_1.jpg)
 
 A. 20
 B. 45
 C. 65
 D. 135
 
-✓ **Answer:** ?
+Answer: B
 
 ---
 
 **44.** ![diagram](images/waec/2014/q44_1.jpg) In the diagram, ST is parallel to UW, < WVT = x o , < VUT = y o , < RSV = 45 o and < VTU = 20 o . Calculate the value of y
-
-![diagram](images/waec/2014/q44_1.jpg)
 
 A. 20
 B. 25
 C. 45
 D. 65
 
-✓ **Answer:** ?
+Answer: B
 
 ---
 
 **45.** ![diagram](images/waec/2014/q45_1.jpg) The graph given is for the relation y = 2x + x - 1. What are the coordinates of the point S?
-
-![diagram](images/waec/2014/q45_1.jpg)
 
 A. (1, 0.2)
 B. (1, 0.4)
 C. (1, 2.0)
 D. (1, 40)
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
 **46.** ![diagram](images/waec/2014/q46_1.jpg) The graph given is for the relation y = 2x + x - 1. Find the minimum value of y
-
-![diagram](images/waec/2014/q46_1.jpg)
 
 A. 0.00
 B. -0.65
 C. -1.25
 D. -2.10
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
 **47.** ![diagram](images/waec/2014/q47_1.jpg) In the figures, PQ is a tangent to the circle at R and UT is parallel to PQ. if < TRQ = x o , find < URT in terms of x
-
-![diagram](images/waec/2014/q47_1.jpg)
 
 A. 2x o
 B. (90 - x) o
 C. (90 + x) o
 D. (180 - 2x) o
 
-✓ **Answer:** ?
+Answer: D
 
 ---
 
 **48.** ![diagram](images/waec/2014/q48_1.jpg) Determine the value of m in the diagram
-
-![diagram](images/waec/2014/q48_1.jpg)
 
 A. 80 o
 B. 90 o
 C. 110 o
 D. 150 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **49.** ![diagram](images/waec/2014/q49_1.jpg) In the diagram, O is the centre of the circle of the circle, PR is a tangent to the circle at Q < SOQ = 86 o . Calculate the value of < SQR.
-
-![diagram](images/waec/2014/q49_1.jpg)
 
 A. 43 o
 B. 47 o
 C. 54 o
 D. 86 o
 
-✓ **Answer:** A
+Answer: A
 
 ---

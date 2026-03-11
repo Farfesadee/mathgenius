@@ -13,7 +13,7 @@ C. 10010
 D. 11101
 E. 10110
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -25,7 +25,7 @@ C. N4.00
 D. N4.50
 E. N5.00
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -37,7 +37,7 @@ C. 8.34 x 10 3
 D. 8.34 x 10 4
 E. 8.34 x 10 6
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -49,7 +49,7 @@ C. 4 2/3
 D. 2 2/3
 E. 2 3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -61,7 +61,7 @@ C. N450.00
 D. N400.00
 E. N200.00
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -73,7 +73,7 @@ C. Un=18+7n
 D. Un= 18-7n
 E. Un= 17-7n
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -85,7 +85,7 @@ C. 1
 D. 4/3
 E. 16/6
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -97,7 +97,7 @@ C. [1,4.7,8]
 D. [2.6.7]
 E. [2.4]
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -109,7 +109,7 @@ C. -5 or -1
 D. +5 or -1
 E. (1/6)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -121,11 +121,11 @@ C. y < 3x+2
 D. y≤x +3
 E. y≥3x+2.
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**11.** Solve the inequality: ( x − ) <
+**11.** Solve the inequality: (1/3)(2x - 1) < 5
 
 A. x < - 5
 B. X<-6
@@ -133,11 +133,11 @@ C. X<7
 D. x <8
 E. x < 16
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**12.** What is the smaller value of x for which x - 3x + 2= 0?
+**12.** What is the smaller value of x for which x^2 - 3x + 2= 0?
 
 A. 1
 B. 2
@@ -145,7 +145,7 @@ C. 3
 D. 4
 E. 5
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -157,11 +157,11 @@ C. (a + c)(x - y)
 D. (a + c)(x + y)
 E. (a - c)(x + y)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**14.** If y ∝ x and x = 3 when y = 4, find y when x = 2.
+**14.** If y \propto (1/x^2) and x = 3 when y = 4, find y when x = 2.
 
 A. 1
 B. 3
@@ -169,11 +169,11 @@ C. 9
 D. 18
 E. 21
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**15.** Solve the equation 3x + 25x -18 = 0
+**15.** Solve the equation 3x^2 + 25x -18 = 0
 
 A. -3,2
 B. -2,3
@@ -181,7 +181,7 @@ C. -2,9
 D. -9,2/3
 E. 2/3, 9.
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -193,7 +193,7 @@ C. x = -4 or 5
 D. x = -3 or 6
 E. x= -5 or -2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -205,7 +205,7 @@ C. 1 / 2
 D. 1
 E. 3 1 / 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -217,7 +217,7 @@ C. -4
 D. -1
 E. 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -229,7 +229,7 @@ C. 1.4and-1.7
 D. 2.0 and -1.9
 E. 2.4 and -2.0
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -241,7 +241,7 @@ C. 8cm
 D. 7cm
 E. 6cm
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -253,11 +253,11 @@ C. 48cm 2
 D. 60cm 2
 E. 96cm 2
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
-**22.** A water tank of height (1/2) m has a square base of side 1(1/2) m. lf it is filled with water from a water tanker holding 1500 litres, how many litres of water are left in the water tanker? [1000 litres = 1m^3]
+**22.** A water tank of height m has a square base of side m. lf it is filled with water from a water tanker holding 1500 litres, how many litres of water are left in the water tanker? [1000 litres = 1m ]
 
 A. 37.5litres
 B. 375 litres
@@ -265,7 +265,7 @@ C. 3750 litres
 D. 37500 litres
 E. 375000 litres
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -277,7 +277,7 @@ C. 220cm 2
 D. 528cm 2
 E. 770cm 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -289,7 +289,7 @@ C. 220cm 3
 D. 528cm 3
 E. 770cm 3
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -301,7 +301,7 @@ C. 75 3/7cm 2
 D. 78 2/7cm 2
 E. 88cm 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -313,7 +313,7 @@ C. 9cm
 D. 12cm
 E. More information is needed
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -325,7 +325,7 @@ C. 18cm
 D. 24cm
 E. 30cm
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -337,7 +337,7 @@ C. 80 o
 D. 50 o
 E. 24 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -349,7 +349,7 @@ C. 1O 1 / 2 cm
 D. 14cm
 E. 21cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -361,7 +361,7 @@ C. 7 1 10 cm
 D. 10 2 5 cm
 E. 13 3 5 cm,
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -373,7 +373,7 @@ C. 30 o
 D. 35 o
 E. 40 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -385,7 +385,7 @@ C. 22.5 o
 D. 30 o
 E. 38.6 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -397,11 +397,11 @@ C. 108 o
 D. 100 o
 E. 96 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**34.** If log x = ˉ .3675 and log y = ˉ .9738 , what is the value of x + y, correct lo three significant figures?
+**34.** If log_10 x = \bar2.3675 and log_10 y = \bar2.9738, what is the value of x + y, correct lo three significant figures?
 
 A. O.117
 B. 0.118
@@ -409,7 +409,7 @@ C. 0.903
 D. O.944
 E. 0.946
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -421,7 +421,7 @@ C. 60 o
 D. 75 o
 E. 90 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -433,7 +433,7 @@ C. 77 o
 D. 62 o
 E. 52 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -445,7 +445,7 @@ C. perpendiculars to the straight line joining them
 D. parallel-line to the straight line joining them
 E. a line making an acute angle with the line joining the two points
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -457,7 +457,7 @@ C. 45 o
 D. a o
 E. d o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -469,7 +469,7 @@ C. 78 o
 D. 75 o
 E. 72 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -481,11 +481,11 @@ C. 65 o
 D. 100 o
 E. 115 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
-**41.** Without using tables, find the value of \frac{\sin 20°}{\cos 70°} + \frac{\cos 25°}{\sin 65°}
+**41.** Without using tables, find the value of (sin 20°/cos 70°) + (cos 25°/sin 65°)
 
 A. 2
 B. 1
@@ -493,7 +493,7 @@ C. o
 D. -1
 E. -2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -505,7 +505,7 @@ C. 4cm
 D. 3cm
 E. 2cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -517,7 +517,7 @@ C. 9m
 D. 7m
 E. 5m
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -529,7 +529,7 @@ C. 10
 D. 11
 E. 14
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -541,7 +541,7 @@ C. 2.85
 D. 2.60
 E. 2.56
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -553,7 +553,7 @@ C. 2.64
 D. 2.50
 E. 2.35
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -565,7 +565,7 @@ C. 1/ 6
 D. 1/4
 E. 5/18
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -577,6 +577,6 @@ C. 5/11
 D. 5/6
 E. 11/13
 
-✓ **Answer:** B
+Answer: B
 
 ---

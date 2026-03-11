@@ -12,7 +12,7 @@ B. 5
 C. 15
 D. 18
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -23,7 +23,7 @@ B. m = 1, n = 0
 C. m = 0, n = 1
 D. m = 1, n = 1
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -34,18 +34,18 @@ B. N200,000.00
 C. N150,000.00
 D. N100,000.00
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**4.** If \frac27^x × 3^1 - x9^2x = 1, find the value of x.
+**4.** If \frac27^x x 3^1 - x9^2x = 1, find the value of x.
 
 A. 1
 B. (1/2)
 C. -(1/2)
 D. -1
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -56,7 +56,7 @@ B. 48
 C. 50
 D. 63
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -67,7 +67,7 @@ B. 9
 C. 12
 D. 24
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -78,7 +78,7 @@ B. 4y^-3
 C. 2y^(1/3)
 D. 2y^-3
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -89,7 +89,7 @@ B. (3a + 4b)(2x - 3y)
 C. (3a - 4b)(2x + 3y)
 D. (2a + 3b)(4x -3y)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -100,7 +100,7 @@ B. 4x 2 - 13x - 12 = 0
 C. 4x 2 + 13x - 12 = 0
 D. 4x 2 + 13x + 12 = 0
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -111,7 +111,7 @@ B. 1(1/16)
 C. (5/16)
 D. - (37/48)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -122,7 +122,7 @@ B. 13
 C. 7
 D. 6
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -133,94 +133,84 @@ B. x 2 - 3x - 1 = 0
 C. x 2 - 3x - 3 = 0
 D. x 2 + 3x - 1 = 0
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**13.** The volume of a cone of height 3cm is 38(1/2)cm . Find the radius of its base. [Take π = (22/7)]
+**13.** The volume of a cone of height 3cm is 38(1/2)cm . Find the radius of its base. [Take pi = (22/7)]
 
 A. 3.0cm
 B. 3.5cm
 C. 4.0cm
 D. 4.5cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**14.** The dimension of a rectangular tank are 2m by 7m by 11m. If its volume is equal to that of a cylindrical tank of height 4cm, calculate the base radius of the cylindrical tank. [Take π = (22/7)]
+**14.** The dimension of a rectangular tank are 2m by 7m by 11m. If its volume is equal to that of a cylindrical tank of height 4cm, calculate the base radius of the cylindrical tank. [Take pi = (22/7)]
 
 A. 14cm
 B. 7m
 C. 3(1/2)m
 D. 1(3/4)m
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **15.** ![diagram](images/waec/2015/q15_1.jpeg) In the diagram, O is the centre. If PQ//RS and ∠ONS = 140°, find the size of ∠POM.
-
-![diagram](images/waec/2015/q15_1.jpeg)
 
 A. 40 o
 B. 50 o
 C. 60 o
 D. 80 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **16.** ![diagram](images/waec/2015/q16_1.jpg) In the diagram, PTR is a tangent to the centre O. If angles TON = 108°, Calculate the size of angle PTN
-
-![diagram](images/waec/2015/q16_1.jpg)
 
 A. 132 o
 B. 126 o
 C. 108 o
 D. 102 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **17.** ![diagram](images/waec/2015/q17_1.jpg) In the diagram, PQ//RT, QR//SU,<PQR = 48º and <RTS = x. Find the value of x.
-
-![diagram](images/waec/2015/q17_1.jpg)
 
 A. 134 o
 B. 132 o
 C. 96 o
 D. 48 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **18.** ![diagram](images/waec/2015/q18_1.jpg) In the diagram, O is the centre, \barRT is a diameter, < PQT = 33^o and <TOS = 76^o. Using the diagram, calculate the value of angle PTR.
-
-![diagram](images/waec/2015/q18_1.jpg)
 
 A. 73 o
 B. 67 o
 C. 57 o
 D. 37 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **19.** ![diagram](images/waec/2015/q19_1.jpg) In the diagram, O is the centre of the circle, \barRT is a diameter, < PQT = 33^o and < TOS = 76^o. Using the diagram, find the value of angle PTR.
-
-![diagram](images/waec/2015/q19_1.jpg)
 
 A. 76 o
 B. 71 o
 C. 57 o
 D. 33 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -231,7 +221,7 @@ B. 2
 C. 3
 D. 4
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -242,18 +232,18 @@ B. 55 o
 C. 63 o
 D. 65 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**22.** The angle of elevation of an aircraft from a point K on the horizontal ground 30α. If the aircraft is 800m above the ground, how far is it from K?
+**22.** The angle of elevation of an aircraft from a point K on the horizontal ground 30alpha. If the aircraft is 800m above the ground, how far is it from K?
 
 A. 400.00m
 B. 692.82m
 C. 923.76m
 D. 1,600.00m
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -264,7 +254,7 @@ B. 45 o
 C. 60 o
 D. 75 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -275,7 +265,7 @@ B. 63
 C. 64
 D. 65
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -286,7 +276,7 @@ B. 6.2
 C. 6.6
 D. 7.0
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -297,20 +287,18 @@ B. (7/60)
 C. (1/30)
 D. (1/60)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **27.** ![diagram](images/waec/2015/q27_1.jpg) In the diagram, VW//YZ, |WX| = 6cm, |XY| = 16cm, |YZ| = 20cm and |ZX| = 12cm. Calculate |VX|
-
-![diagram](images/waec/2015/q27_1.jpg)
 
 A. 3cm
 B. 4cm
 C. 6cm
 D. 8cm
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -321,42 +309,40 @@ B. (20 - n)years
 C. (25 - n)years
 D. (30 + n)years
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**29.** If \frac√(2) + √(3)√(3) is simplified as m + n√(6), find the value of (m + n)
+**29.** If \fracsqrt(2) + sqrt(3)sqrt(3) is simplified as m + nsqrt(6), find the value of (m + n)
 
 A. (1/3)
 B. (2/3)
 C. 1(1/3)
 D. 1(2/3)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **30.** ![diagram](images/waec/2015/q30_1.jpg) In the given diagram, \barQT and \barPR are straight lines, < ROS = (3n - 20), < SOT = n, < POL = m and < QOL is a right angle. Find the value of n.
-
-![diagram](images/waec/2015/q30_1.jpg)
 
 A. 35 o
 B. 40 o
 C. 55 o
 D. 60 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**31.** Make K the subject of the relation T = √((TK - H/K - H))
+**31.** Make K the subject of the relation T =
 
-A. K = (H(T^2 - 1)/T^2 - T)
-B. K = (HT/(T - 1)^2)
-C. K = (H(T^2 + 1)/T)
-D. K = (H(T - 1)/T)
+A. K = H ( T 2 − 1 ) T 2 − T
+B. K = H T ( T − 1 ) 2
+C. K = H ( T 2 + 1 ) T
+D. K = H ( T − 1 ) T
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -367,51 +353,51 @@ B. Frequency polygon
 C. Ogive
 D. Histogram
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**33.** The area of a rhombus is 110 cm^2. If the diagonals are 20 cm and (2x + 1) cm long, find the value of x.
+**33.** The area of a rhombus is 110 cm . If the diagonals are 20 cm and (2x + 1) cm long, find the value of x.
 
 A. 5.0
 B. 4.0
 C. 3.0
 D. 2.5
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**34.** Simplify: (3x - y/xy) - (2x + 3y/2xy) + (1/2)
+**34.** Simplify:
 
-A. (4x + 5y - xy/2xy)
-B. (5y - 4x + xy/2xy)
-C. (5x + 4y - xy/2xy)
-D. (4x - 5y + xy/2xy)
+A. 4 x + 5 y − x y 2 x y
+B. 5 y − 4 x + x y 2 x y
+C. 5 x + 4 y − x y 2 x y
+D. 4 x − 5 y + x y 2 x y
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**35.** A farmer uses (2/5) of his land to grow cassava, (1/3) of the remaining for yam and the rest for maize. Find the part of the land used for maize
+**35.** A farmer uses of his land to grow cassava, of the remaining for yam and the rest for maize. Find the part of the land used for maize
 
-A. (2/15)
-B. (2/5)
-C. (2/3)
-D. (4/5)
+A. 2 15
+B. 2 5
+C. 2 3
+D. 4 5
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **36.** The rate of consumption of petrol by a vehicle varies directly as the square of the distance covered. If 4 litres of petrol is consumed on a distance of 15km. how far would the vehicle go on 9 litres of petrol?
 
-A. 22(1/2)km
+A. 22 1 2 km
 B. 30km
-C. 33(1/2)km
+C. 33 1 2 km
 D. 45km
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -422,31 +408,29 @@ B. 20% loss
 C. 25% profit
 D. 25% loss
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **38.** ![diagram](images/waec/2015/q38_1.jpg) Describe the shaded portion in the diagram
-
-![diagram](images/waec/2015/q38_1.jpg)
 
 A. P' ∩ Q ∩ R'
 B. (P' ∩ R)' ∩ R
 C. P' ∩ Q ∩ R
 D. (P ∩ Q)' ∩ R
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**39.** Find the value of p if (1/4)p + 3q = 10 and 2p - (1/3)q = 7
+**39.** Find the value of p if p + 3q = 10 and 2p - q = 7
 
 A. 4
 B. 3
 C. -3
 D. -4
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -457,20 +441,18 @@ B. 2.0
 C. 2.5
 D. 3.0
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **41.** ![diagram](images/waec/2015/q41_1.jpg) In the diagram, the shaded part is carpet laid in a room with dimensions 3.5m by 2.2m leaving a margin of 0.5m round it. Find area of the margin
-
-![diagram](images/waec/2015/q41_1.jpg)
 
 A. 4.7m 2
 B. 4.9m 2
 C. 5.7m 2
 D. 5.9m 2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -481,7 +463,7 @@ B. 100 o
 C. 120 o
 D. 144 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -492,30 +474,28 @@ B. 11 26
 C. 4 13
 D. 1 26
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**44.** In a circle radius rcm, a chord 16 √ c m long is 10cmfrom the centre of the circle. Find, correct to the nearest cm, the value of r
+**44.** In a circle radius rcm, a chord 16 long is 10cmfrom the centre of the circle. Find, correct to the nearest cm, the value of r
 
 A. 22cm
 B. 17cm
 C. 16cm
 D. 15cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**45.** ![diagram](images/waec/2015/q45_1.jpg) In the diagram, ¯ O X bisects < YXZ and ¯ O Z bisects < YZX. If < XYZ = 68 o , calculate the value of < XOZ
-
-![diagram](images/waec/2015/q45_1.jpg)
+**45.** ![diagram](images/waec/2015/q45_1.jpg) In the diagram, bisects < YXZ and bisects < YZX. If < XYZ = 68 o , calculate the value of < XOZ
 
 A. 68 o
 B. 72 o
 C. 112 o
 D. 124 o
 
-✓ **Answer:** D
+Answer: D
 
 ---

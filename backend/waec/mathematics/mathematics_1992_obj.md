@@ -13,11 +13,11 @@ C. (2, 3)
 D. (1, 3)
 E. (1, 4)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**2.** Simplify ((3/4) + (1/3)) × 4(1/3) ÷ 3(1/4)
+**2.** Simplify ((3/4) + (1/3)) x 4(1/3) / 3(1/4)
 
 A. 1/2
 B. 13/12
@@ -25,7 +25,7 @@ C. 10/9
 D. 17/12
 E. 13/9
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -37,7 +37,7 @@ C. -3
 D. -3≤x≤2
 E. x≥2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -49,7 +49,7 @@ C. 100110
 D. 10101
 E. 10011
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -61,7 +61,7 @@ C. 15%
 D. 35 5/17%
 E. 36 24/41%
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -73,7 +73,7 @@ C. 2/3, 3, 8/3
 D. 2/3, 3 / 4 , 6
 E. 2/3, 3, 1/3
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -85,7 +85,7 @@ C. 4/9
 D. 2/3
 E. -4/3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -97,7 +97,7 @@ C. 100
 D. 409
 E. 490
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -109,7 +109,7 @@ C. (3x - 2y(x - y)
 D. (2y + 3x)(y - x)
 E. (x – y)(2y + 3x)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -121,7 +121,7 @@ C. 2x 2 +3x-2=0
 D. 2x 2 -3x+2=0
 E. 2x 2 -3x-2=0
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -133,7 +133,7 @@ C. (3 - x/1 + x^2)
 D. (3 - x/(1 + x)^2)
 E. (3 - x/1 - x^2)
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -145,7 +145,7 @@ C. 36
 D. 72
 E. 81
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -157,7 +157,7 @@ C. 2
 D. 3
 E. 4
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -169,7 +169,7 @@ C. 16/5cm
 D. 8/3cm
 E. 16/10cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -181,7 +181,7 @@ C. 14cm
 D. 28cm
 E. 32cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -193,7 +193,7 @@ C. 28cm
 D. 98cm
 E. 196cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -205,7 +205,7 @@ C. 27cm
 D. 54cm
 E. 108cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -217,7 +217,7 @@ C. 11/6cm 2
 D. 2 1/3cm 2
 E. 6 1/6cm 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -229,7 +229,7 @@ C. 37 o
 D. 32 o
 E. 30 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -241,7 +241,7 @@ C. 72 o
 D. 63 o
 E. 54 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -253,7 +253,7 @@ C. 60
 D. 120
 E. 150
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -265,7 +265,7 @@ C. 108 o
 D. 144 o
 E. 288 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -277,7 +277,7 @@ C. 65 o
 D. 127 o
 E. 147 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -289,7 +289,7 @@ C. 35 o
 D. 40 o
 E. 55 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -301,7 +301,7 @@ C. 30 o
 D. 36 o
 E. 48 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -313,7 +313,7 @@ C. 6.6cm
 D. 6.8cm
 E. 7.0cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -325,7 +325,7 @@ C. 12
 D. 20
 E. 24
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -337,7 +337,7 @@ C. 55 o
 D. 70 o
 E. 75 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -349,11 +349,11 @@ C. IV only
 D. III only
 E. IV and V only
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**30.** If cos θ = 5/13, what is the value of tan θ for 0 < θ < 90° ?
+**30.** If cos θ = 5/13, what is the value of tan theta for 0 < θ < 90° ?
 
 A. 13
 B. 5
@@ -361,7 +361,7 @@ C. 13/5
 D. 12/5
 E. 5/12
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -373,19 +373,19 @@ C. o
 D. -1
 E. -√2/2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **32.** The value of sin 210° is
 
-A. − 1 2
-B. − √ 3 2
-C. 1 2
-D. √ 2 2
-E. √ 3 2
+A. -(1/2)
+B. -\fracsqrt(3)2
+C. (1/2)
+D. \fracsqrt(2)2
+E. \fracsqrt(3)2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -397,19 +397,19 @@ C. 45km
 D. 60km
 E. 120km
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **34.** A ladder leans against a vertical wall at an angle 60° to the wall, if the foot of the ladder is 5 metres away from the wall, calculate the length of the ladder.
 
-A. 5 √ 3 3 m
+A. (5\sqrt3/3)m
 B. 5m
-C. 10 √ 3 3 m
+C. (10\sqrt3/3)m
 D. 5√3m
 E. 10m
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -421,7 +421,7 @@ C. 100√3m
 D. 200√3m
 E. 300m
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -433,7 +433,7 @@ C. 13m
 D. 17m
 E. 18m
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -445,7 +445,7 @@ C. 63.5
 D. 65
 E. 72
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -457,7 +457,7 @@ C. 15
 D. 18
 E. 20
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -469,7 +469,7 @@ C. 4
 D. 5
 E. 6
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -481,7 +481,7 @@ C. 2
 D. 3
 E. 3.8
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -493,7 +493,7 @@ C. 74 o
 D. 73 o
 E. 72 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -505,7 +505,7 @@ C. 8
 D. 9
 E. 14
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -517,7 +517,7 @@ C. 2/5
 D. 3/5
 E. 7/10
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -529,7 +529,7 @@ C. 1/2
 D. 2/3
 E. 5/6
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -541,7 +541,7 @@ C. 1/3
 D. 1/2
 E. 2/3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -553,7 +553,7 @@ C. 5/162
 D. 5/204
 E. 5/243
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -565,7 +565,7 @@ C. 2/9
 D. 1/6
 E. 1/4
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -577,6 +577,6 @@ C. 5/36
 D. 1/4
 E. 3/4
 
-✓ **Answer:** D
+Answer: D
 
 ---

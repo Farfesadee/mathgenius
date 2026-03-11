@@ -12,7 +12,7 @@ function randomSeed(len = 6) {
     return Array.from({ length: len }, () => chars[Math.floor(Math.random() * chars.length)]).join('')
 }
 
-const EXAM_TYPES = ['JAMB', 'WAEC', 'NECO']
+const EXAM_TYPES = ['JAMB', 'WAEC', 'NECO', 'BECE']
 const OPTION_LETTERS = ['A', 'B', 'C', 'D']
 const TOTAL_QUESTIONS = 10
 

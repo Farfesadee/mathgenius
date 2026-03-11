@@ -12,18 +12,18 @@ B. 2.414 x 10^3
 C. 2.414 x 10^4
 D. 2.414 x 10^5
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**2.** Given that P = {p: 1< p < 20}, where p is an integer and R = {r : 0 ≤ r ≤ 25, where r is a multiple of 4}. Find P ∩ R
+**2.** Given that P = {p: 1< p < 20}, where p is an integer and R = {r : 0 <= r <= 25, where r is a multiple of 4}. Find P ∩ R
 
 A. {4, 8, 10, 16}
 B. {4, 8, 12, 16}
 C. {4, 8, 12, 16, 20}
 D. {4, 8, 12, 16, 20, 24}
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -34,7 +34,7 @@ B. 9
 C. 10
 D. 11
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -45,7 +45,7 @@ B. xy = 3
 C. xy = a^3
 D. x + y = a^3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -56,18 +56,18 @@ B. 2p(p - 3q)
 C. 3p(2p - q)
 D. 2p(3p - q)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**6.** If (3 - 4√(2))(1 + 3√(2)) = a + b√(2), find the value of b
+**6.** If (3 - 4sqrt(2))(1 + 3sqrt(2)) = a + bsqrt(2), find the value of b
 
 A. -5
 B. 5
 C. -21
 D. 21
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -78,7 +78,7 @@ B. 3 years
 C. 4 years
 D. 5 years
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -89,7 +89,7 @@ B. 16
 C. 64
 D. 122
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -100,7 +100,7 @@ B. 3,278
 C. 6,591
 D. 7,515
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -111,7 +111,7 @@ B. 5(5/9)%
 C. 5(7/19)%
 D. 5(7/9)%
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -122,51 +122,51 @@ B. 30
 C. 15
 D. 12
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**12.** If 3x - 2y = - 5 and x + 2y = 9, find the value of x − y x + y
+**12.** If 3x - 2y = - 5 and x + 2y = 9, find the value of (x - y/x + y)
 
-A. 5 3
-B. 3 5
-C. − 3 5
-D. − 5 3
+A. (5/3)
+B. (3/5)
+C. (-3/5)
+D. (-5/3)
 
-✓ **Answer:** C
-
----
-
-**13.** A variable W varies partly as M and Partly inversely as P. Which of the following correctly represents the relation with k and k constants?
-
-A. W = k 1 M k 2 P
-B. W = ( k 1 + k 2 ) M P
-C. W = k 1 M + k 2 P
-D. W = (k 1 + k 2 )M + P
-
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**14.** A cylindrical metallic barrel of height 2.5m and radius 0.245 is closed at one end. Find, correct to one decimal place, the total surface area of the barrel (Take π = )
+**13.** A variable W varies partly as M and Partly inversely as P. Which of the following correctly represents the relation with k_1 and k_2 constants?
 
-A. 2.1 m 2
-B. 3.5 m 2
-C. 4.0 m 2
-D. 9.4 m 2
+A. W = (k_1M/k_2P)
+B. W = (k_1 + k_2)\frac\textM\textP
+C. W = k_1M + (k_2/P)
+D. W = (k_1 + k_2)M + P
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**15.** Make R the subject of the relation V = πl(R - r )
+**14.** A cylindrical metallic barrel of height 2.5m and radius 0.245 is closed at one end. Find, correct to one decimal place, the total surface area of the barrel (Take π = (22/7))
 
-A. R = \sqrt{\frac{V}{πl} + r^2}
-B. R = \sqrt{\frac{V}{πl} - r^2}
-C. R = \sqrt{V - πlr^2}
-D. R = \sqrt{V + πlr^2}
+A. 2.1 m^2
+B. 3.5 m^2
+C. 4.0 m^2
+D. 9.4 m^2
 
-✓ **Answer:** A
+Answer: C
+
+---
+
+**15.** Make R the subject of the relation V = πl(R^2 - r^2)
+
+A. R = sqrt((V/πl) + r^2)
+B. R = sqrt((V/πl) - r^2)
+C. R = sqrt(V - πlr^2)
+D. R = sqrt(V + πlr^2)
+
+Answer: A
 
 ---
 
@@ -177,7 +177,7 @@ B. ¬m ⇒ ¬n.
 C. n ⇒ ¬m.
 D. m ⇒ n.
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -188,7 +188,7 @@ B. 4
 C. 5
 D. 6
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -199,7 +199,7 @@ B. 12
 C. 20
 D. 28
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -210,7 +210,7 @@ B. 3x^2 + x + 2 = 0
 C. 3x^2 + x - 2 = 0
 D. 3x^2 + x - 1 = 0
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -221,20 +221,18 @@ B. 14m
 C. 16m
 D. 24m
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**21.** ![diagram](images/waec/2024/q21_1.png) In the diagram above, \overlineMN || \overlineKL, \overlineML and \overlineKN intersect at X. |\overlineMN| = 12cm, |\overlineMX| = 10cm and |\overlineMN| = 9cm. If the area of \triangle MXN is 16cm^2, calculate the area of \triangle LXK
+**21.** ![diagram](images/waec/2024/q21_1.png) In the diagram above, , and intersect at X. | | = 12cm, | | = 10cm and | | = 9cm. If the area of MXN is 16cm , calculate the area of LXK
 
-![diagram](images/waec/2024/q21_1.png)
+A. 9cm 2
+B. 8cm 2
+C. 10cm 2
+D. 12cm 2
 
-A. 9cm^2
-B. 8cm^2
-C. 10cm^2
-D. 12cm^2
-
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -245,20 +243,18 @@ B. 14.3 m
 C. 4.9 m
 D. 4.6 m
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**23.** ![diagram](images/waec/2024/q23_1.png) In the diagram above, O is the centre of the circle. If | \overlineOA = 25 cm and |\overlineAB = 40 cm, find |\overlineOH|
-
-![diagram](images/waec/2024/q23_1.png)
+**23.** ![diagram](images/waec/2024/q23_1.png) In the diagram above, O is the centre of the circle. If | = 25 cm and | = 40 cm, find | |
 
 A. 15 cm
 B. 20 cm
 C. 25 cm
 D. 30 cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -269,7 +265,7 @@ B. $ 480,000.00
 C. $ 486,000.00
 D. $ 540,000.00
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -280,7 +276,7 @@ B. 21.7 m
 C. 19.8 m
 D. 18.5 m
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -291,7 +287,7 @@ B. 838cm 2
 C. 792cm 2
 D. 746cm 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -302,7 +298,7 @@ B. Eight
 C. Nine
 D. Ten
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -313,44 +309,40 @@ B. 3(3x + 4y)(3x + 4y)
 C. 3(9x - 16y)(9x + 16y)
 D. 3(9x - 16y)(9x - 16y)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**29.** For what values of x is x − + x + ≥ 2 ?
+**29.** For what values of x is + 2 ?
 
 A. x ≥ 5
 B. x ≥ 6
 C. x ≥ 7
 D. x ≥ 8
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **30.** ![diagram](images/waec/2024/q30_1.png) In the diagram above, < SQR = 52º and < PRT = 16º. Find the value of the angle marked y
-
-![diagram](images/waec/2024/q30_1.png)
 
 A. 64 0
 B. 68 0
 C. 112 0
 D. 128 0
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **31.** ![diagram](images/waec/2024/q31_1.png) In the diagram above, JKL is a tangent to the circle GHIK at K.
-
-![diagram](images/waec/2024/q31_1.png)
 
 A. 93º
 B. 55º
 C. 42º
 D. 23º
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -361,20 +353,18 @@ B. 4: 3
 C. 3: 2
 D. 3: 4
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **33.** ![diagram](images/waec/2024/q33_1.png) Find, correct to the nearest ​​​​​​whole number, the value of h in the diagram above.
-
-![diagram](images/waec/2024/q33_1.png)
 
 A. 15 m
 B. 22 m
 C. 23 m
 D. 18 m
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -385,20 +375,18 @@ B. 4
 C. -4
 D. -3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**35.** ![diagram](images/waec/2024/q35_1.png) In the diagram above, \overlinePQ || \overlineRS, \angleWYZ = 44º and \angleWXY = 50º. Find \angleWTX
-
-![diagram](images/waec/2024/q35_1.png)
+**35.** ![diagram](images/waec/2024/q35_1.png) In the diagram above, || , WYZ = 44º and WXY = 50º. Find WTX
 
 A. 65º
 B. 68º
 C. 86º
 D. 90º
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -409,31 +397,29 @@ B. 23 m
 C. 24 m
 D. 26 m
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **37.** Four of the angles of a hexagon sum up to 420º. If the remaining angles are equal, find the value of each of the angles.
 
-A. 60^O
-B. 100^O
-C. 120^O
-D. 150^O
+A. 60 O
+B. 100 O
+C. 120 O
+D. 150 O
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **38.** ![diagram](images/waec/2024/q38_1.png) Find the value of x in the diagram above.
-
-![diagram](images/waec/2024/q38_1.png)
 
 A. 120º
 B. 100º
 C. 60º
 D. 150º
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -444,7 +430,7 @@ B. 50 kg
 C. 40 kg
 D. 53 kg
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -455,75 +441,73 @@ B. 36
 C. 40
 D. 50
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**41.** Two opposite sides of a rectangle are (5x + 3) m and (2x + 9) m. If an adjacent side is (6x - 7) m, find in m^2, the area of the rectangle.
+**41.** Two opposite sides of a rectangle are (5x + 3) m and (2x + 9) m. If an adjacent side is (6x - 7) m, find in m , the area of the rectangle.
 
 A. 45
 B. 65
 C. 125
 D. 165
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **42.** A die is tossed once. Find the probability of getting a prime number.
 
-A. (1/2)
-B. (1/6)
-C. (1/3)
-D. (2/3)
+A. 1 2
+B. 1 6
+C. 1 3
+D. 2 3
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**43.** The area of a sector of a circle with radius 7cm is 51.3 cm^2. Calculate, correct to the nearest whole number, the angle of the sector. (Take π = (22/7))
+**43.** The area of a sector of a circle with radius 7cm is 51.3 cm . Calculate, correct to the nearest whole number, the angle of the sector. (Take = )
 
-A. 60°
-B. 120°
-C. 150°
-D. 150°
+A. 60 0
+B. 120 0
+C. 150 0
+D. 150 0
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **44.** A cliff on the bank of a river 87 m high. A boat on the river is 22 m away from the cliff. Calculate, correct to the nearest degree, the angle of depression of the boat from the top of the cliff.
 
-A. 76^o
-B. 64^o
-C. 36^o
-D. 24^o
+A. 76 o
+B. 64 o
+C. 36 o
+D. 24 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**45.** ![diagram](images/waec/2024/q45_1.png) In the diagram \overlineTU is a tangent to the circle SPQR at P. If \anglePTS = 44º, \angleSQP = 35º, find \anglePST
-
-![diagram](images/waec/2024/q45_1.png)
+**45.** ![diagram](images/waec/2024/q45_1.png) In the diagram is a tangent to the circle SPQR at P. If PTS = 44º, SQP = 35º, find PST
 
 A. 101º
 B. 125º
 C. 130º
 D. 135º
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**46.** The probability that Amaka will pass an examination is (3/7) and that Bala will pass is (4/9). Find the probability that both will pass the examination.
+**46.** The probability that Amaka will pass an examination is and that Bala will pass is . Find the probability that both will pass the examination.
 
-A. (2/21)
-B. (4/21).
-C. (5/21)
-D. (9/21)
+A. 2 21
+B. 4 21 .
+C. 5 21
+D. 9 21
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -534,7 +518,7 @@ B. (1, -1)
 C. (-1, 1)
 D. (-1, -1)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -545,7 +529,7 @@ B. 24
 C. 25
 D. 27
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -556,17 +540,17 @@ B. 6
 C. -2
 D. 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**50.** For what values of y is (y + 2/8y^2 - 10y + 3) not defined?
+**50.** For what values of y is not defined?
 
-A. (-3/4), (1/2)
-B. (-3/4), (-1/2)
-C. (3/4), (1/2)
-D. (3/4), (-1/2)
+A. − 3 4 , 1 2
+B. − 3 4 , − 1 2
+C. 3 4 , 1 2
+D. 3 4 , − 1 2
 
-✓ **Answer:** C
+Answer: C
 
 ---

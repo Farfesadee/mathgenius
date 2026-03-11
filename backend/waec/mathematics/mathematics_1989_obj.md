@@ -13,7 +13,7 @@ C. 8
 D. 16
 E. 32
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -25,7 +25,7 @@ C. 48
 D. 60
 E. 68
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -37,7 +37,7 @@ C. 24cm 2
 D. 21cm 2
 E. 19cm 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -49,11 +49,11 @@ C. 31 o
 D. 45 o
 E. 90 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**5.** Evaluate, using logarithm tables (5.34 × 67.4/2.7)
+**5.** Evaluate, using logarithm tables (5.34 x 67.4/2.7)
 
 A. 1.332
 B. 13.32
@@ -61,7 +61,7 @@ C. 133.2
 D. 1332
 E. 13.320
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -73,11 +73,11 @@ C. (3+7b)(5-b)
 D. (35-b)(3b+7)
 E. (7+b)(5+b)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**7.** Evaluate 0.009 0.012 , leaving your answer in standard form.
+**7.** Evaluate (0.009/0.012), leaving your answer in standard form.
 
 A. 7.5 x 10 2
 B. 7.5 x 10 1
@@ -85,11 +85,11 @@ C. 7.5 x 10 -1
 D. 7.5 x 10 -2
 E. 7.5 x 10 -3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**8.** ![diagram](images/waec/1989/q8_1.png) The graph above is that of a quadratic function y = 2x - x - 6 The roots of the equation are
+**8.** ![diagram](images/waec/1989/q8_1.png) The graph above is that of a quadratic function y = 2x^2 - x - 6 The roots of the equation are
 
 A. 1.5, 2
 B. -1.5, 2
@@ -97,7 +97,7 @@ C. 1, -6
 D. 1, 6
 E. -1, 6
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -109,7 +109,7 @@ C. (2x-5)(x-3)
 D. (2x-3)(x+5)
 E. (2x+5)(x+3)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -121,7 +121,7 @@ C. 20√3m
 D. 40m
 E. 50m
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -133,7 +133,7 @@ C. 9.6%
 D. 14.4%
 E. 15.4%
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -145,7 +145,7 @@ C. x = p 2
 D. x = p/2
 E. x = 2p
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -157,7 +157,7 @@ C. 16.20cm 2
 D. 24.40cm 2
 E. 48.8cm 2
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -169,7 +169,7 @@ C. 30 o
 D. 45 o
 E. 50 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -181,7 +181,7 @@ C. 155
 D. 135
 E. 85
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -193,7 +193,7 @@ C. 51.43 o
 D. 98 o
 E. 114.55 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -205,11 +205,11 @@ C. 7
 D. 4
 E. 3
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**18.** If 3 y = 243, find the value of y.
+**18.** If 3 = 243, find the value of y.
 
 A. 2
 B. 3
@@ -217,7 +217,7 @@ C. 4
 D. 5
 E. 6
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -229,7 +229,7 @@ C. 156 o
 D. 204 o
 E. 336 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -241,7 +241,7 @@ C. 5cm
 D. 8cm
 E. 15cm
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -253,11 +253,11 @@ C. 176cm 2
 D. 214.5cm 2
 E. 253.5cm 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**22.** Solve the following equation: 6x^2 - 7x - 5 = 0
+**22.** Solve the following equation: 6x - 7x - 5 = 0
 
 A. x = 1 / 2 or x = -2 1 / 2
 B. x = 1/3 or x = 2 1 / 2
@@ -265,7 +265,7 @@ C. x = 1 2 /3 or x = - 1 / 2
 D. x = 1 2 /3 or x = 1 / 2
 E. x = 5/6 or x = -1
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -277,7 +277,7 @@ C. 25.7 o
 D. 20 o
 E. 3.75 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -289,7 +289,7 @@ C. 30.5%
 D. 35.2%
 E. 36.5%
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -301,7 +301,7 @@ C. {a,b,c,d,e,f}
 D. {a,b,c}
 E. Φ
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -313,7 +313,7 @@ C. 5
 D. 6
 E. 7
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -325,7 +325,7 @@ C. 5
 D. 6
 E. 7
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -337,7 +337,7 @@ C. 8
 D. 9
 E. 10
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -349,7 +349,7 @@ C. 105 o
 D. 150 o
 E. 210 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -361,7 +361,7 @@ C. 1/9
 D. 1/18
 E. 1/27
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -373,7 +373,7 @@ C. 60 o
 D. 80 o
 E. 100 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -385,7 +385,7 @@ C. y ≥ x, y ≥ 0, y + x ≤ 7
 D. y ≤ x, y ≤ 0, y + x ≤ 7
 E. y ≤ x, y ≥ 0, y + x ≥ 7
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -397,7 +397,7 @@ C. 21.0cm 3
 D. 42.0cm 3
 E. 154.0cm 3
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -409,18 +409,18 @@ C. 1/4
 D. 3/10
 E. 3/4
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**35.** The angle of a sector of a circle of diameter 8cm is 135°. Find the area of the sector [Take π = 22/7].
+**35.** The angle of a sector of a circle of diameter 8cm is 135°. Find the area of the sector [Take = 22/7].
 
 A. 9 3 7 c m 2
 B. 12 4 7 c m 2
 C. 18 6 7 c m 2
 D. 25 1 7 c m 2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -432,7 +432,7 @@ C. 35 o
 D. 25 o
 E. 20 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -444,7 +444,7 @@ C. (-2,4)(3,9)
 D. (-2,3)(-3,2)
 E. (-2,2)(3,6)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -456,7 +456,7 @@ C. 22.0cm 2
 D. 67.2cm 2
 E. 90.2cm 2
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -468,7 +468,7 @@ C. x = p
 D. x = ap
 E. x = a p
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -480,7 +480,7 @@ C. 9.78cm
 D. 25.1cm
 E. 50.3cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -492,7 +492,7 @@ C. 117 o
 D. 114 o
 E. 54 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -504,7 +504,7 @@ C. 27.8m
 D. 14.8m
 E. 13.9m
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -516,7 +516,7 @@ C. 6, 4
 D. -6, 4
 E. 5, 5
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -528,11 +528,11 @@ C. p = x 2 + q 3
 D. p = 2x + 3q
 E. p = x 2 q 3
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
-**45.** sinθ = and cosθ = - √ , what is the value of θ?
+**45.** sinθ = and cosθ = - , what is the value of θ?
 
 A. 30 0
 B. 60 0
@@ -540,7 +540,7 @@ C. 90 o
 D. 120 o
 E. 150 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -552,7 +552,7 @@ C. 1/2
 D. 2/3
 E. 5/6
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -564,7 +564,7 @@ C. 16 o
 D. 20 o
 E. 32 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -576,6 +576,6 @@ C. 8
 D. 7
 E. 5 1 / 2
 
-✓ **Answer:** B
+Answer: B
 
 ---

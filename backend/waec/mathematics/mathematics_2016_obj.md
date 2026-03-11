@@ -12,7 +12,7 @@ B. 6
 C. 5
 D. 4
 
-✓ **Answer:** ?
+Answer: D
 
 ---
 
@@ -23,18 +23,18 @@ B. (5/72)
 C. (1/10)
 D. 1(7/10)
 
-✓ **Answer:** ?
+Answer: C
 
 ---
 
-**3.** Simplify:(\frac10√(3)√(5) - √(15))
+**3.** Simplify:(\frac10sqrt(3)sqrt(5) - sqrt(15))
 
 A. 75.00
 B. 15.00
 C. 8.66
 D. 3.87
 
-✓ **Answer:** ?
+Answer: B
 
 ---
 
@@ -45,7 +45,7 @@ B. 135cm
 C. 180cm
 D. 225cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -56,7 +56,7 @@ B. Joseph is a good footballer therefore he is a Nigerian footballer
 C. Joseph is a Nigerian footballer therefore he is a good footballer
 D. Joseph plays good football therefore he is a Nigerian footballer
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -67,18 +67,18 @@ B. 4cm 2
 C. 8cm 2
 D. 8cm 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**7.** Simplify; \frac3^n - 1 × 27^n + 181^n
+**7.** Simplify; \frac3^n - 1 x 27^n + 181^n
 
 A. 3 2n
 B. 9
 C. 3 n
 D. 3 n + 1
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -89,7 +89,7 @@ B. D10,000.00
 C. D12,000.00
 D. D16,000.00
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -100,7 +100,7 @@ B. 21x 2 + 37x - 12 = 0
 C. 21x 2 - x + 12 = 0
 D. 21x 2 + 7x - 4 = 0
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -111,7 +111,7 @@ B. 3, -6
 C. 3, -7
 D. -3, -7
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -122,29 +122,29 @@ B. 3
 C. 7
 D. 17
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**12.** Simplify; (2/1 - x) - (1/x)
+**12.** Simplify;
 
-A. (x + 1/x(1 - x))
-B. (3x - 1/ x(1 - x))
-C. (3x + 1/ x(1 - x))
-D. (x - 1/ x(1 - x))
+A. x + 1 x ( 1 − x )
+B. 3 x − 1 x ( 1 − x )
+C. 3 x + 1 x ( 1 − x )
+D. x − 1 x ( 1 − x )
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**13.** Make s the subject of the relation: P = S + (sm^2/nr)
+**13.** Make s the subject of the relation: P = S +
 
-A. s = (mrp/nr + m^2)
-B. s = (nr + m^2/mrp)
-C. s = (nrp/mr + m^2)
-D. s = (nrp/nr + m^2)
+A. s = m r p n r + m 2
+B. s = n r + m 2 m r p
+C. s = n r p m r + m 2
+D. s = n r p n r + m 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -155,18 +155,18 @@ B. (3x + y)(2x - 7y)
 C. (3x + y)(x - 7y)
 D. (3x - y)(2x + 7y)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**15.** The curve surface area of a cylinder, 5cm high is 110cm . Find the radius of its base. [Take π = (22/7)]
+**15.** The curve surface area of a cylinder, 5cm high is 110cm . Find the radius of its base. [Take ]
 
 A. 2.6cm
 B. 3.5cm
 C. 3.6cm
 D. 7.0cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -177,7 +177,7 @@ B. 5
 C. 6
 D. 8
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -188,29 +188,29 @@ B. (2/3)
 C. (3/2)
 D. (5/3)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **18.** A straight line passes through the point P(1,2) and Q (5,8). Calculate the length PQ
 
-A. 4√(11)
-B. 4√(10)
-C. 2√(17)
-D. 2√(13)
+A. 4sqrt(11)
+B. 4sqrt(10)
+C. 2sqrt(17)
+D. 2sqrt(13)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**19.** If cos θ = x and sin 60 o = x + 0.5 0 o < θ < 90 o , find, correct to the nearest degree, the value of θ
+**19.** If cos theta = x and sin 60 o = x + 0.5 0 o < theta < 90 o , find, correct to the nearest degree, the value of theta
 
 A. 32 o
 B. 40 o
 C. 60 o
 D. 69 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -221,57 +221,51 @@ B. 55
 C. 60
 D. 65
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**21.** \beginarrayc|c Age(years) & 13 & 14 & 15 & 16 & 17 \\ \hline Frequency & 10 & 24 & 8 & 5 & 3 \endarray Find the median age
+**21.** Find the median age
 
 A. 13
 B. 14
 C. 15
 D. 16
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**22.** ![diagram](images/waec/2016/q22_1.png) In the diagram, \barYW is a tangent to the circle at X, |UV| = |VX| and < VXW = 50º. Find the value of < UXY.
-
-![diagram](images/waec/2016/q22_1.png)
+**22.** ![diagram](images/waec/2016/q22_1.png) In the diagram, is a tangent to the circle at X, |UV| = |VX| and < VXW = 50º. Find the value of < UXY.
 
 A. 70 o
 B. 80 o
 C. 105 o
 D. 110 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**23.** ![diagram](images/waec/2016/q23_1.jpg) In the diagram, \barPF, \barQT, \barRG intersect at S and PG||RG. If < SPQ = 113º and < RSt = 22º, find < PSQ
-
-![diagram](images/waec/2016/q23_1.jpg)
+**23.** ![diagram](images/waec/2016/q23_1.jpg) In the diagram, , , intersect at S and PG||RG. If < SPQ = 113º and < RSt = 22º, find < PSQ
 
 A. 22 o
 B. 45 o
 C. 67 o
 D. 89 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **24.** ![diagram](images/waec/2016/q24_1.jpg) In the diagram, O is the centre of the circle, < XOZ = (10cm) o and < XWZ = m o . Calculate the value of m.
-
-![diagram](images/waec/2016/q24_1.jpg)
 
 A. 30
 B. 36
 C. 40
 D. 72
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -282,59 +276,51 @@ B. 6.0m
 C. 7.5m
 D. 9.0m
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **26.** ![diagram](images/waec/2016/q26_1.jpg) In the diagram, TS is a tangent to the circle at S. |PR| and < PQR = 177 o . Calculate < PST.
-
-![diagram](images/waec/2016/q26_1.jpg)
 
 A. 54 o
 B. 44 o
 C. 34 o
 D. 27 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **27.** ![diagram](images/waec/2016/q27_1.png) In the diagram, PR||SV||WY|, TX||QY|, < PQT = 48o and < TXW = 60o.Find < TQU.
-
-![diagram](images/waec/2016/q27_1.png)
 
 A. 120 o
 B. 108 o
 C. 72 o
 D. 60 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**28.** ![diagram](images/waec/2016/q28_1.jpg) In the diagram, TX is perpendicular to UW, |UX| = 1cm and |TX| = |WX| = √(3)cm. Find UTW
-
-![diagram](images/waec/2016/q28_1.jpg)
+**28.** ![diagram](images/waec/2016/q28_1.jpg) In the diagram, TX is perpendicular to UW, |UX| = 1cm and |TX| = |WX| = sqrt(3)cm. Find UTW
 
 A. 135 o
 B. 105 o
 C. 75 o
 D. 60 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **29.** ![diagram](images/waec/2016/q29_1.jpg) The figure is a pie chart which represents the expenditure of a family in a year. If the total income of the family was Le 10,800,000.00, how much was spent on food?
-
-![diagram](images/waec/2016/q29_1.jpg)
 
 A. Le 2,250,000.00
 B. Le 22,700,000.00
 C. Le 3,600,000.00
 D. Le 4,500,000.00
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -345,7 +331,7 @@ B. (1/6)
 C. (5/18)
 D. (2/3)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -356,7 +342,7 @@ B. 14
 C. 13
 D. 11
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -367,18 +353,18 @@ B. 3.67
 C. 8.67
 D. 11
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **33.** A sphere of radius rcm has the same volume as cylinder of radius 3cm and height 4cm. Find the value of r
 
-A. (2/3)
+A. 2 3
 B. 2
 C. 3
 D. 6
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -389,44 +375,40 @@ B. 1,900
 C. 1,980
 D. 2,000
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**35.** ![diagram](images/waec/2016/q35_1.jpg) The diagram, MOPQ is a trapezium with QP||MO, MQ||NP, NQ||OP, |QP| = 9cm and the height of \Delta QNP = 6cm, calculate the area of the trapezium.
-
-![diagram](images/waec/2016/q35_1.jpg)
+**35.** ![diagram](images/waec/2016/q35_1.jpg) The diagram, MOPQ is a trapezium with QP||MO, MQ||NP, NQ||OP, |QP| = 9cm and the height of QNP = 6cm, calculate the area of the trapezium.
 
 A. 96cm 2
 B. 90cm 2
 C. 81cm 2
 D. 27cm 2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**36.** The perimeter of a sector of a circle of radius 21cm is 64cm. Find the angle of the sector [Take π = ]
+**36.** The perimeter of a sector of a circle of radius 21cm is 64cm. Find the angle of the sector [Take pi = (22/7)]
 
 A. 70 o
 B. 60 o
 C. 55 o
 D. 42 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**37.** ![diagram](images/waec/2016/q37_1.jpg) Examine M' ∩ N from the venn diagram
-
-![diagram](images/waec/2016/q37_1.jpg)
+**37.** ![diagram](images/waec/2016/q37_1.jpg) Examine M' intersect N from the venn diagram
 
 A. {f, g}
 B. {e}
 C. {e, f, g}
 D. {e, f, g}
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -437,31 +419,29 @@ B. 2
 C. 3
 D. 4
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**39.** Simplify ( p − r ) − r p − p r
+**39.** Simplify ((p - r)^2 - r^2/2p^2 - 4pr)
 
-A. 1 2
+A. (1/2)
 B. p - 2r
-C. 1 p − 2 r
-D. 2 p p − 2 r
+C. (1/p - 2r)
+D. (2p/p - 2r)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **40.** ![diagram](images/waec/2016/q40_1.jpg) In the diagram, O is the centre of the circle, < QPS = 100 o , < PSQ = 60 o and < QSR. Calculate < SQR
-
-![diagram](images/waec/2016/q40_1.jpg)
 
 A. 20 o
 B. 40 o
 C. 60 o
 D. 80 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -472,7 +452,7 @@ B. 5 18
 C. 20 81
 D. 5 9
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -483,7 +463,7 @@ B. - 4
 C. 4
 D. 8
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -494,20 +474,18 @@ B. 9, 11, 13
 C. 11, 15, 19
 D. 13, 21, 34
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **44.** ![diagram](images/waec/2016/q44_1.jpg) Find the lower quartile of the distribution illustrated by the cumulative frequency curve
-
-![diagram](images/waec/2016/q44_1.jpg)
 
 A. 17.5
 B. 19.0
 C. 27.5
 D. 28.0
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -518,31 +496,29 @@ B. 24
 C. 18
 D. 12
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **46.** Halima is n years old. Her brother's age is 5 years more than half of her age. How old is her brother?
 
-A. n 2 + 5 2
-B. n 2 - 5
-C. 5 - n 2
-D. n 2 + 5
+A. (n/2) + (5/2)
+B. (n/2) - 5
+C. 5 - (n/2)
+D. (n/2) + 5
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **47.** ![diagram](images/waec/2016/q47_1.jpg) In the diagram MN is a chord of a circle KMN centre O and radius 10cm. If < MON = 140 o , find, correct to the nearest cm, the length of the chord MN.
-
-![diagram](images/waec/2016/q47_1.jpg)
 
 A. 19cm
 B. 18cm
 C. 17cm
 D. 12cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -553,19 +529,17 @@ B. 7.83m
 C. 7.51m
 D. 7.15m
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **49.** ![diagram](images/waec/2016/q49_1.jpg) From the diagram, which of the following is true?
-
-![diagram](images/waec/2016/q49_1.jpg)
 
 A. m + n + p = 180 o
 B. m + n = 180 o
 C. m = p + n
 D. n = m + p
 
-✓ **Answer:** D
+Answer: D
 
 ---

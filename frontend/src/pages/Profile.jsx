@@ -6,6 +6,7 @@ import { getUserStats, xpProgress, BADGES } from '../lib/stats'
 import { getReferralCode, getReferralStats, getReferralLink, applyReferralCode } from '../lib/referrals'
 import { createNotification } from '../lib/notifications'
 import { getUserProfile, updateUserProfile } from '../services/api'
+import PushNotificationToggle from '../components/PushNotificationToggle'
 
 const AVATAR_COLORS = [
   { id: 'teal',   bg: 'bg-[var(--color-teal)]', label: 'Teal'   },
@@ -44,6 +45,13 @@ export default function Profile() {
   // ── Role (teacher / parent / student) ────────────────────────────
   const [role, setRole] = useState('student')
 
+  // ── Parent email alerts ───────────────────────────────────────────
+  const [parentEmail,       setParentEmail]       = useState('')
+  const [emailAlertsOn,     setEmailAlertsOn]     = useState(true)
+  const [alertThreshold,    setAlertThreshold]    = useState(50)
+  const [savingEmail,       setSavingEmail]       = useState(false)
+  const [emailSaved,        setEmailSaved]        = useState(false)
+
   // Study goals
   const [targetScore,    setTargetScore]    = useState('')
   const [targetYear,     setTargetYear]     = useState('')
@@ -57,6 +65,9 @@ export default function Profile() {
       setExamTarget(profile.exam_target || 'WAEC')
       setExamDate(profile.exam_date || '')
       setAvatarColor(profile.avatar_color || 'teal')
+      setParentEmail(profile.parent_email || '')
+      setEmailAlertsOn(profile.email_alerts_enabled !== false)
+      setAlertThreshold(profile.alert_threshold || 50)
       setRole(profile.role || 'student')
     }
   }, [profile])
@@ -81,6 +92,18 @@ export default function Profile() {
       }
     })
   }, [user])
+
+  const handleSaveEmailAlerts = async () => {
+    setSavingEmail(true)
+    await supabase.from('profiles').update({
+      parent_email:          parentEmail || null,
+      email_alerts_enabled:  emailAlertsOn,
+      alert_threshold:       alertThreshold,
+    }).eq('id', user.id)
+    setSavingEmail(false)
+    setEmailSaved(true)
+    setTimeout(() => setEmailSaved(false), 2500)
+  }
 
   const handleSave = async () => {
     setSaving(true)
@@ -587,6 +610,61 @@ export default function Profile() {
               {saving ? 'Saving...' : saved ? '✅ Role Saved!' : '💾 Save Role'}
             </button>
           </div>
+
+          {/* ── Parent Email Alerts ── */}
+          <div className="py-3 border-b border-[var(--color-border)]">
+            <p className="font-semibold text-sm text-[var(--color-ink)] mb-1">
+              Parent / Guardian Email Alerts
+            </p>
+            <p className="text-xs text-[var(--color-muted)] mb-3">
+              MathGenius will email this address if your child scores below the threshold
+              3 sessions in a row.
+            </p>
+            <input
+              type="email"
+              value={parentEmail}
+              onChange={e => setParentEmail(e.target.value)}
+              placeholder="parent@email.com"
+              className="w-full border border-[var(--color-border)] rounded-lg px-3 py-2
+                         text-sm mb-3 focus:outline-none focus:border-[var(--color-teal)]"
+            />
+            <div className="flex items-center gap-3 mb-3">
+              <label className="text-xs text-[var(--color-muted)]">Alert if score below:</label>
+              <select
+                value={alertThreshold}
+                onChange={e => setAlertThreshold(Number(e.target.value))}
+                className="border border-[var(--color-border)] rounded-lg px-2 py-1
+                           text-sm focus:outline-none focus:border-[var(--color-teal)]"
+              >
+                {[30,40,50,60,70].map(v => (
+                  <option key={v} value={v}>{v}%</option>
+                ))}
+              </select>
+              <div className="ml-auto flex items-center gap-2">
+                <span className="text-xs text-[var(--color-muted)]">Enabled</span>
+                <button
+                  onClick={() => setEmailAlertsOn(v => !v)}
+                  className={`relative inline-flex h-5 w-9 items-center rounded-full
+                              transition-colors ${emailAlertsOn ? 'bg-[var(--color-teal)]' : 'bg-gray-300'}`}
+                >
+                  <span className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white
+                                    shadow transition-transform
+                                    ${emailAlertsOn ? 'translate-x-4' : 'translate-x-1'}`} />
+                </button>
+              </div>
+            </div>
+            <button
+              onClick={handleSaveEmailAlerts}
+              disabled={savingEmail}
+              className="w-full btn-primary py-2 text-sm justify-center flex items-center
+                         gap-2 disabled:opacity-50"
+            >
+              {savingEmail ? 'Saving...' : emailSaved ? '✅ Saved!' : '💾 Save Alert Settings'}
+            </button>
+          </div>
+
+          {/* ── Push Notifications ── */}
+          <PushNotificationToggle userId={user?.id} />
 
           {/* ── Dark Mode ── */}
           <div className="flex items-center justify-between py-3 border-b

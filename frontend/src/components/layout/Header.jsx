@@ -169,8 +169,10 @@ export default function Header() {
                         { path: '/bookmarks',    icon: '🔖', label: 'My Bookmarks'    },
                         { path: '/daily',        icon: '🔥', label: 'Daily Challenge'  },
                         { path: '/practice',     icon: '🎯', label: 'Practice'         },
-                        { path: '/mock-exam',    icon: '📋', label: 'Mock Exam'        },
-                        { path: '/classroom',    icon: '🏫', label: 'Classroom'        },
+                        { path: '/mock-exam',      icon: '📋', label: 'Mock Exam'        },
+                        { path: '/classroom',      icon: '🏫', label: 'Classroom'        },
+                        { path: '/battle',         icon: '⚔️',  label: 'Battle'          },
+                        { path: '/question-bank',  icon: '📚', label: 'Question Bank'   },
                         { path: '/ai-quiz',      icon: '🤖', label: 'AI Quiz'          },
                         { path: '/review',       icon: '🧠', label: 'Spaced Review'    },
                         { path: '/challenge',    icon: '⚔️', label: 'Challenge Friend' },
@@ -279,6 +281,16 @@ export default function Header() {
                         : 'text-[var(--color-ink)] hover:bg-[var(--color-cream)]'
                       }`}>
                     <span>🏫</span> Classroom
+                  </Link>
+                  <Link to="/battle" onClick={() => setMobileOpen(false)}
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm
+                               hover:bg-[var(--color-paper)] text-[var(--color-ink)]">
+                    <span>⚔️</span> Battle
+                  </Link>
+                  <Link to="/question-bank" onClick={() => setMobileOpen(false)}
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm
+                               hover:bg-[var(--color-paper)] text-[var(--color-ink)]">
+                    <span>📚</span> Question Bank
                   </Link>
                   {isTeacherOrParent && (
                     <Link to="/monitor" onClick={() => setMenuOpen(false)}

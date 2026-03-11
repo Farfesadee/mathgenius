@@ -12,7 +12,7 @@ B. 1.70 x 10 3
 C. 1.701 x 10 3
 D. 17.01 x 10 3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -23,7 +23,7 @@ B. (3/2)
 C. 2
 D. (5/2)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -34,18 +34,18 @@ B. nine
 C. eight
 D. seven
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**4.** Simplify (1\frac7/8) × 2(2/5)6(3/4) ÷ (3/4)
+**4.** Simplify (1\frac7/8) x 2(2/5)6(3/4) / (3/4)
 
 A. 9
 B. 4(1/2)
 C. 2
 D. (1/2)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -56,18 +56,18 @@ B. 56
 C. 62
 D. 80
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**6.** If √(50) - K√(8) = (2/√(2)), find K
+**6.** If sqrt(50) - Ksqrt(8) = (2/sqrt(2)), find K
 
 A. -2
 B. -1
 C. 1
 D. 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -78,7 +78,7 @@ B. 5(5/9)%
 C. 5(15/17)%
 D. 7%
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -89,18 +89,18 @@ B. N(6x + 4y)
 C. N(24x + 12y)
 D. N(12x + 24y)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**9.** Simplify: (x^2 - y^2/(x + y)^2) ÷ ((x - y)^2/(3x + 3y))
+**9.** Simplify: (x^2 - y^2/(x + y)^2) / ((x - y)^2/(3x + 3y))
 
 A. (x - y/3)
 B. x + y
 C. (3/x - y)
 D. x - y
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -111,73 +111,73 @@ B. x < (1/4)
 C. x > 2(1/2)
 D. x < 2(1/4)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**11.** If x = 64 and y = 27, evaluate: x − y y − x
+**11.** If x = 64 and y = 27, evaluate: (x^\frac1/2) - y^(1/3)y - x^(2/3)
 
-A. 2 1 5
+A. 2(1/5)
 B. 1
-C. 5 11
-D. 11 43
+C. (5/11)
+D. (11/43)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**12.** If x + 2y = 3 and x - 2y = 1, find (x + y)
+**12.** If (1/2)x + 2y = 3 and (3/2)x - 2y = 1, find (x + y)
 
 A. 3
 B. 2
 C. 1
 D. 5
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**13.** Given that p = √ q r , make q the subject of the equation
+**13.** Given that p^(1/3) = \frac(3)sqrt(q)r, make q the subject of the equation
 
-A. q = p √ r
+A. q = psqrt(r)
 B. q = p 3 r
 C. q = pr 3
-D. q = pr 1 3
+D. q = pr (1/3)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **14.** A chord is 2cm from the centre of a circle. If the radius of the circle is 5cm, find the length of the chord
 
-A. 2 √ 21 cm
-B. √ 42 cm
-C. 2 √ 19 cm
-D. √ 21 cm
+A. 2sqrt(21)cm
+B. sqrt(42)cm
+C. 2sqrt(19)cm
+D. sqrt(21)cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**15.** A cube and cuboid have the same base area. The volume of the cube is 64cm while that of the cuboid is 80cm . Find the height of the cuboid
+**15.** A cube and cuboid have the same base area. The volume of the cube is 64cm^3 while that of the cuboid is 80cm^3. Find the height of the cuboid
 
 A. 1cm
 B. 3cm
 C. 5cm
 D. 6cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**16.** If sin x = (5/13) and 0 o ≤ x ≤ 90 o , find the value of (cos x - tan x)
+**16.** If sin x = and 0 o x o , find the value of (cos x - tan x)
 
-A. (7/13)
-B. (12/13)
-C. (79/156)
-D. (209/156)
+A. 7 13
+B. 12 13
+C. 79 156
+D. 209 156
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -188,7 +188,7 @@ B. 7.51m
 C. 7.15m
 D. 1.19m
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -199,7 +199,7 @@ B. 240 o
 C. 180 o
 D. 120 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -210,29 +210,29 @@ B. 0.57
 C. 0.94
 D. 1.01
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**20.** If 2 log x (3(3/8)) = 6, find the value of x
+**20.** If 2 log x (3 ) = 6, find the value of x
 
-A. (3/2)
-B. (4/3)
-C. (2/3)
-D. (1/2)
+A. 3 2
+B. 4 3
+C. 2 3
+D. 1 2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**21.** If p = (y : 2y ≥ 6) and Q = (y : y -3 ≤ 4), where y is an integer, find p ∩ Q
+**21.** If p = (y : 2y 6) and Q = (y : y -3 4), where y is an integer, find p Q
 
 A. {3, 4}
 B. {3, 7}
 C. {3, 4, 5, 6, 7}
 D. {4, 5, 6}
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -243,7 +243,7 @@ B. { − 2 3 , 3 2 }
 C. { 2 3 , − 3 2 }
 D. { 2 3 , 3 2 }
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -254,7 +254,7 @@ B. 7
 C. 6
 D. 5
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -265,7 +265,7 @@ B. -2
 C. -4
 D. -8
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -276,7 +276,7 @@ B. an arc of a circle with PM as a chord
 C. the bisector of angle PXM
 D. a circle centre X and radius PM
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -287,7 +287,7 @@ B. (15/2)
 C. 5
 D. (5/2)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -298,7 +298,7 @@ B. (x - 1/x^2 + x - 6)
 C. (x - 2/x^2 + x - 6)
 D. (x - 27/x^2 + x - 6)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -309,7 +309,7 @@ B. 12
 C. 9
 D. 6
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -320,7 +320,7 @@ B. -1
 C. 1
 D. 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -331,18 +331,18 @@ B. 448m 3
 C. 632m 2
 D. 840m 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**31.** The slant height of a cone is 5cm and the radius of its base is 3cm. Find, correct to the nearest whole number, the volume of the cone. ( Take π = (22/7))
+**31.** The slant height of a cone is 5cm and the radius of its base is 3cm. Find, correct to the nearest whole number, the volume of the cone. ( Take pi = (22/7))
 
 A. 48cm 3
 B. 47cm 3
 C. 38cm 3
 D. 12cm 3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -353,7 +353,7 @@ B. 1: 500,000
 C. 1: 100,000
 D. 1: 10,000
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -364,18 +364,18 @@ B. x(x + 2)
 C. xv + 2
 D. x 2 - x
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**34.** An open cone with base radius 28cm and perpendicular height 96cm was stretched to form sector of a circle. calculate the arc of the sector (Take π = (22/7))
+**34.** An open cone with base radius 28cm and perpendicular height 96cm was stretched to form sector of a circle. calculate the arc of the sector (Take pi = (22/7))
 
 A. 8800cm 2
 B. 8448cm 2
 C. 4400cm 2
 D. 4224cm 2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -386,7 +386,7 @@ B. 98cm
 C. 86cm
 D. 84cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -397,7 +397,7 @@ B. 10K units
 C. 12K units
 D. 14k units
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -408,7 +408,7 @@ B. \bigtriangleup YZX = \bigtriangleup NOM
 C. \bigtriangleup ZXY= \bigtriangleup MON
 D. \bigtriangleup XYZ= \bigtriangleup NOM
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -419,7 +419,7 @@ B. 55 o
 C. 45 o
 D. 35 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -430,7 +430,7 @@ B. 27 o
 C. 23 o
 D. 17 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -441,7 +441,7 @@ B. 55 o
 C. 60 o
 D. 65 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -452,7 +452,7 @@ B. 52.5
 C. 53.5
 D. 54.5
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -463,7 +463,7 @@ B. 50.5 - 60.5
 C. 40.5 - 50.5
 D. 30.5 - 40.5
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -474,18 +474,18 @@ B. 150
 C. 200
 D. 250
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **44.** ![diagram](images/waec/2013/q44_1.jpeg) The pie chart shows the distribution of 600 mathematics textbooks for Arts, Business, Science and Technical Classes. What percentage of the total number of textbooks belongs to science?
 
-A. 12 1 2 %
-B. 205 6 %
+A. 12(1/2)%
+B. (205/6)%
 C. 25%
-D. 412 3 %
+D. (412/3)%
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -496,7 +496,7 @@ B. 54 o
 C. 60 o
 D. 72 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -507,7 +507,7 @@ B. 120 o
 C. 110 o
 D. 100 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -518,17 +518,17 @@ B. 54 o
 C. 87 o
 D. 92 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**48.** ![diagram](images/waec/2013/q48_1.jpg) Using the venn diagram, find n(x ∩ y )
+**48.** ![diagram](images/waec/2013/q48_1.jpg) Using the venn diagram, find n(x y )
 
 A. 2
 B. 3
 C. 4
 D. 6
 
-✓ **Answer:** A
+Answer: A
 
 ---

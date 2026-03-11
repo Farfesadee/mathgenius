@@ -13,7 +13,7 @@ C. 1/4
 D. 2
 E. 3
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -25,11 +25,11 @@ C. 1001001
 D. 1001101
 E. 1011001
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
-**3.** Simplify: (2(1/6) - 1(2/3)) ÷ 2(2/3).
+**3.** Simplify: (2(1/6) - 1(2/3)) / 2(2/3).
 
 A. 3/16
 B. 7/16
@@ -37,11 +37,11 @@ C. 1 13/24
 D. 2 11/24
 E. 10 2/5
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**4.** Simplify 56x^-4 ÷ 14x^-8
+**4.** Simplify 56x^-4 / 14x^-8
 
 A. 2x -12
 B. 3x -3
@@ -49,7 +49,7 @@ C. 4x -4
 D. 4x -3
 E. 4x 4
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -61,7 +61,7 @@ C. 3
 D. 4
 E. 5
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -73,7 +73,7 @@ C. 7%
 D. 0.2%
 E. 0.1%
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -85,7 +85,7 @@ C. 30
 D. 42
 E. 66
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -97,7 +97,7 @@ C. 2 2 - 5x - 8
 D. x 2 - 5x - 15
 E. 2x 2 - 6x + 15
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -109,7 +109,7 @@ C. 1 / x - y
 D. 1 / y - x
 E. y - 9x / x - y
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -121,7 +121,7 @@ C. 2/3
 D. 1
 E. 3 3 / 7
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -133,7 +133,7 @@ C. M = n 2 /2p
 D. M = 3n/2p 2
 E. M = 2n/3p 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -145,7 +145,7 @@ C. -2 < x ≤ 4
 D. -3 ≤ x < 4
 E. -2 ≤ x < 4
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -157,18 +157,18 @@ C. 1 1 / 3
 D. 1 4 / 15
 E. 1 / 3
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**14.** Make p the subject if formula y = a + p a − p
+**14.** Make p the subject if formula y = (a + p/a - p)
 
-A. p = a ( y − 1 ) y + 1
-B. p = 2 a − y a + y
-C. p = a y y + 1
-D. p = 2 y − 1 y − 1
+A. p = (a(y - 1)/y + 1)
+B. p = (2a - y/a + y)
+C. p = (ay/y + 1)
+D. p = (2y - 1/y - 1)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -180,7 +180,7 @@ C. 8x(2x - y)
 D. 8x(2x + y)(2x - y)
 E. 4(2x + y)(4x - y)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -192,7 +192,7 @@ C. 4x 2 + 11x - 3 = 0
 D. 3x 2 - 11x - 3 = 0
 E. 3x 2 - 11x + 3 = 0
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -204,7 +204,7 @@ C. (0, -1)
 D. (0, -2)
 E. (0, 1)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -216,7 +216,7 @@ C. (11/3)cm
 D. 9 1 / 6 cm
 E. 7 1 / 3 cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -228,7 +228,7 @@ C. 32 1 / 12 cm 2
 D. 6 5 / 12 cm 2
 E. 1 5 / 6 cm 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -240,7 +240,7 @@ C. 1
 D. √2
 E. √3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -252,7 +252,7 @@ C. 250.0cm 3
 D. 226.2cm 3
 E. 150.9cm 3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -264,7 +264,7 @@ C. 40cm 2
 D. 36cm 2
 E. 24cm 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -276,7 +276,7 @@ C. 8333km
 D. 6667km
 E. 3333km
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -288,7 +288,7 @@ C. 141cm
 D. 114cm
 E. 44cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -300,7 +300,7 @@ C. 8
 D. 9
 E. 10
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -312,7 +312,7 @@ C. 140 o
 D. 132 o
 E. 36 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -324,11 +324,11 @@ C. 26 o
 D. 36 o
 E. 72 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**28.** ![diagram](images/waec/1996/q28_1.jpg) In the diagram above, TRQ is a straight line. Find p, if p = (a + b + c)
+**28.** ![diagram](images/waec/1996/q28_1.jpg) In the diagram above, TRQ is a straight line. Find p, if p = (1/3)(a + b + c)
 
 A. 45 o
 B. 60 o
@@ -336,7 +336,7 @@ C. 90 o
 D. 120sup>o
 E. 150 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -348,7 +348,7 @@ C. triangle given two sides and the included angle
 D. quatrilateral given all the four sides
 E. parallelogram given two adjacent sides and the diagonal joining them
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -360,7 +360,7 @@ C. 40 o
 D. 70 o
 E. 110 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -372,7 +372,7 @@ C. I and II only
 D. I and III only
 E. I, II and III
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -384,7 +384,7 @@ C. 3 1 / 2
 D. 5cm
 E. 6cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -396,7 +396,7 @@ C. 66 o
 D. 72 o
 E. 128 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -408,7 +408,7 @@ C. 45 o
 D. 50 o
 E. 55 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -420,7 +420,7 @@ C. 79 o
 D. 90 o
 E. 101 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -432,7 +432,7 @@ C. a + b = 162 o
 D. a + b = 100 o
 E. a + b = 80 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -444,7 +444,7 @@ C. 78 o
 D. 90 o
 E. 112 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -456,11 +456,11 @@ C. 100 o
 D. 120 o
 E. 140 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**39.** If sin θ cos θ , for 0 o ≤ θ ≤ o , find the value of θ
+**39.** If sintheta costheta, for 0 o <= θ <= 360 o , find the value of theta
 
 A. 45 o , 225 o
 B. 135 o , 315 o
@@ -468,11 +468,11 @@ C. 45 o , 315 o
 D. 135 o , 225 o
 E. 45 o , 135 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**40.** If tan x = , find the value of sin x; 0 ≤ x ≤ o
+**40.** If tan x = 2(2/5), find the value of sin x; 0 <= x <= 90 o
 
 A. 5/13
 B. 5/12
@@ -480,7 +480,7 @@ C. 144/169
 D. 12/13
 E. 13/12
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -492,7 +492,7 @@ C. 230 o
 D. 270 o
 E. 310 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -504,7 +504,7 @@ C. 55√3m
 D. 60m
 E. 65m
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -516,7 +516,7 @@ C. 1.9
 D. 2
 E. 2.15
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -528,7 +528,7 @@ C. 2
 D. 5
 E. 7
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -540,7 +540,7 @@ C. mode
 D. median
 E. mean
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -552,7 +552,7 @@ C. III only
 D. I and II only
 E. II and III only
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -564,7 +564,7 @@ C. 50%
 D. 62 1 / 2 %
 E. 75%
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -576,7 +576,7 @@ C. 5 22
 D. 5 24
 E. 5 48
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -588,6 +588,6 @@ C. 13/25
 D. 2/3
 E. 17/25
 
-✓ **Answer:** E
+Answer: E
 
 ---

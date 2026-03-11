@@ -13,7 +13,7 @@ C. 20.02
 D. 202
 E. 2020
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -25,11 +25,11 @@ C. 5.4*10 -3
 D. 5.4*10 2
 E. 5.4*10 3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**3.** Simplify 36^(1/2) x 64^-(1/3) x 5°
+**3.** Simplify 36^(1/2) x 64^-(1/3) x 5deg
 
 A. 0
 B. 1\24
@@ -37,7 +37,7 @@ C. 2/3
 D. 1 1 / 2
 E. 7 1 / 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -49,7 +49,7 @@ C. -8
 D. -11
 E. -17
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -61,7 +61,7 @@ C. 4
 D. 5
 E. 7
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -73,7 +73,7 @@ C. 2.5
 D. 2.75
 E. 3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -85,7 +85,7 @@ C. 3
 D. 5
 E. 7
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -97,7 +97,7 @@ C. 150 o
 D. 210 o
 E. 300 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -109,7 +109,7 @@ C. 2 : 3
 D. 3 : 2
 E. 5 : 3
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -121,7 +121,7 @@ C. 7.1m
 D. 8.1m
 E. 18.5m
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -133,7 +133,7 @@ C. 130 o
 D. 100 o
 E. 30 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -145,7 +145,7 @@ C. II & III only
 D. II & IV only
 E. All of the above
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -157,7 +157,7 @@ C. 25
 D. 31
 E. 84
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -169,7 +169,7 @@ C. 73 o
 D. 106 o
 E. 164 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -181,7 +181,7 @@ C. 5\8
 D. 1\2
 E. 3\8
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -193,7 +193,7 @@ C. 9
 D. 18
 E. 81
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -205,7 +205,7 @@ C. y = 1
 D. y = -1
 E. x + y = 1
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -217,7 +217,7 @@ C. 40 o
 D. 60 o
 E. 15°
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -229,7 +229,7 @@ C. x 2 + 5 +14 = 0
 D. x 2 - 5x - 14 = 0
 E. x 2 + 5x - 14 = 0
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -241,7 +241,7 @@ C. 8.0%
 D. 2.4%
 E. 10%
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -253,7 +253,7 @@ C. 1/2
 D. 2/3
 E. 5/6
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -265,7 +265,7 @@ C. 132m 3
 D. 168m 3
 E. 264m 3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -277,7 +277,7 @@ C. 10
 D. 100
 E. 1000
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -289,7 +289,7 @@ C. 1.1738
 D. 1.3802
 E. 10
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -301,7 +301,7 @@ C. 9/7
 D. 7/4
 E. 21/8
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -313,11 +313,11 @@ C. 65 o
 D. 53 o
 E. 37 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**27.** Factorize 5y + 2ay - 3a
+**27.** Factorize 5y^2 + 2ay - 3a^2
 
 A. (5y - a) (y + 3a)
 B. (5y + a) (y - 3a)
@@ -325,7 +325,7 @@ C. 5y 2 + a (2y - 3a)
 D. (y - a) (5y + 3a)
 E. (y + a) (5y - 3a)
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -337,7 +337,7 @@ C. III only
 D. I and II only
 E. II and III only
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -349,7 +349,7 @@ C. 89 o
 D. 119 o
 E. 150 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -361,7 +361,7 @@ C. 890km
 D. 5005km
 E. 10010km
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -373,7 +373,7 @@ C. R
 D. S
 E. T
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -385,7 +385,7 @@ C. 77cm 2
 D. 154cm 2
 E. 308cm 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -397,7 +397,7 @@ C. 113 o
 D. 126 o
 E. 134 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -409,7 +409,7 @@ C. 90 o
 D. 180 o
 E. 270 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -421,7 +421,7 @@ C. 90 o
 D. 75 o
 E. 60 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -433,7 +433,7 @@ C. 782km
 D. 1006km
 E. 2012km
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -445,7 +445,7 @@ C. (1, 3, 5, 7, 9)
 D. (1, 9)
 E. Φ
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -457,7 +457,7 @@ C. 250,000
 D. 260,000
 E. 270,000
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -469,7 +469,7 @@ C. 25,000
 D. 35,000
 E. 60,000
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -481,7 +481,7 @@ C. 9/16
 D. 14/25
 E. 39/40
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -493,6 +493,6 @@ C. 4
 D. 5
 E. 6
 
-✓ **Answer:** E
+Answer: E
 
 ---

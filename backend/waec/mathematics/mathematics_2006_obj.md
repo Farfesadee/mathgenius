@@ -12,7 +12,7 @@ B. 0.00220
 C. 0.00300
 D. 0.00390
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
@@ -23,18 +23,18 @@ B. 1100_2
 C. 1110_2
 D. 1011_2
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
-**3.** Simplify (25 ^\frac2/3) ÷ 25 ^(1/6)( (1/5))^-(7/6) × ( (1/5))^(1/6)
+**3.** Simplify (25 ^\frac2/3) / 25 ^(1/6)( (1/5))^-(7/6) x ( (1/5))^(1/6)
 
 A. 25
 B. (1/5)
 C. 1
 D. (1/25)
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
@@ -45,7 +45,7 @@ B. (x - 6/12)
 C. (x - 18/24)
 D. (x - 6/24)
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
@@ -56,7 +56,7 @@ B. (3/4)
 C. (-3/4)
 D. -3
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
@@ -67,40 +67,40 @@ B. the perpendicular bisector of AP
 C. a circle with centre A
 D. the triangle with centre P
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
 **7.** A fair coin is tossed three times. Find the probability of getting two heads and one tail.
 
-A. (1/2)
-B. (3/8)
-C. (1/4)
-D. (1/8)
+A. 1 2
+B. 3 8
+C. 1 4
+D. 1 8
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
 **8.** If 30% of y is equal to x, what in terms of x, is 30% of 3y?
 
-A. (x/9)
-B. (x/3)
+A. x 9
+B. x 3
 C. x
 D. 3x
 
-✓ **Answer:** D
+Answer: ?
 
 ---
 
-**9.** A baker used 40% of a 50kg bag of flour. If (1/8) of the amount used was for the cake, how many kilogram of flour was used for the cake?
+**9.** A baker used 40% of a 50kg bag of flour. If of the amount used was for the cake, how many kilogram of flour was used for the cake?
 
-A. 2(1/2)
-B. 6(1/2)
-C. 15(3/8)
-D. 17(1/2)
+A. 2 1 2
+B. 6 1 2
+C. 15 3 8
+D. 17 1 2
 
-✓ **Answer:** A
+Answer: ?
 
 ---
 
@@ -111,51 +111,51 @@ B. 0.719
 C. 0.808
 D. 0.927
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
 **11.** The ratio of boys to girls in a class is 5:3. Find the probability of selecting at random, a girl from the class
 
-A. (1/8)
-B. (1/3)
-C. (3/8)
-D. (3/5)
+A. 1 8
+B. 1 3
+C. 3 8
+D. 3 5
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
-**12.** \beginarrayc|c x & 1 & 4 & p \\ \hline y & 0.5 & 1 & 2.5\endarray. The table above satisfies the relation y = k√(x), where k is a positive constant. Find the value of K.
+**12.** . The table above satisfies the relation y = k , where k is a positive constant. Find the value of K.
 
 A. 0.5
 B. 1
 C. 1.5
 D. 2
 
-✓ **Answer:** A
+Answer: ?
 
 ---
 
-**13.** \beginarrayc|c x & 1 & 4 & p \\ \hline y & 0.5 & 1 & 2.5\endarray. The table below satisfies the relation y = k√(x), where k is a positive constant. Find the value of P,
+**13.** . The table below satisfies the relation y = k , where k is a positive constant. Find the value of P,
 
 A. 2
 B. 4
 C. 10
 D. 25
 
-✓ **Answer:** D
+Answer: ?
 
 ---
 
 **14.** What must be added to x - 3x to make it a perfect square?
 
-A. (9/4)
-B. (9/2)
+A. 9 4
+B. 9 2
 C. 6
 D. 9
 
-✓ **Answer:** A
+Answer: ?
 
 ---
 
@@ -166,29 +166,29 @@ B. 5
 C. -9
 D. -10
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
 **16.** What is the place value of 9 in the number 3.0492?
 
-A. (9/10000)
-B. (9/1000)
-C. (9/100)
-D. (9/10)
+A. 9 10000
+B. 9 1000
+C. 9 100
+D. 9 10
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
-**17.** If the simple interest on a sum of money invested at 3% per annum for 2(1/2) years is N123, find the principal.
+**17.** If the simple interest on a sum of money invested at 3% per annum for 2 years is N123, find the principal.
 
 A. N676.50
 B. N820
 C. N1,640
 D. N4,920
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
@@ -199,18 +199,18 @@ B. N1,4,200
 C. 12,000
 D. 8000.
 
-✓ **Answer:** A
+Answer: ?
 
 ---
 
-**19.** If 2x + y = 10, and y ≠ 0, which of the following is not a possible value of x?
+**19.** If 2x + y = 10, and y 0, which of the following is not a possible value of x?
 
 A. 4
 B. 5
 C. 8
 D. 10
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
@@ -221,51 +221,51 @@ B. 10
 C. 12
 D. 15
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
 **21.** ![diagram](images/waec/2006/q21_1.jpg) Which of these equations best describes the points of intersection of the curve and the line?
 
-A. x^2 + 5x - 6 = 0
+A. x 2 + 5 x − 6 = 0
 B. x 2 - 5x - 6 = 0
 C. x 2 + x - 6 = 0
 D. x 2 - x - 6 = 0
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
-**22.** If log a 270 - log a 10 + log a (1/3) = 2, what is the value of a?
+**22.** If log a 270 - log a 10 + log a = 2, what is the value of a?
 
 A. 3
 B. 4
 C. 5
 D. 6
 
-✓ **Answer:** A
+Answer: ?
 
 ---
 
-**23.** a conical water-jug is 7cm in diameter and 6cm deep. find the volume of water it can hold. [Take π = (22/7)]
+**23.** a conical water-jug is 7cm in diameter and 6cm deep. find the volume of water it can hold. [Take ]
 
 A. 22cm 2
 B. 44cm 3
 C. 77cm 3
 D. 308 2
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
-**24.** If p = [(Q(R - T)/15)]^ (1/3), make T the subject of the relation
+**24.** If p = [ ] , make T the subject of the relation
 
-A. T = R + (P^3/15Q)
-B. T = R - (15P^3/Q)
-C. T = R + (P^3/15Q)
-D. T = 15R - (Q/P^3)
+A. T = R + P 3 15 Q
+B. T = R - 15 P 3 Q
+C. T = R + P 3 15 Q
+D. T = 15R - Q P 3
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
@@ -276,29 +276,29 @@ B. 1:5
 C. 3:4
 D. 4:5
 
-✓ **Answer:** D
+Answer: ?
 
 ---
 
-**26.** The wheel of a tractor has a diameter 1.4m. What distance does it cover in 100 complete revolutions? [Take π = ]
+**26.** The wheel of a tractor has a diameter 1.4m. What distance does it cover in 100 complete revolutions? [Take pi = (22/7)]
 
 A. 140m
 B. 220m
 C. 280m
 D. 440m
 
-✓ **Answer:** D
+Answer: ?
 
 ---
 
-**27.** If p = {1, 3, 5, 7, 9} and Q = {2, 4, 6, 8, 10} are subsets of a universal set. U = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}. What are the elements of P ∩ Q ?
+**27.** If p = {1, 3, 5, 7, 9} and Q = {2, 4, 6, 8, 10} are subsets of a universal set. U = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}. What are the elements of P intersect Q ?
 
 A. {1, 3, 5, 7, 9}
 B. [2, 4, 6, 8, 10}
-C. ∅
+C. \varnothing
 D. {1, 2, 6, 8, 10}
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
@@ -309,7 +309,7 @@ B. 58 o
 C. 68 o
 D. 76 o
 
-✓ **Answer:** D
+Answer: ?
 
 ---
 
@@ -320,7 +320,7 @@ B. 57m 2
 C. 120m 2
 D. 225m 2
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
@@ -331,7 +331,7 @@ B. mode
 C. range
 D. median
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
@@ -342,18 +342,18 @@ B. -4 o C
 C. 4 o C
 D. 8 o C
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
-**32.** Simplify √ − √
+**32.** Simplify (20/5sqrt(28) - 2 \sqrt63)
 
-A. 5 √ 7 7
-B. 5 √ 5 7
-C. 7 √ 5 7
-D. 7 √ 7 5
+A. \frac5sqrt(7)7
+B. \frac5sqrt(5)7
+C. \frac7sqrt(5)7
+D. \frac7sqrt(7)5
 
-✓ **Answer:** A
+Answer: ?
 
 ---
 
@@ -364,7 +364,7 @@ B. 14.5m
 C. 17.7m
 D. 34.3m
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
@@ -375,29 +375,29 @@ B. 72cm 2
 C. 60cm 2
 D. 24cm 2
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
 **35.** ![diagram](images/waec/2006/q35_1.jpg) In the diagram, |QR| = 5cm, PQR = 60 o and PSR = 45 o . Find |PS|, leaving your answe in surd form.
 
-A. 4 √ 5 cm
-B. 3 √ 7 cm
-C. 4 √ 6 cm
-D. 5 √ 6 cm
+A. 4sqrt(5)cm
+B. 3sqrt(7)cm
+C. 4sqrt(6)cm
+D. 5sqrt(6)cm
 
-✓ **Answer:** D
+Answer: ?
 
 ---
 
-**36.** ![diagram](images/waec/2006/q36_1.jpg) In the diagram, P Q R S , find x o + y o
+**36.** ![diagram](images/waec/2006/q36_1.jpg) In the diagram, , find x o + y o
 
 A. 360 o
 B. 300 o
 C. 270 o
 D. 180 o
 
-✓ **Answer:** D
+Answer: ?
 
 ---
 
@@ -408,7 +408,7 @@ B. 116 o
 C. 122 o
 D. 148 o
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
@@ -419,7 +419,7 @@ B. 130 o
 C. 100 o
 D. 80 o
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
@@ -430,29 +430,29 @@ B. 70 o
 C. 120 o
 D. 160 o
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
-**40.** ![diagram](images/waec/2006/q40_1.jpg) In the diagram, the two circles have a common centre O. If the area of the larger circle is 100 π and that of the smaller circle is 49 π , find x
+**40.** ![diagram](images/waec/2006/q40_1.jpg) In the diagram, the two circles have a common centre O. If the area of the larger circle is 100 and that of the smaller circle is 49 , find x
 
 A. 2
 B. 3
 C. 4
 D. 6
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
-**41.** ![diagram](images/waec/2006/q41_1.jpg) In the diagram, PQR is a straight line, QRST is a parallelogram, < TPQ = 72o and < RST = 126o. What type of triangle is \bigtriangleup PQT?
+**41.** ![diagram](images/waec/2006/q41_1.jpg) In the diagram, PQR is a straight line, QRST is a parallelogram, < TPQ = 72o and < RST = 126o. What type of triangle is PQT?
 
 A. An equilateral triangle
 B. A right-angled triangle
 C. An isosceles triangle
 D. A scalene triangle
 
-✓ **Answer:** C
+Answer: ?
 
 ---
 
@@ -463,7 +463,7 @@ B. 38
 C. 39
 D. 40
 
-✓ **Answer:** D
+Answer: ?
 
 ---
 
@@ -474,18 +474,18 @@ B. 37%
 C. 62.5%
 D. 80.0%
 
-✓ **Answer:** A
+Answer: ?
 
 ---
 
-**44.** ![diagram](images/waec/2006/q44_1.jpg) The diagram shows an arc MN of a circle, centre O, with 10cm. If < MON = 72 o . calculate the length of the arc, correct to three significant figures. [Take π = (22/7)]
+**44.** ![diagram](images/waec/2006/q44_1.jpg) The diagram shows an arc MN of a circle, centre O, with 10cm. If < MON = 72 o . calculate the length of the arc, correct to three significant figures. [Take ]
 
 A. 6.28cm
 B. 12.6cm
 C. 22.6cm
 D. 62.8cm
 
-✓ **Answer:** B
+Answer: ?
 
 ---
 
@@ -496,7 +496,7 @@ B. 180 o + z
 C. z - 180 o
 D. z
 
-✓ **Answer:** A
+Answer: ?
 
 ---
 
@@ -507,6 +507,6 @@ B. 4cm
 C. 5cm
 D. 6cm
 
-✓ **Answer:** B
+Answer: ?
 
 ---

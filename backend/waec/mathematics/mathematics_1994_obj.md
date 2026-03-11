@@ -13,23 +13,23 @@ C. 15
 D. 33
 E. 45
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
-**2.** If sinθ = K find tanθ, 0° ≤ θ ≤ 90°.
+**2.** If sintheta = K find tantheta, 0° <= theta <= 90°.
 
 A. 1-K
 B. (k/k - 1)
-C. (k/√(1 - k^2))
+C. (k/sqrt(1 - k^2))
 D. (k/1 - k)
-E. (k/√( k^2 - 1))
+E. (k/sqrt( k^2 - 1))
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**3.** Simplify: 2(1/3) ÷ 2(2/3) × 1(1/7)
+**3.** Simplify: 2(1/3) / 2(2/3) x 1(1/7)
 
 A. 0
 B. 1
@@ -37,19 +37,19 @@ C. 2
 D. 3
 E. 4
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **4.** Which of the following is equal to (72/125)
 
-A. (2^3 × 3^2/5^3)
-B. (2^4 × 3/5^3)
-C. (2^3 × 3/5^3)
-D. (2^4 × 3/5^5)
-E. (2^2 × 3^2 × 4^2/5^2)
+A. (2^3 x 3^2/5^3)
+B. (2^4 x 3/5^3)
+C. (2^3 x 3/5^3)
+D. (2^4 x 3/5^5)
+E. (2^2 x 3^2 x 4^2/5^2)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -61,7 +61,7 @@ C. 3.5 x 10 1
 D. 3.5 x 10 2
 E. 3.5 x 10 3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -73,11 +73,11 @@ C. 4
 D. 3
 E. 2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**7.** Simplify: 16^(5/4) x 2^-3 x 3°
+**7.** Simplify: 16^(5/4) x 2^-3 x 3deg
 
 A. 0
 B. 2
@@ -85,7 +85,7 @@ C. 4
 D. 10
 E. 20
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -97,7 +97,7 @@ C. 2 - 2log 3 2
 D. 3 - log 3 2
 E. 4 - log 3 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -109,7 +109,7 @@ C. 0.03
 D. 0.003
 E. 0.0003
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -121,7 +121,7 @@ C. 40%
 D. 50%
 E. 60%
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -133,7 +133,7 @@ C. 3(1/33)%
 D. 3(1/8)%
 E. 25%
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -145,11 +145,11 @@ C. 21
 D. 22
 E. 24
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**13.** E = (integers ≤ 20), P = (multiples of 3), Q = (multiples of 4), what are the elements of P'∩Q?
+**13.** E = (integers <= 20), P = (multiples of 3), Q = (multiples of 4), what are the elements of P'∩Q?
 
 A. (12)
 B. (4, 8, 16, 20)
@@ -157,7 +157,7 @@ C. (3, 6, 9, 15, 18)
 D. (1,2,5,7,10,11,13,17,19)
 E. (3, 4, 6, 8, 9, 12, 15, 16, 18, 20)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -169,7 +169,7 @@ C. 5
 D. 7
 E. 9
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -181,7 +181,7 @@ C. (2,0)
 D. (7,0)
 E. (3,2)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -193,11 +193,11 @@ C. -3
 D. 3
 E. 7
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**17.** For what value of x is the expression (x^2 + 15x + 50/x - 5) not defined ?
+**17.** For what value of x is the expression not defined ?
 
 A. -10
 B. -5
@@ -205,7 +205,7 @@ C. o
 D. 5
 E. 10
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -217,7 +217,7 @@ C. 1 < x < 2
 D. 0 < x < 4 3 4
 E. 0 > x > 2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -229,7 +229,7 @@ C. 3/7
 D. 3/4
 E. 1 1 3
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -241,7 +241,7 @@ C. y = x + 5
 D. y = 2x + 3
 E. y = 2x - 3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -253,11 +253,11 @@ C. x 2 + 6 = 0
 D. X 2 - X – 2 = 0
 E. x 2 - x + 4 = 0
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**22.** Which of the following is not a factors of 2p - 2?
+**22.** Which of the following is not a factors of 2p^2 - 2?
 
 A. 2
 B. p - 1
@@ -265,11 +265,11 @@ C. p + 1
 D. 2p - 2
 E. 2p + 1
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
-**23.** Find the quadratic equation whose roots are 3 and .
+**23.** Find the quadratic equation whose roots are 3 and (2/3).
 
 A. x 2 - 11 / 3x + 6 = 0
 B. x 2 - 11x + 6 = O
@@ -277,11 +277,11 @@ C. 3x 2 - 11x + 2 = O
 D. 3X 2 - 11x – 2 = 0
 E. 3x 2 - 11x + 6 = 0
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
-**24.** Which of the following is a root of the equation x +6x = 0?
+**24.** Which of the following is a root of the equation x^2 +6x = 0?
 
 A. 0
 B. 1
@@ -289,11 +289,11 @@ C. 2
 D. 3
 E. It does not have any root.
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**25.** Factorise: 6x + 7xy - 5y
+**25.** Factorise: 6x^2 + 7xy - 5y^2
 
 A. (6x + 5y)(x - y)
 B. (2x + 5y)(3x - y)
@@ -301,7 +301,7 @@ C. (3x + y)(2x - 5y)
 D. (3x + 5y)(2x - y)
 E. (2x + y)(3x - 5y)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -313,7 +313,7 @@ C. 1
 D. 2
 E. 4
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -325,7 +325,7 @@ C. 4 √ 2 cm
 D. 3 √ 3 cm
 E. 6 √ 3 cm
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -337,7 +337,7 @@ C. 5cm
 D. 8cm
 E. 10cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -349,7 +349,7 @@ C. 6,400km
 D. 5,000km
 E. 3,200km
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -361,7 +361,7 @@ C. 8cm
 D. 16cm
 E. 110cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -372,7 +372,7 @@ B. 3 π x 2 8
 C. 5 π x 2 8
 D. 3 π x 8
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -384,7 +384,7 @@ C. 135cm 2
 D. 162cm 2
 E. 216cm 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -396,7 +396,7 @@ C. 2:1
 D. 4:3
 E. 5:4
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -408,7 +408,7 @@ C. 8 2/3cm
 D. 10cm
 E. 10 2/3cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -420,7 +420,7 @@ C. 155 o
 D. 160 o
 E. 165 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -432,7 +432,7 @@ C. 52.86
 D. 51.43
 E. 50
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -444,7 +444,7 @@ C. 17
 D. 16
 E. 15
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -456,7 +456,7 @@ C. the diagonal cut at right angles
 D. The opposite sides are equal
 E. The opposite angles are equal
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -468,7 +468,7 @@ C. 61 o
 D. 56 o
 E. 34 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -480,7 +480,7 @@ C. 43 o
 D. 39 o
 E. 29 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -492,7 +492,7 @@ C. 48 o
 D. 53 o
 E. 74 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -504,7 +504,7 @@ C. 2√3m
 D. 3√3m
 E. 6√3m
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -516,7 +516,7 @@ C. 248 o
 D. 292 o
 E. 302 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -528,7 +528,7 @@ C. sin 147 o
 D. cos 123 o
 E. cos237 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -540,7 +540,7 @@ C. 67kg
 D. 65.5kg
 E. 68kg
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -552,7 +552,7 @@ C. 68%
 D. 70%
 E. 87.5%
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -564,7 +564,7 @@ C. 1.54m
 D. 1.55m
 E. 1.56m
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -576,7 +576,7 @@ C. 1/52
 D. 1/26
 E. 1/13
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -588,7 +588,7 @@ C. 2/7
 D. 3/10
 E. 1/3
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -600,6 +600,6 @@ C. 19.9 - 20.1cm
 D. 19.95 - 20.05cm
 E. 19 - 21cm
 
-✓ **Answer:** A
+Answer: A
 
 ---

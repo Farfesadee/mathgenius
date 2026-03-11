@@ -1,16 +1,21 @@
 import asyncio
-from fastapi import APIRouter
-from pydantic import BaseModel
+import os
+import json
+from fastapi import APIRouter, Depends
+from fastapi.responses import StreamingResponse
+from pydantic import BaseModel, Field
+from groq import Groq
 from app.services.groq_service import ask_groq
 from app.routers.tracking import log_teach_interaction, TeachLogRequest
+from app.dependencies import require_auth
 
 router = APIRouter(prefix="/teach", tags=["Teach"])
 
 
 class TeachRequest(BaseModel):
-    question: str
-    topic: str = "General Mathematics"
-    level: str = "sss"
+    question: str = Field(..., max_length=2000)
+    topic: str    = Field("General Mathematics", max_length=200)
+    level: str    = Field("sss", max_length=50)
     conversation_history: list = []
     user_id: str = None
 
@@ -20,7 +25,17 @@ class TopicRequest(BaseModel):
     level: str = "sss"
 
 
-# ── Level descriptions ────────────────────────────────────────────────
+class FeedbackRequest(BaseModel):
+    message_id: str
+    topic: str
+    level: str
+    question: str
+    response_preview: str
+    rating: str        # "up" or "down"
+    comment: str = ""
+
+
+# ── Level helpers ─────────────────────────────────────────────────────
 
 def get_level_description(level: str) -> str:
     descriptions = {
@@ -47,7 +62,7 @@ def get_textbook(level: str) -> str:
 # ── Endpoints ─────────────────────────────────────────────────────────
 
 @router.post("/ask")
-async def ask_tutor(request: TeachRequest):
+async def ask_tutor(request: TeachRequest, user=Depends(require_auth)):
     level_desc = get_level_description(request.level)
     prompt = f"""You are Euler, an expert Nigerian mathematics tutor.
 You are teaching a {level_desc}.
@@ -62,23 +77,85 @@ Be encouraging and patient."""
 
     response = await ask_groq(prompt, request.conversation_history)
 
-    if request.user_id:
-        try:
-            asyncio.create_task(log_teach_interaction(TeachLogRequest(
-                user_id=request.user_id,
-                topic=request.topic,
-                question=request.question,
-                response_length=len(response),
-                level=request.level,
-            )))
-        except Exception:
-            pass
+    try:
+        asyncio.create_task(log_teach_interaction(TeachLogRequest(
+            user_id=user.id,
+            topic=request.topic,
+            question=request.question,
+            response_length=len(response),
+            level=request.level,
+        )))
+    except Exception:
+        pass
 
     return {"success": True, "response": response, "topic": request.topic}
 
 
+@router.post("/ask/stream")
+async def ask_tutor_stream(request: TeachRequest, user=Depends(require_auth)):
+    """Streaming version of /teach/ask — sends tokens one by one."""
+    level_desc = get_level_description(request.level)
+    textbook   = get_textbook(request.level)
+
+    msgs = [
+        {
+            "role": "system",
+            "content": (
+                f"You are Euler, an expert Nigerian mathematics tutor.\n"
+                f"You are teaching a {level_desc}.\n"
+                f"Textbook reference: {textbook}\n\n"
+                f"Topic: {request.topic}\n\n"
+                "Explain thoroughly with step-by-step working. "
+                "Use LaTeX for all mathematical expressions "
+                "(inline: \\(...\\), display: $$...$$). "
+                "Be encouraging and patient."
+            ),
+        }
+    ]
+
+    for turn in request.conversation_history:
+        role    = turn.get("role", "user")
+        content = turn.get("content", "")
+        if role in ("user", "assistant") and content:
+            msgs.append({"role": role, "content": content})
+
+    msgs.append({"role": "user", "content": request.question})
+
+    def _stream_sse():
+        client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+        completion = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=msgs,
+            stream=True,
+            max_tokens=2048,
+            temperature=0.3,
+        )
+        for chunk in completion:
+            delta = chunk.choices[0].delta
+            if delta and delta.content:
+                yield f"data: {json.dumps({'token': delta.content})}\n\n"
+        yield "data: [DONE]\n\n"
+
+    try:
+        asyncio.create_task(log_teach_interaction(TeachLogRequest(
+            user_id=user.id,
+            topic=request.topic,
+            question=request.question,
+            response_length=0,
+            level=request.level,
+        )))
+    except Exception:
+        pass
+
+    return StreamingResponse(
+        _stream_sse(),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
+
+
 @router.post("/overview")
-async def topic_overview(request: TopicRequest):
+async def topic_overview(request: TopicRequest, user=Depends(require_auth)):
     level_desc = get_level_description(request.level)
     prompt = f"""Give a clear structured overview of '{request.topic}' for a {level_desc}.
 Include:
@@ -94,329 +171,47 @@ Include:
 @router.get("/topics")
 async def get_topics():
     topics = {
-
-        # ── Primary ───────────────────────────────────────────────────
         "primary": {
-            "Number & Numeration": [
-                "Counting and Place Value",
-                "Addition and Subtraction",
-                "Multiplication and Division",
-                "Fractions (Half, Quarter, Third)",
-                "Decimals and Money",
-                "Percentages",
-                "Factors and Multiples",
-                "HCF and LCM",
-                "Prime Numbers",
-                "Roman Numerals",
-            ],
-            "Basic Geometry": [
-                "2D Shapes (Triangle, Rectangle, Circle, Square)",
-                "3D Shapes (Cube, Cuboid, Sphere, Cylinder)",
-                "Angles (Right Angle, Acute, Obtuse)",
-                "Lines (Parallel, Perpendicular)",
-                "Symmetry",
-                "Perimeter and Area",
-            ],
-            "Measurement": [
-                "Length (cm, m, km)",
-                "Mass (g, kg)",
-                "Capacity (ml, l)",
-                "Time (Hours, Minutes, Seconds)",
-                "Temperature",
-                "Money and Change",
-            ],
-            "Data Handling": [
-                "Pictograms and Bar Charts",
-                "Tally Charts",
-                "Simple Tables",
-                "Reading Graphs",
-            ],
-            "Everyday Maths": [
-                "Buying and Selling",
-                "Profit and Loss (Introduction)",
-                "Simple Interest (Introduction)",
-                "Distance, Speed and Time (Basic)",
-            ],
+            "Number & Numeration": ["Counting and Place Value","Addition and Subtraction","Multiplication and Division","Fractions (Half, Quarter, Third)","Decimals and Money","Percentages","Factors and Multiples","HCF and LCM","Prime Numbers","Roman Numerals"],
+            "Basic Geometry": ["2D Shapes (Triangle, Rectangle, Circle, Square)","3D Shapes (Cube, Cuboid, Sphere, Cylinder)","Angles (Right Angle, Acute, Obtuse)","Lines (Parallel, Perpendicular)","Symmetry","Perimeter and Area"],
+            "Measurement": ["Length (cm, m, km)","Mass (g, kg)","Capacity (ml, l)","Time (Hours, Minutes, Seconds)","Temperature","Money and Change"],
+            "Data Handling": ["Pictograms and Bar Charts","Tally Charts","Simple Tables","Reading Graphs"],
+            "Everyday Maths": ["Buying and Selling","Profit and Loss (Introduction)","Simple Interest (Introduction)","Distance, Speed and Time (Basic)"],
         },
-
-        # ── JSS ───────────────────────────────────────────────────────
         "jss": {
-            "Number & Numeration": [
-                "Whole Numbers and Place Value",
-                "Fractions: Proper, Improper, Mixed Numbers",
-                "Decimals and Decimal Places",
-                "Percentages and Applications",
-                "Ratio and Proportion",
-                "HCF and LCM",
-                "Prime Numbers and Factorisation",
-                "Number Bases (Base 2, 8, 10)",
-                "Approximation and Significant Figures",
-                "Directed Numbers (Positive and Negative)",
-                "Standard Form (Introduction)",
-            ],
-            "Basic Operations": [
-                "Order of Operations (BODMAS/BIDMAS)",
-                "Word Problems — Basic Operations",
-                "Estimation and Rounding",
-            ],
-            "Algebra": [
-                "Algebraic Expressions and Simplification",
-                "Simple Equations in One Variable",
-                "Simple Inequalities",
-                "Substitution into Formulae",
-                "Word Problems Leading to Equations",
-                "Factorisation — Common Factors",
-                "Expansion of Brackets",
-                "Introduction to Simultaneous Equations",
-            ],
-            "Geometry": [
-                "Types of Angles: Acute, Obtuse, Reflex, Right",
-                "Angles on a Straight Line and at a Point",
-                "Vertically Opposite Angles",
-                "Angles in a Triangle",
-                "Types of Triangles: Equilateral, Isosceles, Scalene",
-                "Quadrilaterals: Square, Rectangle, Parallelogram, Rhombus, Trapezium",
-                "Circles: Radius, Diameter, Circumference, Chord, Arc",
-                "Construction: Bisecting Lines and Angles",
-                "Symmetry: Line and Rotational",
-                "Bearings (Introduction)",
-            ],
-            "Mensuration": [
-                "Perimeter of Plane Shapes",
-                "Area of Rectangles, Triangles, Circles, Trapeziums",
-                "Volume of Cuboids and Cylinders",
-                "Surface Area of Cuboids",
-                "Units of Measurement and Conversion",
-            ],
-            "Statistics": [
-                "Data Collection and Presentation",
-                "Bar Charts, Pie Charts, Pictograms",
-                "Frequency Tables",
-                "Mean, Median, Mode for Ungrouped Data",
-                "Range",
-            ],
-            "Everyday Mathematics": [
-                "Profit and Loss",
-                "Simple Interest",
-                "Hire Purchase (Introduction)",
-                "Rates, Taxes and Bills",
-                "Foreign Exchange (Introduction)",
-                "Venn Diagrams with Two Sets",
-            ],
+            "Number & Numeration": ["Whole Numbers and Place Value","Fractions: Proper, Improper, Mixed Numbers","Decimals and Decimal Places","Percentages and Applications","Ratio and Proportion","HCF and LCM","Prime Numbers and Factorisation","Number Bases (Base 2, 8, 10)","Approximation and Significant Figures","Directed Numbers (Positive and Negative)","Standard Form (Introduction)"],
+            "Basic Operations": ["Order of Operations (BODMAS/BIDMAS)","Word Problems — Basic Operations","Estimation and Rounding"],
+            "Algebra": ["Algebraic Expressions and Simplification","Simple Equations in One Variable","Simple Inequalities","Substitution into Formulae","Word Problems Leading to Equations","Factorisation — Common Factors","Expansion of Brackets","Introduction to Simultaneous Equations"],
+            "Geometry": ["Types of Angles: Acute, Obtuse, Reflex, Right","Angles on a Straight Line and at a Point","Vertically Opposite Angles","Angles in a Triangle","Types of Triangles: Equilateral, Isosceles, Scalene","Quadrilaterals: Square, Rectangle, Parallelogram, Rhombus, Trapezium","Circles: Radius, Diameter, Circumference, Chord, Arc","Construction: Bisecting Lines and Angles","Symmetry: Line and Rotational","Bearings (Introduction)"],
+            "Mensuration": ["Perimeter of Plane Shapes","Area of Rectangles, Triangles, Circles, Trapeziums","Volume of Cuboids and Cylinders","Surface Area of Cuboids","Units of Measurement and Conversion"],
+            "Statistics": ["Data Collection and Presentation","Bar Charts, Pie Charts, Pictograms","Frequency Tables","Mean, Median, Mode for Ungrouped Data","Range"],
+            "Everyday Mathematics": ["Profit and Loss","Simple Interest","Hire Purchase (Introduction)","Rates, Taxes and Bills","Foreign Exchange (Introduction)","Venn Diagrams with Two Sets"],
         },
-
-        # ── SSS ───────────────────────────────────────────────────────
         "sss": {
-            "Number & Numeration": [
-                "Number Bases (Binary, Octal, Hexadecimal)",
-                "Fractions, Decimals and Percentages",
-                "Approximation and Significant Figures",
-                "Standard Form (Scientific Notation)",
-                "Indices and Laws of Indices",
-                "Surds and Simplification of Surds",
-                "Rational and Irrational Numbers",
-                "Ratios, Proportions and Rates",
-                "Logarithms and Laws of Logarithms",
-            ],
-            "Algebra": [
-                "Algebraic Expressions and Simplification",
-                "Linear Equations",
-                "Simultaneous Linear Equations",
-                "Quadratic Equations",
-                "Polynomials and Remainder Theorem",
-                "Factor Theorem",
-                "Variation (Direct, Inverse, Joint, Partial)",
-                "Inequalities and Number Lines",
-                "Sequences and Series (AP and GP)",
-                "Binomial Expansion",
-                "Functions and Mappings",
-                "Partial Fractions",
-            ],
-            "Geometry & Mensuration": [
-                "Angles and Parallel Lines",
-                "Triangles (Congruency, Similarity)",
-                "Quadrilaterals and Polygons",
-                "Circle Theorems (Chords, Tangents, Arcs)",
-                "Mensuration (Perimeter, Area, Volume)",
-                "Surface Area and Volume of Solids",
-                "Plane Geometry and Proofs",
-                "Construction and Loci",
-                "Transformation (Translation, Reflection, Rotation, Enlargement)",
-            ],
-            "Trigonometry": [
-                "Trigonometric Ratios (sin, cos, tan)",
-                "Right-Angled Triangles",
-                "Angles of Elevation and Depression",
-                "Bearings and Distances",
-                "Sine Rule and Cosine Rule",
-                "Area of Triangle using Trigonometry",
-                "Trigonometric Identities",
-                "Graphs of Trigonometric Functions",
-                "Solving Trigonometric Equations",
-            ],
-            "Earth Geometry": [
-                "Longitude and Latitude",
-                "Great Circles and Small Circles",
-                "Distance Along a Great Circle",
-                "Distance Along a Circle of Latitude",
-                "Time Zones and Local Time",
-            ],
-            "Coordinate Geometry": [
-                "Cartesian Plane and Plotting Points",
-                "Distance Between Two Points",
-                "Midpoint of a Line Segment",
-                "Gradient (Slope) of a Line",
-                "Equation of a Straight Line",
-                "Parallel and Perpendicular Lines",
-                "Equation of a Circle",
-            ],
-            "Statistics & Probability": [
-                "Data Collection and Presentation",
-                "Frequency Tables and Histograms",
-                "Mean, Median, Mode",
-                "Range, Variance and Standard Deviation",
-                "Cumulative Frequency and Ogive",
-                "Box and Whisker Plots",
-                "Probability (Basic, Addition, Multiplication Rule)",
-                "Permutations and Combinations",
-            ],
-            "Vectors & Matrices": [
-                "Vector Notation and Representation",
-                "Addition and Subtraction of Vectors",
-                "Position Vectors and Magnitude",
-                "Matrix Notation and Operations",
-                "Determinant and Inverse of a 2×2 Matrix",
-                "Solving Simultaneous Equations using Matrices",
-                "Transformation Matrices",
-            ],
-            "Introductory Calculus": [
-                "Limits and Continuity",
-                "Differentiation from First Principles",
-                "Rules of Differentiation",
-                "Differentiation of Trig Functions",
-                "Tangent and Normal to a Curve",
-                "Maximum and Minimum Values",
-                "Integration as Reverse Differentiation",
-                "Definite and Indefinite Integrals",
-                "Area Under a Curve",
-            ],
+            "Number & Numeration": ["Number Bases (Binary, Octal, Hexadecimal)","Fractions, Decimals and Percentages","Approximation and Significant Figures","Standard Form (Scientific Notation)","Indices and Laws of Indices","Surds and Simplification of Surds","Rational and Irrational Numbers","Ratios, Proportions and Rates","Logarithms and Laws of Logarithms"],
+            "Algebra": ["Algebraic Expressions and Simplification","Linear Equations","Simultaneous Linear Equations","Quadratic Equations","Polynomials and Remainder Theorem","Factor Theorem","Variation (Direct, Inverse, Joint, Partial)","Inequalities and Number Lines","Sequences and Series (AP and GP)","Binomial Expansion","Functions and Mappings","Partial Fractions"],
+            "Geometry & Mensuration": ["Angles and Parallel Lines","Triangles (Congruency, Similarity)","Quadrilaterals and Polygons","Circle Theorems (Chords, Tangents, Arcs)","Mensuration (Perimeter, Area, Volume)","Surface Area and Volume of Solids","Plane Geometry and Proofs","Construction and Loci","Transformation (Translation, Reflection, Rotation, Enlargement)"],
+            "Trigonometry": ["Trigonometric Ratios (sin, cos, tan)","Right-Angled Triangles","Angles of Elevation and Depression","Bearings and Distances","Sine Rule and Cosine Rule","Area of Triangle using Trigonometry","Trigonometric Identities","Graphs of Trigonometric Functions","Solving Trigonometric Equations"],
+            "Earth Geometry": ["Longitude and Latitude","Great Circles and Small Circles","Distance Along a Great Circle","Distance Along a Circle of Latitude","Time Zones and Local Time"],
+            "Coordinate Geometry": ["Cartesian Plane and Plotting Points","Distance Between Two Points","Midpoint of a Line Segment","Gradient (Slope) of a Line","Equation of a Straight Line","Parallel and Perpendicular Lines","Equation of a Circle"],
+            "Statistics & Probability": ["Data Collection and Presentation","Frequency Tables and Histograms","Mean, Median, Mode","Range, Variance and Standard Deviation","Cumulative Frequency and Ogive","Box and Whisker Plots","Probability (Basic, Addition, Multiplication Rule)","Permutations and Combinations"],
+            "Vectors & Matrices": ["Vector Notation and Representation","Addition and Subtraction of Vectors","Position Vectors and Magnitude","Matrix Notation and Operations","Determinant and Inverse of a 2×2 Matrix","Solving Simultaneous Equations using Matrices","Transformation Matrices"],
+            "Introductory Calculus": ["Limits and Continuity","Differentiation from First Principles","Rules of Differentiation","Differentiation of Trig Functions","Tangent and Normal to a Curve","Maximum and Minimum Values","Integration as Reverse Differentiation","Definite and Indefinite Integrals","Area Under a Curve"],
         },
-
-        # ── Backwards compatibility alias ─────────────────────────────
-        "secondary": None,  # filled below
-
-        # ── University ────────────────────────────────────────────────
+        "secondary": None,
         "university": {
-            "Algebra & Pre-Calculus": [
-                "Sets, Relations and Functions",
-                "Complex Numbers and Argand Diagram",
-                "Polar Form and De Moivre's Theorem",
-                "Polynomial Division and Rational Functions",
-                "Exponential and Logarithmic Functions",
-                "Hyperbolic Functions",
-                "Partial Fractions (All cases)",
-                "Mathematical Induction",
-                "Binomial Theorem (General term)",
-            ],
-            "Calculus I": [
-                "Limits and L'Hôpital's Rule",
-                "Continuity and Differentiability",
-                "Differentiation — All Rules",
-                "Implicit and Parametric Differentiation",
-                "Higher Order Derivatives",
-                "Taylor and Maclaurin Series",
-                "Curve Sketching and Optimisation",
-                "Integration by Substitution",
-                "Integration by Parts",
-                "Integration by Partial Fractions",
-                "Trigonometric Substitution",
-                "Reduction Formulae",
-                "Improper Integrals",
-            ],
-            "Calculus II": [
-                "Area Between Curves",
-                "Volumes of Revolution",
-                "Arc Length and Surface Area",
-                "Sequences and Series (Convergence Tests)",
-                "Power Series and Radius of Convergence",
-                "Fourier Series",
-            ],
-            "Multivariable Calculus": [
-                "Partial Derivatives",
-                "Gradient, Divergence and Curl",
-                "Directional Derivatives",
-                "Double and Triple Integrals",
-                "Change of Variables (Jacobian)",
-                "Line Integrals and Surface Integrals",
-                "Green's Theorem",
-                "Stokes' Theorem",
-                "Divergence Theorem",
-            ],
-            "Differential Equations": [
-                "First Order ODEs (Separable, Linear, Exact)",
-                "Integrating Factor Method",
-                "Bernoulli's Equation",
-                "Second Order ODEs",
-                "Method of Undetermined Coefficients",
-                "Variation of Parameters",
-                "Laplace Transforms",
-                "Inverse Laplace Transforms",
-                "Systems of Differential Equations",
-                "Partial Differential Equations (Intro)",
-            ],
-            "Linear Algebra": [
-                "Vectors in 2D and 3D",
-                "Dot Product and Cross Product",
-                "Lines and Planes in 3D",
-                "Matrix Operations and Types",
-                "Determinants (Any Order)",
-                "Matrix Inverse (Gauss-Jordan)",
-                "Systems of Linear Equations",
-                "Vector Spaces and Subspaces",
-                "Eigenvalues and Eigenvectors",
-                "Diagonalisation",
-                "Linear Transformations",
-            ],
-            "Numerical Methods": [
-                "Errors in Numerical Computation",
-                "Bisection Method",
-                "Newton-Raphson Method",
-                "Lagrange Interpolation",
-                "Newton's Divided Differences",
-                "Trapezoidal Rule",
-                "Simpson's Rule",
-                "Euler's Method",
-                "Runge-Kutta Methods",
-                "Gauss-Seidel Iteration",
-            ],
-            "Statistics & Probability": [
-                "Conditional Probability and Bayes' Theorem",
-                "Discrete Random Variables",
-                "Binomial and Poisson Distributions",
-                "Normal Distribution",
-                "t-Distribution and Chi-Square",
-                "Sampling Theory and Central Limit Theorem",
-                "Hypothesis Testing",
-                "Regression and Correlation",
-                "Analysis of Variance (ANOVA)",
-            ],
-            "Engineering Mathematics": [
-                "Laplace Transforms (Full — K.A. Stroud)",
-                "Z-Transforms",
-                "Fourier Transforms",
-                "Vector Analysis",
-                "Calculus of Variations",
-                "Optimisation Methods",
-                "Complex Analysis",
-                "Cauchy's Integral Theorem",
-                "Residues and Poles",
-            ],
+            "Algebra & Pre-Calculus": ["Sets, Relations and Functions","Complex Numbers and Argand Diagram","Polar Form and De Moivre's Theorem","Polynomial Division and Rational Functions","Exponential and Logarithmic Functions","Hyperbolic Functions","Partial Fractions (All cases)","Mathematical Induction","Binomial Theorem (General term)"],
+            "Calculus I": ["Limits and L'Hôpital's Rule","Continuity and Differentiability","Differentiation — All Rules","Implicit and Parametric Differentiation","Higher Order Derivatives","Taylor and Maclaurin Series","Curve Sketching and Optimisation","Integration by Substitution","Integration by Parts","Integration by Partial Fractions","Trigonometric Substitution","Reduction Formulae","Improper Integrals"],
+            "Calculus II": ["Area Between Curves","Volumes of Revolution","Arc Length and Surface Area","Sequences and Series (Convergence Tests)","Power Series and Radius of Convergence","Fourier Series"],
+            "Multivariable Calculus": ["Partial Derivatives","Gradient, Divergence and Curl","Directional Derivatives","Double and Triple Integrals","Change of Variables (Jacobian)","Line Integrals and Surface Integrals","Green's Theorem","Stokes' Theorem","Divergence Theorem"],
+            "Differential Equations": ["First Order ODEs (Separable, Linear, Exact)","Integrating Factor Method","Bernoulli's Equation","Second Order ODEs","Method of Undetermined Coefficients","Variation of Parameters","Laplace Transforms","Inverse Laplace Transforms","Systems of Differential Equations","Partial Differential Equations (Intro)"],
+            "Linear Algebra": ["Vectors in 2D and 3D","Dot Product and Cross Product","Lines and Planes in 3D","Matrix Operations and Types","Determinants (Any Order)","Matrix Inverse (Gauss-Jordan)","Systems of Linear Equations","Vector Spaces and Subspaces","Eigenvalues and Eigenvectors","Diagonalisation","Linear Transformations"],
+            "Numerical Methods": ["Errors in Numerical Computation","Bisection Method","Newton-Raphson Method","Lagrange Interpolation","Newton's Divided Differences","Trapezoidal Rule","Simpson's Rule","Euler's Method","Runge-Kutta Methods","Gauss-Seidel Iteration"],
+            "Statistics & Probability": ["Conditional Probability and Bayes' Theorem","Discrete Random Variables","Binomial and Poisson Distributions","Normal Distribution","t-Distribution and Chi-Square","Sampling Theory and Central Limit Theorem","Hypothesis Testing","Regression and Correlation","Analysis of Variance (ANOVA)"],
+            "Engineering Mathematics": ["Laplace Transforms (Full — K.A. Stroud)","Z-Transforms","Fourier Transforms","Vector Analysis","Calculus of Variations","Optimisation Methods","Complex Analysis","Cauchy's Integral Theorem","Residues and Poles"],
         },
     }
-
-    # 'secondary' is an alias for 'sss' — backwards compat
     topics["secondary"] = topics["sss"]
-
     return {"success": True, "topics": topics}
 
 
@@ -447,3 +242,28 @@ Keep each section brief and exam-focused."""
 
     content = await ask_groq(prompt, [])
     return {"topic": topic, "content": content}
+
+
+@router.post("/feedback")
+async def submit_feedback(request: FeedbackRequest, user=Depends(require_auth)):
+    """Store thumbs up/down feedback in Supabase."""
+    from supabase import create_client
+    url = os.environ.get("SUPABASE_URL")
+    key = os.environ.get("SUPABASE_SERVICE_KEY")
+
+    if not url or not key:
+        return {"success": False, "error": "Supabase not configured"}
+
+    sb  = create_client(url, key)
+    row = {
+        "message_id":       request.message_id,
+        "user_id":          user.id,          # verified — never trust client-sent user_id
+        "topic":            request.topic,
+        "level":            request.level,
+        "question":         request.question,
+        "response_preview": request.response_preview[:300],
+        "rating":           request.rating,
+        "comment":          request.comment,
+    }
+    result = sb.table("teach_feedback").insert(row).execute()
+    return {"success": True, "id": result.data[0]["id"] if result.data else None}

@@ -5,14 +5,14 @@ Type: Objective
 
 ---
 
-**1.** Simplify 125^(-1/3) x 49^(-1/2) x 10°
+**1.** Simplify 125^(-1/3) x 49^(-1/2) x 10deg
 
 A. 350
 B. 35
 C. 1/35
 D. 1/350
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -24,7 +24,7 @@ C. 4.5
 D. 18
 E. 40.5
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -36,7 +36,7 @@ C. 562 x 10 -2
 D. 5.62 x 10 2
 E. 5.62 x 10 3
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -48,11 +48,11 @@ C. 10
 D. 100
 E. 1000
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
-**5.** Simplify \fraclog √(8)log 8
+**5.** Simplify \fraclog sqrt(8)log 8
 
 A. 1/3
 B. 1/2
@@ -60,7 +60,7 @@ C. 1 / 3 log√2
 D. 1 / 3 log√8
 E. 1 / 2 log√2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -72,7 +72,7 @@ C. 0.6258
 D. \overline1.6258
 E. 1.6272
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -84,7 +84,7 @@ C. 9.03
 D. 9.44
 E. 9.46
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -96,7 +96,7 @@ C. 7.44%
 D. 8.035%
 E. 9.00%
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -108,7 +108,7 @@ C. 3.5
 D. 4
 E. 4.5
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -120,7 +120,7 @@ C. -2, 1.5
 D. -1, 1
 E. 2, 1.5
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -132,7 +132,7 @@ C. -2.0, 1.5
 D. -2.0, 2.0
 E. 0, 0
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -144,7 +144,7 @@ C. 96 o
 D. 156 o
 E. 168 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -156,7 +156,7 @@ C. 242
 D. 130
 E. 121
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -168,7 +168,7 @@ C. H = {0, 1, 2}
 D. H = {}
 E. J ≤ H
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -180,7 +180,7 @@ C. 35
 D. 45
 E. 50
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -192,7 +192,7 @@ C. y ≤ -x, y + 2x ≤ 3, x ≥ -3
 D. y ≥ -x, y + 3 ≤ 2x, x ≥ -3
 E. y ≤ x, y ≤ 2x - 3, x ≥ 3
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -204,7 +204,7 @@ C. y ≤ x, y ≤ 2x - 3, x ≤ 3
 D. y ≤ -x, y ≤ 2x - 3, x ≤ 3
 E. y ≥ x, y + 2x ≥ 3, x ≤ 3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -216,7 +216,7 @@ C. 13.2cm
 D. 20.6cm
 E. 31.4cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -228,7 +228,7 @@ C. (x-12) (x+16)
 D. (x-12) (x-16)
 E. (x+12) (x+16)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -240,7 +240,7 @@ C. (2e+3) (e+2)
 D. (2e-3) (e-1)
 E. (e 2 -3(2e-1)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -252,7 +252,7 @@ C. y = 0 or 3/7
 D. y = 0 or 9
 E. y = 0 or 10
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -264,7 +264,7 @@ C. 8
 D. 12
 E. 16
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -276,7 +276,7 @@ C. 3, 9/2
 D. -3, -9/2
 E. -3, 9/2
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -288,7 +288,7 @@ C. 52 o
 D. 103 o
 E. 206 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -300,7 +300,7 @@ C. 616cm 2
 D. 1434cm 2
 E. 4312cm 2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -312,7 +312,7 @@ C. 45 o
 D. 30 o
 E. 0 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -324,7 +324,7 @@ C. 220cm 2
 D. 528cm 2
 E. 770cm 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -336,7 +336,7 @@ C. 220cm 3
 D. 528cm 3
 E. 770cm 3
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -348,7 +348,7 @@ C. 52 o
 D. 32 o
 E. 26 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -360,7 +360,7 @@ C. 45 o
 D. 60 o
 E. 70 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -372,7 +372,7 @@ C. 10.24cm 2
 D. 20.48cm 2
 E. 40.96cm 2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -384,7 +384,7 @@ C. ∠XZW
 D. ∠YXZ
 E. ∠VYW
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -396,7 +396,7 @@ C. ΔXYV
 D. ΔWYV
 E. ΔWYZ
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -408,7 +408,7 @@ C. 48 o
 D. 43 o
 E. 38 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -420,7 +420,7 @@ C. 55 o
 D. 35 o
 E. 20 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -432,7 +432,7 @@ C. 35 o
 D. 40 o
 E. 50 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -444,7 +444,7 @@ C. III only
 D. I and II only
 E. I, II and III
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -456,7 +456,7 @@ C. 0.0266
 D. 0.2660
 E. 1.5320
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -468,7 +468,7 @@ C. 60 o
 D. 26 o
 E. 0 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -480,7 +480,7 @@ C. 6.0m
 D. 9.3m
 E. 26.1m
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -492,7 +492,7 @@ C. 164 o
 D. 254 o
 E. 286 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -504,7 +504,7 @@ C. N2,000.00
 D. N2,910.00
 E. N4,000.00
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -516,7 +516,7 @@ C. N9
 D. N12
 E. N15
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -528,7 +528,7 @@ C. N12.00
 D. N15.00
 E. N18.00
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -540,7 +540,7 @@ C. 10/19
 D. 4/7
 E. 4/5
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -552,7 +552,7 @@ C. 5/19
 D. 9/19
 E. 10/19
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -564,6 +564,6 @@ C. N2,000.00
 D. N4,000.00
 E. N2,300.00
 
-✓ **Answer:** E
+Answer: E
 
 ---

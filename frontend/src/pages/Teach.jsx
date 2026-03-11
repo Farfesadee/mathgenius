@@ -6,6 +6,7 @@ import ChatWindow from '../components/teach/ChatWindow'
 import ConversationSidebar from '../components/teach/ConversationSidebar'
 import { useAuth } from '../context/AuthContext'
 import { createConversation } from '../lib/conversations'
+import { supabase } from '../lib/supabase'
 
 export default function Teach() {
   const { user, profile, updateProfile } = useAuth()
@@ -23,6 +24,25 @@ export default function Teach() {
   }, [selectedLevel])
   const [currentConversation,  setCurrentConversation]  = useState(null)
   const [convRefreshKey,       setConvRefreshKey]        = useState(0)
+
+  // ── Restore last conversation on mount ───────────────────────────
+  useEffect(() => {
+    if (!user) return
+    supabase
+      .from('conversations')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('is_deleted', false)
+      .order('updated_at', { ascending: false })
+      .limit(1)
+      .single()
+      .then(({ data }) => {
+        if (data) {
+          setCurrentConversation(data)
+          if (data.topic) setSelectedTopic(data.topic)
+        }
+      })
+  }, [user?.id])
 
   const handleTopicSelect = async (topic) => {
     setSelectedTopic(topic)

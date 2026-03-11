@@ -12,7 +12,7 @@ B. 0.0800
 C. 0.00799
 D. 0.008
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -23,18 +23,18 @@ B. 1101_2
 C. 101_2
 D. 10001_2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**3.** Solve: 2^√(2x + 1) = 32
+**3.** Solve: 2^sqrt(2x + 1) = 32
 
 A. 13
 B. 24
 C. 12
 D. 11
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -45,7 +45,7 @@ B. m + 3n
 C. 4mn
 D. 3mn
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -56,7 +56,7 @@ B. 24
 C. 36
 D. 26
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -67,7 +67,7 @@ B. -3, -2, -1, 0 and 1
 C. -2, -1 and 0
 D. -1, 0 and 1
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -78,7 +78,7 @@ B. 3(p + r)( 2q - 2q - s)
 C. 3(2q - s)(p + r)
 D. 3(r - p)(s - 2q)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -89,7 +89,7 @@ B. 1(1/2)
 C. 1(1/6)
 D. (1/2)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -100,7 +100,7 @@ B. 10 years
 C. 5 years
 D. 15 years
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -111,7 +111,7 @@ B. 4
 C. 1
 D. -1
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -122,18 +122,18 @@ B. 6km
 C. 7km
 D. 3km
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**12.** Simplify 2√7- √ + √
+**12.** Simplify 2√7-
 
 A. √ 21 21
 B. 7 √ 21 21
 C. √ 21 3
 D. 3√21
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -144,20 +144,18 @@ B. 2
 C. 4
 D. 6
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **14.** ![diagram](images/waec/2021/q14_1.jpeg) In the diagram, ∠ABC and ∠BCD are right angles, ∠BAD = t and ∠EDF = 70°. Find the value of t.
-
-![diagram](images/waec/2021/q14_1.jpeg)
 
 A. 70°
 B. 165°
 C. 140°
 D. 110°
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -168,18 +166,18 @@ B. 40°
 C. 90°
 D. 120°
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**16.** make u the subject in x =(2u-3/3u + 2)
+**16.** make u the subject in x =
 
-A. u = (2x + 3/3x - 2)
-B. u = (2x - 3/3x - 2)
-C. u = (2x + 3/2 - 3x)
-D. u = (2x + 3/3x + 2)
+A. u = 2 x + 3 3 x − 2
+B. u = 2 x − 3 3 x − 2
+C. u = 2 x + 3 2 − 3 x
+D. u = 2 x + 3 3 x + 2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -190,75 +188,73 @@ B. #120,000.00
 C. #24,000.00
 D. #18,000.00
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**18.** The height of an equilateral triangle of side is 10√(3)cm. Calculate its perimeter.
+**18.** The height of an equilateral triangle of side is 10 cm. Calculate its perimeter.
 
 A. 20cm
 B. 60cm
 C. 40cm
 D. 30cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**19.** In △LMN, |LM| = 6cm, ∠LNM = x and sin x = sin x = (3/5). Find the area of △LMN
+**19.** In △LMN, |LM| = 6cm, ∠LNM = x and sin x = sin x = . Find the area of △LMN
 
-A. 60cm^2
-B. 48cm^2
-C. 24cm^2
-D. 30cm^2
+A. 60cm 2
+B. 48cm 2
+C. 24cm 2
+D. 30cm 2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **20.** ![diagram](images/waec/2021/q20_1.jpeg) consider the statements: P = All students offering Literature(L) also offer History(H); Q = Students offering History(H) do not offer Geography(G). Which of the Venn diagram correctly illustrate the two statements?
-
-![diagram](images/waec/2021/q20_1.jpeg)
 
 A. A
 B. B
 C. C
 D. D
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **21.** Find The quadratic Equation Whose Roots Are -2q And 5q.
 
-A. 3x 2 + 3qx - 10q 2
-B. x 2 + 3qx + 10q 2
-C. x 2 - 3qx + 10q 2
-D. x 2 - 3qx - 10q 2
+A. 3x^2 + 3qx - 10q^2
+B. x^2 + 3qx + 10q^2
+C. x^2 - 3qx + 10q^2
+D. x^2 - 3qx - 10q^2
 
-✓ **Answer:** D
-
----
-
-**22.** if tanθ = f r a c , 180° < θ < 270°, find the value of cosθ.
-
-A. 4 5
-B. 3 5
-C. - 4 5
-D. - 3 5
-
-✓ **Answer:** C
+Answer: D
 
 ---
 
-**23.** If x − - x − = p ( x − ) ( x − ) , find p.
+**22.** if tanθ = frac34, 180° < θ < 270°, find the value of cosθ.
+
+A. (4/5)
+B. (3/5)
+C. -(4/5)
+D. -(3/5)
+
+Answer: C
+
+---
+
+**23.** If (2/x-3) - (3/x-2) = (p/(x-3)(x -2)), find p.
 
 A. 5 - x
 B. - (x + 5)
 C. 13 - x
 D. - (5x - 13)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -269,20 +265,18 @@ B. 24cm
 C. 17cm
 D. 34cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **25.** ![diagram](images/waec/2021/q25_1.jpeg) In the diagram, △XYZ is produced to T. if |XY| = |ZY| and ∠XYT = 40°, find ∠XZT
-
-![diagram](images/waec/2021/q25_1.jpeg)
 
 A. 110°
 B. 130°
 C. 140°
 D. 180°
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -293,7 +287,7 @@ B. r = √ \frac{3h^2}{π}
 C. r = πh
 D. r = h √ \frac{3}{h}
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -304,7 +298,7 @@ B. 72°
 C. 24°
 D. 15°
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -315,42 +309,40 @@ B. 315°
 C. 045°
 D. 135°
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **29.** ![diagram](images/waec/2021/q29_1.jpeg) In the diagram, O is the centre of the circle PQRS, ∠PQR = 72° and OR is parallel to PS. Find ∠ OPS.
-
-![diagram](images/waec/2021/q29_1.jpeg)
 
 A. 18°
 B. 108°
 C. 54°
 D. 36°
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**30.** A trapezium of parellel sides 10cm and 21cm and height 8cm is inscribed in a circle of radius 7cm. calculate the area of the region not covered by the trapezium. π = \frac{22}{7}
+**30.** A trapezium of parellel sides 10cm and 21cm and height 8cm is inscribed in a circle of radius 7cm. calculate the area of the region not covered by the trapezium. π =
 
 A. 84cm ^2
 B. 80cm ^2
 C. 30cm ^2
 D. 94cm ^2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**31.** Find, correct to two decimal, the mean of 1 , 2 , 3 , 4 , and 5 .
+**31.** Find, correct to two decimal, the mean of 1(1/2), 2(2/3), 3(3/4), 4(4/5), and 5(5/6).
 
 A. 3.71
 B. 3.70
 C. 3.69
 D. 3.72
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -361,33 +353,29 @@ B. 3km/h
 C. 4km/h
 D. 6km/h
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **33.** ![diagram](images/waec/2021/q33_1.jpeg) find the value of (x+y)
-
-![diagram](images/waec/2021/q33_1.jpeg)
 
 A. 215°
 B. 70°
 C. 135°
 D. 145°
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**34.** ![diagram](images/waec/2021/q34_1.jpeg) In the diagram, ¯ M P is a tangent to the circle NQR, ∠NQR, ∠PNQ = 64 and | ¯ R Q | = | ¯ R N |. Find the angle market t.
-
-![diagram](images/waec/2021/q34_1.jpeg)
+**34.** ![diagram](images/waec/2021/q34_1.jpeg) In the diagram, \overlineMP is a tangent to the circle NQR, ∠NQR, ∠PNQ = 64 and | \overlineRQ | = | \overlineRN |. Find the angle market t.
 
 A. 130°
 B. 115°
 C. 58°
 D. 68°
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -398,20 +386,18 @@ B. 7.0
 C. 7.5
 D. 8.0
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **36.** ![diagram](images/waec/2021/q36_1.jpeg) In the diagram, PQRS is a circle. find the value of x.
-
-![diagram](images/waec/2021/q36_1.jpeg)
 
 A. 50°
 B. 30°
 C. 80°
 D. 100°
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -422,7 +408,7 @@ B. 276.57cm 2
 C. 201.14cm 2
 D. 477.71cm 2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -433,20 +419,18 @@ B. 2 7 20
 C. 11 20
 D. 1 20
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**39.** ![diagram](images/waec/2021/q39_1.jpeg) In the diagram, line ¯ E C is a diameter of the circle ABCDE. If angle ABC equals 158°, find ∠ADE
-
-![diagram](images/waec/2021/q39_1.jpeg)
+**39.** ![diagram](images/waec/2021/q39_1.jpeg) In the diagram, line is a diameter of the circle ABCDE. If angle ABC equals 158°, find ∠ADE
 
 A. 112
 B. 90
 C. 68
 D. 22
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -457,18 +441,18 @@ B. 162.0
 C. 160.0
 D. 165.0
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**41.** ¯ X Y is a line segments with the coordinates X (- 8,- 12) and Y(p,q). if the midpoint of ¯ X Y is (-4,-2) find the coordinates of Y.
+**41.** is a line segments with the coordinates X (- 8,- 12) and Y(p,q). if the midpoint of is (-4,-2) find the coordinates of Y.
 
 A. (-6,-2)
 B. (0,8)
 C. (4,10)
 D. (0,4)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -479,7 +463,7 @@ B. 235
 C. 175
 D. 400
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -490,20 +474,18 @@ B. 18 < d < 23
 C. 18 ≤ d < 23
 D. 18 < d ≤ 23
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **44.** ![diagram](images/waec/2021/q44_1.jpeg) The pie chart represents the distribution of fruits on display in the shop if there are 60 apples on display how many oranges are there?
-
-![diagram](images/waec/2021/q44_1.jpeg)
 
 A. 80
 B. 270
 C. 120
 D. 90
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -514,18 +496,18 @@ B. 3 10
 C. 1 4
 D. 11 20
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **46.** A fair die is tossed twice what is the probability of get a sum of at least 10.
 
-A. (5/36)
-B. (2/3)
-C. (5/18)
-D. (1/6)
+A. 5 36
+B. 2 3
+C. 5 18
+D. 1 6
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -536,28 +518,28 @@ B. 63
 C. 57
 D. 67
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **48.** The equation of a line is given as 3 x - 5y = 7. Find its gradient (slope)
 
-A. (5/3).
-B. (3/5).
-C. (-3/5).
-D. (-5/3).
+A. 5 3 .
+B. 3 5 .
+C. − 3 5 .
+D. − 5 3 .
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**49.** For what value of x is (4 - 2x/x + 1) undefined.
+**49.** For what value of x is undefined.
 
 A. 2
 B. -1
 C. 1
 D. -2
 
-✓ **Answer:** B
+Answer: B
 
 ---

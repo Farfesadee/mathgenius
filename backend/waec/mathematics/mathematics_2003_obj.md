@@ -5,14 +5,14 @@ Type: Objective
 
 ---
 
-**1.** Simplify \left((3/4) - (1/3)\right)× 4(1/3)÷ 3(1/4)
+**1.** Simplify \left((3/4) - (1/3)\right)x 4(1/3)/ 3(1/4)
 
 A. (5/9)
 B. (5/16)
 C. (8/13)
 D. (16/5)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -23,7 +23,7 @@ B. 5
 C. 8
 D. 18
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -34,7 +34,7 @@ B. 2
 C. 3
 D. 4
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -45,7 +45,7 @@ B. 23
 C. 37
 D. 49
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -56,7 +56,7 @@ B. -4 ≤ x< 5
 C. -4
 D. -4≤x≤5
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -67,7 +67,7 @@ B. N7.50
 C. N10.00
 D. N15.00
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -78,18 +78,18 @@ B. (3a+11/(a+3)(a-2))
 C. (3a+11/(a+3)(a+2))
 D. (3a+11/(a-3)(a+2))
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**8.** Simplify \frac4√(18)√(8)
+**8.** Simplify \frac4sqrt(18)sqrt(8)
 
 A. 2
 B. 3
 C. 6
 D. 12
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -100,7 +100,7 @@ B. 290 o
 C. 305 o
 D. 325 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -111,18 +111,18 @@ B. 4
 C. 5
 D. 6
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**11.** Simplify ( ) − ( )
+**11.** Simplify \left(1(2/3)\right)^2 - \left((2/3)\right)^2
 
-A. 2 1 3
-B. 1 1 3
+A. 2(1/3)
+B. 1(1/3)
 C. 1
-D. 3 7
+D. (3/7)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -133,18 +133,18 @@ B. x=4
 C. x=6
 D. x = 14
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**13.** Evaluate l o g l o g ( )
+**13.** Evaluate (log8/log\left(\frac1)4\right)
 
 A. -2
-B. − 3 2
-C. 1 2
+B. (-3/2)
+C. (1/2)
 D. 4
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -155,7 +155,7 @@ B. 9cm
 C. 12cm
 D. 15cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -166,7 +166,7 @@ B. 150 o
 C. 105 o
 D. 75 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -177,7 +177,7 @@ B. 30 o
 C. 35 o
 D. 37 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -188,29 +188,29 @@ B. − 1 3 , − 3
 C. − 1 3 , 3
 D. 1 3 , 3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**18.** In ∆ PQR, P\hat{Q}P = 84^°, |Q\hat{P}R |= 43^° and |PQ| = 5cm. Find /QR/ in cm, correct to 1 decimal place.
+**18.** In and |PQ| = 5cm. Find /QR/ in cm, correct to 1 decimal place.
 
 A. 3.4
 B. 4.3
 C. 5.9
 D. 6.2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**19.** Given, that 4P4_5 = 119_{10} , find the value of P
+**19.** Given, that , find the value of P
 
 A. 1
 B. 2
 C. 3
 D. 4
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -221,7 +221,7 @@ B. 4.521m
 C. 4.792m
 D. 7.962m
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -232,7 +232,7 @@ B. 30 o
 C. 45 o
 D. 60 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -243,7 +243,7 @@ B. 80
 C. 100
 D. 360
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -254,51 +254,51 @@ B. 34
 C. 44
 D. 45
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **24.** Out of 60 members of an Association, 15 are Doctors and 9 are Lawyers. If a member is selected at random from the Association, what is the probability that the member is neither a Doctor Nor a Lawyer
 
-A. 3 5
-B. 9 10
-C. 3 20
-D. 1 4
+A. (3/5)
+B. (9/10)
+C. (3/20)
+D. (1/4)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**25.** Find the values of x for which x − x + is not defined,
+**25.** Find the values of x for which (1/2x^2 - 13x +15) is not defined,
 
-A. 5 or 3 2
-B. 1 or 15 13
+A. 5 or (3/2)
+B. 1 or (15/13)
 C. 2 or 15
 D. 13 or 15
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**26.** ![diagram](images/waec/2003/q26_1.jpg) In the diagram, P\hatQS = 65^o, R\hatPS = 40^o\hspace1mmand\hspace1mmQ\hatSR=20^o\hspace1mm Find P\hatSQ
+**26.** ![diagram](images/waec/2003/q26_1.jpg) In the diagram,
 
 A. 85 o
 B. 60 o
 C. 55 o
 D. 45 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**27.** Evaluate (111_two)^2 - (101_two)^2
+**27.** Evaluate
 
 A. 10 two
 B. 100 two
 C. 1100 two
 D. 11000 two
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -309,18 +309,18 @@ B. 0.01021
 C. 0.01015
 D. 0.01016
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**29.** If \frac3^(1-n)9^-2n = (1/9) find n
+**29.** If = find n
 
-A. -(3/2)
-B. (1/3)
+A. − 3 2
+B. 1 3
 C. -1
 D. -3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -331,7 +331,7 @@ B. II only
 C. III only
 D. I and III only
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -342,18 +342,18 @@ B. 4√3
 C. 6√3
 D. 12√3
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**32.** If P = √(QR\left(1+(3t/R)\right)), make R the subject of the formula.
+**32.** If , make R the subject of the formula.
 
-A. R = (3Qt/P^2 - Q)
-B. R = (P^2 – 3t/Q+1)
-C. R = (P^2 + 3t/Q - 1)
-D. R = (P^2-3Qt/Q)
+A. R = 3 Q t P 2 − Q
+B. R = \frac{P^2 – 3t}{Q+1}
+C. R = \frac{P^2 + 3t}{Q - 1}
+D. R = \frac{P^2-3Qt}{Q}
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -364,7 +364,7 @@ B. 2
 C. 4
 D. 6
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -375,18 +375,18 @@ B. (c, h)
 C. (c, g, h)
 D. (c, e, g, h)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **35.** The square root of a number is 2k. What is half of the number
 
-A. √((k/2))
-B. √(k)
-C. (1/2)k^2
+A. \sqrt{\frac{k}{2}}
+B. \sqrt{k}
+C. \frac{1}{2}k^2
 D. 2k 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -397,7 +397,7 @@ B. p varies as the square root of r
 C. p varies inversely as the square of r
 D. p varies inversely as r
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -408,7 +408,7 @@ B. 1-(x+y)-xy
 C. 1-(x+y)+xy
 D. 1 - (x - y) + x
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -419,29 +419,29 @@ B. a circle centre P radius PR
 C. the point of intersection of the perpendicular bisectors of PQ and PR
 D. the bisector of angle QPR
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**39.** Find the equation whose roots are -(2/3) and 3
+**39.** Find the equation whose roots are and 3
 
 A. 3x 2 +11x-6=0
 B. 3x 2 +7x+6=0
 C. 3x 2 -11x-6=0
 D. 3x 2 -7x-6=0
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **40.** Evaluate Cos 45o Cos 30o - Sin 45o Sin 30o leaving the answer in surd form
 
-A. \frac√(2)-12
-B. \frac√(3)-√(2)4
-C. \frac√(6)-√(2)2
-D. \frac√(6)-√(2)4
+A. √ 2 − 1 2
+B. √ 3 − √ 2 4
+C. √ 6 − √ 2 2
+D. √ 6 − √ 2 4
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -452,18 +452,18 @@ B. 75 o
 C. 60 o
 D. 45 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**42.** ![diagram](images/waec/2003/q42_1.jpg) In the diagram /PS/ = 9 cm, /OR/ = 5cm, P ˆ S R = o and S ˆ P Q = P ˆ Q R = o . Find, correct to the nearest whole number, the area of the trapezium,
+**42.** ![diagram](images/waec/2003/q42_1.jpg) In the diagram /PS/ = 9 cm, /OR/ = 5cm, and . Find, correct to the nearest whole number, the area of the trapezium,
 
 A. 55cm 2
 B. 25cm 2
 C. 22cm 2
 D. 13cm 2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -474,7 +474,7 @@ B. 1 12 π h 3
 C. 4 3 π h 2
 D. 4 3 π h 3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -485,7 +485,7 @@ B. N684.25
 C. N700.00
 D. N892.50
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -496,7 +496,7 @@ B. (x-270) o
 C. (x - 135) o
 D. (x - 180) o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -507,6 +507,6 @@ B. Mean deviation
 C. Mean
 D. Standard deviation
 
-✓ **Answer:** C
+Answer: C
 
 ---

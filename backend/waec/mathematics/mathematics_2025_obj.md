@@ -12,7 +12,7 @@ B. 10101
 C. 10010
 D. 11001
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -23,7 +23,7 @@ B. ₦4.00
 C. ₦4.50
 D. ₦3.00
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -34,7 +34,7 @@ B. 8.34 x 10^-3
 C. 8.34 x 10^4
 D. 8.34 x 10^3
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -45,7 +45,7 @@ B. 3(1/3)
 C. (1/3)
 D. 3
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -56,7 +56,7 @@ B. 2^(2/3)
 C. 4^(2/3)
 D. 4^(1/2)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -67,7 +67,7 @@ B. ₦1200.00
 C. ₦900.00
 D. ₦450.00
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -78,7 +78,7 @@ B. U_n = 19 + 7n
 C. U_n = 18 - 7n
 D. U_n = 18 + 7n
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -89,7 +89,7 @@ B. {1, 2, 4, 7, 8}
 C. {1, 4, 7, 8}
 D. {2, 6, 7}
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -100,20 +100,18 @@ B. (3/4)
 C. 1
 D. (4/3)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **10.** ![diagram](images/waec/2025/q10_1.png) In the diagram above, the shaded portion is
-
-![diagram](images/waec/2025/q10_1.png)
 
 A. (P ∪ Q)^1 ∩ R
 B. P^1 ∩ Q ∩ R
 C. P^1 ∩ R
 D. Q^1 ∩ R
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -124,7 +122,7 @@ B. -5 or +1
 C. -5 or -1
 D. +4 or +1
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -135,7 +133,7 @@ B. x < 8
 C. x < -6
 D. x < 7
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -146,7 +144,7 @@ B. 2
 C. 3
 D. 1
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -157,7 +155,7 @@ B. (a + c)(x + y)
 C. (a + c)(x - y)
 D. (a - c)(x - y)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -168,7 +166,7 @@ B. 9
 C. 1
 D. 18
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -179,7 +177,7 @@ B. -9, (2/3)
 C. -2, 9
 D. -2, 3
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -190,7 +188,7 @@ B. -4 or 5
 C. -3 or 6
 D. -2 or 7
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -201,46 +199,40 @@ B. (1/2)
 C. 1
 D. -1
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **19.** ![diagram](images/waec/2025/q19_1.png) Which of the following could be the inequality illustrated in the sketch graph above?
-
-![diagram](images/waec/2025/q19_1.png)
 
 A. y ≤ -3x + 3
 B. y ≤ 3x + 2
 C. y ≥ -2x + 3
 D. y ≤ x + 3
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **20.** ![diagram](images/waec/2025/q20_1.png) What is the minimum value of y?
-
-![diagram](images/waec/2025/q20_1.png)
 
 A. -7
 B. -10
 C. -4
 D. -1
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **21.** ![diagram](images/waec/2025/q21_1.png) Find the roots of the equation y = 3x + x - 7.
-
-![diagram](images/waec/2025/q21_1.png)
 
 A. 1.4 and -1.7
 B. 2.0 and -1.9
 C. 1.0 and -1.2
 D. 1.1 and -1.3
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -251,20 +243,18 @@ B. 36 cm 2
 C. 48 cm 2
 D. 24 cm 2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **23.** ![diagram](images/waec/2025/q23_1.png) A cylindrical container, closed at both ends, has a radius of 7 cm and a height of 5 cm. Use this information to answer the questions below. Find the total surface area of the container.
-
-![diagram](images/waec/2025/q23_1.png)
 
 A. 35 cm 2
 B. 528 cm 2
 C. 154 cm 2
 D. 220 cm 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -275,7 +265,7 @@ B. 37 5 7 cm 2
 C. 75 3 7 cm 2
 D. 78 6 7 cm 2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -286,7 +276,7 @@ B. 3750 litres
 C. 37.5 litres
 D. 37500 litres
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -297,20 +287,18 @@ B. 9 cm
 C. More information needed.
 D. 6 cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **27.** ![diagram](images/waec/2025/q27_1.png) The diagram above shows a cone with the dimensions of its frustum indicated. Calculate the height of the cone.
-
-![diagram](images/waec/2025/q27_1.png)
 
 A. 24 cm
 B. 15 cm
 C. 8 cm
 D. 12 cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -321,7 +309,7 @@ B. 104°
 C. 80°
 D. 100°
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -332,20 +320,18 @@ B. 10 1 2 cm
 C. 14 cm
 D. 7 cm
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **30.** ![diagram](images/waec/2025/q30_1.png) A cylindrical container, closed at both ends, has a radius of 7 cm and a height of 5 cm. Use this information to answer the questions below. What is the volume of the container?
-
-![diagram](images/waec/2025/q30_1.png)
 
 A. 770 cm 3
 B. 35 cm 3
 C. 220 cm 3
 D. 154 cm 3
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -356,7 +342,7 @@ B. 0.903
 C. 0.117
 D. 0.944
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -367,33 +353,29 @@ B. 7(2/10) cm
 C. 6 (4/5) cm
 D. 13 (3/5) cm
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **33.** ![diagram](images/waec/2025/q33_1.png) In the diagram above, AO is perpendicular to OB. Find x.
-
-![diagram](images/waec/2025/q33_1.png)
 
 A. 15°
 B. 22.5°
 C. 7.5°
 D. 30°
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **34.** ![diagram](images/waec/2025/q34_1.png) In the diagram above. O is the centre of the circle and |BD| = |DC|. If < DCB = 35º, find < BAO
-
-![diagram](images/waec/2025/q34_1.png)
 
 A. 25°
 B. 30°
 C. 20°
 D. 35°
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -404,7 +386,7 @@ B. 78°
 C. 72°
 D. 85°
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -415,98 +397,84 @@ B. Parallel line to the straight line joining them.
 C. Perpendicular to the straight line joining them.
 D. Perpendicular bisector of the straight line joining them.
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **37.** ![diagram](images/waec/2025/q37_1.png) In the diagram,|AB| = 12cm, |AE| = 8cm, |DC| = 9cm and BD||DC
-
-![diagram](images/waec/2025/q37_1.png)
 
 A. 6cm
 B. 5cm
 C. 8cm
 D. 9cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **38.** ![diagram](images/waec/2025/q38_1.png) In the diagram above, PQ is parallel to TU, < PQR = 50º, < QRS = 86º, and < STU = 64º. Calculate the value of x
-
-![diagram](images/waec/2025/q38_1.png)
 
 A. 100°
 B. 108°
 C. 120°
 D. 136°
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **39.** ![diagram](images/waec/2025/q39_1.png) In the diagram below, AB||DC, the bisectors of < BAC and < ACD meet at E. Find the value of < AEC
-
-![diagram](images/waec/2025/q39_1.png)
 
 A. 45°
 B. 60°
 C. 30°
 D. 90°
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **40.** ![diagram](images/waec/2025/q40_1.png) In the diagram above, AB||CD. What is the size of the angle marked x?
-
-![diagram](images/waec/2025/q40_1.png)
 
 A. 93°
 B. 77°
 C. 103°
 D. 62°
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **41.** ![diagram](images/waec/2025/q41_1.png) In the diagram above, the value of angles b + c is
-
-![diagram](images/waec/2025/q41_1.png)
 
 A. a°
 B. 90°
 C. 180°
 D. d°
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **42.** ![diagram](images/waec/2025/q42_1.png) In △ABC above, BC is produced to D, |AB| = |AC|, and ∠BAC = 50°. Find ∠ACD.
-
-![diagram](images/waec/2025/q42_1.png)
 
 A. 115°
 B. 65°
 C. 60°
 D. 50°
 
-✓ **Answer:** ?
+Answer: A
 
 ---
 
 **43.** ![diagram](images/waec/2025/q43_1.png) In the diagram above, < PRQ = 90º, < QPR = 30º and |PQ| = 10 cm. Find y
-
-![diagram](images/waec/2025/q43_1.png)
 
 A. 6cm
 B. 4cm
 C. 5cm
 D. 3cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -517,7 +485,7 @@ B. 9
 C. 10
 D. 11
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -528,18 +496,18 @@ B. 13 m
 C. 9 m
 D. 7 m
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**46.** Without using tables, find the value of: \frac{sin 20°}{cos 70°} + \frac{cos 25°}{sin 65°}
+**46.** Without using tables, find the value of: (sin 20°/cos 70°) + (cos 25°/sin 65°)
 
 A. 2
 B. 0
 C. 1
 D. -1
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -550,18 +518,18 @@ B. 2.60
 C. 2.85
 D. 3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **48.** Two fair dice are tossed together once. Find the probability that the sum of the outcomes is at least 10.
 
-A. \frac{1}{6}
-B. \frac{1}{12}
-C. \frac{1}{4}
-D. \frac{5}{36}
+A. (1/6)
+B. (1/12)
+C. (1/4)
+D. (5/36)
 
-✓ **Answer:** ?
+Answer: D
 
 ---
 
@@ -572,17 +540,17 @@ B. 2.64
 C. 2.91
 D. 2.72
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **50.** From a box containing 2 red, 6 white, and 5 black balls, a ball is randomly selected. What is the probability that the selected ball is black?
 
-A. \frac{5}{13}
-B. \frac{5}{11}
-C. \frac{2}{13}
-D. \frac{5}{6}
+A. (5/13)
+B. (5/11)
+C. (2/13)
+D. (5/6)
 
-✓ **Answer:** A
+Answer: A
 
 ---

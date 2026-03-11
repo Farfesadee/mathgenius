@@ -12,18 +12,18 @@ B. 302.11
 C. 302.105
 D. 302.1049
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**2.** Simplify; \frac3√(5) × 4√(6)2 √(3) × 3√(2)
+**2.** Simplify; \frac3sqrt(5) x 4sqrt(6)2 sqrt(3) x 3sqrt(2)
 
-A. √(2)
-B. √(5)
-C. 2√(2)
-D. 2√(5)
+A. sqrt(2)
+B. sqrt(5)
+C. 2sqrt(2)
+D. 2sqrt(5)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -34,7 +34,7 @@ B. 15:17
 C. 13:55
 D. 12:11
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -45,7 +45,7 @@ B. 10011
 C. 100011
 D. 11001
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -56,7 +56,7 @@ B. 16
 C. -16
 D. -30
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -67,51 +67,51 @@ B. 150m/s
 C. 250m/s
 D. 500m/s
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **7.** If N2,500.00 amounted to N3,50.00 in 4 years at simple interest, find the rate at which the interest was charged
 
 A. 5%
-B. 7 1 2 %
+B. 7(1/2)%
 C. 8%
 D. 10%
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**8.** Solve for x in the equation; x + x =
+**8.** Solve for x in the equation; (1/x) + (2/3x) = (1/3)
 
 A. 5
 B. 4
 C. 3
 D. 1
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**9.** Simplify: k − k +
+**9.** Simplify: (54k^2 - 6/3k + 1)
 
 A. 6(1 - 3k 2 )
 B. 6(3k 2 - 1)
 C. 6(3k - 1)
 D. 6(1 - 3k)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**10.** Make p the subject of the relation: q = p r + s
+**10.** Make p the subject of the relation: q = (3p/r) + (s/2)
 
-A. p = 2 q − r s 6
+A. p = (2q - rs/6)
 B. p = 2qr - sr - 3
-C. p = 2 q r − s 6
-D. p = 2 q r − r s 6
+C. p = (2qr - s/6)
+D. p = (2qr - rs/6)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -122,7 +122,7 @@ B. 2
 C. 1
 D. -1
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -133,29 +133,29 @@ B. 3n - 12 = 0
 C. 2n - 35 = 0
 D. 5n - 33 = 0
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**13.** Solve the inequality: − m − ≥ m −
+**13.** Solve the inequality: (-m/2) - (5/4) >= (5m/12) - (7/6)
 
-A. m ≤ 5 4
-B. m ≥ 5 4
-C. m ≤ − 1 11
-D. m ≥ − 1 11
+A. m <= (5/4)
+B. m >= (5/4)
+C. m <= - (1/11)
+D. m >= - (1/11)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**14.** The curved surface area of a cylindrical tin is 704cm . If the radius of its base is 8cm, find the height. [Take π = ]`
+**14.** The curved surface area of a cylindrical tin is 704cm . If the radius of its base is 8cm, find the height. [Take pi = (22/7)]`
 
 A. 14cm
 B. 9cm
 C. 8cm
 D. 7cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -166,7 +166,7 @@ B. 252 o
 C. 246 o
 D. 234 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -177,7 +177,7 @@ B. /XY/ - /YZ/ = /XZ/
 C. /XY/ 2 = /Y/ 2 - /XY/ 2
 D. /YZ/ 2 = /XZ/ 2 + /XY/ 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -188,7 +188,7 @@ B. 75 o
 C. 65 o
 D. 45 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -199,18 +199,18 @@ B. 50 sin 54 o
 C. 50 tan 54 o
 D. 50 sin 36 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **19.** Given that the mean of the scores 15, 21, 17, 26, 18 and 29 is 21, calculate the standard deviation of the scores
 
-A. √(10)
+A. sqrt(10)
 B. 4
 C. 5
-D. √(30)
+D. sqrt(30)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -221,18 +221,18 @@ B. (13/25)
 C. (11/15)
 D. (13/15)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**21.** Which of these statements about y = √ m is correct?
+**21.** Which of these statements about y = is correct?
 
 A. log y = log 8 x log √ m
 B. log y = 3 log 2 x 1 2 log m
 C. log y = 3 log 2 - 1 2 log m
 D. log y = 3 2 log 2 + 1 2 log m
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -243,29 +243,29 @@ B. 2 1 2
 C. 3 3 4
 D. 5
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**23.** Express 3 - [ x − y y ] as a single fraction
+**23.** Express 3 - [ ] as a single fraction
 
 A. 3 x y y
 B. x − 4 y y
 C. 4 y − x y
 D. 3 - x − y y
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**24.** If p = {prime factors of 210} and Q = {prime less than 10}, find p ∩ Q
+**24.** If p = {prime factors of 210} and Q = {prime less than 10}, find p Q
 
 A. {1,2, 3}
 B. {2, 3, 5}
 C. {1, 3, 5,7}
 D. {2,3,5,7}
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -276,7 +276,7 @@ B. N43,000.00
 C. N42,200.00
 D. N40,000.00
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -287,7 +287,7 @@ B. 9 10
 C. 2 5
 D. 12 125
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -298,18 +298,18 @@ B. 12
 C. 10
 D. 8
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**28.** Find the coefficient of m in the expression of ( m − ) (m + )
+**28.** Find the coefficient of m in the expression of ( ) (m + )
 
 A. - 1 6
 B. - 1 2
 C. -1
 D. -1 1 6
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -320,7 +320,7 @@ B. 90cm 2
 C. 80cm 2
 D. 72cm 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -331,7 +331,7 @@ B. 24cm 2
 C. 48cm 2
 D. 96cm 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -342,29 +342,29 @@ B. 8xy(4x - 6x 2 y 2 )
 C. 8x 2 y(4 - 6xy 2 )
 D. 16xy(2x - 3x 2 y 2 )
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **32.** If x and y are variables and k is a constant, which of the following describes an inverse relationship between x and y?
 
 A. y = kx
-B. y = (k/x)
-C. y = k√(x)
+B. y = k x
+C. y = k √ x
 D. y = x + k
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **33.** If x and y are variables and k is a constant, which of the following describes an inverse relationship between x and y?
 
 A. y = kx
-B. y = (k/x)
-C. y = k√(x)
+B. y = k x
+C. y = k √ x
 D. y = x + k
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -375,7 +375,7 @@ B. 6.32m
 C. 9.32m
 D. 17.32
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -386,7 +386,7 @@ B. 172 o
 C. 130 o
 D. 50 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -397,7 +397,7 @@ B. m = 2n
 C. m = n - 2
 D. m = n + 2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -408,7 +408,7 @@ B. 110 o
 C. 100 o
 D. 95 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -419,7 +419,7 @@ B. ii
 C. iii
 D. iv
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -430,7 +430,7 @@ B. 80 o
 C. 158 o
 D. 91 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -441,7 +441,7 @@ B. 24
 C. 25
 D. 30
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -452,7 +452,7 @@ B. 3.0
 C. 2.4
 D. 1.8
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -463,7 +463,7 @@ B. 4
 C. 6
 D. 8
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -474,7 +474,7 @@ B. 10.5
 C. 10.3
 D. 9.9
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -485,7 +485,7 @@ B. 54 o
 C. 56 o
 D. 68 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -496,7 +496,7 @@ B. 72 o
 C. 40 o
 D. 36 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -507,7 +507,7 @@ B. 1.84cm
 C. 0.62cm
 D. 0.26cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -518,18 +518,18 @@ B. 45 o
 C. 25 o
 D. 19 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **48.** ![diagram](images/waec/2012/q48_1.jpg) The graph is that of y = 2x - 5x - 3. For what value of x will y be negative? For what value of x will y be negative?
 
-A. -(1/2) ≤ x < 3
-B. -(1/2) < x ≤ 3
+A. -(1/2) <= x < 3
+B. -(1/2) < x <= 3
 C. -(1/2) < x < 3
-D. -(1/2) ≤ x ≤ 3
+D. -(1/2) <= x <= 3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -540,6 +540,6 @@ B. 100 o
 C. 120 o
 D. 150 o
 
-✓ **Answer:** D
+Answer: D
 
 ---

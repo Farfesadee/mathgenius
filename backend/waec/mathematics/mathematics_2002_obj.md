@@ -12,29 +12,29 @@ B. 9m
 C. 10m
 D. 13m
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**2.** A right pyramid is on a square base of side 4cm. The slanting side of the pyramid is 2√(3) cm. Calculate the volume of the pyramid
+**2.** A right pyramid is on a square base of side 4cm. The slanting side of the pyramid is 2sqrt(3) cm. Calculate the volume of the pyramid
 
 A. 5(1/3)cm^3
 B. 10(2/3)cm^3
 C. 16cm^3
 D. 32cm^3
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **3.** The height of a right circular cone is 4cm. The radius of its base is 3cm. Find the curved surface area
 
-A. 9π cm^2
-B. 15π cm^2
-C. 16π cm^2
-D. 20π cm^2
+A. 9pi cm^2
+B. 15pi cm^2
+C. 16pi cm^2
+D. 20pi cm^2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -45,18 +45,18 @@ B. 65 o
 C. 61 o
 D. 54 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**5.** Simplify 5(1/4)÷ \left(1(2/3)- (1/2)\right)
+**5.** Simplify 5(1/4)/ \left(1(2/3)- (1/2)\right)
 
 A. 1(3/4)
 B. 3(1/2)
 C. 4(1/2)
 D. 8(1/2)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -67,7 +67,7 @@ B. 2
 C. 2.6
 D. 5
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -78,40 +78,40 @@ B. 35 o
 C. 37 o
 D. 41 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**8.** If M t e n = t w o find the value of M
+**8.** If M5_ten = 1001011_two find the value of M
 
 A. 5
 B. 6
 C. 7
 D. 8
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**9.** ![diagram](images/waec/2002/q9_1.jpg) The diagram is the graph of y = + x − x . The graph intercepts the x- axis at P and R and the y- axis at Q. What is the value of y at Q?
+**9.** ![diagram](images/waec/2002/q9_1.jpg) The diagram is the graph of y = 6 + x - x^2. The graph intercepts the x- axis at P and R and the y- axis at Q. What is the value of y at Q?
 
-A. 6 1 3
+A. 6(1/3)
 B. 6
 C. 3
 D. zero
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**10.** ![diagram](images/waec/2002/q10_1.jpeg) The diagram is the graph of y = + x − x . The graph intercepts the x-axis at P and R and the y-axis at Q. When y = , what is the positive value of x?
+**10.** ![diagram](images/waec/2002/q10_1.jpeg) The diagram is the graph of y = 6 + x - x^2. The graph intercepts the x-axis at P and R and the y-axis at Q. When y = 3(1/3), what is the positive value of x?
 
-A. 2 1 2
-B. 2 1 5
-C. 1 1 5
+A. 2(1/2)
+B. 2(1/5)
+C. 1(1/5)
 D. zero
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -122,18 +122,18 @@ B. 5
 C. 13
 D. 17
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**12.** If log 2 = 0.3010 and log 2 y = 1.8062, find; correct to the nearest whole number, the value of y.
+**12.** If log 2 = 0.3010 and log 2^y = 1.8062, find; correct to the nearest whole number, the value of y.
 
 A. 6
 B. 5
 C. 4
 D. -5
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -144,7 +144,7 @@ B. 13.4km
 C. 13km
 D. 10.4km
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -155,18 +155,18 @@ B. 5
 C. 7
 D. 9
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **15.** If (x + 3) varies directly as y and x = 3 when y = 12, what is the value of x when y = 8?
 
 A. 1
-B. 1 2
-C. − 1 2
+B. (1/2)
+C. -(1/2)
 D. -1
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -177,7 +177,7 @@ B. 214 o
 C. 146 o
 D. 124 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -188,18 +188,18 @@ B. 2(2 + 3 n-1 )
 C. 2 n + 2
 D. 2(3n+2)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **18.** If (-3, -4) is a point on the line y = mx + 2 find the value of m.
 
 A. -2
-B. 7 4 7 4
+B. (7/4)
 C. 2
-D. 8 3 8 3
+D. (8/3)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -210,7 +210,7 @@ B. y = x 2 - x - 6
 C. y = x 2 - x + 6
 D. y = x 2 + x + 6
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -221,29 +221,29 @@ B. 13.36 o
 C. 44 o
 D. 46 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**21.** For what values of x is the expression x − x + x − x − x + x − undefined?
+**21.** For what values of x is the expression undefined?
 
-A. − 3 4 o r 3 − 3 4 o r 3
-B. − 2 3 o r − 3 − 2 3 o r − 3
-C. 2 3 o r 3 2 3 o r 3
-D. 3 4 o r − 3 3 4 o r − 3
+A. − 3 4 o r 3
+B. − 2 3 o r − 3
+C. 2 3 o r 3
+D. 3 4 o r − 3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**22.** Simplify − x + + x − x + + x
+**22.** Simplify
 
-A. x + 3 1 − x 2 x + 3 1 − x 2
-B. x − 3 1 + x 2 x − 3 1 + x 2
-C. 3 − x 1 − x 2 3 − x 1 − x 2
-D. 3 − x 1 + x 2 3 − x 1 + x 2
+A. x + 3 1 − x 2
+B. x − 3 1 + x 2
+C. 3 − x 1 − x 2
+D. 3 − x 1 + x 2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -254,29 +254,29 @@ B. 7cm
 C. 10cm
 D. 15cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**24.** The base diameter of a cone is 14cm, and its volume is 462 cm . Find its height. [Taken π = π = ]
+**24.** The base diameter of a cone is 14cm, and its volume is 462 cm . Find its height. [Taken ]
 
 A. 3.5cm
 B. 5cm
 C. 7cm
 D. 9cm
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **25.** A number is selected at random from the set Y = {18, 19, 20, . . . 28, 29}. Find the probability that the number is prime.
 
-A. 1 4 1 4
-B. 3 11 3 11
-C. 1 2 1 2
-D. 3 4 3 4
+A. 1 4
+B. 3 11
+C. 1 2
+D. 3 4
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -287,7 +287,7 @@ B. 17.5
 C. 15
 D. 12.5
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -298,7 +298,7 @@ B. 30
 C. 25
 D. 15
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -309,7 +309,7 @@ B. 27.5
 C. 25
 D. 17.75
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -320,7 +320,7 @@ B. 19.04cm
 C. 20.81cm
 D. 26.16cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -331,18 +331,18 @@ B. II and III only
 C. II only
 D. III only
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**31.** Simplify ×
+**31.** Simplify (2^\frac1/2)x 8^(1/2)4
 
 A. 1
 B. 2
 C. 4
 D. 16
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -353,7 +353,7 @@ B. 39 o
 C. 38 o
 D. 30 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -364,7 +364,7 @@ B. 25.00m
 C. 22.98m
 D. 19.28
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -375,18 +375,18 @@ B. 30cm 2
 C. 616cm 2
 D. 1262cm 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**35.** Simplify √ + √ − √
+**35.** Simplify 3sqrt(12) + 10sqrt(3) - (6/sqrt(3))
 
-A. 7 √ 3
-B. 10 √ 3
-C. 14 √ 3
-D. 18 √ 3
+A. 7sqrt(3)
+B. 10sqrt(3)
+C. 14sqrt(3)
+D. 18sqrt(3)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -397,7 +397,7 @@ B. (2a+b)(m-2n)
 C. (2a-b)(m+2n)
 D. (2a-b)(m-2n)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -408,18 +408,18 @@ B. q t p
 C. q p t
 D. p q t
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**38.** ![diagram](images/waec/2002/q38_1.jpg) In the diagram, QRT is a straight line. If angle PTR = 90°, angle PRT = 60°, angle PQR = 30° and |PQ| = √ c m , calculate |RT|
+**38.** ![diagram](images/waec/2002/q38_1.jpg) In the diagram, QRT is a straight line. If angle PTR = 90°, angle PRT = 60°, angle PQR = 30° and |PQ| = , calculate |RT|
 
 A. 0.3cm
 B. √ 3 2 c m
 C. 3cm
 D. 3 √ 3 c m
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -430,29 +430,29 @@ B. 80 o
 C. 100 o
 D. 115 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**40.** ![diagram](images/waec/2002/q40_1.jpg) In the diagram, ¯ P S a n d ¯ Q T are two altitudes of ∆PQR. Which of the following is equal to ∠RQT?
+**40.** ![diagram](images/waec/2002/q40_1.jpg) In the diagram, are two altitudes of ∆PQR. Which of the following is equal to ∠RQT?
 
 A. ∠PQT
 B. ∠SRP
 C. ∠PQR
 D. ∠SPR
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **41.** ![diagram](images/waec/2002/q41_1.jpg) In the diagram, |QR| = 10cm, PR⊥QS, angle PSR = 30° and angle PQR = 45°. Calculate in meters |QS|
 
-A. 10(1+√(3))
-B. 20√(3)
-C. 10√(3)
-D. (10+√(3))
+A. 10 ( 1 + √ 3 )
+B. 20 √ 3
+C. 10 √ 3
+D. ( 10 + √ 3 )
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -463,7 +463,7 @@ B. 2.5
 C. 6.6
 D. 6.7
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -474,18 +474,18 @@ B. 80km/hr
 C. 90km/hr
 D. 108km/hr
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**44.** ![diagram](images/waec/2002/q44_1.jpg) In the diagram, QR||TP and W\hatPT = 88^\circ. Find the value of x
+**44.** ![diagram](images/waec/2002/q44_1.jpg) In the diagram, . Find the value of x
 
 A. 92 o
 B. 68 o
 C. 67 o
 D. 23 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -496,40 +496,40 @@ B. 96 o
 C. 94 o
 D. 86 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**46.** Given that p = x − x a n d q = x + x express q in terms of p.
+**46.** Given that p = x-(1/x) and\hspace1mmq = x^2 + (1/x^2) express q in terms of p.
 
 A. (p 2 + 2)
 B. (p - 2) 2
 C. (p + 2) 2
 D. (p 2 - 2)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **47.** The number of goals scored by a school team in 10 netball matches are as follows: 3, 5, 7, 7, 8, 8, 8, 11, 11, 12. Find the probability that in a match, the school team will score at most 8 goals.
 
-A. 7 10
-B. 2 5
-C. 3 5
-D. 1 5
+A. (7/10)
+B. (2/5)
+C. (3/5)
+D. (1/5)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **48.** Which of the following is not a rational number?
 
 A. -5
-B. √ 4
-C. 3 3 4
-D. √ 90
+B. sqrt(4)
+C. 3(3/4)
+D. sqrt(90)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -540,6 +540,6 @@ B. 46 o
 C. 52 o
 D. 70 o
 
-✓ **Answer:** B
+Answer: D
 
 ---

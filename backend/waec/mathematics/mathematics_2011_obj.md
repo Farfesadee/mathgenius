@@ -12,7 +12,7 @@ B. 7.49
 C. 8.00
 D. 13.00
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -23,18 +23,18 @@ B. 1
 C. 2
 D. 3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **3.** Given that cos x o = (1/r), express tan x in terms of r
 
-A. (1/√(r))
-B. √(r)
-C. √(r^2 + 1)
-D. √(r^2 - 1)
+A. (1/sqrt(r))
+B. sqrt(r)
+C. sqrt(r^2 + 1)
+D. sqrt(r^2 - 1)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -45,40 +45,40 @@ B. x = 1, y = 3
 C. x = -2, y = -1
 D. x = 4, y = -3
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**5.** If a number is chosen at random from the set {x: 4 ≤ x ≤ 15}. Find the probability that it is a multiple of 3 or a multiple of 4
+**5.** If a number is chosen at random from the set {x: 4 <= x <= 15}. Find the probability that it is a multiple of 3 or a multiple of 4
 
 A. (1/2)
 B. (5/12)
 C. (7/12)
 D. (11/12)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**6.** One of the factors of (mn - nq - n + mq) is (m - n). The other factor is?
+**6.** One of the factors of (mn - nq - n^2 + mq) is (m - n). The other factor is?
 
 A. (n - q)
 B. (q - n)
 C. (n + q)
 D. (q - m)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**7.** A cylindrical container has a base radius of 14cm and height 18cm. How many litres of liquid can it hold? correct to the nearest litre [Take π = ]
+**7.** A cylindrical container has a base radius of 14cm and height 18cm. How many litres of liquid can it hold? correct to the nearest litre [Take pi = (22/7)]
 
 A. 11
 B. 14
 C. 16
 D. 18
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -89,7 +89,7 @@ B. 8
 C. 12
 D. 15
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -100,7 +100,7 @@ B. S 70 o W
 C. N 20 o W
 D. S 20 o E
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -111,7 +111,7 @@ B. 132cm 2
 C. 122cm 2
 D. 112cm 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -122,18 +122,18 @@ B. 6x 2 - x - 2 = 0
 C. 6x 2 + x + 2 = 0
 D. 6x 2 + x - 2 = 0
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**12.** Simplify \fraclog √(27)log √(81)
+**12.** Simplify \fraclog sqrt(27)log sqrt(81)
 
 A. 3
 B. 2
 C. (3/2)
 D. (3/4)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -144,18 +144,18 @@ B. 125 o
 C. 135 o
 D. 145 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**14.** The perimeter of a sector of a circle of radius 4cm is (π + 8)cm. Calculate the anle of the sector
+**14.** The perimeter of a sector of a circle of radius 4cm is (pi + 8)cm. Calculate the anle of the sector
 
 A. 45 o
 B. 60 o
 C. 75 o
 D. 90 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -166,51 +166,51 @@ B. (29/7)%
 C. 5%
 D. (20/7)%
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **16.** What is the value of 3 in the number 42.7531?
 
-A. 3 10000 3 10000
-B. 3 1000 3 1000
-C. 3 100 3 100
-D. 1 10 1 10
+A. (3/10000)
+B. (3/1000)
+C. (3/100)
+D. (1/10)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**17.** The height of a cylinder is equal to its radius. If the volume is 0.216 π π m . Calculate the radius.
+**17.** The height of a cylinder is equal to its radius. If the volume is 0.216 pi m^3. Calculate the radius.
 
 A. 0.46m
 B. 0.60m
 C. 0.87m
 D. 1.80m
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**18.** The height of a cylinder is equal to its radius. If the volume is 0.216 π m π m Calculate the radius.
+**18.** The height of a cylinder is equal to its radius. If the volume is 0.216 pi m^3 Calculate the radius.
 
 A. 0.46m
 B. 0.60m
 C. 0.87m
 D. 1.80m
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **19.** What is the value of 3 in the number 42.7531?
 
-A. 3 10000 3 10000
-B. 3 1000 3 1000
-C. 3 100 3 100
-D. 1 10 1 10
+A. (3/10000)
+B. (3/1000)
+C. (3/100)
+D. (1/10)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -221,7 +221,7 @@ B. (a - b)(m - n)
 C. (a + b)(m - n)
 D. (a + b)(m + n)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -232,29 +232,29 @@ B. 1.55, -4.55
 C. -1.55, -4.55
 D. 1.55, 4.55
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**22.** Simplify m n + ( m − ) n = ( m − ) n where n ≠
+**22.** Simplify (m/n) + ((m - 1)/5n) = ((m - 2)/10n) where n != 0
 
-A. m − 3 10 n
-B. 11 m 10 n
-C. m + 1 10 n
-D. 11 m + 4 10 n
+A. (m - 3/10n)
+B. (11m/10n)
+C. (m + 1/10n)
+D. (11m + 4/10n)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**23.** If √ + √ − √ = x √ , Find the value of x
+**23.** If sqrt(72) + sqrt(32) - 3 sqrt(18) = x sqrt(8), Find the value of x
 
 A. 1
-B. 3 4
-C. 1 2
-D. 1 4
+B. (3/4)
+C. (1/2)
+D. (1/4)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -265,18 +265,18 @@ B. 25
 C. 75
 D. 225
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**25.** Given that n(p) = 19, m(P ∪ Q) = 38 and n(P ∩ Q) = 7, Find n(C)
+**25.** Given that n(p) = 19, m(P union Q) = 38 and n(P intersect Q) = 7, Find n(C)
 
 A. 26
 B. 31
 C. 36
 D. 50
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -287,29 +287,29 @@ B. y - x
 C. x - 5x
 D. x - y
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**27.** Simplify 1 − ( + )
+**27.** Simplify 1(3/4) - (2 (1/3) + 4)
 
-A. 3 5 12
-B. 2 7 12
-C. -4 7 12
-D. -5 7 12
+A. 3(5/12)
+B. 2(7/12)
+C. -4 (7/12)
+D. -5 (7/12)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**28.** Find the smaller value of x that satisfies the equation x + 7x + 10 = 0
+**28.** Find the smaller value of x that satisfies the equation x^2 + 7x + 10 = 0
 
 A. -5
 B. -2
 C. 2
 D. 5
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -320,7 +320,7 @@ B. at a midpoint of a side
 C. inside the triangle
 D. outside the triangle
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -331,7 +331,7 @@ B. 231m 2
 C. 232m 2
 D. 233m 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -342,7 +342,7 @@ B. 18cm
 C. 21cm
 D. 34cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -353,7 +353,7 @@ B. 18cm
 C. 21cm
 D. 34cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -364,18 +364,18 @@ B. 15
 C. 12
 D. 10
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**34.** If 27 x = 9 y . Find the value of x y x y
+**34.** If 27 x = 9 y . Find the value of (x/y)
 
-A. 1 3 1 3
-B. 2 3 2 3
-C. 1 1 2 1 2
+A. (1/3)
+B. (2/3)
+C. 1(1/2)
 D. 3
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -386,7 +386,7 @@ B. 10 o
 C. 11 o
 D. 12 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -397,7 +397,7 @@ B. △ PKS
 C. △ SKR
 D. △ PSR
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -408,7 +408,7 @@ B. 55 o
 C. 50 o
 D. 45 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -419,7 +419,7 @@ B. 112 o
 C. 128 o
 D. 142 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -430,7 +430,7 @@ B. 50
 C. 48
 D. 40
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -441,7 +441,7 @@ B. 42.5
 C. 41.5
 D. 40.5
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -452,7 +452,7 @@ B. 120 o
 C. 130 o
 D. 160 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -463,7 +463,7 @@ B. x = 1.0
 C. x = 1.5
 D. y = 4.6
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -474,7 +474,7 @@ B. i and iv
 C. ii and iii
 D. ii and ic
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -485,7 +485,7 @@ B. 140 o
 C. 130 o
 D. 120 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -496,7 +496,7 @@ B. 9
 C. 11
 D. 13
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -507,7 +507,7 @@ B. 70 o
 C. 60 o
 D. 50 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -518,7 +518,7 @@ B. 70 o
 C. 60 o
 D. 50 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -529,7 +529,7 @@ B. 36.5
 C. 37.5
 D. 38.5
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -540,6 +540,6 @@ B. 46.5
 C. 47.5
 D. 48.5
 
-✓ **Answer:** C
+Answer: C
 
 ---

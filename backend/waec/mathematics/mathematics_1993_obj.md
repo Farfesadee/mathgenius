@@ -13,11 +13,11 @@ C. {1, 2, 4, 5}
 D. {2, 3, 4, 5}
 E. {1, 2, 3, 4, 5}
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**2.** Simplify: (3/4) ÷ 1(1/4) × (1(1/2) - (2/3))
+**2.** Simplify: (3/4) / 1(1/4) x (1(1/2) - (2/3))
 
 A. 7/30
 B. 7/24
@@ -25,7 +25,7 @@ C. 9/25
 D. 1 / 2
 E. 18/25
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -37,7 +37,7 @@ C. m>4
 D. m>6
 E. m>12
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -49,7 +49,7 @@ C. 1001101
 D. 101101
 E. 11001
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -61,7 +61,7 @@ C. 5%
 D. 27 7 / 9 %
 E. 28 4 / 7 %.
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -73,11 +73,11 @@ C. 2
 D. 6
 E. 12
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**7.** Simplify: (4^-\frac1/2) × 16^(3/4)4^(1/2)
+**7.** Simplify: (4^-\frac1/2) x 16^(3/4)4^(1/2)
 
 A. 1 / 4
 B. 0
@@ -85,11 +85,11 @@ C. 1
 D. 2
 E. 4
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**8.** Simplify: \fraclog √(27)log 81
+**8.** Simplify: \fraclog sqrt(27)log 81
 
 A. 1/6
 B. 3/8
@@ -97,7 +97,7 @@ C. 1/2
 D. 3/4
 E. 6
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -109,7 +109,7 @@ C. (s + t)(2s - 1)
 D. (2s + t)(s -t)
 E. (2s + t)(s + 2t)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -121,11 +121,11 @@ C. (3,1)
 D. (43, 0)
 E. (-1, 3).
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
-**11.** Write as a single fraction: r − r
+**11.** Write as a single fraction: (5/6r) - (3/4r)
 
 A. r / 12
 B. 12 / r
@@ -133,11 +133,11 @@ C. 1 / 6r
 D. r / 6
 E. 1 / 12r
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
-**12.** Factorize 2x - 21x + 45
+**12.** Factorize 2x^2 - 21x + 45
 
 A. (2x - 9)(x - 5)
 B. (2x-15)(x + 3)
@@ -145,7 +145,7 @@ C. (2x +15)(x - 3)
 D. (2x -15(x - 3)
 E. (2x - 9)(x + 5)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -157,11 +157,11 @@ C. 2,-6
 D. -2,6
 E. -1,-3
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**14.** A sector of a circle of radius 9cm subtends angle 120° at the centre of the circle. Find the area of the sector to the nearest cm [Take π = 22/7]
+**14.** A sector of a circle of radius 9cm subtends angle 120° at the centre of the circle. Find the area of the sector to the nearest cm^2 [Take π = 22/7]
 
 A. 75cm 2
 B. 84cm 2
@@ -169,19 +169,19 @@ C. 85cm 2
 D. 86cm 2
 E. 95cm 2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **15.** Calculate the total surface area of a cone of height 12cm and base radius 5cm. [Take π = 22/7]
 
-A. 180 5 7 cm 2
-B. 240 2 7 cm 2
-C. 235 5 7 cm 2
-D. 282 6 7 cm 2
-E. 361 3 7 cm 2
+A. 180(5/7)cm^2
+B. 240(2/7)cm^2
+C. 235(5/7)cm^2
+D. 282(6/7)cm^2
+E. 361(3/7)cm^2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -193,7 +193,7 @@ C. 148.5cm 3
 D. 297cm 3
 E. 445.5cm 3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -205,7 +205,7 @@ C. 10cm
 D. 12cm
 E. 15cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -217,7 +217,7 @@ C. 43cm
 D. 66cm
 E. 115.5cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -229,7 +229,7 @@ C. 56 o
 D. 68 o
 E. 73 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -241,7 +241,7 @@ C. 26 sides
 D. 17 sides
 E. 15 sides
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -253,7 +253,7 @@ C. 5cm
 D. 5.5cm
 E. 6.6cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -265,7 +265,7 @@ C. 40 o
 D. 50 o
 E. 55 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -277,7 +277,7 @@ C. 107 o
 D. 138 o
 E. 149 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -289,11 +289,11 @@ C. 44°
 D. 84°
 E. 124°
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**25.** Simplify 2.25 0.015 leaving your answer in standard form
+**25.** Simplify (2.25/0.015) leaving your answer in standard form
 
 A. 1.5 x 10 -4
 B. 1.5 x 10 -2
@@ -301,19 +301,19 @@ C. 1.5 x 10 -3
 D. 1.5 x 10 1
 E. 1.5 x 10 2
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
-**26.** State the fifth and seventh terms of the sequence − , − , − , . . .
+**26.** State the fifth and seventh terms of the sequence -2, -3, -4(1/2), ...
 
-A. − 81 8 , − 729 32
-B. 8 81 , 72 39
-C. 27 729 , 718 39
-D. − 27 16 , − 79 81
-E. − 21 8 , 32 618
+A. -(81/8), -(729/32)
+B. (8/81), (72/39)
+C. (27/729), (718/39)
+D. -(27/16), -(79/81)
+E. -(21/8), (32/618)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -325,7 +325,7 @@ C. 195km
 D. (150 + 45√3)km
 E. 240km
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -337,7 +337,7 @@ C. 50 o
 D. 90 o
 E. 130 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -349,7 +349,7 @@ C. 25km
 D. 31km
 E. 84km
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -361,7 +361,7 @@ C. 12/13
 D. 17/13
 E. 5/12
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -373,7 +373,7 @@ C. cos 285 o
 D. -sin165 o
 E. -sin 255 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -385,7 +385,7 @@ C. 105/169
 D. 144/169
 E. 8/13
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -397,7 +397,7 @@ C. 20√3m
 D. 40√3m
 E. 60cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -409,7 +409,7 @@ C. 354m
 D. 433m
 E. 500m
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -421,7 +421,7 @@ C. 29
 D. 28.5
 E. 28
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -433,7 +433,7 @@ C. (1,2,3)
 D. (2,3,8)
 E. (6,4,7)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -445,7 +445,7 @@ C. (6,5)
 D. (9,4)
 E. (9,5)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -457,7 +457,7 @@ C. 4.8
 D. 5.0
 E. 5.2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -469,7 +469,7 @@ C. 13
 D. 13.5
 E. 14
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -481,7 +481,7 @@ C. 45 o
 D. 48 o
 E. 54 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -493,7 +493,7 @@ C. 21
 D. 23
 E. 24
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -505,7 +505,7 @@ C. 18
 D. 21
 E. 25
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -517,7 +517,7 @@ C. 6/11
 D. 9/11
 E. 2/3
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -529,7 +529,7 @@ C. 2/3
 D. 1/2
 E. 5/6
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -541,7 +541,7 @@ C. 1/2
 D. 2/3
 E. 5/6
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -553,7 +553,7 @@ C. 7/36
 D. 5/6
 E. 1
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -565,7 +565,7 @@ C. 0.15
 D. 16
 E. 0.2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -577,6 +577,6 @@ C. 0.275
 D. 0.500
 E. 0.725
 
-✓ **Answer:** C
+Answer: C
 
 ---

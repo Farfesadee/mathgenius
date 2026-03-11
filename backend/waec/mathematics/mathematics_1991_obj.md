@@ -13,7 +13,7 @@ C. 4.62 x 10 -1
 D. 4.62 x 10 -2
 E. 4.62 x 10 3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -25,7 +25,7 @@ C. 5840
 D. 585
 E. 584
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -37,7 +37,7 @@ C. 0
 D. 1
 E. 4
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -49,7 +49,7 @@ C. 0.04004
 D. 0.004004
 E. 0.0004004
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -61,7 +61,7 @@ C. 2
 D. 4
 E. 8
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -73,7 +73,7 @@ C. y = 3
 D. y = 5
 E. y = 10
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -85,7 +85,7 @@ C. (3a - 2)(a + 3)
 D. (3a + 2)(a - 3)
 E. (2a-3)(a + 2)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -97,11 +97,11 @@ C. a = 10 or a = 0
 D. a = 5 or a = 0
 E. a = 5 or a = -2
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
-**9.** Simplify ((3/x) - (15/2y)) ÷ (6/xy)
+**9.** Simplify ((3/x) - (15/2y)) / (6/xy)
 
 A. (2y - 5x/4)
 B. (9(2x - 5x)/x^2y^2)
@@ -109,7 +109,7 @@ C. (5x - 2y/2)
 D. (c^2y^2/18y - 45x)
 E. (4/2y - 5x)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -120,7 +120,7 @@ B. 2^n-2(1-2^n)
 C. 2^n + 2^2 + n
 D. 2^2n
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -132,7 +132,7 @@ C. x 2 - 11/12x + 2 = 0
 D. 12x 2 - 11x - 2 = 0
 E. x 2 - 11/12x - 2 = 0
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -144,7 +144,7 @@ C. 1/2
 D. 1/3
 E. o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -156,7 +156,7 @@ C. 7
 D. 10
 E. 17
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -168,7 +168,7 @@ C. 4cm
 D. 8cm
 E. 16cm
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -180,7 +180,7 @@ C. N545
 D. N490
 E. N440
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -192,7 +192,7 @@ C. 133.3m/s
 D. 222.2m/s
 E. 1333.3m/s
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -204,7 +204,7 @@ C. 5.3%
 D. 1.7%
 E. 1.4%
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -216,11 +216,11 @@ C. 154cm 2
 D. 192cm 2
 E. 385cm 2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**19.** ![diagram](images/waec/1991/q19_1.png) In the diagram above, PXR and PYO are two semicircles with diameters 14cm and 7cm respectively. Find the perimeter of the region (take π = (22/7) )
+**19.** ![diagram](images/waec/1991/q19_1.png) In the diagram above, PXR and PYO are two semicircles with diameters 14cm and 7cm respectively. Find the perimeter of the region (take pi = (22/7) )
 
 A. 22cm
 B. 33cm
@@ -228,19 +228,19 @@ C. 40cm
 D. 47cm
 E. 66cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **20.** ![diagram](images/waec/1991/q20_1.jpg) The shaded portion shows the outer boundary of the half plane defined by the inequality
 
-A. 4x + 3y ≥ 6
+A. 4x + 3y >= 6
 B. 4x + 3y = 6
 C. 4x + 3y < 6
 D. 3y >6
 E. 4x < 6
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -252,7 +252,7 @@ C. (2,0)
 D. (1 1 / 2 , 2)
 E. (1 1 / 2 , 0)
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -264,7 +264,7 @@ C. 6d
 D. a + 5d
 E. 2a + 4d
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -276,7 +276,7 @@ C. 45
 D. 48
 E. 90
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -288,7 +288,7 @@ C. πR / 2 cos4 o
 D. πR / 3 cos4 o
 E. πR / 6 cos4 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -300,11 +300,11 @@ C. y=cos2x
 D. y=2sinx
 E. y = 2cos x
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**26.** Given that sin θ = -0.9063, where O ≤ θ ≤ 270°, find θ .
+**26.** Given that sin = -0.9063, where O 270°, find .
 
 A. 65 o
 B. 115 o
@@ -312,7 +312,7 @@ C. 145 o
 D. 245 o
 E. 265 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -324,7 +324,7 @@ C. 25√3m / 3
 D. 25m / 3
 E. √3m / 25
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -336,7 +336,7 @@ C. 13/ √ 3 m
 D. 13/3 √ 3 m
 E. √ 3 /13m
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -348,7 +348,7 @@ C. 45 o
 D. 55 o
 E. 65 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -360,7 +360,7 @@ C. (1, 2, 3, 4, 5, 6, 7)
 D. (5, 4, 2 1 / 2 )
 E. ( 1 / 2 , 1, 2, 2 1 / 2 , 3, 4, 5, 7, 9)
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -372,7 +372,7 @@ C. (1, 3, 7)
 D. (4)
 E. (5,7,9)
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -384,7 +384,7 @@ C. 35
 D. 45
 E. 50
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -396,7 +396,7 @@ C. Range
 D. interquartile range
 E. Standard deviation
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -408,7 +408,7 @@ C. 3.9
 D. 3.4
 E. 3.0
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -420,7 +420,7 @@ C. 4.4
 D. 5.0
 E. 5
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -432,7 +432,7 @@ C. 7
 D. 5
 E. 2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -444,7 +444,7 @@ C. 5
 D. 4.5
 E. 4
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -456,7 +456,7 @@ C. 11/15
 D. 4/15
 E. 1
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -468,7 +468,7 @@ C. 4/14
 D. 11/15
 E. 1
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -480,7 +480,7 @@ C. 2/5
 D. 7/20
 E. 3/10
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -492,7 +492,7 @@ C. 3/8
 D. 1 / 2
 E. 3/4
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -504,7 +504,7 @@ C. the diagonals bisect each other
 D. The adjacent sides are equal
 E. Opposite angles are equal
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -516,7 +516,7 @@ C. 75
 D. 80
 E. 90
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -528,7 +528,7 @@ C. 125 o
 D. 130 o
 E. 150 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -540,7 +540,7 @@ C. 6
 D. 8
 E. 12
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -552,7 +552,7 @@ C. 56 o
 D. 62 o
 E. 68 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -564,7 +564,7 @@ C. 96cm 2
 D. 128√3cm 2
 E. 128cm 2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -576,7 +576,7 @@ C. 1:9
 D. 2:3
 E. 4:9
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -588,7 +588,7 @@ C. 80cm 2
 D. 96cm 2
 E. 120cm 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -600,6 +600,6 @@ C. Area ADE = Area DCFE
 D. Area CBF = Area DABC
 E. Area DABO = Area CFEO
 
-✓ **Answer:** E
+Answer: E
 
 ---

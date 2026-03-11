@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useAuth } from '../context/AuthContext'
+import { supabase } from '../lib/supabase'
 import {
   fetchCBTQuestions, createCBTSession, completeCBTSession,
   getCBTHistory, getAvailableTopics, getAvailableYears,
@@ -170,6 +171,38 @@ export default function CBT() {
   useEffect(() => { if (user) { loadSetupData(); loadHistory(); loadPreferredTopics() } }, [user])
   useEffect(() => { if (examType) loadTopicsAndYears() }, [examType])
 
+  // ── Restore in-progress CBT session on mount ─────────────────────
+  useEffect(() => {
+    if (!user) return
+    supabase
+      .from('cbt_sessions')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('status', 'ongoing')
+      .order('started_at', { ascending: false })
+      .limit(1)
+      .single()
+      .then(({ data }) => {
+        if (!data) return
+        const elapsed = Math.round((Date.now() - new Date(data.started_at).getTime()) / 1000)
+        const remaining = (data.duration_mins * 60) - elapsed
+        if (remaining <= 0) return  // session timed out while away — don't restore
+
+        // Restore questions from the saved snapshot
+        if (data.questions_snapshot) {
+          setQuestions(data.questions_snapshot)
+          setAnswers(data.answers_so_far || {})
+          setFlagged(data.flagged_so_far || {})
+          setCurrentIdx(data.current_idx || 0)
+          setTimeLeft(remaining)
+          setSessionId(data.id)
+          setStartTime(Date.now() - elapsed * 1000)
+          setExamType(data.exam_type || 'JAMB')
+          setScreen('exam')
+        }
+      })
+  }, [user?.id])
+
   const loadSetupData = async () => {
     const stats = await getQuestionBankStats()
     setBankStats(stats)
@@ -235,7 +268,27 @@ export default function CBT() {
     setStartTime(Date.now())
     setScreen('exam')
     setLoadingSetup(false)
+
+    // Save question snapshot so we can restore on reload
+    if (session?.id) {
+      supabase.from('cbt_sessions').update({
+        questions_snapshot: qs,
+        answers_so_far: {},
+        flagged_so_far: {},
+        current_idx: 0,
+      }).eq('id', session.id).then(() => {})
+    }
   }
+
+  // ── Auto-save answers + progress whenever they change ────────────
+  useEffect(() => {
+    if (screen !== 'exam' || !sessionId) return
+    supabase.from('cbt_sessions').update({
+      answers_so_far: answers,
+      flagged_so_far: flagged,
+      current_idx:    currentIdx,
+    }).eq('id', sessionId).then(() => {})
+  }, [answers, flagged, currentIdx])
 
   useEffect(() => {
     if (screen !== 'exam') return

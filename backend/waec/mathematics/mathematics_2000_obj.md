@@ -12,7 +12,7 @@ B. 3.7%
 C. 27.1%
 D. 36.8%
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -23,18 +23,18 @@ B. 398700
 C. 398800
 D. 399000
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**3.** simplify (10/√(32))
+**3.** simplify (10/sqrt(32))
 
-A. (5/4)√(2)
-B. (4/5)√(2)
-C. (5/16)√(2)
-D. (16/5)√(2)
+A. (5/4)sqrt(2)
+B. (4/5)sqrt(2)
+C. (5/16)sqrt(2)
+D. (16/5)sqrt(2)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -45,7 +45,7 @@ B. 5556
 C. 6016
 D. 13453
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -56,18 +56,18 @@ B. (1/2)
 C. 1(1/6)
 D. 1(1/2)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**6.** Simplify \left((16/81)\right)^-(3/4)× √((100/81))
+**6.** Simplify \left((16/81)\right)^-(3/4)x sqrt((100/81))
 
 A. (80/243)
 B. (1/64)
 C. (25/6)
 D. (15/4)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -78,7 +78,7 @@ B. 504
 C. 950
 D. 1728
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -89,7 +89,7 @@ B. 7
 C. 8
 D. 9
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -100,7 +100,7 @@ B. 72 years
 C. 108 years
 D. 216 years
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -111,7 +111,7 @@ B. (1/64)
 C. 64
 D. 81
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -122,7 +122,7 @@ B. 0.75
 C. 0.86
 D. 0.93
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -133,7 +133,7 @@ B. 24 sec
 C. 144 sec
 D. 240 sec
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -144,7 +144,7 @@ B. N1578
 C. N1875
 D. N3125
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -155,7 +155,7 @@ B. 8km
 C. 8√2km
 D. 16km
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -166,7 +166,7 @@ B. 270 o
 C. 225 o
 D. 135 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -177,7 +177,7 @@ B. 130 o
 C. 220 o
 D. 230 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -188,7 +188,7 @@ B. 60 o
 C. 45 o
 D. 27 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -199,7 +199,7 @@ B. 11
 C. 10
 D. 17
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -210,7 +210,7 @@ B. 32
 C. 15
 D. 11
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -221,18 +221,18 @@ B. 1.7
 C. 1.8
 D. 1.9
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**21.** The probabilities that Kodjo and Adoga pass an examination are and respectively. Find the probability of both boys failing the examination
+**21.** The probabilities that Kodjo and Adoga pass an examination are (3/4) and (3/5) respectively. Find the probability of both boys failing the examination
 
-A. 1 10
-B. 3 10
-C. 9 20
-D. 2 3
+A. (1/10)
+B. (3/10)
+C. (9/20)
+D. (2/3)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -243,7 +243,7 @@ B. III only
 C. II only
 D. II and III only
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -254,7 +254,7 @@ B. 40 o
 C. 45 o
 D. 50 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -265,18 +265,18 @@ B. 150 o
 C. 160 o
 D. 68 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **25.** If the interior angles of hexagon are 107°, 2x°, 150°, 95°, (2x-15)° and 123°, find x.
 
-A. 57 1 2 ∘
-B. 65 ∘
-C. 106 ∘
-D. 120 ∘
+A. 57(1/2)^\circ
+B. 65^\circ
+C. 106^\circ
+D. 120^\circ
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -287,18 +287,18 @@ B. 140 o
 C. 120 o
 D. 100 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**27.** Given that x = − a n d y = e v a l u a t e x y + x y
+**27.** Given that
 
 A. -5
 B. -1
 C. 4
 D. 11
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -309,40 +309,40 @@ B. − 1 3
 C. 5 3
 D. 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**29.** If x varies inversely as y and x = when y = 9, find the value of y when x =
+**29.** If x varies inversely as y and when y = 9, find the value of y when
 
 A. 1 18
 B. 8 81
 C. 9 2
 D. 8
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**30.** Given that (2x + 7) is a factor of x + x − , find the other factor
+**30.** Given that (2x + 7) is a factor of , find the other factor
 
 A. x + 2
 B. 2 - x
 C. x - 2
 D. x + 1
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**31.** Simplify x − − ( x − ) x −
+**31.** Simplify
 
 A. x − 1 x − 3
 B. − 2 x + 3
 C. x − 1 x + 3
 D. 4 x x 2 − 9
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -353,7 +353,7 @@ B. 18 < d ≤ 23
 C. 18 ≤ d < 23
 D. d < 18 or d > 23
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -364,40 +364,40 @@ B. x 2 − 13 x − 40 = 0
 C. x 2 − 3 x + 40 = 0
 D. x 2 + 3 x − 40 = 0
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**34.** Make t the subject of formula k = m √ t − p r
+**34.** Make t the subject of formula
 
 A. r k 2 + p m 2
 B. r k 2 + p m 2 m 2
 C. r k 2 − p m 2
 D. r k 2 − p 2 m 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**35.** Solve the equation y = 27y
+**35.** Solve the equation = 27y
 
 A. y = o or 3
 B. y = 0 or 9
 C. y = -3 or 3
 D. y = 3 or 9
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**36.** Find the value of x such that the expression (1/x)+(4/3x)-(5/6x)+1 equals zero
+**36.** Find the value of x such that the expression equals zero
 
-A. (1/6)
-B. (1/4)
-C. (-3/2)
-D. (-7/6)
+A. 1 6
+B. 1 4
+C. − 3 2
+D. − 7 6
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -408,7 +408,7 @@ B. p varies inversely as r
 C. p varies directly as r
 D. q varies inversely as p
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -419,18 +419,18 @@ B. 48 o
 C. 60 o
 D. 66 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**39.** A bicycle wheel of radius 42cm is rolled over a distance 66 meters. How many revolutions does it make?[Take π = (22/7)]
+**39.** A bicycle wheel of radius 42cm is rolled over a distance 66 meters. How many revolutions does it make?[Take ]
 
 A. 2.5
 B. 5
 C. 25
 D. 50
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -441,40 +441,40 @@ B. 9.6cm 2
 C. 16cm 2
 D. 25cm 2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**41.** A tap leaks at the rate of 2cm per seconds. How long will it take the tap to fill a container of 45 liters capacity? (1 liters = 1000cm )
+**41.** A tap leaks at the rate of 2cm^3 per seconds. How long will it take the tap to fill a container of 45 liters capacity? (1 liters = 1000cm^3)
 
 A. 8 hours
 B. 6hr 15min
 C. 4hr 25min
 D. 3hr
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**42.** The length of the parallel sides of a trapezium are 5cm and 7cm. If its area is 120cm , find the perpendicular distance between the parallel sides
+**42.** The length of the parallel sides of a trapezium are 5cm and 7cm. If its area is 120cm^2, find the perpendicular distance between the parallel sides
 
 A. 5.0cm
 B. 6.9cm
 C. 10.0cm
 D. 20.0cm
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**43.** The arc of a circle 50 cm long, subtends angle of 75° at the center of the circle. Find correct to 3 significant figures, the radius of the circle. Take π =
+**43.** The arc of a circle 50 cm long, subtends angle of 75° at the center of the circle. Find correct to 3 significant figures, the radius of the circle. Take pi = (22/7)
 
 A. 8.74cm
 B. 38.2cm
 C. 61.2cm
 D. 76.4cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -485,50 +485,50 @@ B. |PO| = |RO|
 C. QR||PS
 D. ∠PQR=∠PSR
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**45.** The area of a circle is 38.5cm2. Find its diameter [take π = ]
+**45.** The area of a circle is 38.5cm2. Find its diameter [take pi = (22/7)]
 
 A. 22cm
 B. 14cm
 C. 7cm
 D. 6cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**46.** ![diagram](images/waec/2000/q46_1.png) Find the volume (in cm^3) of the solid shown above
+**46.** ![diagram](images/waec/2000/q46_1.png) Find the volume (in cm ) of the solid shown above
 
 A. 100cm 3
 B. 150cm 3
 C. 175cm 3
 D. 250cm 3
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**47.** Solve the equation 3 + 5x - 2x^2 = 0
+**47.** Solve the equation 3 + 5x - 2x = 0
 
-A. -(1/2),-3
+A. − 1 2 , − 3
 B. 2, 3
 C. -2, 3
-D. -(1/2),3
+D. − 1 2 , 3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **48.** If the simple interest on N2000 after 9 months is N60, at what rate per annum is the interest charged?
 
-A. 2(1/4)%
+A. 2 1 4 %
 B. 4%
 C. 5%
 D. 6%
 
-✓ **Answer:** B
+Answer: B
 
 ---

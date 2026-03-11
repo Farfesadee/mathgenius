@@ -12,7 +12,7 @@ B. 2 x 3 x 8
 C. 2 x 2 x 2 x 3 x 4
 D. 2 x 2 x 2 x 2 x 3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -23,7 +23,7 @@ B. 121
 C. 202
 D. 2020
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -34,7 +34,7 @@ B. 3
 C. 4
 D. 5
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -45,7 +45,7 @@ B. 30
 C. 35
 D. 45
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -56,7 +56,7 @@ B. 15
 C. 17(1/2)
 D. 18(1/2)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -67,7 +67,7 @@ B. 0.462 x 10 -2
 C. 4.62 x 10 -1
 D. 4.62 x 10 -2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -78,7 +78,7 @@ B. 72
 C. 54
 D. 45
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -89,18 +89,18 @@ B. 47.5%
 C. 5.26%
 D. 5%
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**9.** Evaluate 5(2/5)× \left((2/3)\right)^2÷\left(1(1/2)\right)^-1
+**9.** Evaluate 5(2/5)x \left((2/3)\right)^2/\left(1(1/2)\right)^-1
 
 A. (8/25)
 B. (12/25)
 C. 3(3/5)
 D. 4(1/8)
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -111,18 +111,18 @@ B. 4th
 C. 5th
 D. 6th
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**11.** Evaluate + o f ÷
+**11.** Evaluate
 
 A. 15 16
 B. 11 16
 C. 49 50
 D. 3 1 5
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -133,7 +133,7 @@ B. 48 years
 C. 60 years
 D. 74 years
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -144,95 +144,95 @@ B. p = 1, q = 2
 C. p = -2, q = 3
 D. p = 3, q = -2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**14.** Evaluate x + x − x + x − when x = -1
+**14.** Evaluate when x = -1
 
 A. -2
 B. -1
 C. − 1 2
 D. 1
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**15.** Factorize x + x −
+**15.** Factorize
 
 A. (6x - 5)(x + 4)
 B. 2(3x-5)(x+2)
 C. (3x+4)(2x-5)
 D. (3x-4)(2x+5)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**16.** Simplify (2x-1/3)-(x+3/2)
+**16.** Simplify
 
-A. (x+3/6)
-B. (x+8/6)
-C. (x-11/6)
-D. (x-4/6)
+A. x + 3 6
+B. x + 8 6
+C. x − 11 6
+D. x − 4 6
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**17.** If (y-3/2)<(2y-1/3), which of the following is true?
+**17.** If , which of the following is true?
 
 A. y > 7
 B. y < -7
 C. y > -7
 D. y < 7
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**18.** if (4m+3n/4m-3n)=(5/2), find the ratio m:n
+**18.** if , find the ratio m:n
 
 A. 7:4
 B. 4:3
 C. 3:4
 D. 4:7
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**19.** If 2x^2 + kx - 14 = (x+2)(2x-7), find the value of K
+**19.** If , find the value of K
 
 A. -3
 B. 5
 C. 9
 D. 11
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **20.** which of the following is not quadratic expression?
 
-A. y = 2x^2 - 5x
-B. y=x(x-5)
-C. y = x^2 - 5
+A. y = 2 x 2 − 5 x
+B. y = x ( x − 5 )
+C. y = x 2 − 5
 D. y = 5(x-1)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**21.** The graph of the curve y = 2x^2 - 5x - 1 and a straight line PQ were drawn to solve the equation 2x^2 - 5x + 2 = 0 What is the equation of the straight line PQ?
+**21.** The graph of the curve and a straight line PQ were drawn to solve the equation What is the equation of the straight line PQ?
 
 A. y = -1
 B. y = 1
 C. y = 3
 D. y = -3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -243,29 +243,29 @@ B. 3y + 2x + 3z
 C. -5y + 4x + 7z
 D. 2x - 5y + 3z
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**23.** If y \propto (1/√(x)) and x = 16 when y = 2, find x when y = 24
+**23.** If and x = 16 when y = 2, find x when y = 24
 
-A. (1/9)
-B. (1/6)
-C. (1/3)
-D. (2/3)
+A. 1 9
+B. 1 6
+C. 1 3
+D. 2 3
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **24.** If 2x : (x +1) = 3:2, what is the value of x?
 
-A. (1/2)
+A. 1 2
 B. 1
-C. 1(1/2)
+C. 1 1 2
 D. 3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -276,18 +276,18 @@ B. 050 o
 C. 130 o
 D. 140 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**26.** Given that sin P = , where p is acute, find the value of cos p - tan p
+**26.** Given that sin , where p is acute, find the value of cos p - tan p
 
 A. 79 156
 B. 85 156
 C. 7 13
 D. 8 1
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -298,7 +298,7 @@ B. 7.5km
 C. 7.6km
 D. 8.7km
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -309,7 +309,7 @@ B. 25.55 o
 C. 25.45 o
 D. 25.15 o
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -320,7 +320,7 @@ B. 5 36
 C. 103 132
 D. 31 36
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -331,7 +331,7 @@ B. 5 12
 C. 8 12
 D. 7 11
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -342,7 +342,7 @@ B. q-p=0
 C. p+q=1
 D. p+q=0
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -353,7 +353,7 @@ B. 20 years
 C. 30.5 years
 D. 31 years
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -364,7 +364,7 @@ B. 23.0 years
 C. 24.0 years
 D. 27.5 years
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -375,7 +375,7 @@ B. 30
 C. 52
 D. 55
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -386,7 +386,7 @@ B. 18 o
 C. 20 o
 D. 21 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -397,7 +397,7 @@ B. 80 o
 C. 85 o
 D. 95 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -408,7 +408,7 @@ B. 64 o
 C. 77 o
 D. 103 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -419,29 +419,29 @@ B. 32 o
 C. 42 o
 D. 53 o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**39.** A chord of length 30cm is 8cm away from the center of the circle. What is the radius of the circle? Take π =
+**39.** A chord of length 30cm is 8cm away from the center of the circle. What is the radius of the circle? Take pi =(22/7)
 
 A. 16cm
 B. 17cm
 C. 18cm
 D. 20cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**40.** A sector of a circle radius 14 cm subtends an angle 135° at the center of the circle. What is the perimeter of the sector? Take π =
+**40.** A sector of a circle radius 14 cm subtends an angle 135° at the center of the circle. What is the perimeter of the sector? Take pi = (22/7)
 
 A. 47cm
 B. 61cm
 C. 88cm
 D. 231cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -452,7 +452,7 @@ B. 6cm 2
 C. 14cm 2
 D. 24cm 2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -463,7 +463,7 @@ B. 6cm 2
 C. 15cm 2
 D. 20cm 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -474,29 +474,29 @@ B. 42cm 2
 C. 70cm 2
 D. 84cm 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **44.** A solid cylinder of radius 7cm is 10 cm long. Find its total surface area.
 
-A. 70 π c m 2 70 π c m 2
-B. 189 π c m 2 189 π c m 2
-C. 210 π c m 2 210 π c m 2
-D. 238 π c m 2 238 π c m 2
+A. 70pi cm^2
+B. 189pi cm^2
+C. 210pi cm^2
+D. 238pi cm^2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**45.** ![diagram](images/waec/2001/q45_1.png) PQRS is a trapezium in which |PS| = 9cm, |QR| = 15cm, |PQ| = – √ , ∠ P Q R = o a n d ∠ Q R S = o , ∠ P Q R = o a n d ∠ Q R S = o . Calculate the area of the trapezium
+**45.** ![diagram](images/waec/2001/q45_1.png) PQRS is a trapezium in which |PS| = 9cm, |QR| = 15cm, |PQ| = 2sqrt(3), \angle PQR = 90^o and \angle QRS = 30^o. Calculate the area of the trapezium
 
-A. 24 3 – √ c m 2 24 3 c m 2
-B. 36 3 – √ c m 2 36 3 c m 2
-C. 42 3 – √ c m 2 42 3 c m 2
-D. 72 3 – √ c m 2 72 3 c m 2
+A. 24sqrt(3) cm^2
+B. 36sqrt(3) cm^2
+C. 42sqrt(3) cm^2
+D. 72sqrt(3) cm^2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -507,7 +507,7 @@ B. 75
 C. 25
 D. 5
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -518,18 +518,18 @@ B. {a, c, d, g}
 C. {c, d, g}
 D. {a, c, g}
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**48.** ![diagram](images/waec/2001/q48_1.jpg) What is the length of \barRP?
+**48.** ![diagram](images/waec/2001/q48_1.jpg) What is the length of ?
 
 A. 6
 B. 5
 C. 3
 D. 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -540,7 +540,7 @@ B. -7 ≤ x < -1
 C. -7 < x ≤ -1
 D. -7 < x < -1
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -551,6 +551,6 @@ B. 9m
 C. 10m
 D. 13m
 
-✓ **Answer:** A
+Answer: A
 
 ---

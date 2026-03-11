@@ -13,7 +13,7 @@ C. 17 / 250
 D. 17 / 100
 E. 17 / 10
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -25,7 +25,7 @@ C. {4, 6}
 D. {5, 6}
 E. {3, 5}
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -37,7 +37,7 @@ C. 15
 D. 12
 E. 7
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -49,7 +49,7 @@ C. 15 5/13%
 D. 2/3%
 E. 20%
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -61,7 +61,7 @@ C. 3
 D. 1
 E. o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -73,7 +73,7 @@ C. 3
 D. 4 3 / 7
 E. 7
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -85,7 +85,7 @@ C. x 2 - x + 20 = 0
 D. x 2 + x - 20 = 0
 E. x 2 - x - 20 = 0
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -97,7 +97,7 @@ C. x = -2, y = 3
 D. x = 2, y = -3
 E. x = 2, y = 3.
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -109,7 +109,7 @@ C. q = (rt/(p - r^3))
 D. q = ((p - r^3)/rt^2)
 E. q = rt^2(p - r^3)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -121,7 +121,7 @@ C. 4
 D. 16/9
 E. 4/3
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -133,7 +133,7 @@ C. -2 < x < 3
 D. -2 ≤ x ≤ 3
 E. x ≥ 3
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -145,7 +145,7 @@ C. 14cm
 D. 19.85cm
 E. 23cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -157,7 +157,7 @@ C. 3200πkm
 D. 3200km
 E. 3200km/π
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -169,7 +169,7 @@ C. 8Ocm 2
 D. 150cm 2
 E. 300cm 2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -181,7 +181,7 @@ C. 184πcm 2
 D. 200πcm 2
 E. 32Oπcm 2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -193,7 +193,7 @@ C. 96cm 3
 D. 120cm 3
 E. 24Ocm 3
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -205,7 +205,7 @@ C. 25.2cm
 D. 38.4cm
 E. 124.5cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -217,7 +217,7 @@ C. 36 o
 D. 37 o
 E. 40 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -229,7 +229,7 @@ C. Two sides and a right angle
 D. Two sides and an angle
 E. Two angles and a side.
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -241,7 +241,7 @@ C. 4cm
 D. 5cm
 E. 6cm
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -253,7 +253,7 @@ C. II and III only
 D. I, II and III
 E. I and II
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -265,7 +265,7 @@ C. Trapezium PQXS = Δ QHR
 D. Δ PGS = Parallelogram GHRS
 E. Parallelogram PQRS = Parallelogram GHRS
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -277,7 +277,7 @@ C. a – b = 180 - x
 D. a + b = x + 180
 E. a – b = x - 180.
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -289,7 +289,7 @@ C. 105 o
 D. 115 o
 E. 125 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -301,7 +301,7 @@ C. x ≤ -4
 D. x ≤ -1
 E. x < 2
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -312,7 +312,7 @@ B. 1.4180
 C. 1.1680
 D. 1.9180
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -324,7 +324,7 @@ C. 2 3 / 11
 D. 2 1 / 2
 E. 2 4 / 5
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -336,11 +336,11 @@ C. 3
 D. 6
 E. 9
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**29.** Find the value of t for which = ( ) t −
+**29.** Find the value of t for which
 
 A. -4
 B. -2
@@ -348,7 +348,7 @@ C. 1 1 / 3
 D. 2
 E. 4
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -360,7 +360,7 @@ C. 42 o
 D. 32 o
 E. 22 o .
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -372,11 +372,11 @@ C. 60 o
 D. 74 o
 E. 118 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**32.** Given that (1/2) log_10 P = 1, find the value of P.
+**32.** Given that , find the value of P.
 
 A. 10 4
 B. 10 3
@@ -384,7 +384,7 @@ C. 10 2
 D. 10 1
 E. 10 -1
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -396,7 +396,7 @@ C. corresponding altitudes are equal
 D. areas are equal
 E. perimeters are equal
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -408,7 +408,7 @@ C. The diagonals are perpendicular
 D. Each diagonal divides the area of the rectangle equally
 E. Each diagonal divides the rectangle into two congruent triangles
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -420,7 +420,7 @@ C. 24cm
 D. 25.51cm
 E. 51.1cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -432,7 +432,7 @@ C. 46.3m
 D. 31.2m
 E. 27m
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -444,7 +444,7 @@ C. N20 o W
 D. S70 o W
 E. S70 o E
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -456,7 +456,7 @@ C. 210 o ,300 o
 D. 210 o ,330 o
 E. 300 o ,360 o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -468,7 +468,7 @@ C. Cos 115 o
 D. Cos 205 o
 E. Cos 295 o
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -480,7 +480,7 @@ C. 37 o
 D. 38 o
 E. 53 o .
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -492,7 +492,7 @@ C. R
 D. Q
 E. P
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -504,7 +504,7 @@ C. 1/3
 D. 4/21
 E. 4/25
 
-✓ **Answer:** E
+Answer: E
 
 ---
 
@@ -516,7 +516,7 @@ C. 3
 D. 4
 E. 5
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -528,7 +528,7 @@ C. 1/2
 D. 1/3
 E. 1/6
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -540,6 +540,6 @@ C. 3/7
 D. 5/14
 E. 3/14
 
-✓ **Answer:** B
+Answer: B
 
 ---

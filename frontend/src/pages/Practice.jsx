@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
+import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
 import { useSearchParams } from 'react-router-dom'
 import { generateQuestion, gradeAnswer, getWorkedExample, getRetryQuestion } from '../services/api'
 import { createSession, saveAttempt, completeSession, getSessionHistory } from '../lib/practice'
+import { submitAssignment, getMyAssignments, checkAndCreateStrugglingAlert } from '../lib/social2'
 import { getConversations } from '../lib/conversations'
 import { ExplanationBody } from '../utils/RenderMath'
 import {
@@ -11,6 +13,224 @@ import {
   updateSpacedRepetition, getDueTopics,
 } from '../lib/learning'
 import { updateTopicProgress } from '../lib/progress'
+
+// ── Video helpers ─────────────────────────────────────────────────────────────
+async function fetchVideos(topic, level) {
+  const normalised = level === 'secondary' ? 'sss' : level
+  const { data } = await supabase
+    .from('topic_videos')
+    .select('*')
+    .ilike('topic', topic)
+    .eq('level', normalised)
+    .order('view_count', { ascending: false })
+    .limit(3)
+  return data || []
+}
+
+async function fetchVideosByLevel(level) {
+  const normalised = level === 'secondary' ? 'sss' : level
+  const { data } = await supabase
+    .from('topic_videos')
+    .select('*')
+    .eq('level', normalised)
+    .order('topic')
+  return data || []
+}
+
+async function incrementViewCount(videoId) {
+  await supabase.rpc('increment_video_views', { video_id: videoId }).catch(() => {})
+}
+
+// ── Video Card ────────────────────────────────────────────────────────────────
+function VideoCard({ video, compact = false }) {
+  const [playing, setPlaying] = useState(false)
+  const thumb = `https://img.youtube.com/vi/${video.youtube_id}/mqdefault.jpg`
+
+  const handlePlay = () => {
+    setPlaying(true)
+    incrementViewCount(video.id)
+  }
+
+  if (playing) {
+    return (
+      <div className={`rounded-2xl overflow-hidden border-2 border-[var(--color-border)]
+                       ${compact ? '' : 'w-full'}`}>
+        <div className="relative" style={{ paddingBottom: '56.25%' }}>
+          <iframe
+            className="absolute inset-0 w-full h-full"
+            src={`https://www.youtube.com/embed/${video.youtube_id}?autoplay=1`}
+            title={video.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+            allowFullScreen
+          />
+        </div>
+        <div className="bg-white px-4 py-3">
+          <p className="font-semibold text-sm text-[var(--color-ink)] leading-snug">{video.title}</p>
+          {video.channel && <p className="text-xs text-[var(--color-muted)] mt-0.5">📺 {video.channel}</p>}
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <button onClick={handlePlay}
+      className="group rounded-2xl overflow-hidden border-2 border-[var(--color-border)]
+                 hover:border-red-400 transition-all text-left w-full">
+      <div className="relative overflow-hidden bg-black">
+        <img src={thumb} alt={video.title}
+          className="w-full object-cover group-hover:opacity-80 transition-opacity"
+          style={{ aspectRatio: '16/9' }} />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-red-600/90 group-hover:bg-red-600
+                          flex items-center justify-center shadow-lg transition-all group-hover:scale-110">
+            <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+            </svg>
+          </div>
+        </div>
+        {video.duration_mins && (
+          <span className="absolute bottom-1 right-1 bg-black/80 text-white text-[10px]
+                           font-mono px-1.5 py-0.5 rounded">
+            {video.duration_mins}m
+          </span>
+        )}
+      </div>
+      <div className="bg-white px-3 py-2.5">
+        <p className="font-semibold text-xs text-[var(--color-ink)] leading-snug line-clamp-2
+                      group-hover:text-red-700 transition-colors">
+          {video.title}
+        </p>
+        <div className="flex items-center justify-between mt-1">
+          {video.channel && <p className="text-[10px] text-[var(--color-muted)] truncate">{video.channel}</p>}
+          {video.tags?.includes('WAEC') && (
+            <span className="shrink-0 ml-1 px-1.5 py-0.5 rounded bg-green-100 text-green-700
+                             text-[9px] font-bold uppercase tracking-wide">WAEC</span>
+          )}
+        </div>
+        {video.description && !compact && (
+          <p className="text-[10px] text-[var(--color-muted)] mt-1 line-clamp-1">{video.description}</p>
+        )}
+      </div>
+    </button>
+  )
+}
+
+// ── Video Panel (shown after wrong answer) ────────────────────────────────────
+function VideoPanel({ topic, level }) {
+  const [videos,  setVideos]  = useState([])
+  const [loading, setLoading] = useState(true)
+  const [open,    setOpen]    = useState(false)
+
+  useEffect(() => {
+    fetchVideos(topic, level).then(v => { setVideos(v); setLoading(false) })
+  }, [topic, level])
+
+  if (loading || videos.length === 0) return null
+
+  return (
+    <div className="rounded-2xl border-2 border-red-200 overflow-hidden">
+      <button onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center justify-between px-4 py-3
+                   bg-red-50 hover:bg-red-100 transition-colors">
+        <div className="flex items-center gap-2">
+          <span className="text-lg">📺</span>
+          <div className="text-left">
+            <p className="font-semibold text-sm text-red-800">Watch a video explanation</p>
+            <p className="text-xs text-red-600 mt-0.5">
+              {videos.length} curated video{videos.length > 1 ? 's' : ''} on {topic}
+            </p>
+          </div>
+        </div>
+        <span className={`text-red-500 font-mono text-xs transition-transform ${open ? 'rotate-180' : ''}`}>▼</span>
+      </button>
+      {open && (
+        <div className="bg-white p-4">
+          <div className={`grid gap-3 ${videos.length > 1 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1'}`}>
+            {videos.map(v => <VideoCard key={v.id} video={v} compact={videos.length > 1} />)}
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── Video Browser (setup screen tab) ─────────────────────────────────────────
+function VideoBrowser({ topicsByLevel, selectedLevel }) {
+  const [allVideos,   setAllVideos]   = useState([])
+  const [loading,     setLoading]     = useState(true)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [filterTopic, setFilterTopic] = useState('')
+
+  const raw = selectedLevel || Object.keys(topicsByLevel)[0] || 'sss'
+  const lvl = raw === 'secondary' ? 'sss' : raw
+
+  useEffect(() => {
+    setLoading(true)
+    fetchVideosByLevel(lvl).then(v => { setAllVideos(v); setLoading(false) })
+  }, [lvl])
+
+  const topics = [...new Set(allVideos.map(v => v.topic))].sort()
+
+  const filtered = allVideos.filter(v => {
+    const matchTopic  = !filterTopic  || v.topic === filterTopic
+    const matchSearch = !searchQuery  ||
+      v.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      v.topic.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      v.channel?.toLowerCase().includes(searchQuery.toLowerCase())
+    return matchTopic && matchSearch
+  })
+
+  const grouped = filtered.reduce((acc, v) => {
+    if (!acc[v.topic]) acc[v.topic] = []
+    acc[v.topic].push(v)
+    return acc
+  }, {})
+
+  return (
+    <div className="space-y-4">
+      <div className="flex gap-2 flex-wrap">
+        <input type="text" value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
+          placeholder="Search videos..."
+          className="flex-1 min-w-48 border-2 border-[var(--color-border)] rounded-xl
+                     px-3 py-2 text-sm focus:border-[var(--color-teal)] transition-colors" />
+        <select value={filterTopic} onChange={e => setFilterTopic(e.target.value)}
+          className="border-2 border-[var(--color-border)] rounded-xl px-3 py-2 text-sm
+                     focus:border-[var(--color-teal)] transition-colors bg-white">
+          <option value="">All topics</option>
+          {topics.map(t => <option key={t} value={t}>{t}</option>)}
+        </select>
+      </div>
+      {loading ? (
+        <div className="flex items-center justify-center py-12 gap-3">
+          <span className="w-5 h-5 border-2 border-[var(--color-teal)] border-t-transparent rounded-full animate-spin" />
+          <span className="text-sm text-[var(--color-muted)]">Loading videos...</span>
+        </div>
+      ) : Object.keys(grouped).length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-4xl mb-3">📺</p>
+          <p className="text-[var(--color-muted)] text-sm">No videos found for this search.</p>
+        </div>
+      ) : (
+        <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-1">
+          {Object.entries(grouped).map(([topic, vids]) => (
+            <div key={topic}>
+              <p className="font-semibold text-sm text-[var(--color-ink)] mb-2 flex items-center gap-2">
+                <span className="block w-3 h-px bg-[var(--color-gold)]" />
+                {topic}
+                <span className="text-[10px] text-[var(--color-muted)] font-mono">
+                  {vids.length} video{vids.length > 1 ? 's' : ''}
+                </span>
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {vids.map(v => <VideoCard key={v.id} video={v} compact />)}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 const DIFFICULTY_CONFIG = {
   easy:   { label: 'Easy',   color: 'text-green-600 bg-green-50 border-green-200',   emoji: '🟢' },
@@ -22,8 +242,18 @@ const DIFFICULTY_CONFIG = {
 const LEVEL_LABELS = {
   primary:    '📚 Primary',
   jss:        '🏫 JSS',
-  secondary:  '🎓 Secondary',
+  sss:        '🎓 SSS',
+  secondary:  '🎓 SSS',   // legacy alias — treated as SSS
   university: '🏛️ University',
+}
+
+// Subtitle shown beneath each level tab
+const LEVEL_SUBTITLES = {
+  jss:        'Junior Secondary',
+  sss:        'Senior Secondary',
+  secondary:  'Senior Secondary',
+  primary:    'Primary School',
+  university: null,
 }
 
 // Mastery level config
@@ -67,12 +297,106 @@ function ResultBadge({ result }) {
   return <span className="text-red-500 font-bold text-lg">❌ Incorrect</span>
 }
 
+// ── Step-by-step working breakdown ───────────────────────────────────────
+function StepBreakdown({ steps }) {
+  if (!steps || steps.length === 0) return null
+
+  const cfg = {
+    CORRECT:   { bg: 'bg-green-50',  border: 'border-green-200', badge: 'bg-green-100 text-green-700',  icon: '✓', label: 'Correct'   },
+    INCORRECT: { bg: 'bg-red-50',    border: 'border-red-200',   badge: 'bg-red-100 text-red-700',      icon: '✗', label: 'Error'     },
+    MISSING:   { bg: 'bg-amber-50',  border: 'border-amber-200', badge: 'bg-amber-100 text-amber-700',  icon: '!', label: 'Missing'   },
+  }
+
+  const correctCount   = steps.filter(s => s.status === 'CORRECT').length
+  const incorrectCount = steps.filter(s => s.status === 'INCORRECT').length
+  const missingCount   = steps.filter(s => s.status === 'MISSING').length
+
+  return (
+    <div className="rounded-2xl border-2 border-[var(--color-border)] overflow-hidden">
+      {/* Header */}
+      <div className="bg-[var(--color-ink)] px-4 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="text-white font-semibold text-sm">📋 Step-by-Step Breakdown</span>
+        </div>
+        <div className="flex items-center gap-2">
+          {correctCount > 0 && (
+            <span className="px-2 py-0.5 rounded-full bg-green-500/20 text-green-300 text-[10px] font-mono font-bold">
+              {correctCount} correct
+            </span>
+          )}
+          {incorrectCount > 0 && (
+            <span className="px-2 py-0.5 rounded-full bg-red-500/20 text-red-300 text-[10px] font-mono font-bold">
+              {incorrectCount} error{incorrectCount > 1 ? 's' : ''}
+            </span>
+          )}
+          {missingCount > 0 && (
+            <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-mono font-bold">
+              {missingCount} missing
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Steps */}
+      <div className="bg-white divide-y divide-[var(--color-border)]">
+        {steps.map((step, i) => {
+          const c = cfg[step.status] || cfg.CORRECT
+          return (
+            <div key={i} className={`flex gap-3 px-4 py-3 ${c.bg}`}>
+              {/* Step number + status icon */}
+              <div className="flex flex-col items-center gap-1 shrink-0 pt-0.5">
+                <span className="w-6 h-6 rounded-full bg-[var(--color-ink)] text-white
+                                 text-[10px] font-bold flex items-center justify-center">
+                  {step.step}
+                </span>
+                <span className={`w-5 h-5 rounded-full flex items-center justify-center
+                                  text-[11px] font-bold ${c.badge}`}>
+                  {c.icon}
+                </span>
+              </div>
+
+              {/* Content */}
+              <div className="flex-1 min-w-0 space-y-1">
+                {/* What the student wrote */}
+                <p className="text-sm font-mono text-[var(--color-ink)] bg-white/60
+                              rounded-lg px-3 py-1.5 border border-[var(--color-border)]
+                              leading-relaxed break-words">
+                  {step.text || <span className="italic text-[var(--color-muted)]">— step not written —</span>}
+                </p>
+                {/* Euler's note */}
+                {step.note && (
+                  <p className={`text-xs leading-relaxed px-1
+                    ${step.status === 'CORRECT'   ? 'text-green-700'
+                      : step.status === 'INCORRECT' ? 'text-red-700'
+                      : 'text-amber-700'}`}>
+                    {step.status === 'CORRECT'   ? '✓ ' : step.status === 'MISSING' ? '! ' : '✗ '}
+                    {step.note}
+                  </p>
+                )}
+              </div>
+
+              {/* Badge */}
+              <span className={`shrink-0 self-start mt-0.5 px-2 py-0.5 rounded-full
+                                text-[10px] font-bold uppercase tracking-wide ${c.badge}`}>
+                {c.label}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 // ── Group taught topics by level from conversations ───────────────────
+// 'secondary' is a legacy DB value — normalise it to 'sss' so the tab
+// always reads "SSS · Senior Secondary" instead of a bare "Secondary".
 function groupTopicsByLevel(conversations) {
   const groups = {}
   conversations.forEach(conv => {
     if (!conv.topic) return
-    const level = conv.level || 'secondary'
+    const raw   = conv.level || 'secondary'
+    const level = raw === 'secondary' ? 'sss' : raw   // ← normalise legacy value
     if (!groups[level]) groups[level] = new Set()
     groups[level].add(conv.topic)
   })
@@ -95,6 +419,7 @@ export default function Practice() {
   const [topic,      setTopic]      = useState('')
   const [difficulty, setDifficulty] = useState('easy')
   const [started,    setStarted]    = useState(false)
+  const [setupTab,   setSetupTab]   = useState('practice')  // 'practice' | 'videos'
 
   // Session state
   const [sessionId,      setSessionId]      = useState(null)
@@ -125,6 +450,7 @@ export default function Practice() {
 
   // ── Exam-prep mode state ─────────────────────────────────────────────
   // 'normal' | 'weak-drill' | 'mixed' | 'predicted'
+  const [assignmentId,     setAssignmentId]     = useState(null)   // set when launched from an assignment
   const [sessionMode,      setSessionMode]      = useState('normal')
   // Mixed session: array of {topic, level} objects — one per question
   const [mixedTopics,      setMixedTopics]      = useState([])
@@ -191,6 +517,34 @@ export default function Practice() {
     if (urlTopic) setTopic(urlTopic)
   }, [user])
 
+  // ── Restore in-progress practice session on mount ─────────────────
+  useEffect(() => {
+    if (!user) return
+    supabase
+      .from('practice_sessions')
+      .select('*, practice_attempts(*)')
+      .eq('user_id', user.id)
+      .eq('status', 'ongoing')
+      .order('started_at', { ascending: false })
+      .limit(1)
+      .single()
+      .then(({ data }) => {
+        if (!data) return
+        // Restore topic/level/difficulty from saved session
+        if (data.topic)      setTopic(data.topic)
+        if (data.level)      setLevel(data.level)
+        if (data.difficulty) setDifficulty(data.difficulty)
+        setSessionId(data.id)
+        // Restore score from attempts
+        const attempts = data.practice_attempts || []
+        const correct  = attempts.filter(a => a.is_correct).length
+        setCorrectCount(correct)
+        setScore(attempts.length > 0 ? Math.round((correct / attempts.length) * 100) : 0)
+        setQuestionNumber(attempts.length + 1)
+        setStarted(true)
+      })
+  }, [user?.id])
+
   const loadStreak = async () => {
     const { data } = await getStreak(user.id)
     if (data) setStreak(data)
@@ -231,8 +585,10 @@ export default function Practice() {
 
   // ── URL auto-start ────────────────────────────────────────────────
   useEffect(() => {
-    const urlTopic   = searchParams.get('topic')
-    const autoStart  = searchParams.get('auto') === 'true'
+    const urlTopic      = searchParams.get('topic')
+    const urlAssignment = searchParams.get('assignment')
+    const autoStart     = searchParams.get('auto') === 'true'
+    if (urlAssignment) setAssignmentId(urlAssignment)
     if (urlTopic && autoStart && topic === urlTopic && !started && user) {
       startSession()
     }
@@ -388,6 +744,16 @@ export default function Practice() {
       const finalScore = Math.round(score / 5)
       if (sessionId) await completeSession(sessionId, finalScore)
 
+      // If launched from a class assignment, record the submission
+      if (assignmentId && user) {
+        await submitAssignment(assignmentId, user.id, sessionId, finalScore)
+      }
+
+      // Check if student is struggling (3 consecutive sessions < 40%)
+      if (user) {
+        checkAndCreateStrugglingAlert(user.id).catch(() => {})  // fire-and-forget, non-fatal
+      }
+
       // For normal/weak-drill: update mastery for the single topic
       // For mixed/predicted: per-question tracking already fired in handleSubmit
       if (sessionMode === 'normal' || sessionMode === 'weak-drill') {
@@ -421,7 +787,7 @@ export default function Practice() {
   const askEuler = async () => {
     if (askingEuler) return
     setAskingEuler(true)
-    setEulerExplanation(null)
+    setEulerExplanation('')
     try {
       const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
       const prompt = `A student answered a ${difficulty} ${topic} question incorrectly.
@@ -437,13 +803,35 @@ Please explain:
 
 Be warm, encouraging, and specific. Address the student directly.`
 
-      const res = await fetch(`${API_BASE}/solve/explain`, {
+      const { data: { session } } = await supabase.auth.getSession()
+      const res = await fetch(`${API_BASE}/solve/explain/stream`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
+        },
         body: JSON.stringify({ expression: question, result: prompt }),
       })
-      const data = await res.json()
-      setEulerExplanation(data.explanation || 'Could not generate explanation. Please try again.')
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const reader = res.body.getReader()
+      const decoder = new TextDecoder()
+      let buffer = ''
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        buffer += decoder.decode(value, { stream: true })
+        const lines = buffer.split('\n')
+        buffer = lines.pop()
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue
+          const payload = line.slice(6).trim()
+          if (payload === '[DONE]') break
+          try {
+            const { token } = JSON.parse(payload)
+            setEulerExplanation(prev => prev + token)
+          } catch {}
+        }
+      }
     } catch {
       setEulerExplanation('Could not reach Euler. Make sure the backend is running.')
     } finally {
@@ -709,6 +1097,7 @@ Be warm, encouraging, and specific. Address the student directly.`
     setRetryAnswer(''); setRetryResult(null); setRetryHintLevel(0)
     setChallengeMode(false); setTimeLeft(CHALLENGE_TIME); setTimeExpired(false)
     clearInterval(challengeTimerRef.current)
+    setSetupTab('practice')
   }
 
   const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
@@ -896,6 +1285,36 @@ Be warm, encouraging, and specific. Address the student directly.`
           </div>
         )}
 
+        {/* ── Tab bar: Practice / Videos ── */}
+        <div className="flex border-b-2 border-[var(--color-border)] mb-6">
+          {[
+            { id: 'practice', label: '🎯 Practice' },
+            { id: 'videos',   label: '📺 Video Lessons' },
+          ].map(tab => (
+            <button key={tab.id} onClick={() => setSetupTab(tab.id)}
+              className={`px-5 py-3 font-semibold text-sm border-b-2 transition-all -mb-0.5
+                ${setupTab === tab.id
+                  ? 'border-[var(--color-teal)] text-[var(--color-teal)]'
+                  : 'border-transparent text-[var(--color-muted)] hover:text-[var(--color-ink)]'}`}>
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {setupTab === 'videos' ? (
+          <div className="card overflow-hidden">
+            <div className="bg-red-600 px-6 py-4 flex items-center justify-between">
+              <div>
+                <p className="font-serif font-bold text-white text-lg">📺 Video Lessons</p>
+                <p className="text-white/70 text-sm mt-0.5">Curated YouTube explanations matched to your level</p>
+              </div>
+              <span className="text-3xl">🎬</span>
+            </div>
+            <div className="bg-white p-6">
+              <VideoBrowser topicsByLevel={topicsByLevel} selectedLevel={selectedLevel} />
+            </div>
+          </div>
+        ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
           {/* ── Setup card ── */}
@@ -948,16 +1367,24 @@ Be warm, encouraging, and specific. Address the student directly.`
                           key={level}
                           onClick={() => handleLevelChange(level)}
                           className={`px-3 py-1.5 rounded-lg text-xs font-semibold border-2
-                                      transition-all
+                                      transition-all flex flex-col items-start
                             ${selectedLevel === level
                               ? 'bg-[var(--color-teal)] border-[var(--color-teal)] text-white'
                               : 'border-[var(--color-border)] text-[var(--color-muted)]'
                             }`}
                         >
-                          {LEVEL_LABELS[level] || level}
-                          <span className="ml-1.5 opacity-70">
-                            ({topicsByLevel[level].length})
+                          <span>
+                            {LEVEL_LABELS[level] || level}
+                            <span className="ml-1.5 opacity-70">
+                              ({topicsByLevel[level].length})
+                            </span>
                           </span>
+                          {LEVEL_SUBTITLES[level] && (
+                            <span className={`text-[10px] font-normal mt-0.5
+                              ${selectedLevel === level ? 'text-white/70' : 'text-[var(--color-muted)]'}`}>
+                              {LEVEL_SUBTITLES[level]}
+                            </span>
+                          )}
                         </button>
                       ))}
                     </div>
@@ -1118,6 +1545,7 @@ Be warm, encouraging, and specific. Address the student directly.`
             </div>
           </div>
         </div>
+        )} {/* end setupTab ternary */}
       </div>
     )
   }
@@ -1127,6 +1555,7 @@ Be warm, encouraging, and specific. Address the student directly.`
     const finalPct = Math.round(score / 5)
     const grade    = finalPct >= 80 ? 'A' : finalPct >= 60 ? 'B' : finalPct >= 40 ? 'C' : 'D'
 
+    const assignLabel = assignmentId ? '📋 Assignment Submitted' : null
     const modeLabel = sessionMode === 'weak-drill' ? '🎯 Weak Topic Drill'
       : sessionMode === 'mixed'   ? '🔀 Mixed Session'
       : sessionMode === 'predicted' ? `🔮 ${profile?.exam_target || 'WAEC'} Exam Prep`
@@ -1147,11 +1576,21 @@ Be warm, encouraging, and specific. Address the student directly.`
           <div className="bg-[var(--color-teal)] px-6 py-8">
             <div className="text-7xl font-black font-serif text-white mb-2">{grade}</div>
             <p className="text-white/80 text-sm font-mono uppercase tracking-widest">Final Grade</p>
-            {modeLabel && (
-              <span className="inline-block mt-2 px-3 py-1 rounded-full bg-white/20
-                               text-white text-xs font-mono">
-                {modeLabel}
-              </span>
+            {(modeLabel || assignLabel) && (
+              <div className="flex gap-2 justify-center flex-wrap mt-2">
+                {modeLabel && (
+                  <span className="inline-block px-3 py-1 rounded-full bg-white/20
+                                   text-white text-xs font-mono">
+                    {modeLabel}
+                  </span>
+                )}
+                {assignLabel && (
+                  <span className="inline-block px-3 py-1 rounded-full bg-green-400/30
+                                   text-white text-xs font-mono font-bold">
+                    {assignLabel}
+                  </span>
+                )}
+              </div>
             )}
           </div>
           <div className="bg-white p-8 space-y-4">
@@ -1522,6 +1961,16 @@ Be warm, encouraging, and specific. Address the student directly.`
                   "{gradeResult.motivation}"
                 </p>
 
+                {/* ── Step-by-step breakdown ── */}
+                {gradeResult.steps && gradeResult.steps.length > 0 && (
+                  <StepBreakdown steps={gradeResult.steps} />
+                )}
+
+                {/* ── Video Panel — shown on wrong/partial answers ── */}
+                {!gradeResult.is_correct && (
+                  <VideoPanel topic={topic} level={selectedLevel || 'sss'} />
+                )}
+
                 {/* ── Ask Euler button — only on wrong/partial answers ── */}
                 {!gradeResult.is_correct && (
                   <div className="rounded-2xl border-2 border-orange-200 bg-orange-50 overflow-hidden">
@@ -1534,7 +1983,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                           Get a targeted explanation of your specific mistake
                         </p>
                       </div>
-                      {!eulerExplanation && (
+                      {!eulerExplanation && !askingEuler && (
                         <button
                           onClick={askEuler}
                           disabled={askingEuler}
@@ -1552,7 +2001,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                     </div>
 
                     {/* Euler's targeted explanation */}
-                    {eulerExplanation && (
+                    {(eulerExplanation || askingEuler) && (
                       <div className="border-t border-orange-200 px-4 py-4 bg-white">
                         <p className="font-mono text-[10px] uppercase tracking-widest
                                        text-orange-500 mb-2">
@@ -1560,6 +2009,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                         </p>
                         <div className="text-sm text-[var(--color-ink)] leading-relaxed whitespace-pre-wrap">
                           {eulerExplanation}
+                          {askingEuler && <span className="inline-block w-2 h-4 bg-orange-400 ml-0.5 animate-pulse align-text-bottom" />}
                         </div>
                       </div>
                     )}

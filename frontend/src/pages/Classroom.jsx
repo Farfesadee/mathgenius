@@ -4,6 +4,11 @@ import {
   createClassroom, getMyClassrooms, getJoinedClassrooms,
   joinClassroom, getClassroomLeaderboard, getStudentStats,
 } from '../lib/classroom'
+import {
+  createAssignment, getAssignmentsForClass, getMyAssignments,
+  submitAssignment, getAssignmentResults, closeAssignment,
+} from '../lib/social2'
+import { useNavigate } from 'react-router-dom'
 
 const MEDAL = { 1: '🥇', 2: '🥈', 3: '🥉' }
 const MASTERY_COLOR = {
@@ -27,12 +32,14 @@ export default function Classroom() {
   const { user, profile } = useAuth()
   const isTeacher = profile?.role === 'teacher'
   const isParent  = profile?.role === 'parent'
+  const navigate  = useNavigate()
 
   const [myClasses,    setMyClasses]    = useState([])
   const [joinedClasses, setJoinedClasses] = useState([])
   const [selectedClass, setSelectedClass] = useState(null)
   const [leaderboard,   setLeaderboard]   = useState([])
   const [loading,       setLoading]       = useState(true)
+  const [classTab,      setClassTab]      = useState('leaderboard')  // leaderboard | assignments
 
   // Create class form
   const [newName,  setNewName]  = useState('')
@@ -43,6 +50,14 @@ export default function Classroom() {
   const [code,     setCode]     = useState('')
   const [joining,  setJoining]  = useState(false)
   const [joinMsg,  setJoinMsg]  = useState('')
+
+  // Assignments
+  const [assignments,     setAssignments]     = useState([])
+  const [myAssignments,   setMyAssignments]   = useState([])  // student view
+  const [assignResults,   setAssignResults]   = useState({})  // { [assignId]: [...submissions] }
+  const [showAssignForm,  setShowAssignForm]  = useState(false)
+  const [assignForm,      setAssignForm]      = useState({ title: '', topic: '', level: 'secondary', difficulty: 'medium', dueDate: '' })
+  const [creatingAssign,  setCreatingAssign]  = useState(false)
 
   // Student detail
   const [selectedStudent, setSelectedStudent] = useState(null)
@@ -68,8 +83,10 @@ export default function Classroom() {
   const selectClass = async (cls) => {
     setSelectedClass(cls)
     setSelectedStudent(null)
+    setClassTab('leaderboard')
     const { data } = await getClassroomLeaderboard(cls.id)
     setLeaderboard(data || [])
+    await loadAssignments(cls.id)
   }
 
   const handleCreate = async () => {
@@ -96,6 +113,43 @@ export default function Classroom() {
       await loadAll()
     }
     setJoining(false)
+  }
+
+  // Load assignments when a class is selected
+  const loadAssignments = async (classId) => {
+    const { data } = await getAssignmentsForClass(classId)
+    setAssignments(data || [])
+    // Load results for each assignment (teacher view)
+    if (isTeacher) {
+      const results = {}
+      await Promise.all((data || []).map(async (a) => {
+        const { data: subs } = await getAssignmentResults(a.id)
+        results[a.id] = subs || []
+      }))
+      setAssignResults(results)
+    }
+  }
+
+  const handleCreateAssignment = async () => {
+    if (!assignForm.title || !assignForm.topic) return
+    setCreatingAssign(true)
+    const { data } = await createAssignment(user.id, selectedClass.id, assignForm)
+    if (data) {
+      setAssignments(prev => [data, ...prev])
+      setAssignForm({ title: '', topic: '', level: 'secondary', difficulty: 'medium', dueDate: '' })
+      setShowAssignForm(false)
+    }
+    setCreatingAssign(false)
+  }
+
+  const handleStartAssignment = (assignment) => {
+    // Navigate to Practice with topic pre-selected + assignment context
+    navigate(`/practice?topic=${encodeURIComponent(assignment.topic)}&assignment=${assignment.id}&level=${assignment.level}`)
+  }
+
+  const handleCloseAssignment = async (assignId) => {
+    await closeAssignment(assignId)
+    setAssignments(prev => prev.map(a => a.id === assignId ? { ...a, status: 'closed' } : a))
   }
 
   const handleStudentClick = async (student) => {
@@ -307,7 +361,7 @@ export default function Classroom() {
               </div>
             </div>
           ) : (
-            // Leaderboard
+            // Class detail — leaderboard + assignments
             <div>
               <div className="flex items-center justify-between mb-4">
                 <h2 className="font-serif font-bold text-2xl">{selectedClass.name}</h2>
@@ -316,6 +370,26 @@ export default function Classroom() {
                 </span>
               </div>
 
+              {/* Tab switcher */}
+              <div className="flex gap-1 bg-[var(--color-paper)] rounded-xl p-1 mb-5
+                              w-fit border border-[var(--color-border)]">
+                {[
+                  { id: 'leaderboard', label: '🏆 Leaderboard' },
+                  { id: 'assignments', label: `📋 Assignments (${assignments.length})` },
+                ].map(t => (
+                  <button key={t.id} onClick={() => setClassTab(t.id)}
+                    className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors
+                      ${classTab === t.id
+                        ? 'bg-white text-[var(--color-teal)] shadow-sm border border-[var(--color-border)]'
+                        : 'text-[var(--color-muted)] hover:text-[var(--color-ink)]'}`}>
+                    {t.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* ── LEADERBOARD ── */}
+              {classTab === 'leaderboard' && (
+              <>
               {leaderboard.length === 0 ? (
                 <div className="card p-12 text-center">
                   <p className="text-4xl mb-3">🏆</p>
@@ -372,6 +446,174 @@ export default function Classroom() {
                   </div>
                 </div>
               )}
+              </>
+              )}
+
+              {/* ── ASSIGNMENTS TAB ── */}
+              {classTab === 'assignments' && (
+                <div className="space-y-4">
+                  {/* Teacher: create assignment button */}
+                  {isTeacher && (
+                    <div>
+                      {!showAssignForm ? (
+                        <button onClick={() => setShowAssignForm(true)}
+                          className="btn-primary px-5 py-2.5 text-sm">
+                          + New Assignment
+                        </button>
+                      ) : (
+                        <div className="card p-5 space-y-4 border-2 border-[var(--color-teal)]">
+                          <p className="font-serif font-bold text-[var(--color-ink)]">New Assignment</p>
+                          <div className="grid grid-cols-2 gap-3">
+                            <div className="col-span-2">
+                              <label className="block font-mono text-[10px] uppercase tracking-widest
+                                                 text-[var(--color-muted)] mb-1">Title *</label>
+                              <input value={assignForm.title}
+                                onChange={e => setAssignForm(f => ({ ...f, title: e.target.value }))}
+                                placeholder="e.g. Week 3 Algebra"
+                                className="w-full border-2 border-[var(--color-border)]
+                                           focus:border-[var(--color-teal)] rounded-xl px-3 py-2 text-sm" />
+                            </div>
+                            <div className="col-span-2">
+                              <label className="block font-mono text-[10px] uppercase tracking-widest
+                                                 text-[var(--color-muted)] mb-1">Topic *</label>
+                              <input value={assignForm.topic}
+                                onChange={e => setAssignForm(f => ({ ...f, topic: e.target.value }))}
+                                placeholder="e.g. Quadratic Equations"
+                                className="w-full border-2 border-[var(--color-border)]
+                                           focus:border-[var(--color-teal)] rounded-xl px-3 py-2 text-sm" />
+                            </div>
+                            <div>
+                              <label className="block font-mono text-[10px] uppercase tracking-widest
+                                                 text-[var(--color-muted)] mb-1">Difficulty</label>
+                              <select value={assignForm.difficulty}
+                                onChange={e => setAssignForm(f => ({ ...f, difficulty: e.target.value }))}
+                                className="w-full border-2 border-[var(--color-border)] rounded-xl
+                                           px-3 py-2 text-sm bg-white">
+                                <option value="easy">🟢 Easy</option>
+                                <option value="medium">🟡 Medium</option>
+                                <option value="hard">🔴 Hard</option>
+                              </select>
+                            </div>
+                            <div>
+                              <label className="block font-mono text-[10px] uppercase tracking-widest
+                                                 text-[var(--color-muted)] mb-1">Due Date</label>
+                              <input type="date" value={assignForm.dueDate}
+                                onChange={e => setAssignForm(f => ({ ...f, dueDate: e.target.value }))}
+                                className="w-full border-2 border-[var(--color-border)] rounded-xl
+                                           px-3 py-2 text-sm" />
+                            </div>
+                          </div>
+                          <div className="flex gap-3">
+                            <button onClick={handleCreateAssignment}
+                              disabled={creatingAssign || !assignForm.title || !assignForm.topic}
+                              className="btn-primary px-5 py-2.5 text-sm disabled:opacity-50">
+                              {creatingAssign ? 'Creating…' : 'Create Assignment'}
+                            </button>
+                            <button onClick={() => setShowAssignForm(false)}
+                              className="btn-secondary px-5 py-2.5 text-sm">
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {assignments.length === 0 ? (
+                    <div className="card p-10 text-center">
+                      <p className="text-3xl mb-2">📋</p>
+                      <p className="text-[var(--color-muted)] text-sm">
+                        {isTeacher ? 'No assignments yet. Create one above.'
+                          : 'No assignments from your teacher yet.'}
+                      </p>
+                    </div>
+                  ) : (
+                    assignments.map(a => {
+                      const subs    = assignResults[a.id] || []
+                      const isDue   = a.due_date && new Date(a.due_date) < new Date()
+                      const mySubmit = !isTeacher && subs.find(s => s.student_id === user.id)
+                      return (
+                        <div key={a.id} className={`card p-5 space-y-3
+                          ${a.status === 'closed' ? 'opacity-60' : ''}`}>
+                          <div className="flex items-start justify-between gap-3">
+                            <div>
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <p className="font-semibold text-[var(--color-ink)]">{a.title}</p>
+                                <span className={`text-[10px] font-mono px-2 py-0.5 rounded-lg border
+                                  ${a.status === 'active'
+                                    ? 'bg-green-50 border-green-200 text-green-700'
+                                    : 'bg-slate-100 border-slate-200 text-slate-500'}`}>
+                                  {a.status === 'active' ? 'Open' : 'Closed'}
+                                </span>
+                                {isDue && a.status === 'active' && (
+                                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-lg
+                                                   bg-red-50 border border-red-200 text-red-600">
+                                    Overdue
+                                  </span>
+                                )}
+                              </div>
+                              <p className="text-sm text-[var(--color-muted)] mt-0.5">
+                                {a.topic} · {a.difficulty}
+                                {a.due_date && ` · Due ${new Date(a.due_date).toLocaleDateString()}`}
+                              </p>
+                            </div>
+                            <div className="flex items-center gap-2 shrink-0">
+                              {/* Student: start button */}
+                              {!isTeacher && a.status === 'active' && !mySubmit && (
+                                <button onClick={() => handleStartAssignment(a)}
+                                  className="btn-primary px-4 py-2 text-sm">
+                                  Start →
+                                </button>
+                              )}
+                              {!isTeacher && mySubmit && (
+                                <span className="text-xs text-green-600 font-semibold">
+                                  ✅ Submitted ({mySubmit.score}%)
+                                </span>
+                              )}
+                              {/* Teacher: close button */}
+                              {isTeacher && a.status === 'active' && (
+                                <button onClick={() => handleCloseAssignment(a.id)}
+                                  className="text-xs text-[var(--color-muted)] hover:text-red-500
+                                             font-mono uppercase tracking-widest">
+                                  Close
+                                </button>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Teacher: submission results */}
+                          {isTeacher && subs.length > 0 && (
+                            <div>
+                              <p className="font-mono text-[10px] uppercase tracking-widest
+                                             text-[var(--color-muted)] mb-2">
+                                {subs.length} Submission{subs.length !== 1 ? 's' : ''}
+                              </p>
+                              <div className="space-y-1.5">
+                                {subs.map(s => (
+                                  <div key={s.id}
+                                    className="flex items-center justify-between text-sm
+                                               bg-[var(--color-paper)] rounded-xl px-3 py-2">
+                                    <span className="font-medium text-[var(--color-ink)]">
+                                      {s.profiles?.display_name || s.profiles?.email?.split('@')[0] || 'Student'}
+                                    </span>
+                                    <span className={`font-bold font-mono
+                                      ${(s.score || 0) >= 70 ? 'text-green-600'
+                                        : (s.score || 0) >= 50 ? 'text-amber-600'
+                                        : 'text-red-500'}`}>
+                                      {s.score ?? '—'}%
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )
+                    })
+                  )}
+                </div>
+              )}
+
             </div>
           )}
         </div>

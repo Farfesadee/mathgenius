@@ -5,14 +5,14 @@ Type: Objective
 
 ---
 
-**1.** Simplify: √(108) + √(125) - √(75)
+**1.** Simplify: sqrt(108) + sqrt(125) - sqrt(75)
 
-A. √(3) + 5√(5)
-B. 6 √(3) - 5 √(5)
-C. 6 √(3) + √(2)
-D. 6√(3) - √(2)
+A. sqrt(3) + 5sqrt(5)
+B. 6 sqrt(3) - 5 sqrt(5)
+C. 6 sqrt(3) + sqrt(2)
+D. 6sqrt(3) - sqrt(2)
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -23,7 +23,7 @@ B. 144
 C. 169
 D. 196
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -34,7 +34,7 @@ B. yx^2 = 900
 C. y = (100x/9)
 D. y = 900x^2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -45,18 +45,18 @@ B. five
 C. six
 D. seven
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**5.** Simplify; 2(1/4) × 3(1/2) ÷ 4 (3/8)
+**5.** Simplify; 2(1/4) x 3(1/2) / 4 (3/8)
 
 A. (5/9)
 B. 1(1/5)
 C. 1(1/4)
 D. 1(4/5)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -67,7 +67,7 @@ B. 42.2%
 C. 50.0%
 D. 52.5%
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -78,7 +78,7 @@ B. 3
 C. 4
 D. 5
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -89,7 +89,7 @@ B. 37
 C. 39
 D. 41
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -100,7 +100,7 @@ B. 2
 C. 1
 D. -1
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -111,62 +111,62 @@ B. 2
 C. 2(1/2)
 D. 3
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**11.** Simplify; (2 - 18m^2/1 + 3m)
+**11.** Simplify;
 
-A. 2 (1 + 3m)
-B. 2 (1 + 3m^2)
-C. 2(1 - 3m)
-D. 2(1 - 3m^2)
+A. 2 ( 1 + 3 m )
+B. 2 ( 1 + 3 m 2 )
+C. 2 ( 1 − 3 m )
+D. 2 ( 1 − 3 m 2 )
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **12.** A curve is such that when y = 0, x = -2 or x = 3. Find the equation of the curve.
 
-A. y = x^2 - 5x - 6
-B. y = x^2 + 5x - 6
-C. y = x^2 + x - 6
-D. y = x^2 - x - 6
+A. y = x 2 − 5 x − 6
+B. y = x 2 + 5 x − 6
+C. y = x 2 + x − 6
+D. y = x 2 − x − 6
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**13.** The volume of a cylindrical tank, 10m high is 385 m^2. Find the diameter of the tank. [Take π = (22/7)]
+**13.** The volume of a cylindrical tank, 10m high is 385 m . Find the diameter of the tank. [Take ]
 
 A. 14m
 B. 10m
 C. 7m
 C. 5m
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**14.** The surface area of a sphere is (792/7) cm^2. Find, correct to the nearest whole number, its volume. [Take π = (22/7)]
+**14.** The surface area of a sphere is . Find, correct to the nearest whole number, its volume. [Take ]
 
-A. 113cm^3
-B. 131cm^3
-C. 311cm^3
-D. 414cm^3
+A. 113 c m 3
+B. 131 c m 3
+C. 311 c m 3
+D. 414 c m 3
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**15.** The angles of a polygon are x, 2x, 2x, (x + 30^o), (x + 20^o) and (x - 10^o). Find the value of x
+**15.** The angles of a polygon are x, 2x, 2x, (x + ), (x + ) and (x - ). Find the value of x
 
-A. 45^o
-A. 95^o
-B. 84^o
-C. 85^o
+A. 45 o
+A. 95 o
+B. 84 o
+C. 85 o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -177,7 +177,7 @@ B. 11 units
 C. 15 units
 D. 17 units
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -188,7 +188,7 @@ B. 2
 C. 3
 D. 9
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -199,99 +199,95 @@ B. 4
 C. 6
 D. 8
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **19.** ![diagram](images/waec/2018/q19_1.png) The table shows the distribution of goals scored by 25 teams in a football competition. Calculate the probability that a team selected at randon scored either 4 or 7 goals.
 
-![diagram](images/waec/2018/q19_1.png)
+A. 9 25
+B. 1 5
+C. 6 25
+D. 2 5
 
-A. (9/25)
-B. (1/5)
-C. (6/25)
-D. (2/5)
-
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **20.** ![diagram](images/waec/2018/q20_1.png) The table shows the distribution of goals scored by 25 teams in a football competition. Calculate the probability that a team selected at random scored at most 3 goals.
 
-![diagram](images/waec/2018/q20_1.png)
+A. 3 25
+B. 1 5
+C. 6 25
+D. 2 5
 
-A. (3/25)
-B. (1/5)
-C. (6/25)
-D. (2/5)
-
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**21.** The total surface area of a hemispher is 75π cm^2. Find the radius.
+**21.** The total surface area of a hemispher is 75 . Find the radius.
 
 A. 5.0 cm
 B. 7.0 cm
 C. 8.5 cm
 D. 12.0 cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**22.** Find the value of x for which (x - 5/x(x - 1)) is undefined.
+**22.** Find the value of x for which is undefined.
 
 A. 0 or 5
 B. -5 or 5
 C. -11 or 5
 D. 0 or 1
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**23.** Solved the equation 2x^2 - x - 6 = 0
+**23.** Solved the equation = 0
 
-A. x = (-3/2) or 2
-B. x = -2 or (3/2)
+A. x = − 3 2 or 2
+B. x = -2 or 3 2
 C. x = -3 or 2
 D. x = 3 or -2
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**24.** Factorise completely the expression (x + 2)^2 - (2x + 1)^2
+**24.** Factorise completely the expression -
 
 A. (3x + 2)(1 - x)
 B. (3x + 2)(2x + 1)
-C. 3(x + 2)^2
+C. 3 ( x + 2 ) 2
 D. 3(x + 1)(1 - x)
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**25.** Find the n^th term of the sequence 2 x 3, 4 x 6, 8 x 9, 16 x 12...
+**25.** Find the term of the sequence 2 x 3, 4 x 6, 8 x 9, 16 x 12...
 
-A. 2^n x 3(n + 1)
-B. 2^n x 3n
-C. 2^n x 3^n
-D. 2^n x 3^n - 1
+A. 2 n x 3(n + 1)
+B. 2 n x 3n
+C. 2 n x 3 n
+D. 2 n x 3 n − 1
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**26.** If 3x^o 4(mod 5), find the least value of x
+**26.** If 3x 4(mod 5), find the least value of x
 
 A. 1
 B. 2
 C. 3
 D. 4
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -302,53 +298,51 @@ B. 7
 C. 8
 D. 9
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**28.** If x : y = (1/4) : (3/8) and y : z = (1/3) : (4/9), find x : z
+**28.** If x : y = and y : z = , find x : z
 
 A. 2:3
 B. 3:4
 C. 3:8
 D. 1:2
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**29.** Expression 0.612 in the form (x/y), where x and y are integers and y ≠ 0
+**29.** Expression 0.612 in the form , where x and y are integers and y
 
-A. (153/250)
-B. (68/111)
-C. (61/100)
-D. (21/33)
+A. 153 250
+B. 68 111
+C. 61 100
+D. 21 33
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
-**30.** The angle of elevation of the top of a tree from a point 27m away and on the same horizontal ground as the foot of the tree is 30^o. Find the height of the tree.
+**30.** The angle of elevation of the top of a tree from a point 27m away and on the same horizontal ground as the foot of the tree is 30 . Find the height of the tree.
 
 A. 27m
-B. 13.5 √(3m)
-C. 13.5 √(2m)
-D. 9√(3m)
+B. 13.5 √ 3 m
+C. 13.5 √ 2 m
+D. 9 √ 3 m
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**31.** ![diagram](images/waec/2018/q31_1.png) In the diagram, which of the following ratios is equal to (|PN|/|PQ|)?
+**31.** ![diagram](images/waec/2018/q31_1.png) In the diagram, which of the following ratios is equal to ?
 
-![diagram](images/waec/2018/q31_1.png)
+A. | P N | | P R |
+B. | P M | | P Q |
+C. | P M | | P R |
+D. | P R | | P Q |
 
-A. (|PN|/|PR|)
-B. (|PM|/|PQ|)
-C. (|PM|/|PR|)
-D. (|PR|/|PQ|)
-
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -359,7 +353,7 @@ B. If p is true and q is false
 C. If p is false and q is false
 D. If p is false and q is true
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
@@ -370,7 +364,7 @@ B. 0.5
 C. 1.0
 D. 1.5
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
@@ -381,170 +375,150 @@ B. 9
 C. 10
 D. 12
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **35.** ![diagram](images/waec/2018/q35_1.png) Find the value of t in the diagram
 
-![diagram](images/waec/2018/q35_1.png)
+A. 63 o
+B. 117 o
+C. 126 o
+D. 234 o
 
-A. 63^o
-B. 117^o
-C. 126^o
-D. 234^o
-
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **36.** ![diagram](images/waec/2018/q36_1.png) In the diagram, PR is a tangent to the circle at Q, QT//RS, < SQR = 35º and < RSQ = 50º. Find the value of <QST
-
-![diagram](images/waec/2018/q36_1.png)
 
 A. 40^o
 B. 65^o
 C. 85^o
 D. 95^o
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **37.** ![diagram](images/waec/2018/q37_1.png) In the diagram, WXYZ is a rectangle with dimension 8cm by 6cm. P, Q, R and S are the midpoints of the sides of the rectangle as shown. Using this information, what type of quadrilateral is the shaded region?
-
-![diagram](images/waec/2018/q37_1.png)
 
 A. Trapezium
 B. Prism
 C. Rectangle
 D. Rhombus
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **38.** ![diagram](images/waec/2018/q38_1.png) In the diagram, PS and RS are tangents to the circle centre O. ∠PSR = 70°, ∠POR = m, and ∠PSR =n. Find ( m + n ).
-
-![diagram](images/waec/2018/q38_1.png)
 
 A. 110^o
 B. 135^o
 C. 165^o
 D. 225^o
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
 **39.** ![diagram](images/waec/2018/q39_1.png) In the diagram, WXYZ is a rectangle with diamension 8cm by 6cm. P, Q, R and S are the midpoints of the rectangle as shown. Using this information calculate the area of the part of the rectangle that is not shaded
-
-![diagram](images/waec/2018/q39_1.png)
 
 A. 25cm^2
 B. 24cm^2
 C. 16cm^2
 D. 12cm^2
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**40.** ![diagram](images/waec/2018/q40_1.png) The solution of x + 2 ≥ 2x + 1 is illustrated
-
-![diagram](images/waec/2018/q40_1.png)
+**40.** ![diagram](images/waec/2018/q40_1.png) The solution of x + 2 >= 2x + 1 is illustrated
 
 A. i
 B. ii
 C. iii
 D. iv
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
 **41.** ![diagram](images/waec/2018/q41_1.png) The diagram shows a trapezium inscribed in a semi-circle. If O is the mid-point of WZ and |WX| = |XY| = |YZ|, calculate the value of m
-
-![diagram](images/waec/2018/q41_1.png)
 
 A. 90^o
 B. 60^o
 C. 45^o
 D. 30^o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
 **42.** ![diagram](images/waec/2018/q42_1.png) In the diagram, PQ//RS. Find x in terms of y and z
-
-![diagram](images/waec/2018/q42_1.png)
 
 A. x = 240^o - y - z
 B. x = 180^o - y - z
 C. x = 360^o + y -z
 D. x = 360^o - y - z
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **43.** ![diagram](images/waec/2018/q43_1.png) In the diagram, PQ is a straight line, (m + n) = 110^o and (n + r) = 130^o and (m + r) = 120^o. Find the ratio of m : n : r
-
-![diagram](images/waec/2018/q43_1.png)
 
 A. 2 : 3 : 4
 B. 3 : 4 : 5
 C. 4 : 5 : 6
 D. 5 : 6 : 7
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
 **44.** ![diagram](images/waec/2018/q44_1.png) Donations during the launching of a church project were sent in sealed envolopes. The table shows the distribution of the amount of money in the envelope. How much was the donation?
-
-![diagram](images/waec/2018/q44_1.png)
 
 A. N26,792.00
 B. N26,972.00
 C. N62.792.00
 D. N62,972.00
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
-**45.** A piece of thread of length 21.4cm is used to form a sector of a circle of radius 4.2cm on a piece of cloth. Calculate, correct to the nearest degree, the angle of the sector. [Take π = (22/7)]
+**45.** A piece of thread of length 21.4cm is used to form a sector of a circle of radius 4.2cm on a piece of cloth. Calculate, correct to the nearest degree, the angle of the sector. [Take pi = (22/7)]
 
 A. 170^o
 B. 177^o
 C. 182^o
 D. 192^o
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**46.** If tan x = , 0 o < x < 90 o , find the value of sin x - cos x
+**46.** If tan x = , 0 < x < 90 , find the value of sin x - cos x
 
 A. 1 10
 B. 1 5
 C. 5 12
 D. 1 2 5
 
-✓ **Answer:** B
+Answer: B
 
 ---
 
-**47.** Given that Y is 20cm on a bearing of 300 o from x, how far south of y is x?
+**47.** Given that Y is 20cm on a bearing of 300 from x, how far south of y is x?
 
 A. 10cm
 B. 15cm
 C. 25cm
 D. 30cm
 
-✓ **Answer:** A
+Answer: A
 
 ---
 
@@ -555,18 +529,18 @@ B. 48cm
 C. 52cm
 D. 60cm
 
-✓ **Answer:** C
+Answer: C
 
 ---
 
-**49.** M and N are two subsets of the universal set (U). If n(U) = 48, n(M) = 20, n(N) = 30 and n(MUN) = 40, find n(M ∩ N)
+**49.** M and N are two subsets of the universal set (U). If n(U) = 48, n(M) = 20, n(N) = 30 and n(MUN) = 40, find n(M N)
 
 A. 18
 B. 20
 C. 30
 D. 38
 
-✓ **Answer:** D
+Answer: D
 
 ---
 
@@ -577,6 +551,6 @@ B. (0,0), (0,1)
 C. (1, 0), (0, 0)
 D. (0, 0) (0, 0)
 
-✓ **Answer:** A
+Answer: A
 
 ---
