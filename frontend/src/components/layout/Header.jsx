@@ -166,32 +166,33 @@ export default function Header() {
                     {/* Scrollable links */}
                     <div className="overflow-y-auto flex-1">
                       {[
-                        { path: '/bookmarks',    icon: '🔖', label: 'My Bookmarks'    },
-                        { path: '/daily',        icon: '🔥', label: 'Daily Challenge'  },
-                        { path: '/practice',     icon: '🎯', label: 'Practice'         },
-                        { path: '/mock-exam',      icon: '📋', label: 'Mock Exam'        },
-                        { path: '/classroom',      icon: '🏫', label: 'Classroom'        },
-                        { path: '/battle',         icon: '⚔️',  label: 'Battle'          },
-                        { path: '/question-bank',  icon: '📚', label: 'Question Bank'   },
-                        { path: '/ai-quiz',      icon: '🤖', label: 'AI Quiz'          },
-                        { path: '/review',       icon: '🧠', label: 'Spaced Review'    },
-                        { path: '/challenge',    icon: '⚔️', label: 'Challenge Friend' },
-                        { path: '/groups',       icon: '👥', label: 'Study Groups'     },
-                        { path: '/weekly-report',icon: '📊', label: 'Weekly Report'    },
-                        { path: '/certificate',  icon: '🏆', label: 'Certificate'      },
-                        { path: '/wiki/Quadratic+Equations', icon: '📖', label: 'Topic Wiki' },
-                        { path: '/dashboard',    icon: '📈', label: 'Dashboard'        },
-                        { path: '/past-questions',icon: '📝', label: 'Past Questions'  },
-                        { path: '/cbt',          icon: '🖥️', label: 'CBT'             },
-                        { path: '/theory',       icon: '📝', label: 'Theory Practice'  },
-                        { path: '/leaderboard',  icon: '🏆', label: 'Leaderboard'      },
-                        { path: '/mastery',      icon: '🗺️', label: 'Mastery'         },
-                        { path: '/notes',        icon: '📝', label: 'Notes'            },
-                        { path: '/planner',      icon: '📅', label: 'Study Planner'    },
-                        { path: '/cbt-history',  icon: '🗂️', label: 'CBT History'     },
-                        { path: '/profile',      icon: '👤', label: 'My Profile'       },
-                        { path: '/formulas',     icon: '📐', label: 'Formula Sheet'    },
-                        // Teacher / Parent only
+                        // ── Account ──────────────────────────────────
+                        { path: '/profile',       icon: '👤', label: 'My Profile'       },
+                        { path: '/bookmarks',     icon: '🔖', label: 'My Bookmarks'     },
+                        // ── Daily engagement ─────────────────────────
+                        { path: '/daily',         icon: '🔥', label: 'Daily Challenge'  },
+                        { path: '/leaderboard',   icon: '🏆', label: 'Leaderboard'      },
+                        // ── Study tools ──────────────────────────────
+                        { path: '/past-questions',icon: '📝', label: 'Past Questions'   },
+                        { path: '/theory',        icon: '📖', label: 'Theory Practice'  },
+                        { path: '/ai-quiz',       icon: '🤖', label: 'AI Quiz'          },
+                        { path: '/review',        icon: '🧠', label: 'Spaced Review'    },
+                        { path: '/question-bank', icon: '📚', label: 'Question Bank'    },
+                        { path: '/formulas',      icon: '📐', label: 'Formula Sheet'    },
+                        { path: '/wiki/Quadratic+Equations', icon: '🔬', label: 'Topic Wiki' },
+                        // ── Social / competitive ──────────────────────
+                        { path: '/battle',        icon: '⚔️', label: 'Battle'           },
+                        { path: '/challenge',     icon: '🎮', label: 'Challenge Friend' },
+                        { path: '/groups',        icon: '👥', label: 'Study Groups'     },
+                        { path: '/classroom',     icon: '🏫', label: 'Classroom'        },
+                        // ── Progress & extras ─────────────────────────
+                        { path: '/mastery',       icon: '🗺️', label: 'Mastery Map'      },
+                        { path: '/weekly-report', icon: '📊', label: 'Weekly Report'    },
+                        { path: '/certificate',   icon: '🎓', label: 'Certificate'      },
+                        { path: '/notes',         icon: '🗒️', label: 'My Notes'         },
+                        { path: '/planner',       icon: '📅', label: 'Study Planner'    },
+                        { path: '/cbt-history',   icon: '🗂️', label: 'CBT History'      },
+                        // ── Teacher / Parent only ─────────────────────
                         ...(isTeacherOrParent ? [
                           { path: '/monitor', icon: '👨‍🏫', label: 'Monitor Students', highlight: true },
                         ] : []),

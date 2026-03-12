@@ -34,31 +34,33 @@ const STEPS = [
 ]
 
 const FEATURES = [
-  { icon: '⚙️', title: 'Solve',          desc: 'Solve equations, differentiate and integrate with full step-by-step working' },
-  { icon: '📚', title: 'Teach',          desc: 'Learn any topic with Euler — your AI tutor explains everything clearly' },
-  { icon: '🎯', title: 'Practice',       desc: 'Test yourself with questions Euler generates and grades for you' },
+  { icon: '⚙️', title: 'Solve', desc: 'Solve equations, differentiate and integrate with full step-by-step working' },
+  { icon: '📚', title: 'Teach', desc: 'Learn any topic with Euler — your AI tutor explains everything clearly' },
+  { icon: '🎯', title: 'Practice', desc: 'Test yourself with questions Euler generates and grades for you' },
   { icon: '📝', title: 'Past Questions', desc: 'Practice real WAEC, NECO and JAMB questions with worked solutions' },
-  { icon: '🔖', title: 'Bookmarks',      desc: 'Save important solutions and explanations for exam revision' },
-  { icon: '📊', title: 'Dashboard',      desc: 'Track your progress, see weak topics and improve over time' },
+  { icon: '🔖', title: 'Bookmarks', desc: 'Save important solutions and explanations for exam revision' },
+  { icon: '📊', title: 'Dashboard', desc: 'Track your progress, see weak topics and improve over time' },
 ]
 
 export default function Onboarding() {
   const navigate = useNavigate()
   const { updateProfile } = useAuth()
-  const [step,  setStep]  = useState(0)
+  const [step, setStep] = useState(0)
   const [level, setLevel] = useState('')
 
   const handleNext = async () => {
-  // Store level in sessionStorage — will be saved after signup
-  if (step === 1 && level) {
-    sessionStorage.setItem('onboarding_level', level)
+    // Store level in sessionStorage — will be saved after signup
+    if (step === 1 && level) {
+      sessionStorage.setItem('onboarding_level', level)
+    }
+    if (step < STEPS.length - 1) {
+      setStep(s => s + 1)
+    } else {
+      // Mark onboarding as done so returning visitors skip it
+      localStorage.setItem('mg_onboarding_done', '1')
+      navigate('/signup')
+    }
   }
-  if (step < STEPS.length - 1) {
-    setStep(s => s + 1)
-  } else {
-    window.location.href = '/signup'
-  }
-}
 
   const current = STEPS[step]
   const progress = ((step + 1) / STEPS.length) * 100
@@ -105,7 +107,7 @@ export default function Onboarding() {
                 <div className="grid grid-cols-3 gap-3 mt-6">
                   {['⚡ Instant Solutions', '🧠 Smart Explanations', '📈 Track Progress'].map(f => (
                     <div key={f}
-                         className="bg-[var(--color-cream)] rounded-xl p-3
+                      className="bg-[var(--color-cream)] rounded-xl p-3
                                     text-xs font-medium text-center text-[var(--color-ink)]">
                       {f}
                     </div>
@@ -121,12 +123,18 @@ export default function Onboarding() {
                   This helps Euler explain things at the right level for you.
                 </p>
                 {[
-                  { value: 'secondary',  icon: '🏫', label: 'Secondary School',
-                    desc: 'JSS1 to SS3 — WAEC and NECO preparation' },
-                  { value: 'university', icon: '🎓', label: 'Undergraduate',
-                    desc: '100L to 400L — University mathematics' },
-                  { value: 'graduate',   icon: '🔬', label: 'Graduate',
-                    desc: 'Postgraduate and advanced mathematics' },
+                  {
+                    value: 'secondary', icon: '🏫', label: 'Secondary School',
+                    desc: 'JSS1 to SS3 — WAEC and NECO preparation'
+                  },
+                  {
+                    value: 'university', icon: '🎓', label: 'Undergraduate',
+                    desc: '100L to 400L — University mathematics'
+                  },
+                  {
+                    value: 'graduate', icon: '🔬', label: 'Graduate',
+                    desc: 'Postgraduate and advanced mathematics'
+                  },
                 ].map(opt => (
                   <button
                     key={opt.value}
@@ -166,7 +174,7 @@ export default function Onboarding() {
               <div className="grid grid-cols-1 gap-3">
                 {FEATURES.map(f => (
                   <div key={f.title}
-                       className="flex items-start gap-3 p-3 rounded-xl
+                    className="flex items-start gap-3 p-3 rounded-xl
                                   bg-[var(--color-cream)]">
                     <span className="text-xl shrink-0">{f.icon}</span>
                     <div>
@@ -224,7 +232,10 @@ export default function Onboarding() {
             {/* Skip */}
             {step < STEPS.length - 1 && (
               <button
-                onClick={() => navigate('/signup')}
+                onClick={() => {
+                  localStorage.setItem('mg_onboarding_done', '1')
+                  navigate('/signup')
+                }}
                 className="w-full text-center text-xs text-[var(--color-muted)]
                            hover:text-[var(--color-ink)] mt-3 transition-colors"
               >

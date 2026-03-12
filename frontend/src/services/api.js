@@ -146,3 +146,33 @@ export const getPastQuestionMeta = () =>
 
 export const getRandomPastQuestion = (params = {}) =>
   API.get('/past-questions/random/one', { params })
+
+// ── STUDY PLAN ──────────────────────────────────────────────────────
+export const getStudyPlan = (userId) =>
+  API.get(`/study-plan/${userId}`)
+
+export const generateStudyPlan = (userId, examTarget, examDate, daysUntil) =>
+  API.post('/study-plan/generate', {
+    user_id:     userId,
+    exam_target: examTarget,
+    exam_date:   examDate   || null,
+    days_until:  daysUntil  || null,
+  }, { responseType: 'stream' })
+
+// Fetch weak topics directly from Supabase (bypasses backend)
+export const getTopicProgress = (userId) =>
+  supabase
+    .from('topic_progress')
+    .select('topic, mastery_level, avg_score, sessions_done')
+    .eq('user_id', userId)
+    .order('avg_score', { ascending: true })
+
+// ── TESTIMONIALS ─────────────────────────────────────────────────────────────
+/** Fetch publicly visible (approved) testimonials for the landing page */
+export const getApprovedTestimonials = () =>
+  supabase
+    .from('testimonials')
+    .select('id, full_name, school, rating, body, created_at')
+    .eq('approved', true)
+    .order('created_at', { ascending: false })
+    .limit(6)

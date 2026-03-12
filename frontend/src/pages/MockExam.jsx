@@ -5,6 +5,7 @@ import { fetchCBTQuestions } from '../lib/cbt'
 import { ExplanationBody } from '../utils/RenderMath'
 import { explainCBTAnswer } from '../services/api'
 import ShareResultCard from '../components/ShareResultCard'
+import { TestimonialPrompt } from '../components/TestimonialModal'
 
 const EXAM_CONFIG = {
   WAEC:   { label: 'WAEC', color: '#1a8a7a', questions: 50, minutes: 90,  emoji: '📗' },
@@ -444,6 +445,9 @@ export default function MockExam() {
               📲 Share Result
             </button>
           </div>
+
+          {/* Testimonial prompt — shown once per user */}
+          <TestimonialPrompt />
         </div>
       </div>
 

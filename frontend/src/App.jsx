@@ -50,11 +50,11 @@ function AppRoutes() {
       <InstallBanner />
       <Routes>
         {/* Public auth pages — no layout */}
-        <Route path="/login"           element={<Login defaultTab="login"   />} />
-        <Route path="/signup"          element={<Login defaultTab="signup"  />} />
+        <Route path="/login" element={<Login defaultTab="login" />} />
+        <Route path="/signup" element={<Login defaultTab="signup" />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password"  element={<ResetPassword />} />
-        <Route path="/onboarding"      element={<Onboarding />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/onboarding" element={user ? <Navigate to="/dashboard" replace /> : <Onboarding />} />
 
         {/* Landing */}
         <Route path="/" element={<Landing />} />

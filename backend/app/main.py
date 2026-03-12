@@ -12,6 +12,7 @@ from app.routers.exams import router as exams_router
 from app.routers.cbt import router as cbt_router
 from app.routers.tracking import router as tracking_router
 from app.routers.past_questions import router as past_questions_router
+from app.routers.study_plan import router as study_plan_router
 from solution_generator import router as solution_router
 
 # ── Rate limiter (shared across all routers) ──────────────────────────
@@ -66,6 +67,7 @@ app.include_router(cbt_router)
 app.include_router(tracking_router)
 app.include_router(past_questions_router)
 app.include_router(solution_router)
+app.include_router(study_plan_router)
 
 app.mount("/images", StaticFiles(directory="images"), name="images")
 

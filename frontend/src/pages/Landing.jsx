@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useEffect, useState, useRef } from 'react'
-import { askTutor } from '../services/api'
+import { askTutor, getApprovedTestimonials } from '../services/api'
 import { ExplanationBody } from '../utils/RenderMath'
 
 const FEATURES = [
@@ -37,26 +37,7 @@ const FEATURES = [
   },
 ]
 
-const TESTIMONIALS = [
-  {
-    name: 'Chisom A.',
-    school: 'Lagos State',
-    text: 'I went from failing maths to scoring 87% in my WAEC mock after using MathGenius for 3 weeks.',
-    emoji: '🌟',
-  },
-  {
-    name: 'Emeka T.',
-    school: 'Abuja',
-    text: 'The CBT practice is exactly like the real JAMB exam. The AI explanations are better than my teacher!',
-    emoji: '🚀',
-  },
-  {
-    name: 'Fatima B.',
-    school: 'Kano State',
-    text: 'I love the streak system — it keeps me studying every day. My accuracy jumped from 45% to 76%.',
-    emoji: '🔥',
-  },
-]
+
 
 const MAX_FREE = 5
 
@@ -255,13 +236,35 @@ const STATS = [
 
 export default function Landing() {
   const { user } = useAuth()
+  const navigate = useNavigate()
   const [scrolled, setScrolled] = useState(false)
+  const [testimonials, setTestimonials]   = useState([])
+  const [testimonialsLoading, setTestimonialsLoading] = useState(true)
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 50)
     window.addEventListener('scroll', handler)
     return () => window.removeEventListener('scroll', handler)
   }, [])
+
+  useEffect(() => {
+    getApprovedTestimonials().then(({ data }) => {
+      setTestimonials(data || [])
+      setTestimonialsLoading(false)
+    }).catch(() => setTestimonialsLoading(false))
+  }, [])
+
+  // Routes new guests through onboarding; returning guests go straight to signup
+  const handleGoToApp = (e) => {
+    e.preventDefault()
+    if (user) {
+      navigate('/dashboard')
+    } else if (localStorage.getItem('mg_onboarding_done')) {
+      navigate('/signup')
+    } else {
+      navigate('/onboarding')
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[var(--color-paper)]">
@@ -277,9 +280,9 @@ export default function Landing() {
           </span>
           <div className="flex items-center gap-3">
             {user ? (
-              <Link to="/dashboard" className="btn-primary px-5 py-2 text-sm">
+              <button onClick={handleGoToApp} className="btn-primary px-5 py-2 text-sm">
                 Go to App →
-              </Link>
+              </button>
             ) : (
               <>
                 <Link to="/login"
@@ -288,9 +291,9 @@ export default function Landing() {
                              hidden sm:block">
                   Sign In
                 </Link>
-                <Link to="/signup" className="btn-primary px-5 py-2 text-sm">
-                  Get Started Free
-                </Link>
+                <button onClick={handleGoToApp} className="btn-primary px-5 py-2 text-sm">
+                  Go to App →
+                </button>
               </>
             )}
           </div>
@@ -502,21 +505,56 @@ export default function Landing() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            {TESTIMONIALS.map((t, i) => (
-              <div key={i}
-                className="bg-white/5 border border-white/10 rounded-2xl p-6">
-                <div className="text-3xl mb-4">{t.emoji}</div>
-                <p className="text-white/90 text-sm leading-relaxed mb-4 italic">
-                  "{t.text}"
-                </p>
-                <div>
-                  <p className="font-bold text-white text-sm">{t.name}</p>
-                  <p className="text-white/50 text-xs font-mono">{t.school}</p>
+          {/* Loading skeletons */}
+          {testimonialsLoading && (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+              {[0,1,2].map(i => (
+                <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-3 animate-pulse">
+                  <div className="h-4 bg-white/10 rounded w-1/3" />
+                  <div className="h-3 bg-white/10 rounded w-full" />
+                  <div className="h-3 bg-white/10 rounded w-5/6" />
+                  <div className="h-3 bg-white/10 rounded w-4/6" />
+                  <div className="h-4 bg-white/10 rounded w-1/2 mt-4" />
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
+
+          {/* No reviews yet */}
+          {!testimonialsLoading && testimonials.length === 0 && (
+            <div className="text-center py-10">
+              <p className="text-white/50 text-sm">
+                No reviews yet — be the first to share your result after completing a mock exam! 🚀
+              </p>
+            </div>
+          )}
+
+          {/* Live testimonials */}
+          {!testimonialsLoading && testimonials.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {testimonials.map(t => (
+                <div key={t.id}
+                  className="bg-white/5 border border-white/10 rounded-2xl p-6
+                             flex flex-col gap-3">
+                  {/* Stars */}
+                  <div className="flex gap-0.5 text-base">
+                    {[1,2,3,4,5].map(s => (
+                      <span key={s}>{s <= t.rating ? '⭐' : '☆'}</span>
+                    ))}
+                  </div>
+                  <p className="text-white/90 text-sm leading-relaxed italic flex-1">
+                    "{t.body}"
+                  </p>
+                  <div>
+                    <p className="font-bold text-white text-sm">{t.full_name}</p>
+                    {t.school && (
+                      <p className="text-white/50 text-xs font-mono">{t.school}</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

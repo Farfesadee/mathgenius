@@ -1,322 +1,457 @@
-import { useState, useEffect } from 'react'
-import { useAuth } from '../context/AuthContext'
-import { useNavigate } from 'react-router-dom'
-import {
-  getOrCreateGoal, updateGoal, getWeekSessions,
-  getWeekStart, getWeekDays, getAIStudyPlan,
-} from '../lib/planner'
-import { getTopicMastery } from '../lib/stats'
+// src/pages/StudyPlanner.jsx
+//
+// AI-powered personalised study plan page
+// - Loads saved plan from Supabase on mount
+// - Lets student regenerate at any time
+// - Streams plan from Groq via backend
+// - Displays day-by-day cards with topics, tasks, and duration
 
-const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-const ACTIVITIES = [
-  { id: 'teach',    label: 'Learn with Euler', icon: '📚', path: '/teach'    },
-  { id: 'practice', label: 'Practice',          icon: '🎯', path: '/practice' },
-  { id: 'cbt',      label: 'CBT Exam',          icon: '🖥️', path: '/cbt'      },
-]
+import { useState, useEffect, useRef } from 'react'
+import { useAuth } from '../context/AuthContext'
+import { getStudyPlan, generateStudyPlan, getTopicProgress } from '../services/api'
+import { supabase } from '../lib/supabase'
+
+// ── Helpers ────────────────────────────────────────────────────────
+
+function daysUntil(dateStr) {
+  if (!dateStr) return null
+  const diff = Math.ceil((new Date(dateStr) - new Date()) / 86400000)
+  return diff > 0 ? diff : 0
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return ''
+  return new Date(dateStr).toLocaleDateString('en-GB', {
+    weekday: 'short', day: 'numeric', month: 'short',
+  })
+}
+
+function masteryColor(level) {
+  if (level === 'beginner')     return 'bg-red-100 text-red-700'
+  if (level === 'intermediate') return 'bg-amber-100 text-amber-700'
+  return 'bg-green-100 text-green-700'
+}
+
+function topicEmoji(score) {
+  if (score >= 75) return '✅'
+  if (score >= 50) return '⚠️'
+  return '🔴'
+}
+
+// ── Sub-components ─────────────────────────────────────────────────
+
+function DayCard({ day, isToday }) {
+  const [open, setOpen] = useState(isToday)
+
+  return (
+    <div className={`card bg-white rounded-2xl overflow-hidden border-2 transition-all
+      ${isToday
+        ? 'border-[var(--color-teal)] shadow-md'
+        : 'border-[var(--color-border)] hover:border-[var(--color-teal)]'
+      }`}>
+
+      {/* Header */}
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center justify-between p-4 text-left"
+      >
+        <div className="flex items-center gap-3">
+          <div className={`w-10 h-10 rounded-xl flex items-center justify-center
+            font-black text-sm
+            ${isToday
+              ? 'bg-[var(--color-teal)] text-white'
+              : 'bg-[var(--color-bg)] text-[var(--color-ink)]'
+            }`}>
+            {day.day}
+          </div>
+          <div>
+            <p className="font-semibold text-sm text-[var(--color-ink)]">
+              {day.topic}
+              {isToday && (
+                <span className="ml-2 text-xs bg-[var(--color-teal)] text-white
+                                 px-2 py-0.5 rounded-full">Today</span>
+              )}
+            </p>
+            <p className="text-xs text-[var(--color-muted)]">
+              {formatDate(day.date)} · {day.duration_mins || 45} mins
+            </p>
+          </div>
+        </div>
+        <span className="text-[var(--color-muted)] text-lg">
+          {open ? '▲' : '▼'}
+        </span>
+      </button>
+
+      {/* Body */}
+      {open && (
+        <div className="px-4 pb-4 space-y-3 border-t border-[var(--color-border)] pt-3">
+          {day.focus && (
+            <p className="text-sm text-[var(--color-muted)] italic">
+              🎯 {day.focus}
+            </p>
+          )}
+          <ul className="space-y-2">
+            {(day.tasks || []).map((task, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm text-[var(--color-ink)]">
+                <span className="mt-0.5 w-5 h-5 rounded-full bg-[#e8f4f4]
+                                 text-[var(--color-teal)] flex items-center
+                                 justify-center text-xs font-bold flex-shrink-0">
+                  {i + 1}
+                </span>
+                {task}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  )
+}
+
+
+function WeakTopicsBadges({ topics }) {
+  if (!topics || topics.length === 0) return null
+  return (
+    <div className="flex flex-wrap gap-2">
+      {topics.map(t => (
+        <span key={t.topic}
+          className={`text-xs px-2 py-1 rounded-full font-medium
+            ${masteryColor(t.mastery_level)}`}>
+          {topicEmoji(t.avg_score || 0)} {t.topic}
+          {t.avg_score != null && ` · ${Math.round(t.avg_score)}%`}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+
+// ── Main page ──────────────────────────────────────────────────────
 
 export default function StudyPlanner() {
-  const { user }   = useAuth()
-  const navigate   = useNavigate()
-  const weekStart  = getWeekStart()
-  const weekDays   = getWeekDays(weekStart)
-  const today      = new Date().toISOString().split('T')[0]
+  const { user, profile } = useAuth()
 
-  const [goal,        setGoal]        = useState(null)
-  const [sessions,    setSessions]    = useState([])
-  const [plan,        setPlan]        = useState(null)
-  const [mastery,     setMastery]     = useState([])
-  const [loading,     setLoading]     = useState(true)
-  const [generating,  setGenerating]  = useState(false)
-  const [dailyTarget, setDailyTarget] = useState(30)
-  const [examDate,    setExamDate]    = useState('')
+  const [plan,         setPlan]         = useState(null)   // saved plan object
+  const [weakTopics,   setWeakTopics]   = useState([])
+  const [generating,   setGenerating]   = useState(false)
+  const [streaming,    setStreaming]     = useState('')     // raw streamed text
+  const [error,        setError]        = useState('')
+  const [loading,      setLoading]      = useState(true)
+  const [activeTab,    setActiveTab]    = useState('plan') // 'plan' | 'topics'
+  const abortRef = useRef(null)
 
+  const examTarget = profile?.exam_target || 'WAEC'
+  const examDate   = profile?.exam_date   || null
+  const daysLeft   = daysUntil(examDate)
+
+  // ── Load saved plan + weak topics on mount ─────────────────────
   useEffect(() => {
-    if (user) loadData()
+    if (!user) return
+    Promise.all([
+      loadSavedPlan(),
+      loadWeakTopics(),
+    ]).finally(() => setLoading(false))
   }, [user])
 
-  const loadData = async () => {
-    const [g, s, m] = await Promise.all([
-      getOrCreateGoal(user.id, weekStart),
-      getWeekSessions(user.id, weekStart),
-      getTopicMastery(user.id),
-    ])
-    setGoal(g)
-    setDailyTarget(g?.daily_target || 30)
-    setSessions(s)
-    setMastery(m)
-    if (g?.plan_data) setPlan(JSON.parse(g.plan_data))
-    setLoading(false)
-  }
-
-  const handleGeneratePlan = async () => {
-    setGenerating(true)
-    const weakTopics = mastery
-      .filter(t => t.attempted > 0 && (t.correct / t.attempted) < 0.5)
-      .map(t => t.topic)
-      .slice(0, 5)
-
-    const allTopics = mastery.map(t => t.topic).slice(0, 10)
-
-    const result = await getAIStudyPlan(allTopics, weakTopics, dailyTarget, examDate)
-    if (result) {
-      setPlan(result)
-      if (goal) {
-        const updated = await updateGoal(goal.id, {
-          daily_target: dailyTarget,
-          plan_data:    JSON.stringify(result),
-        })
-        setGoal(updated)
-      }
+  async function loadSavedPlan() {
+    try {
+      const res = await getStudyPlan(user.id)
+      if (res.data) setPlan(res.data)
+    } catch {
+      // 404 = no plan yet, that's fine
     }
-    setGenerating(false)
   }
 
-  const getSessionForDay = (dateStr) =>
-    sessions.find(s => s.date === dateStr)
+  async function loadWeakTopics() {
+    try {
+      const { data } = await getTopicProgress(user.id)
+      if (data) {
+        const weak = data.filter(t =>
+          t.mastery_level === 'beginner' ||
+          t.mastery_level === 'intermediate' ||
+          (t.avg_score ?? 100) < 60
+        )
+        setWeakTopics(weak)
+      }
+    } catch {
+      // topic_progress might be empty for new users
+    }
+  }
 
-  const totalMinsThisWeek = sessions.reduce((sum, s) => sum + (s.minutes || 0), 0)
-  const daysStudied = sessions.filter(s => s.minutes > 0).length
-  const weeklyTarget = dailyTarget * 7
+  // ── Generate plan ──────────────────────────────────────────────
+  async function handleGenerate() {
+    setGenerating(true)
+    setStreaming('')
+    setError('')
 
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/study-plan/generate`,
+        {
+          method:  'POST',
+          headers: {
+            'Content-Type':  'application/json',
+            Authorization:   `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
+          },
+          body: JSON.stringify({
+            user_id:     user.id,
+            exam_target: examTarget,
+            exam_date:   examDate,
+            days_until:  daysLeft,
+          }),
+        }
+      )
+
+      if (!response.ok) throw new Error(`Server error ${response.status}`)
+
+      const reader  = response.body.getReader()
+      const decoder = new TextDecoder()
+      let   raw     = ''
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        const chunk = decoder.decode(value, { stream: true })
+        raw += chunk
+        setStreaming(raw)
+      }
+
+      // Parse completed JSON
+      try {
+        let clean = raw.trim()
+        if (clean.startsWith('```')) {
+          clean = clean.split('```')[1]
+          if (clean.startsWith('json')) clean = clean.slice(4)
+        }
+        const parsed = JSON.parse(clean.trim())
+        setPlan({
+          plan:        parsed,
+          exam_target: examTarget,
+          exam_date:   examDate,
+          days_until:  daysLeft,
+          weak_topics: weakTopics.map(t => t.topic),
+          generated_at: new Date().toISOString(),
+        })
+        setStreaming('')
+      } catch {
+        setError('Plan was generated but could not be parsed. Please try again.')
+      }
+
+    } catch (err) {
+      setError(err.message || 'Failed to generate plan. Please try again.')
+    } finally {
+      setGenerating(false)
+    }
+  }
+
+  // ── Derived ────────────────────────────────────────────────────
+  const days     = plan?.plan?.days || []
+  const todayStr = new Date().toISOString().split('T')[0]
+  const todayIdx = days.findIndex(d => d.date === todayStr)
+
+  // ── Render ─────────────────────────────────────────────────────
   if (loading) {
     return (
-      <div className="max-w-4xl mx-auto px-6 py-10">
-        <div className="space-y-4">
-          {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-20 bg-[var(--color-border)] rounded-2xl animate-pulse" />
-          ))}
-        </div>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-10 w-10
+                        border-4 border-[var(--color-teal)] border-t-transparent" />
       </div>
     )
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-10">
-      <div className="mb-8">
-        <p className="font-mono text-xs tracking-widest uppercase
-                      text-[var(--color-gold)] mb-2 flex items-center gap-3">
-          <span className="block w-6 h-px bg-[var(--color-gold)]" />
-          AI Study Planner
-        </p>
-        <h1 className="font-serif font-black text-5xl tracking-tight">
-          Study Planner
+    <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
+
+      {/* ── Header ─────────────────────────────────────────────── */}
+      <div>
+        <h1 className="font-serif font-black text-4xl tracking-tight
+                       text-[var(--color-ink)]">
+          Study Plan
         </h1>
-        <p className="text-[var(--color-muted)] mt-2">
-          Your personalised weekly study plan, powered by Euler.
+        <p className="text-[var(--color-muted)] text-sm mt-1">
+          {examTarget} prep
+          {daysLeft != null && ` · ${daysLeft} days to go`}
+          {examDate  && ` · Exam: ${formatDate(examDate)}`}
         </p>
       </div>
 
-      {/* Week summary */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-        {[
-          { label: 'Mins This Week', value: totalMinsThisWeek, icon: '⏱️', color: 'text-[var(--color-teal)]' },
-          { label: 'Daily Target',   value: `${dailyTarget}m`,  icon: '🎯', color: 'text-[var(--color-gold)]' },
-          { label: 'Days Studied',   value: `${daysStudied}/7`, icon: '📅', color: 'text-green-600'           },
-          { label: 'Weekly Goal',    value: `${weeklyTarget}m`, icon: '🏆', color: 'text-[var(--color-ink)]'  },
-        ].map(s => (
-          <div key={s.label} className="card bg-white p-4 text-center">
-            <div className="text-2xl mb-1">{s.icon}</div>
-            <div className={`font-serif font-black text-2xl ${s.color}`}>{s.value}</div>
-            <div className="font-mono text-[10px] uppercase tracking-widest
-                            text-[var(--color-muted)] mt-1">{s.label}</div>
+      {/* ── Exam info missing warning ───────────────────────────── */}
+      {!examDate && (
+        <div className="card bg-amber-50 border border-amber-200 rounded-2xl p-4
+                        flex items-start gap-3">
+          <span className="text-xl">⚠️</span>
+          <div>
+            <p className="font-semibold text-sm text-amber-800">No exam date set</p>
+            <p className="text-xs text-amber-700 mt-0.5">
+              Set your exam date in{' '}
+              <a href="/profile" className="underline font-medium">Profile → Settings</a>
+              {' '}for a more accurate plan.
+            </p>
           </div>
+        </div>
+      )}
+
+      {/* ── Tabs ────────────────────────────────────────────────── */}
+      <div className="flex gap-1 bg-[var(--color-bg)] rounded-xl p-1">
+        {[
+          { id: 'plan',   label: '📅 Study Plan' },
+          { id: 'topics', label: `🔴 Weak Topics (${weakTopics.length})` },
+        ].map(t => (
+          <button key={t.id} onClick={() => setActiveTab(t.id)}
+            className={`flex-1 py-2 rounded-lg text-sm font-semibold transition-all
+              ${activeTab === t.id
+                ? 'bg-white text-[var(--color-teal)] shadow-sm'
+                : 'text-[var(--color-muted)] hover:text-[var(--color-ink)]'
+              }`}>
+            {t.label}
+          </button>
         ))}
       </div>
 
-      {/* Weekly progress bar */}
-      <div className="card bg-white p-5 mb-6">
-        <div className="flex items-center justify-between mb-3">
-          <p className="font-semibold text-sm text-[var(--color-ink)]">
-            Weekly Progress
-          </p>
-          <p className="font-mono text-xs text-[var(--color-muted)]">
-            {totalMinsThisWeek} / {weeklyTarget} mins
-          </p>
-        </div>
-        <div className="w-full bg-[var(--color-border)] rounded-full h-3 mb-4">
-          <div
-            className="bg-[var(--color-teal)] h-3 rounded-full transition-all duration-700"
-            style={{ width: `${Math.min(100, Math.round((totalMinsThisWeek / weeklyTarget) * 100))}%` }}
-          />
-        </div>
+      {/* ══ TAB: PLAN ══════════════════════════════════════════════ */}
+      {activeTab === 'plan' && (
+        <div className="space-y-4">
 
-        {/* Day grid */}
-        <div className="grid grid-cols-7 gap-2">
-          {weekDays.map((dateStr, i) => {
-            const session   = getSessionForDay(dateStr)
-            const mins      = session?.minutes || 0
-            const isToday   = dateStr === today
-            const isPast    = dateStr < today
-            const met       = mins >= dailyTarget
+          {/* Generate button */}
+          <button
+            onClick={handleGenerate}
+            disabled={generating}
+            className="w-full btn-primary py-3 text-sm font-semibold
+                       flex items-center justify-center gap-2 disabled:opacity-50"
+          >
+            {generating
+              ? <><span className="animate-spin">⏳</span> Generating your plan...</>
+              : plan
+                ? '🔄 Regenerate Plan'
+                : '✨ Generate My Study Plan'
+            }
+          </button>
 
-            return (
-              <div key={dateStr} className="text-center">
-                <p className={`font-mono text-[10px] uppercase mb-1
-                  ${isToday ? 'text-[var(--color-teal)] font-bold' : 'text-[var(--color-muted)]'}`}>
-                  {DAYS[i]}
-                </p>
-                <div className={`w-full aspect-square rounded-xl flex items-center
-                                 justify-center text-xs font-bold border-2 transition-all
-                  ${isToday
-                    ? 'border-[var(--color-teal)] bg-[#e8f4f4] text-[var(--color-teal)]'
-                    : met
-                    ? 'border-green-500 bg-green-50 text-green-700'
-                    : isPast && mins > 0
-                    ? 'border-yellow-400 bg-yellow-50 text-yellow-700'
-                    : isPast
-                    ? 'border-[var(--color-border)] bg-[var(--color-paper)] text-[var(--color-muted)]'
-                    : 'border-dashed border-[var(--color-border)] text-[var(--color-muted)]'
-                  }`}>
-                  {mins > 0 ? `${mins}m` : isToday ? '📅' : '·'}
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      </div>
-
-      {/* Plan generator */}
-      <div className="card overflow-hidden mb-6">
-        <div className="bg-[var(--color-teal)] px-6 py-4">
-          <p className="font-serif font-bold text-white text-lg">
-            🤖 Generate AI Study Plan
-          </p>
-        </div>
-        <div className="bg-white p-6 space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="font-mono text-[10px] uppercase tracking-widest
-                                 text-[var(--color-muted)] block mb-2">
-                Daily Study Target (minutes)
-              </label>
-              <div className="flex gap-2">
-                {[15, 30, 45, 60, 90].map(m => (
-                  <button key={m} onClick={() => setDailyTarget(m)}
-                    className={`px-3 py-2 rounded-xl text-xs font-semibold
-                                border-2 transition-all
-                      ${dailyTarget === m
-                        ? 'border-[var(--color-teal)] bg-[#e8f4f4] text-[var(--color-teal)]'
-                        : 'border-[var(--color-border)] text-[var(--color-muted)]'}`}>
-                    {m}m
-                  </button>
-                ))}
-              </div>
+          {/* Error */}
+          {error && (
+            <div className="card bg-red-50 border border-red-200 rounded-2xl p-4">
+              <p className="text-sm text-red-700">{error}</p>
             </div>
-            <div>
-              <label className="font-mono text-[10px] uppercase tracking-widest
-                                 text-[var(--color-muted)] block mb-2">
-                Exam Date (Optional)
-              </label>
-              <input
-                type="date"
-                value={examDate}
-                onChange={e => setExamDate(e.target.value)}
-                className="w-full border-2 border-[var(--color-border)]
-                           focus:border-[var(--color-teal)] rounded-xl px-4 py-2.5
-                           text-sm transition-colors"
-              />
-            </div>
-          </div>
+          )}
 
-          {mastery.length === 0 && (
-            <div className="bg-yellow-50 border border-yellow-300 rounded-xl p-4">
-              <p className="text-sm text-yellow-700">
-                💡 Take a CBT exam first so Euler can identify your weak topics and
-                create a personalised plan.
+          {/* Streaming progress */}
+          {streaming && !plan && (
+            <div className="card bg-white rounded-2xl p-4 space-y-2">
+              <p className="text-sm font-semibold text-[var(--color-teal)] animate-pulse">
+                ✨ Euler is building your plan...
+              </p>
+              <p className="text-xs text-[var(--color-muted)] font-mono
+                            max-h-32 overflow-hidden">
+                {streaming.slice(-300)}
               </p>
             </div>
           )}
 
-          <button
-            onClick={handleGeneratePlan}
-            disabled={generating}
-            className="w-full btn-primary py-4 text-sm justify-center
-                       flex items-center gap-2 disabled:opacity-50"
-          >
-            {generating ? (
-              <>
-                <span className="w-4 h-4 border-2 border-white/30
-                                 border-t-white rounded-full animate-spin" />
-                Euler is building your plan...
-              </>
-            ) : '🤖 Generate My Study Plan'}
-          </button>
+          {/* Plan summary */}
+          {plan && plan.plan?.summary && (
+            <div className="card bg-[#f0fdfa] border border-[#99f6e4] rounded-2xl p-4">
+              <p className="text-sm font-semibold text-[var(--color-teal)] mb-1">
+                📋 Strategy
+              </p>
+              <p className="text-sm text-[var(--color-ink)]">{plan.plan.summary}</p>
+              <p className="text-xs text-[var(--color-muted)] mt-2">
+                Generated {plan.generated_at
+                  ? new Date(plan.generated_at).toLocaleDateString('en-GB', {
+                      day: 'numeric', month: 'short', year: 'numeric'
+                    })
+                  : 'just now'}
+                {' '}· {days.length} days
+              </p>
+            </div>
+          )}
+
+          {/* No plan yet */}
+          {!plan && !generating && !streaming && (
+            <div className="card bg-white rounded-2xl p-8 text-center space-y-3">
+              <p className="text-4xl">📚</p>
+              <p className="font-semibold text-[var(--color-ink)]">
+                No study plan yet
+              </p>
+              <p className="text-sm text-[var(--color-muted)]">
+                Tap the button above and Euler will build a personalised
+                day-by-day plan based on your weak topics and exam date.
+              </p>
+            </div>
+          )}
+
+          {/* Day cards */}
+          {days.length > 0 && (
+            <div className="space-y-3">
+              {days.map((day, i) => (
+                <DayCard
+                  key={day.day || i}
+                  day={day}
+                  isToday={i === todayIdx}
+                />
+              ))}
+            </div>
+          )}
         </div>
-      </div>
+      )}
 
-      {/* AI Plan display */}
-      {plan && (
-        <div className="card overflow-hidden">
-          <div className="bg-[var(--color-ink)] px-6 py-4">
-            <p className="font-serif font-bold text-white text-lg">
-              📅 Your 7-Day Plan
-            </p>
-            {plan.summary && (
-              <p className="text-white/70 text-sm mt-1">{plan.summary}</p>
-            )}
-          </div>
-          <div className="divide-y divide-[var(--color-border)]">
-            {(plan.days || []).map((day, i) => {
-              const dateStr  = weekDays[i] || ''
-              const isToday  = dateStr === today
-              const session  = getSessionForDay(dateStr)
-              const done     = session && session.minutes >= dailyTarget
-              const activity = ACTIVITIES.find(a => a.id === day.activity) || ACTIVITIES[0]
-
-              return (
-                <div key={i}
-                     className={`bg-white px-6 py-4 flex items-start gap-4
-                       ${isToday ? 'bg-[#e8f4f4]' : ''}`}>
-                  <div className="shrink-0 text-center w-12">
-                    <p className={`font-mono text-xs font-bold uppercase
-                      ${isToday ? 'text-[var(--color-teal)]' : 'text-[var(--color-muted)]'}`}>
-                      {day.day?.slice(0, 3)}
-                    </p>
-                    {done
-                      ? <span className="text-xl">✅</span>
-                      : isToday
-                      ? <span className="text-xl">👈</span>
-                      : <span className="text-xl">{activity.icon}</span>
-                    }
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <p className="font-semibold text-[var(--color-ink)] text-sm">
-                        {day.topic}
-                      </p>
-                      <span className={`text-[10px] font-mono px-2 py-0.5
-                                        rounded-lg border font-semibold
-                        ${isToday
-                          ? 'border-[var(--color-teal)] text-[var(--color-teal)] bg-white'
-                          : 'border-[var(--color-border)] text-[var(--color-muted)]'}`}>
-                        {day.minutes}m · {activity.label}
-                      </span>
-                    </div>
-                    {day.subtopics?.length > 0 && (
-                      <p className="text-xs text-[var(--color-muted)] mt-1">
-                        {day.subtopics.join(' · ')}
-                      </p>
-                    )}
-                    {day.tip && (
-                      <p className="text-xs text-[var(--color-teal)] mt-1 italic">
-                        💡 {day.tip}
-                      </p>
-                    )}
-                  </div>
-
-                  {isToday && !done && (
-                    <button
-                      onClick={() => navigate(activity.path)}
-                      className="shrink-0 btn-primary px-4 py-2 text-xs"
-                    >
-                      Start →
-                    </button>
-                  )}
+      {/* ══ TAB: WEAK TOPICS ═══════════════════════════════════════ */}
+      {activeTab === 'topics' && (
+        <div className="space-y-4">
+          {weakTopics.length === 0 ? (
+            <div className="card bg-white rounded-2xl p-8 text-center space-y-3">
+              <p className="text-4xl">🎉</p>
+              <p className="font-semibold text-[var(--color-ink)]">
+                No weak topics yet!
+              </p>
+              <p className="text-sm text-[var(--color-muted)]">
+                Complete some practice sessions and your weak topics
+                will appear here automatically.
+              </p>
+              <a href="/practice"
+                className="inline-block btn-primary px-6 py-2.5 text-sm mt-2">
+                Start Practising →
+              </a>
+            </div>
+          ) : (
+            weakTopics.map(t => (
+              <div key={t.topic}
+                className="card bg-white rounded-2xl p-4 flex items-center
+                           justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-sm text-[var(--color-ink)] truncate">
+                    {t.topic}
+                  </p>
+                  <p className="text-xs text-[var(--color-muted)] mt-0.5">
+                    {t.sessions_done || 0} session{t.sessions_done !== 1 ? 's' : ''} done
+                  </p>
                 </div>
-              )
-            })}
-          </div>
+
+                <div className="flex items-center gap-3 flex-shrink-0">
+                  {/* Score bar */}
+                  <div className="w-20 h-2 bg-gray-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full rounded-full transition-all"
+                      style={{
+                        width: `${Math.min(t.avg_score || 0, 100)}%`,
+                        background: (t.avg_score || 0) >= 60
+                          ? 'var(--color-teal)'
+                          : (t.avg_score || 0) >= 40
+                            ? '#f59e0b'
+                            : '#ef4444',
+                      }}
+                    />
+                  </div>
+                  <span className="text-sm font-bold text-[var(--color-ink)] w-10 text-right">
+                    {Math.round(t.avg_score || 0)}%
+                  </span>
+                  <span className={`text-xs px-2 py-0.5 rounded-full font-medium
+                    ${masteryColor(t.mastery_level)}`}>
+                    {t.mastery_level || 'beginner'}
+                  </span>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       )}
     </div>
