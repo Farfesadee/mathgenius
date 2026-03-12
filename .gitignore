@@ -1,6 +1,30 @@
-echo .env > .gitignore
-echo venv/ >> .gitignore
-echo __pycache__/ >> .gitignore
-echo node_modules/ >> .gitignore
-echo .env.local >> .gitignore
+@"
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Node
+node_modules/
+dist/
+.next/
+
+# Env files
 .env
+.env.local
+.env.*.local
+
+# Large backend assets
+backend/images/
+backend/books/
+backend/qdrant_db/
+backend/*.pdf
+backend/debug_output.txt
+
+# Misc
+.DS_Store
+*.log
+"@ | Set-Content .gitignore
