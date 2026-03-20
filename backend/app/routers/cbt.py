@@ -2,10 +2,40 @@ from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 from typing import Optional, List
 from app.services.groq_service import ask_groq
-import os, json, re, httpx
+import os, json, re, httpx, time, hashlib
 from datetime import date
 
 router = APIRouter(prefix="/cbt", tags=["CBT"])
+
+# ── In-memory explanation cache ───────────────────────────────────────────
+# Prevents the same CBT explanation being regenerated for every user who
+# expands the same question (very common in popular past-paper questions).
+_EXPL_CACHE: dict = {}          # key: hash of question → (timestamp, text)
+_EXPL_TTL   = 60 * 60 * 24     # cache entries live for 24 hours
+_EXPL_MAX   = 500               # max entries before oldest are dropped
+
+def _expl_key(req_data: dict) -> str:
+    """Stable hash of the question fields so identical questions share a cache entry."""
+    blob = json.dumps({
+        "q": req_data.get("question_text", ""),
+        "a": req_data.get("correct_answer", ""),
+        "t": req_data.get("topic", ""),
+    }, sort_keys=True)
+    return hashlib.md5(blob.encode()).hexdigest()
+
+def _expl_get(key: str):
+    entry = _EXPL_CACHE.get(key)
+    if entry and time.time() - entry[0] < _EXPL_TTL:
+        return entry[1]
+    return None
+
+def _expl_set(key: str, value: str):
+    if len(_EXPL_CACHE) >= _EXPL_MAX:
+        # Drop the oldest quarter of entries to make room
+        oldest = sorted(_EXPL_CACHE, key=lambda k: _EXPL_CACHE[k][0])
+        for k in oldest[:_EXPL_MAX // 4]:
+            del _EXPL_CACHE[k]
+    _EXPL_CACHE[key] = (time.time(), value)
 
 
 class ParseQuestionsRequest(BaseModel):

@@ -4,6 +4,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { supabase } from '../../lib/supabase'
+import { saveBookmark } from '../../lib/bookmarks'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
@@ -70,9 +71,9 @@ async function submitFeedback({ messageId, userId, topic, level, question, respo
   } catch {}   // silent fail — feedback is non-critical
 }
 
-// ── Markdown-lite renderer ────────────────────────────────────────────────────
-// Handles **bold**, `code`, numbered lists, bullet lists, and LaTeX fences.
-// Full KaTeX rendering would need the katex package — this gives readable output.
+// ── Improved Markdown renderer ─────────────────────────────────────────────────
+// Handles **bold**, `code`, $inline math$, numbered/bullet lists,
+// heading levels 1–3, horizontal rules, and $$...$$ display math blocks.
 function renderMessage(text) {
   if (!text) return null
   const lines = text.split('\n')
@@ -82,82 +83,116 @@ function renderMessage(text) {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
 
-    // Blank line → spacer
+    // Blank line → slightly larger spacer for readability
     if (!line.trim()) {
-      elements.push(<div key={key++} className="h-2" />)
+      elements.push(<div key={key++} className="h-3" />)
       continue
     }
 
-    // Numbered list
+    // Horizontal rule
+    if (line.trim() === '---' || line.trim() === '***') {
+      elements.push(<hr key={key++} className="border-[var(--color-border)] my-2" />)
+      continue
+    }
+
+    // H1 heading  #
+    const h1Match = line.match(/^# (.+)/)
+    if (h1Match) {
+      elements.push(
+        <p key={key++} className="font-bold text-base text-[var(--color-ink)] mt-3 mb-1">
+          {h1Match[1]}
+        </p>
+      )
+      continue
+    }
+
+    // H2 heading  ##
+    const h2Match = line.match(/^## (.+)/)
+    if (h2Match) {
+      elements.push(
+        <p key={key++} className="font-semibold text-sm text-[var(--color-ink)] mt-2.5 mb-1
+                                  border-b border-[var(--color-border)] pb-0.5">
+          {h2Match[1]}
+        </p>
+      )
+      continue
+    }
+
+    // H3 heading  ###
+    const h3Match = line.match(/^### (.+)/)
+    if (h3Match) {
+      elements.push(
+        <p key={key++} className="font-semibold text-sm text-[var(--color-teal)] mt-2 mb-0.5">
+          {h3Match[1]}
+        </p>
+      )
+      continue
+    }
+
+    // Numbered list  1. ...
     const numMatch = line.match(/^(\d+)\.\s+(.*)/)
     if (numMatch) {
       elements.push(
-        <div key={key++} className="flex gap-2 text-sm leading-relaxed">
-          <span className="shrink-0 font-bold text-[var(--color-teal)] w-5">{numMatch[1]}.</span>
+        <div key={key++} className="flex gap-2.5 text-sm leading-relaxed ml-1">
+          <span className="shrink-0 font-bold text-[var(--color-teal)] w-5 pt-px">{numMatch[1]}.</span>
           <span dangerouslySetInnerHTML={{ __html: inlineFormat(numMatch[2]) }} />
         </div>
       )
       continue
     }
 
-    // Bullet list
+    // Bullet list  - ... / * ... / • ...
     const bulletMatch = line.match(/^[-*•]\s+(.*)/)
     if (bulletMatch) {
       elements.push(
-        <div key={key++} className="flex gap-2 text-sm leading-relaxed">
-          <span className="shrink-0 text-[var(--color-teal)] mt-1">•</span>
+        <div key={key++} className="flex gap-2.5 text-sm leading-relaxed ml-1">
+          <span className="shrink-0 text-[var(--color-teal)] mt-1 text-xs">▪</span>
           <span dangerouslySetInnerHTML={{ __html: inlineFormat(bulletMatch[1]) }} />
         </div>
       )
       continue
     }
 
-    // Heading (##)
-    const headingMatch = line.match(/^#{1,3}\s+(.*)/)
-    if (headingMatch) {
-      elements.push(
-        <p key={key++} className="font-bold text-sm text-[var(--color-ink)] mt-2 mb-1">
-          {headingMatch[1]}
-        </p>
-      )
-      continue
-    }
-
-    // LaTeX display block $$...$$
+    // LaTeX display block $$...$$ — styled highlighted box
     if (line.trim().startsWith('$$')) {
       elements.push(
         <div key={key++}
-          className="my-2 px-3 py-2 rounded-lg bg-[var(--color-border)]/40 font-mono text-sm text-center overflow-x-auto">
+          className="my-3 px-4 py-3 rounded-xl bg-[var(--color-ink)]/5
+                     border border-[var(--color-border)] font-mono text-sm text-center
+                     overflow-x-auto text-[var(--color-ink)] tracking-wide">
           {line.trim()}
         </div>
       )
       continue
     }
 
-    // Normal paragraph line
+    // Normal paragraph
     elements.push(
       <p key={key++} className="text-sm leading-relaxed"
         dangerouslySetInnerHTML={{ __html: inlineFormat(line) }} />
     )
   }
 
-  return <div className="space-y-0.5">{elements}</div>
+  return <div className="space-y-1.5">{elements}</div>
 }
 
 function inlineFormat(text) {
   return text
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g,     '<em>$1</em>')
-    .replace(/`([^`]+)`/g,     '<code class="px-1 py-0.5 rounded bg-stone-100 font-mono text-xs text-[var(--color-teal)]">$1</code>')
+    .replace(/`([^`]+)`/g,     '<code class="px-1.5 py-0.5 rounded-md bg-[var(--color-teal)]/10 font-mono text-xs text-[var(--color-teal)]">$1</code>')
+    .replace(/\$([^$\n]+)\$/g, '<span class="font-mono text-[var(--color-ink)] bg-[var(--color-ink)]/5 px-1 rounded text-xs border border-[var(--color-border)]">$1</span>')
 }
 
 // ── Message bubble ────────────────────────────────────────────────────────────
 function MessageBubble({ msg, topic, level, lastUserQuestion, onFeedbackSent }) {
   const { user } = useAuth()
-  const [rating,   setRating]   = useState(msg.rating || null)   // 'up' | 'down' | null
-  const [copied,   setCopied]   = useState(false)
-  const [showNote, setShowNote] = useState(false)
-  const [note,     setNote]     = useState('')
+  const [rating,     setRating]     = useState(msg.rating || null)
+  const [copied,     setCopied]     = useState(false)
+  const [showNote,   setShowNote]   = useState(false)
+  const [note,       setNote]       = useState('')
+  const [bookmarked, setBookmarked] = useState(false)
+  const [bookmarking,setBookmarking]= useState(false)
 
   const isUser = msg.role === 'user'
   const isStreaming = msg.streaming === true
@@ -199,6 +234,22 @@ function MessageBubble({ msg, topic, level, lastUserQuestion, onFeedbackSent }) 
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     })
+  }
+
+  const handleBookmark = async () => {
+    if (bookmarked || bookmarking || !user) return
+    setBookmarking(true)
+    try {
+      await saveBookmark({
+        userId:  user.id,
+        type:    'explanation',
+        title:   lastUserQuestion ? lastUserQuestion.slice(0, 80) : (topic || 'Teach note'),
+        content: msg.content,
+        topic:   topic || '',
+      })
+      setBookmarked(true)
+    } catch { /* silent */ }
+    finally { setBookmarking(false) }
   }
 
   if (isUser) {
@@ -278,6 +329,24 @@ function MessageBubble({ msg, topic, level, lastUserQuestion, onFeedbackSent }) 
                        transition-all">
             {copied ? '✓' : '⎘'}
           </button>
+
+          {/* Bookmark */}
+          {user && (
+            <button
+              onClick={handleBookmark}
+              disabled={bookmarked || bookmarking}
+              title={bookmarked ? 'Saved!' : 'Save to bookmarks'}
+              className={`w-7 h-7 rounded-full flex items-center justify-center text-xs
+                         border transition-all
+                         ${ bookmarked
+                           ? 'bg-amber-50 border-amber-300 text-amber-500'
+                           : 'border-[var(--color-border)] text-[var(--color-muted)] hover:border-amber-300 hover:text-amber-500 hover:bg-amber-50'
+                         }`}>
+              {bookmarking
+                ? <span className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" />
+                : '🔖'}
+            </button>
+          )}
 
           {/* Feedback sent confirmation */}
           {rating && !showNote && (
@@ -431,13 +500,13 @@ export default function ChatWindow({ topic, level, conversation, onConversationU
         setStreaming(false)
         onConversationUpdate?.()
       },
-      onError: (msg) => {
+      onError: (err) => {
         setMessages(prev => prev.map(m =>
           m.id === aiId
             ? { ...m, content: 'Sorry, something went wrong. Please try again.', streaming: false }
             : m
         ))
-        setError(msg)
+        setError(err)
         setStreaming(false)
       },
     })
@@ -509,7 +578,7 @@ export default function ChatWindow({ topic, level, conversation, onConversationU
 
         {error && (
           <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-            ⚠️ {error}
+            ⚠️ Something went wrong. Please check your connection and try again.
           </div>
         )}
 

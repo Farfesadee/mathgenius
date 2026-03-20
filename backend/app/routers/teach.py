@@ -1,15 +1,53 @@
 import asyncio
 import os
 import json
-from fastapi import APIRouter, Depends
+import httpx
+from datetime import datetime
+from fastapi import APIRouter, Depends, Request
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
-from groq import Groq
-from app.services.groq_service import ask_groq
-from app.routers.tracking import log_teach_interaction, TeachLogRequest
+from app.services.groq_service import ask_groq, ask_groq_stream
 from app.dependencies import require_auth
 
 router = APIRouter(prefix="/teach", tags=["Teach"])
+
+SUPABASE_URL         = os.environ.get("SUPABASE_URL", "").rstrip("/")
+SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY", "")
+
+_SB_HEADERS = {
+    "apikey":        SUPABASE_SERVICE_KEY,
+    "Authorization": f"Bearer {SUPABASE_SERVICE_KEY}",
+    "Content-Type":  "application/json",
+    "Prefer":        "return=minimal",
+}
+
+
+# ── Internal teach-log helper ──────────────────────────────────────────
+# Replaces the broken asyncio.create_task(log_teach_interaction(...)) pattern.
+# This is a plain coroutine — safe to fire-and-forget with asyncio.create_task.
+
+async def _log_teach(user_id: str, topic: str, question: str,
+                     response_length: int, level: str):
+    """Write one row to teach_sessions via Supabase REST. Non-fatal."""
+    if not SUPABASE_URL or not SUPABASE_SERVICE_KEY:
+        return
+    payload = {
+        "user_id":         user_id,
+        "topic":           topic,
+        "question":        question[:500],
+        "response_length": response_length,
+        "level":           level,
+        "created_at":      datetime.utcnow().isoformat(),
+    }
+    try:
+        async with httpx.AsyncClient(timeout=8) as client:
+            await client.post(
+                f"{SUPABASE_URL}/rest/v1/teach_sessions",
+                headers=_SB_HEADERS,
+                json=payload,
+            )
+    except Exception:
+        pass  # logging is non-critical — never break the teaching flow
 
 
 class TeachRequest(BaseModel):
@@ -59,10 +97,10 @@ def get_textbook(level: str) -> str:
     return books.get(level, books["sss"])
 
 
-# ── Endpoints ─────────────────────────────────────────────────────────
+# ── Endpoints ──────────────────────────────────────────────────────────
 
 @router.post("/ask")
-async def ask_tutor(request: TeachRequest, user=Depends(require_auth)):
+async def ask_tutor(request: TeachRequest, http_request: Request, user=Depends(require_auth)):
     level_desc = get_level_description(request.level)
     prompt = f"""You are Euler, an expert Nigerian mathematics tutor.
 You are teaching a {level_desc}.
@@ -77,78 +115,64 @@ Be encouraging and patient."""
 
     response = await ask_groq(prompt, request.conversation_history)
 
-    try:
-        asyncio.create_task(log_teach_interaction(TeachLogRequest(
-            user_id=user.id,
-            topic=request.topic,
-            question=request.question,
-            response_length=len(response),
-            level=request.level,
-        )))
-    except Exception:
-        pass
+    asyncio.create_task(_log_teach(
+        user_id=user.id,
+        topic=request.topic,
+        question=request.question,
+        response_length=len(response),
+        level=request.level,
+    ))
 
     return {"success": True, "response": response, "topic": request.topic}
 
 
 @router.post("/ask/stream")
-async def ask_tutor_stream(request: TeachRequest, user=Depends(require_auth)):
-    """Streaming version of /teach/ask — sends tokens one by one."""
+async def ask_tutor_stream(request: TeachRequest, http_request: Request, user=Depends(require_auth)):
+    """Streaming version of /teach/ask — sends tokens one by one via SSE."""
     level_desc = get_level_description(request.level)
     textbook   = get_textbook(request.level)
 
-    msgs = [
-        {
-            "role": "system",
-            "content": (
-                f"You are Euler, an expert Nigerian mathematics tutor.\n"
-                f"You are teaching a {level_desc}.\n"
-                f"Textbook reference: {textbook}\n\n"
-                f"Topic: {request.topic}\n\n"
-                "Explain thoroughly with step-by-step working. "
-                "Use LaTeX for all mathematical expressions "
-                "(inline: \\(...\\), display: $$...$$). "
-                "Be encouraging and patient."
-            ),
-        }
-    ]
+    system_content = (
+        f"You are Euler, an expert Nigerian mathematics tutor.\n"
+        f"You are teaching a {level_desc}.\n"
+        f"Textbook reference: {textbook}\n\n"
+        f"Topic: {request.topic}\n\n"
+        "Explain thoroughly with step-by-step working. "
+        "Use LaTeX for all mathematical expressions "
+        "(inline: \\(...\\), display: $$...$$). "
+        "Be encouraging and patient."
+    )
 
+    # Build the conversation history with the system message prepended
+    history_with_system = [{"role": "system", "content": system_content}]
     for turn in request.conversation_history:
         role    = turn.get("role", "user")
         content = turn.get("content", "")
         if role in ("user", "assistant") and content:
-            msgs.append({"role": role, "content": content})
+            history_with_system.append({"role": role, "content": content})
 
-    msgs.append({"role": "user", "content": request.question})
+    # Fire-and-forget logging (response_length=0 for streaming — we don't buffer)
+    asyncio.create_task(_log_teach(
+        user_id=user.id,
+        topic=request.topic,
+        question=request.question,
+        response_length=0,
+        level=request.level,
+    ))
 
-    def _stream_sse():
-        client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
-        completion = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=msgs,
-            stream=True,
-            max_tokens=2048,
-            temperature=0.3,
-        )
-        for chunk in completion:
-            delta = chunk.choices[0].delta
-            if delta and delta.content:
-                yield f"data: {json.dumps({'token': delta.content})}\n\n"
+    async def _event_stream():
+        try:
+            async for token in ask_groq_stream(
+                user_message=request.question,
+                conversation_history=history_with_system,
+            ):
+                yield f"data: {json.dumps({'token': token})}\n\n"
+        except Exception as exc:
+            yield f"data: {json.dumps({'token': f'[ERROR] {exc}'})}\n\n"
         yield "data: [DONE]\n\n"
 
-    try:
-        asyncio.create_task(log_teach_interaction(TeachLogRequest(
-            user_id=user.id,
-            topic=request.topic,
-            question=request.question,
-            response_length=0,
-            level=request.level,
-        )))
-    except Exception:
-        pass
-
     return StreamingResponse(
-        _stream_sse(),
+        _event_stream(),
         media_type="text/event-stream",
         headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
     )

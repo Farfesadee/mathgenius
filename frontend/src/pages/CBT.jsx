@@ -325,48 +325,7 @@ export default function CBT() {
 
     const { score, percentage } = await completeCBTSession(sessionId, answerRows, timeTaken)
 
-    try {
-      const [statResult, streakResult] = await Promise.all([
-        recordCBTResult(user.id, {
-          score, total: questions.length,
-          timeTaken, answers: answerRows, examType,
-        }),
-        updateStreak(user.id),
-      ])
-      const allNewBadges = [
-        ...(statResult?.newBadges || []),
-        ...(streakResult?.newBadges || []),
-      ]
-      setToast({ xpGained: statResult?.xpGained || 0, newBadges: allNewBadges })
-
-      await createNotification(user.id, {
-        type: 'cbt_complete',
-        title: `CBT Result: ${percentage}% (${getGrade(percentage)})`,
-        message: `${examType} · ${score}/${questions.length} correct · ${Math.round(timeTaken / 60)}m`,
-        icon: percentage >= 70 ? '🏆' : percentage >= 50 ? '📊' : '📝',
-        link: '/cbt-history',
-      })
-
-      if (streakResult?.streakIncreased && streakResult.newStreak > 1) {
-        await createNotification(user.id, {
-          type: 'streak',
-          title: `🔥 ${streakResult.newStreak}-day streak!`,
-          message: 'Keep it up — study again tomorrow to extend your streak.',
-          icon: '🔥',
-          link: '/mastery',
-        })
-      }
-    } catch {
-      // stats failure is non-critical
-    }
-
-    try {
-      const res = await generateCBTReport(
-        answerRows, score, questions.length, timeTaken, examType, topic
-      )
-      setAiSummary(res.data.summary)
-    } catch { setAiSummary('') }
-
+    // ── Show report screen immediately ────────────────────────────────
     setReport({
       answers: answerRows, score, percentage,
       total: questions.length, timeTaken,
@@ -374,7 +333,50 @@ export default function CBT() {
     })
     setScreen('report')
     setSubmitting(false)
-    await loadHistory()
+
+    // ── Fire ALL background work in parallel so nothing blocks anything ──
+    // AI summary runs at the same time as stats/streak/notifications
+    generateCBTReport(answerRows, score, questions.length, timeTaken, examType, topic)
+      .then(res => setAiSummary(res.data.summary))
+      .catch(() => setAiSummary(''))
+
+    // Stats + streak + notifications (non-critical, fully background)
+    ;(async () => {
+      try {
+        const [statResult, streakResult] = await Promise.all([
+          recordCBTResult(user.id, {
+            score, total: questions.length,
+            timeTaken, answers: answerRows, examType,
+          }),
+          updateStreak(user.id),
+        ])
+        const allNewBadges = [
+          ...(statResult?.newBadges || []),
+          ...(streakResult?.newBadges || []),
+        ]
+        setToast({ xpGained: statResult?.xpGained || 0, newBadges: allNewBadges })
+
+        await createNotification(user.id, {
+          type: 'cbt_complete',
+          title: `CBT Result: ${percentage}% (${getGrade(percentage)})`,
+          message: `${examType} · ${score}/${questions.length} correct · ${Math.round(timeTaken / 60)}m`,
+          icon: percentage >= 70 ? '🏆' : percentage >= 50 ? '📊' : '📝',
+          link: '/cbt-history',
+        })
+
+        if (streakResult?.streakIncreased && streakResult.newStreak > 1) {
+          await createNotification(user.id, {
+            type: 'streak',
+            title: `🔥 ${streakResult.newStreak}-day streak!`,
+            message: 'Keep it up — study again tomorrow to extend your streak.',
+            icon: '🔥',
+            link: '/mastery',
+          })
+        }
+      } catch { /* non-critical */ }
+
+      loadHistory()
+    })()
   }, [questions, answers, sessionId, startTime, submitting, examType, topic, difficulty])
 
   const fetchExplanation = async (answer) => {
@@ -871,16 +873,25 @@ export default function CBT() {
               ))}
             </div>
 
-            {aiSummary && (
-              <div className="bg-[#e8f4f4] border border-[var(--color-teal)]
-                              rounded-2xl p-5 mb-4">
-                <p className="font-mono text-[10px] uppercase tracking-widest
-                               text-[var(--color-teal)] mb-2">
-                  🧠 Euler's Feedback
-                </p>
+            <div className="bg-[#e8f4f4] border border-[var(--color-teal)]
+                            rounded-2xl p-5 mb-4">
+              <p className="font-mono text-[10px] uppercase tracking-widest
+                             text-[var(--color-teal)] mb-2">
+                🧠 Euler's Feedback
+              </p>
+              {aiSummary ? (
                 <p className="text-[var(--color-ink)] text-sm leading-relaxed">{aiSummary}</p>
-              </div>
-            )}
+              ) : (
+                <div className="space-y-2">
+                  <div className="h-3 bg-[var(--color-teal)]/20 rounded animate-pulse w-full" />
+                  <div className="h-3 bg-[var(--color-teal)]/20 rounded animate-pulse w-4/5" />
+                  <div className="h-3 bg-[var(--color-teal)]/20 rounded animate-pulse w-3/5" />
+                  <p className="text-xs text-[var(--color-teal)]/60 mt-1 italic">
+                    Generating personalised feedback…
+                  </p>
+                </div>
+              )}
+            </div>
 
             <button onClick={() => setScreen('setup')}
               className="w-full btn-primary py-3 text-sm justify-center">

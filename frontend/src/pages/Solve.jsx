@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { supabase } from '../lib/supabase'
+import { useAuth } from '../context/AuthContext'
+import { saveBookmark } from '../lib/bookmarks'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
@@ -124,7 +126,7 @@ function extractAnswer(data) {
 }
 
 // ── Result panel (shown in right column) ─────────────────────────────
-function ResultPanel({ raw, mode, expression, onExplain, explaining, explanation }) {
+function ResultPanel({ raw, mode, expression, onExplain, explaining, explanation, userId }) {
   const modeConfig = MODES.find(m => m.id === mode)
   const parsed = raw ? extractAnswer(raw) : null
 
@@ -145,17 +147,30 @@ function ResultPanel({ raw, mode, expression, onExplain, explaining, explanation
             {modeConfig?.label} Result
           </span>
         </div>
-        <button
-          onClick={onExplain}
-          disabled={explaining || !!parsed.error}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold
-                     border-2 border-[var(--color-border)] hover:border-[var(--color-teal)]
-                     hover:text-[var(--color-teal)] transition-all disabled:opacity-40">
-          {explaining
-            ? <><span className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" /> Explaining...</>
-            : '🧠 Explain Steps'
-          }
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={onExplain}
+            disabled={explaining || !!parsed.error}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold
+                       border-2 border-[var(--color-border)] hover:border-[var(--color-teal)]
+                       hover:text-[var(--color-teal)] transition-all disabled:opacity-40">
+            {explaining
+              ? <><span className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" /> Explaining...</>
+              : '🧠 Explain Steps'
+            }
+          </button>
+          {!parsed.error && userId && (
+            <BookmarkButton
+              userId={userId}
+              title={expression}
+              content={parsed.value + (parsed.steps?.length ? '\n\n' + parsed.steps.join('\n') : '')}
+              expression={expression}
+              result={parsed.value}
+              topic={mode}
+              type="solution"
+            />
+          )}
+        </div>
       </div>
 
       {/* Answer */}
@@ -688,6 +703,41 @@ function CameraTab() {
 }
 
 // ── Main page ─────────────────────────────────────────────────────────
+// ── Bookmark button (reusable within Solve) ──────────────────────────
+function BookmarkButton({ userId, title, content, expression, result, topic, type }) {
+  const [saved,   setSaved]   = useState(false)
+  const [saving,  setSaving]  = useState(false)
+
+  const handleSave = async () => {
+    if (saved || saving || !userId) return
+    setSaving(true)
+    try {
+      await saveBookmark({ userId, type, title, content, expression, result, topic })
+      setSaved(true)
+    } catch {
+      // silent fail
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  return (
+    <button
+      onClick={handleSave}
+      disabled={saved || saving}
+      title={saved ? 'Saved!' : 'Save to bookmarks'}
+      className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold border-2
+                  transition-all disabled:opacity-60
+                  ${ saved
+                    ? 'border-[var(--color-gold)] text-[var(--color-gold)] bg-amber-50'
+                    : 'border-[var(--color-border)] hover:border-[var(--color-gold)] hover:text-[var(--color-gold)]'
+                 }`}>
+      {saving ? <span className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" />
+               : saved ? '🔖 Saved' : '🔖 Save'}
+    </button>
+  )
+}
+
 export default function Solve() {
   const [tab,         setTab]         = useState('type')
   const [mode,        setMode]        = useState('solve')
@@ -708,7 +758,7 @@ export default function Solve() {
       const data = await callSolve(clean, evalMode)
       setResult(data)
     } catch {
-      setError('Could not connect to backend. Make sure it is running on port 8000.')
+      setError('Something went wrong. Please check your expression and try again.')
       setResult(null)
     } finally {
       setLoading(false)
@@ -759,6 +809,7 @@ export default function Solve() {
     setTimeout(() => { el.focus(); el.setSelectionRange(start + text.length, start + text.length) }, 0)
   }
 
+  const { user } = useAuth()
   const activeMode = MODES.find(m => m.id === mode)
 
   return (
@@ -991,6 +1042,7 @@ export default function Solve() {
                 onExplain={handleExplain}
                 explaining={explaining}
                 explanation={explanation}
+                userId={user?.id}
               />
             ) : (
               /* Placeholder when no result yet */

@@ -141,7 +141,7 @@ function LandingChat() {
               Try Euler — no account needed
             </p>
             <p className="text-sm text-[var(--color-muted)] max-w-xs">
-              Ask any WAEC, JAMB or NECO maths question and get a full step-by-step explanation.
+              Ask any WAEC, JAMB, NECO or BECE maths question and get a full step-by-step explanation.
             </p>
             <div className="flex flex-wrap gap-2 justify-center mt-2">
               {DEMO_STARTERS.map(q => (
@@ -313,12 +313,14 @@ export default function Landing() {
           <h1 className="font-serif font-black text-5xl sm:text-6xl lg:text-7xl
                          tracking-tight leading-[1.05] mb-6">
             Ace Your{' '}
-            <span className="text-[var(--color-teal)]">WAEC</span>
+            <span className="text-[var(--color-teal)]">JAMB</span>
             {', '}
-            <span className="text-[var(--color-gold)]">JAMB</span>
-            {' & '}
+            <span className="text-[var(--color-gold)]">WAEC</span>
+            {', '}
             <span className="text-[var(--color-teal)]">NECO</span>
-            {' '}Maths
+            {' & '}
+            <span className="text-[var(--color-gold)]">BECE</span>
+            {' '}Mathematics Examinations.
           </h1>
 
           <p className="text-xl text-[var(--color-muted)] max-w-2xl mx-auto mb-10
@@ -396,7 +398,7 @@ export default function Landing() {
               Everything you need to pass
             </h2>
             <p className="text-[var(--color-muted)] mt-3 max-w-xl mx-auto">
-              One platform for all your maths exam preparation — from learning
+              One platform for all your maths exam preparation from learning
               concepts to full CBT simulations.
             </p>
           </div>

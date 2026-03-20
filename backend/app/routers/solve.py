@@ -77,7 +77,7 @@ Make it very clear, warm and easy for a student to understand."""
 
 
 @router.post("/image")
-async def solve_from_image(request: ImageSolveRequest, user=Depends(require_auth)):
+async def solve_from_image(request: ImageSolveRequest, http_request: Request, user=Depends(require_auth)):
     instruction = (
         request.extra_instruction or
         (
@@ -693,7 +693,7 @@ async def explain_solution_stream(request: ExplainStreamRequest, user=Depends(re
 
 
 @router.post("/image/stream")
-async def solve_from_image_stream(request: ImageStreamRequest, user=Depends(require_auth)):
+async def solve_from_image_stream(request: ImageStreamRequest, http_request: Request, user=Depends(require_auth)):
     """Streaming version of /solve/image — used by Image Upload and Camera Snap tabs."""
     instruction = (
         request.extra_instruction or

@@ -30,7 +30,7 @@ export default function Home() {
 
           <h1 className="font-serif font-black leading-none tracking-tighter"
               style={{ fontSize: 'clamp(46px, 5vw, 72px)' }}>
-            Learn maths<br />
+            Learn mathematics<br />
             the{' '}
             <em className="not-italic font-light text-[var(--color-teal)]">smart</em>
             <br />way.
@@ -38,7 +38,7 @@ export default function Home() {
 
           <p className="text-[var(--color-muted)] text-lg leading-relaxed
                         max-w-md mt-6 mb-10">
-            Solve any equation instantly. Learn from the world's best engineering
+            Solve any equation instantly. Learn from the world's best
             mathematics textbooks. Powered by AI — built for secondary school
             and university students in Nigeria and beyond.
           </p>
@@ -114,7 +114,7 @@ export default function Home() {
             {
               icon: '📝',
               title: 'Past Questions',
-              desc: 'Real WAEC, NECO and JAMB past questions from 1998 to present with full worked solutions from Euler.',
+              desc: 'Real WAEC, NECO, JAMB and BECE past questions from 1998 to present with full worked solutions from Euler.',
             },
             {
               icon: '🖥️',
@@ -206,7 +206,7 @@ export default function Home() {
           </h2>
           <p className="text-white/70 text-lg mb-8">
             Join thousands of students already using MathGenius to prepare
-            for WAEC, NECO and JAMB.
+            for WAEC, NECO, JAMB and BECE.
           </p>
           {user ? (
             <div className="flex gap-3 justify-center flex-wrap">

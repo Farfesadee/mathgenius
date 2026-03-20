@@ -155,7 +155,8 @@ export default function Login({ defaultTab = 'login' }) {
     } else {
       // Clear onboarding storage
       sessionStorage.removeItem('onboarding_level')
-      setSuccess('Account created! You can now sign in.')
+      setSuccess('Almost there! Check your email inbox and click the confirmation link to activate your account.')
+
     }
     setLoading(false)
   }

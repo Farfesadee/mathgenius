@@ -79,8 +79,15 @@ def differentiate(expression: str, variable: str = 'x') -> dict:
             "result":   str(deriv),
             "latex":    f"\\frac{{d}}{{d{variable}}}\\left({sp.latex(parsed)}\\right) = {sp.latex(deriv)}"
         }
-    except Exception as e:
-        return {"type": "error", "error": str(e)}
+    except Exception:
+        return {
+            "type": "error",
+            "error": (
+                f"Could not differentiate \u2018{expression}\u2019. "
+                "Make sure you use standard notation (e.g. x^2, sin(x), e^x) "
+                "and that x is your variable."
+            )
+        }
 
 
 def integrate_expr(expression: str, variable: str = 'x') -> dict:
@@ -95,5 +102,12 @@ def integrate_expr(expression: str, variable: str = 'x') -> dict:
             "result":   str(integral),
             "latex":    f"\\int {sp.latex(parsed)}\\, d{variable} = {sp.latex(integral)} + C"
         }
-    except Exception as e:
-        return {"type": "error", "error": str(e)}
+    except Exception:
+        return {
+            "type": "error",
+            "error": (
+                f"Could not integrate \u2018{expression}\u2019. "
+                "Make sure you use standard notation (e.g. x^2, cos(x)) "
+                "and that x is your variable."
+            )
+        }
