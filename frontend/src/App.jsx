@@ -45,16 +45,46 @@ import QuestionBank from './pages/QuestionBank'
 
 function AppRoutes() {
   const { user } = useAuth()
+  const hasCompletedOnboarding = typeof window !== 'undefined'
+    && localStorage.getItem('mg_onboarding_done') === '1'
+
   return (
     <>
       <InstallBanner />
       <Routes>
         {/* Public auth pages — no layout */}
-        <Route path="/login" element={<Login defaultTab="login" />} />
-        <Route path="/signup" element={<Login defaultTab="signup" />} />
+        <Route
+          path="/login"
+          element={
+            user
+              ? <Navigate to="/dashboard" replace />
+              : hasCompletedOnboarding
+                ? <Login defaultTab="login" />
+                : <Navigate to="/onboarding" replace />
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            user
+              ? <Navigate to="/dashboard" replace />
+              : hasCompletedOnboarding
+                ? <Login defaultTab="signup" />
+                : <Navigate to="/onboarding" replace />
+          }
+        />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/onboarding" element={user ? <Navigate to="/dashboard" replace /> : <Onboarding />} />
+        <Route
+          path="/onboarding"
+          element={
+            user
+              ? <Navigate to="/dashboard" replace />
+              : hasCompletedOnboarding
+                ? <Navigate to="/signup" replace />
+                : <Onboarding />
+          }
+        />
 
         {/* Landing */}
         <Route path="/" element={<Landing />} />

@@ -7,6 +7,7 @@ import { supabase } from '../../lib/supabase'
 import { saveBookmark } from '../../lib/bookmarks'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const overviewSentFor = new Set()
 
 // ── Streaming helper ──────────────────────────────────────────────────────────
 async function streamTeach({ question, topic, level, history, userId, onToken, onDone, onError }) {
@@ -443,10 +444,15 @@ export default function ChatWindow({ topic, level, conversation, onConversationU
 
   // Auto-ask overview when a new topic is selected and no messages yet
   useEffect(() => {
-    if (topic && messages.length === 0 && !streaming) {
-      sendMessage(`Give me an overview of ${topic}`)
-    }
-  }, [topic, conversation?.id])
+    if (!topic || messages.length > 0 || streaming) return
+    if (user && !conversation?.id) return
+
+    const key = conversation?.id ? `conv:${conversation.id}` : `topic:${topic}`
+    if (overviewSentFor.has(key)) return
+    overviewSentFor.add(key)
+
+    sendMessage(`Give me an overview of ${topic}`)
+  }, [topic, conversation?.id, user?.id, messages.length, streaming])
 
   const sendMessage = useCallback(async (text) => {
     const content = (text || input).trim()

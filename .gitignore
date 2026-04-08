@@ -28,3 +28,7 @@ backend/debug_output.txt
 .DS_Store
 *.log
 "@ | Set-Content .gitignore
+
+requirements.txt
+
+PRESENTATION_GUIDE.md

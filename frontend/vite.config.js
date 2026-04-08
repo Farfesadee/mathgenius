@@ -94,6 +94,8 @@ export default defineConfig({
   ],
 
   server: {
+    port: 5173,
+    strictPort: true,
     historyApiFallback: true,
     headers: { 'Cache-Control': 'no-store' },
   },

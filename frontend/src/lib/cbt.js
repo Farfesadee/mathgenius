@@ -51,6 +51,7 @@ export async function fetchCBTQuestions({
     .not('option_b', 'is', null)
     .not('option_c', 'is', null)
     .not('option_d', 'is', null)
+    .limit(Math.max(1, count))
 
   const { data, error } = await query
   if (error || !data?.length) return { data: [], error }
@@ -91,14 +92,18 @@ export async function createCBTSession(userId, config) {
   const { data, error } = await supabase
     .from('cbt_sessions')
     .insert({
-      user_id:         userId,
-      exam_type:       config.examType,
-      topic:           config.topic      || null,
-      difficulty:      config.difficulty || 'mixed',
-      year:            config.year       || null,
-      duration_mins:   config.duration,
-      total_questions: config.count,
-      status:          'ongoing',
+      user_id:           userId,
+      exam_type:         config.examType,
+      topic:             config.topic      || null,
+      difficulty:        config.difficulty || 'mixed',
+      year:              config.year       || null,
+      duration_mins:     config.duration,
+      total_questions:   config.count,
+      questions_snapshot: config.questions_snapshot || null,
+      answers_so_far:    config.answers_so_far || {},
+      flagged_so_far:    config.flagged_so_far || {},
+      current_idx:       config.current_idx || 0,
+      status:            'ongoing',
     })
     .select()
     .single()

@@ -14,14 +14,14 @@ from datetime import date, timedelta
 from fastapi          import APIRouter, HTTPException, Depends
 from fastapi.responses import StreamingResponse
 from pydantic         import BaseModel
-from groq             import Groq
+from groq             import AsyncGroq
 from supabase         import create_client
 
 from app.dependencies import require_auth
 
 router = APIRouter(prefix="/study-plan", tags=["study-plan"])
 
-groq_client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+groq_client = AsyncGroq(api_key=os.environ.get("GROQ_API_KEY"))
 
 
 def get_supabase():
@@ -149,7 +149,7 @@ async def generate_study_plan(
         full_text = ""
 
         try:
-            stream = groq_client.chat.completions.create(
+            stream = await groq_client.chat.completions.create(
                 model="llama-3.3-70b-versatile",
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=4096,
@@ -157,7 +157,7 @@ async def generate_study_plan(
                 stream=True,
             )
 
-            for chunk in stream:
+            async for chunk in stream:
                 delta = chunk.choices[0].delta.content or ""
                 full_text += delta
                 yield delta

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useLocalStorageState } from '../hooks/useLocalStorageState'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
 import { useSearchParams } from 'react-router-dom'
@@ -13,6 +14,19 @@ import {
   updateSpacedRepetition, getDueTopics,
 } from '../lib/learning'
 import { updateTopicProgress } from '../lib/progress'
+
+function formatPracticeTakenAt(timestamp) {
+  if (!timestamp) return ''
+  const date = new Date(timestamp)
+  const weekday = date.toLocaleDateString('en-US', { weekday: 'long' })
+  const month = date.toLocaleDateString('en-US', { month: 'long' })
+  const day = date.getDate()
+  const year = date.getFullYear()
+  const time = date.toLocaleTimeString('en-US', {
+    hour: 'numeric', minute: '2-digit', hour12: true,
+  })
+  return `${weekday} ${month} ${day}, ${year} · ${time}`
+}
 
 // ── Video helpers ─────────────────────────────────────────────────────────────
 async function fetchVideos(topic, level) {
@@ -413,35 +427,39 @@ export default function Practice() {
   // ── Taught topics state ───────────────────────────────────────────
   const [topicsByLevel,  setTopicsByLevel]  = useState({})   // { secondary: [...], jss: [...] }
   const [topicsLoading,  setTopicsLoading]  = useState(true)
-  const [selectedLevel,  setSelectedLevel]  = useState('')   // currently selected level tab
+  const [selectedLevel,  setSelectedLevel]  = useLocalStorageState('mathgenius_practice_selected_level', '')   // currently selected level tab
 
   // Setup state
-  const [topic,      setTopic]      = useState('')
-  const [difficulty, setDifficulty] = useState('easy')
+  const [topic,      setTopic]      = useLocalStorageState('mathgenius_practice_topic', '')
+  const [difficulty, setDifficulty] = useLocalStorageState('mathgenius_practice_difficulty', 'easy')
   const [started,    setStarted]    = useState(false)
-  const [setupTab,   setSetupTab]   = useState('practice')  // 'practice' | 'videos'
+  const [setupTab,   setSetupTab]   = useLocalStorageState('mathgenius_practice_setup_tab', 'practice')  // 'practice' | 'videos'
 
   // Session state
   const [sessionId,      setSessionId]      = useState(null)
-  const [questionNumber, setQuestionNumber] = useState(1)
-  const [question,       setQuestion]       = useState('')
-  const [answer,         setAnswer]         = useState('')
-  const [hint,           setHint]           = useState('')
-  const [studentAnswer,  setStudentAnswer]  = useState('')
-  const [showHint,       setShowHint]       = useState(false)
-  const [submitted,      setSubmitted]      = useState(false)
-  const [gradeResult,    setGradeResult]    = useState(null)
-  const [showAnswer,     setShowAnswer]     = useState(false)
+  const [questionNumber, setQuestionNumber] = useLocalStorageState('mathgenius_practice_question_number', 1)
+  const [question,       setQuestion]       = useLocalStorageState('mathgenius_practice_question', '')
+  const [answer,         setAnswer]         = useLocalStorageState('mathgenius_practice_answer', '')
+  const [hint,           setHint]           = useLocalStorageState('mathgenius_practice_hint', '')
+  const [studentAnswer,  setStudentAnswer]  = useLocalStorageState('mathgenius_practice_student_answer', '')
+  const [showHint,       setShowHint]       = useLocalStorageState('mathgenius_practice_show_hint', false)
+  const [submitted,      setSubmitted]      = useLocalStorageState('mathgenius_practice_submitted', false)
+  const [gradeResult,    setGradeResult]    = useLocalStorageState('mathgenius_practice_grade_result', null)
+  const [showAnswer,     setShowAnswer]     = useLocalStorageState('mathgenius_practice_show_answer', false)
 
   // Progress
-  const [score,          setScore]          = useState(0)
-  const [correctCount,   setCorrectCount]   = useState(0)
+  const [score,          setScore]          = useLocalStorageState('mathgenius_practice_score', 0)
+  const [correctCount,   setCorrectCount]   = useLocalStorageState('mathgenius_practice_correct_count', 0)
   const [loading, setLoading] = useState(false)
   const [finished, setFinished] = useState(false)
   const [history,  setHistory]  = useState([])
+  const [reviewSession, setReviewSession] = useState(null)
+  const [reviewAttempts, setReviewAttempts] = useState([])
+  const [reviewLoading, setReviewLoading] = useState(false)
+  const [showReviewModal, setShowReviewModal] = useState(false)
 
   // Timer
-  const [elapsed, setElapsed] = useState(0)
+  const [elapsed, setElapsed] = useLocalStorageState('mathgenius_practice_elapsed', 0)
   const timerRef = useRef(null)
 
   // ── Ask Euler state ───────────────────────────────────────────────
@@ -530,18 +548,17 @@ export default function Practice() {
       .single()
       .then(({ data }) => {
         if (!data) return
-        // Restore topic/level/difficulty from saved session
+        // Restore saved setup only, but do not auto-start the session.
         if (data.topic)      setTopic(data.topic)
-        if (data.level)      setLevel(data.level)
+        if (data.level)      setSelectedLevel(data.level)
         if (data.difficulty) setDifficulty(data.difficulty)
         setSessionId(data.id)
-        // Restore score from attempts
         const attempts = data.practice_attempts || []
         const correct  = attempts.filter(a => a.is_correct).length
         setCorrectCount(correct)
         setScore(attempts.length > 0 ? Math.round((correct / attempts.length) * 100) : 0)
         setQuestionNumber(attempts.length + 1)
-        setStarted(true)
+        // Do not setStarted(true) here. User must explicitly continue.
       })
   }, [user?.id])
 
@@ -583,16 +600,13 @@ export default function Practice() {
   const topicsForLevel  = selectedLevel ? (topicsByLevel[selectedLevel] || []) : []
   const hasAnyTopics    = availableLevels.length > 0
 
-  // ── URL auto-start ────────────────────────────────────────────────
+  // ── Parse URL params without auto-start ─────────────────────────────
   useEffect(() => {
     const urlTopic      = searchParams.get('topic')
     const urlAssignment = searchParams.get('assignment')
-    const autoStart     = searchParams.get('auto') === 'true'
     if (urlAssignment) setAssignmentId(urlAssignment)
-    if (urlTopic && autoStart && topic === urlTopic && !started && user) {
-      startSession()
-    }
-  }, [topic])
+    if (urlTopic) setTopic(urlTopic)
+  }, [searchParams])
 
   // ── Session elapsed timer ────────────────────────────────────────
   useEffect(() => {
@@ -629,6 +643,32 @@ export default function Practice() {
   const loadHistory = async () => {
     const { data } = await getSessionHistory(user.id)
     setHistory(data || [])
+  }
+
+  const loadReviewAttempts = async (sessionId) => {
+    setReviewLoading(true)
+    const { data } = await supabase
+      .from('practice_attempts')
+      .select('*')
+      .eq('session_id', sessionId)
+      .order('id', { ascending: true })
+    setReviewAttempts(data || [])
+    setReviewLoading(false)
+  }
+
+  const openReview = async (session) => {
+    setReviewSession(session)
+    setShowReviewModal(true)
+    await loadReviewAttempts(session.id)
+  }
+
+  const retakeSession = (session) => {
+    setTopic(session.topic)
+    setDifficulty(session.difficulty || 'easy')
+    if (session.level) setSelectedLevel(session.level)
+    setSetupTab('practice')
+    setStarted(false)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const [sessionError, setSessionError] = useState(null)
@@ -1513,34 +1553,45 @@ Be warm, encouraging, and specific. Address the student directly.`
                   </p>
                 </div>
               ) : history.map(session => (
-                <button
-                  key={session.id}
-                  onClick={() => { setTopic(session.topic); setDifficulty(session.difficulty || 'easy') }}
-                  className="w-full px-5 py-3 hover:bg-[var(--color-cream)]
-                             transition-colors text-left group"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium text-sm text-[var(--color-ink)] truncate
-                                    group-hover:text-[var(--color-teal)] transition-colors">
+                <div key={session.id} className="w-full px-5 py-4 hover:bg-[var(--color-cream)] transition-colors">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="min-w-0">
+                      <p className="font-medium text-sm text-[var(--color-ink)] truncate">
                         {session.topic}
                       </p>
                       <p className="text-xs text-[var(--color-muted)] mt-0.5">
                         {DIFFICULTY_CONFIG[session.difficulty]?.emoji} {session.difficulty}
                         &nbsp;·&nbsp;
                         {session.level && (LEVEL_LABELS[session.level] || session.level)}
-                        &nbsp;·&nbsp;
-                        {new Date(session.completed_at).toLocaleDateString()}
+                      </p>
+                      <p className="text-[11px] text-[var(--color-muted)] mt-1">
+                        {formatPracticeTakenAt(session.completed_at)}
                       </p>
                     </div>
-                    <div className={`text-lg font-black font-serif shrink-0 ml-3
-                      ${session.score >= 80 ? 'text-green-600'
-                        : session.score >= 50 ? 'text-yellow-600'
-                        : 'text-red-500'}`}>
-                      {session.score}%
+                    <div className="flex flex-col items-end gap-2 shrink-0">
+                      <div className={`text-lg font-black font-serif
+                        ${session.score >= 80 ? 'text-green-600'
+                          : session.score >= 50 ? 'text-yellow-600'
+                          : 'text-red-500'}`}>
+                        {session.score}%
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          type="button"
+                          onClick={() => openReview(session)}
+                          className="rounded-full border border-[var(--color-teal)] bg-[var(--color-teal)]/10 text-[11px] font-semibold text-[var(--color-teal)] px-3 py-1 hover:bg-[var(--color-teal)]/20 transition">
+                          Review
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => retakeSession(session)}
+                          className="rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] text-[11px] font-semibold text-[var(--color-ink)] px-3 py-1 hover:border-[var(--color-teal)] hover:text-[var(--color-teal)] transition">
+                          Retake
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </button>
+                </div>
               ))}
             </div>
           </div>

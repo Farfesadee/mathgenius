@@ -8,7 +8,7 @@ load_dotenv()
 client = AsyncGroq(api_key=os.getenv("GROQ_API_KEY"))
 
 SYSTEM_PROMPT = r"""You are Euler, a friendly and brilliant mathematics tutor for 
-secondary school and university students in Nigeria and beyond.
+primary school, secondary school, and university students in Nigeria and beyond.
 
 TONE: Warm, encouraging, patient. Talk like a brilliant friend, not a textbook.
 Say things like "Great question!", "Let's work through this together!", "You've got this!"
@@ -34,7 +34,8 @@ STEPS FORMAT — every step must be on its own line, clearly numbered:
 
 Never run steps together on one line.
 
-CURRICULUM — full Nigerian secondary school and university syllabus:
+CURRICULUM — full Nigerian primary, secondary school, and university syllabus:
+Primary: Counting, place value, basic operations, fractions, money, shapes, measurement, and simple data handling
 Secondary: Number Bases, Surds, Indices, Logarithms, Bearings, Longitude & Latitude,
 Earth Geometry, Quadratic Equations, Polynomials, Variation, Sequences, Binomial 
 Expansion, Trigonometry, Circle Theorems, Mensuration, Matrices, Vectors, Statistics, Probability
@@ -67,15 +68,26 @@ async def _groq_with_retry(fn, *args, **kwargs):
 
 async def ask_groq(
     user_message: str,
-    conversation_history: list = [],
+    conversation_history: list = None,
     image_base64: str = None,
     image_type: str = "image/jpeg",
+    rag_query: str = None,
+    rag_level: str = None,
 ) -> str:
     """
     Async version — awaitable, does not block the event loop.
     Use this for non-streaming responses (overview, wiki, grading etc.)
     """
-    messages = await _build_messages(user_message, conversation_history, image_base64, image_type)
+    if conversation_history is None:
+        conversation_history = []
+    messages = await _build_messages(
+        user_message,
+        conversation_history,
+        image_base64,
+        image_type,
+        rag_query=rag_query,
+        rag_level=rag_level,
+    )
 
     async def _call():
         return await client.chat.completions.create(
@@ -94,15 +106,26 @@ async def ask_groq(
 
 async def ask_groq_stream(
     user_message: str,
-    conversation_history: list = [],
+    conversation_history: list = None,
     image_base64: str = None,
     image_type: str = "image/jpeg",
+    rag_query: str = None,
+    rag_level: str = None,
 ):
     """
     Async generator — yields text chunks as they arrive from Groq.
     Use this for the /teach/ask streaming endpoint.
     """
-    messages = await _build_messages(user_message, conversation_history, image_base64, image_type)
+    if conversation_history is None:
+        conversation_history = []
+    messages = await _build_messages(
+        user_message,
+        conversation_history,
+        image_base64,
+        image_type,
+        rag_query=rag_query,
+        rag_level=rag_level,
+    )
 
     stream = await client.chat.completions.create(
         model=_model(image_base64),
@@ -128,13 +151,21 @@ def _model(image_base64):
     )
 
 
-async def _build_messages(user_message, conversation_history, image_base64, image_type):
+async def _build_messages(
+    user_message,
+    conversation_history,
+    image_base64,
+    image_type,
+    rag_query=None,
+    rag_level=None,
+):
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
 
     # RAG context — only for text questions
-    if not image_base64 and user_message:
+    retrieval_query = (rag_query or user_message or "").strip()
+    if not image_base64 and retrieval_query:
         from app.rag.retriever import retrieve_context
-        context = retrieve_context(user_message)
+        context = retrieve_context(retrieval_query, level=rag_level)
         if context:
             messages.append({"role": "system", "content": context})
 
@@ -160,4 +191,4 @@ async def _build_messages(user_message, conversation_history, image_base64, imag
     messages.append({"role": "user", "content": content})
     return messages
 
-
+

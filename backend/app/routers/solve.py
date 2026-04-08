@@ -132,10 +132,8 @@ Do not add any text before QUESTION: or after the HINT: line."""
     response = await ask_groq(prompt)
 
     # Multi-line-safe parser: capture everything between section markers
-    import re
-    question, answer, hint = "", "", ""
-
     import re as _re
+    question, answer, hint = "", "", ""
     q_match  = _re.search(r"QUESTION:\s*(.+?)(?=\nANSWER:|\Z)",  response, _re.DOTALL)
     a_match  = _re.search(r"ANSWER:\s*(.+?)(?=\nHINT1:|\Z)",     response, _re.DOTALL)
     h1_match = _re.search(r"HINT1:\s*(.+?)(?=\nHINT2:|\Z)",      response, _re.DOTALL)

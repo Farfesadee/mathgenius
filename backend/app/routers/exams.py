@@ -40,7 +40,7 @@ This is an exam question so:
 4. End with a 'Key Examiner Tips' section
 5. Be encouraging — this student is preparing for an important exam"""
 
-    response = ask_groq(prompt)
+    response = await ask_groq(prompt)
     return {"success": True, "response": response}
 
 

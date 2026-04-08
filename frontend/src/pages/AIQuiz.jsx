@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
+import { useLocalStorageState } from '../hooks/useLocalStorageState'
 import { generateMCQ } from '../services/api'
 import { ExplanationBody } from '../utils/RenderMath'
 
@@ -128,15 +129,15 @@ export default function AIQuiz() {
   const { user, profile } = useAuth()
 
   // Initialise level from whatever Teach last used
-  const [level,      setLevel]      = useState(() => resolveLevel(null))
-  const [topic,      setTopic]      = useState('')
-  const [difficulty, setDifficulty] = useState('medium')
+  const [level,      setLevel]      = useLocalStorageState('mathgenius_aiquiz_level', resolveLevel(null))
+  const [topic,      setTopic]      = useLocalStorageState('mathgenius_aiquiz_topic', '')
+  const [difficulty, setDifficulty] = useLocalStorageState('mathgenius_aiquiz_difficulty', 'medium')
   const [generating, setGenerating] = useState(false)
-  const [question,   setQuestion]   = useState(null)
-  const [selected,   setSelected]   = useState(null)
-  const [submitted,  setSubmitted]  = useState(false)
-  const [score,      setScore]      = useState({ correct: 0, total: 0 })
-  const [error,      setError]      = useState(null)
+  const [question,   setQuestion]   = useLocalStorageState('mathgenius_aiquiz_question', null)
+  const [selected,   setSelected]   = useLocalStorageState('mathgenius_aiquiz_selected', null)
+  const [submitted,  setSubmitted]  = useLocalStorageState('mathgenius_aiquiz_submitted', false)
+  const [score,      setScore]      = useLocalStorageState('mathgenius_aiquiz_score', { correct: 0, total: 0 })
+  const [error,      setError]      = useLocalStorageState('mathgenius_aiquiz_error', null)
 
   // Re-sync level once profile loads from Supabase (handles page refresh)
   useEffect(() => {

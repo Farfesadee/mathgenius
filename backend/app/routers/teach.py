@@ -89,10 +89,10 @@ def get_level_description(level: str) -> str:
 def get_textbook(level: str) -> str:
     books = {
         "primary":    "New General Mathematics for Primary Schools",
-        "jss":        "New General Mathematics for Junior Secondary Schools (Books 1–3)",
-        "sss":        "New General Mathematics for Senior Secondary Schools (Books 1–3)",
-        "secondary":  "New General Mathematics for Senior Secondary Schools (Books 1–3)",
-        "university": "relevant university mathematics textbooks",
+        "jss":        "Mathematics Textbook for Junior Secondary Schools",
+        "sss":        "Engineering Mathematics (K.A. Stroud)",
+        "secondary":  "Engineering Mathematics (K.A. Stroud)",
+        "university": "Engineering Mathematics (K.A. Stroud)",
     }
     return books.get(level, books["sss"])
 
@@ -113,7 +113,12 @@ Please explain thoroughly with step-by-step working.
 Use LaTeX for all mathematical expressions (e.g. \\(x^2\\) inline, $$....$$ for display).
 Be encouraging and patient."""
 
-    response = await ask_groq(prompt, request.conversation_history)
+    response = await ask_groq(
+        prompt,
+        request.conversation_history,
+        rag_query=f"{request.topic}\n{request.question}",
+        rag_level=request.level,
+    )
 
     asyncio.create_task(_log_teach(
         user_id=user.id,
@@ -165,6 +170,8 @@ async def ask_tutor_stream(request: TeachRequest, http_request: Request, user=De
             async for token in ask_groq_stream(
                 user_message=request.question,
                 conversation_history=history_with_system,
+                rag_query=f"{request.topic}\n{request.question}",
+                rag_level=request.level,
             ):
                 yield f"data: {json.dumps({'token': token})}\n\n"
         except Exception as exc:
@@ -188,7 +195,11 @@ Include:
 3. Key formulas in LaTeX
 4. One fully worked example
 5. Common mistakes to avoid"""
-    response = await ask_groq(prompt)
+    response = await ask_groq(
+        prompt,
+        rag_query=request.topic,
+        rag_level=request.level,
+    )
     return {"success": True, "overview": response, "topic": request.topic}
 
 
@@ -264,7 +275,12 @@ One clear step-by-step worked example with a final boxed answer.
 
 Keep each section brief and exam-focused."""
 
-    content = await ask_groq(prompt, [])
+    content = await ask_groq(
+        prompt,
+        [],
+        rag_query=topic,
+        rag_level=level,
+    )
     return {"topic": topic, "content": content}
 
 

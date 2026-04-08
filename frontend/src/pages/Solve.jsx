@@ -738,6 +738,8 @@ function BookmarkButton({ userId, title, content, expression, result, topic, typ
   )
 }
 
+const STORAGE_KEY = 'math-genius-solve-state'
+
 export default function Solve() {
   const [tab,         setTab]         = useState('type')
   const [mode,        setMode]        = useState('solve')
@@ -749,6 +751,24 @@ export default function Solve() {
   const [explaining,  setExplaining]  = useState(false)
   const inputRef    = useRef()
   const debounceRef = useRef()
+
+  const persistState = (overrides = {}) => {
+    if (typeof window === 'undefined') return
+    try {
+      const payload = {
+        tab,
+        mode,
+        expression,
+        result,
+        error,
+        explanation,
+        ...overrides,
+      }
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(payload))
+    } catch {
+      // ignore localStorage failures
+    }
+  }
 
   const evaluate = useCallback(async (expr, evalMode) => {
     const clean = expr.trim()
@@ -765,15 +785,43 @@ export default function Solve() {
     }
   }, [])
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    try {
+      const raw = window.localStorage.getItem(STORAGE_KEY)
+      if (!raw) return
+      const saved = JSON.parse(raw)
+
+      setTab(saved.tab || 'type')
+      setMode(saved.mode || 'solve')
+      setExpression(saved.expression || '')
+      setResult(saved.result || null)
+      setError(saved.error || null)
+      setExplanation(saved.explanation || null)
+    } catch {
+      // ignore invalid storage data
+    }
+  }, [])
+
+  useEffect(() => {
+    persistState()
+  }, [tab, mode, expression, result, error, explanation])
+
   const handleModeChange = (newMode) => {
-    setMode(newMode); setExplanation(null)
+    setMode(newMode)
+    setExplanation(null)
+    setError(null)
+    persistState({ mode: newMode, explanation: null, error: null })
     if (expression.trim()) evaluate(expression, newMode)
   }
 
   const handleExpressionChange = (val) => {
-    setExpression(val); setExplanation(null)
+    setExpression(val)
+    setExplanation(null)
+    setError(null)
+    persistState({ expression: val, error: null, explanation: null })
     clearTimeout(debounceRef.current)
-    if (!val.trim()) { setResult(null); setError(null); return }
+    if (!val.trim()) { setResult(null); return }
     debounceRef.current = setTimeout(() => evaluate(val, mode), 600)
   }
 

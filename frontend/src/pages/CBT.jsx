@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import {
@@ -54,6 +55,41 @@ function formatTime(secs) {
   const m = Math.floor(secs / 60)
   const s = secs % 60
   return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
+}
+
+function formatTakenAt(timestamp) {
+  if (!timestamp) return ''
+  const date = new Date(timestamp)
+  return date.toLocaleDateString('en-US', {
+    weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
+  }) + ' · ' + date.toLocaleTimeString('en-US', {
+    hour: 'numeric', minute: '2-digit', hour12: true,
+  })
+}
+
+const CBT_STORAGE_KEYS = {
+  SETUP: 'mathgenius_cbt_setup',
+  REPORT: 'mathgenius_cbt_report',
+  SCREEN: 'mathgenius_cbt_screen',
+}
+
+function loadStoredJSON(key) {
+  if (typeof window === 'undefined') return null
+  try {
+    return JSON.parse(window.localStorage.getItem(key))
+  } catch {
+    return null
+  }
+}
+
+function saveStoredJSON(key, value) {
+  if (typeof window === 'undefined') return
+  window.localStorage.setItem(key, JSON.stringify(value))
+}
+
+function removeStored(key) {
+  if (typeof window === 'undefined') return
+  window.localStorage.removeItem(key)
 }
 
 function OptionBtn({ letter, text, selected, correct, revealed, onClick }) {
@@ -124,15 +160,25 @@ function SubmitModal({ answered, total, onConfirm, onCancel }) {
 
 export default function CBT() {
   const { user } = useAuth()
-  const [screen, setScreen] = useState('setup')
+  const navigate = useNavigate()
+  const savedSetup = loadStoredJSON(CBT_STORAGE_KEYS.SETUP)
+  const savedReport = loadStoredJSON(CBT_STORAGE_KEYS.REPORT)
+  const savedScreen = typeof window !== 'undefined'
+    ? window.localStorage.getItem(CBT_STORAGE_KEYS.SCREEN)
+    : null
+
+  const [screen, setScreen] = useState(() => {
+    if (savedScreen === 'report' && savedReport) return 'report'
+    return 'setup'
+  })
 
   // Config
-  const [examType, setExamType] = useState('JAMB')
-  const [topics, setTopics] = useState([])
-  const [difficulty, setDifficulty] = useState('mixed')
-  const [duration, setDuration] = useState(30)
-  const [count, setCount] = useState(20)
-  const [year, setYear] = useState('')
+  const [examType, setExamType] = useState(savedSetup?.examType || 'JAMB')
+  const [topics, setTopics] = useState(savedSetup?.topics || [])
+  const [difficulty, setDifficulty] = useState(savedSetup?.difficulty || 'mixed')
+  const [duration, setDuration] = useState(savedSetup?.duration || 30)
+  const [count, setCount] = useState(savedSetup?.count || 20)
+  const [year, setYear] = useState(savedSetup?.year || '')
 
   const topic = topics.length === 1
     ? topics[0]
@@ -144,6 +190,26 @@ export default function CBT() {
   const [bankStats, setBankStats] = useState({})
   const [history, setHistory] = useState([])
   const [loadingSetup, setLoadingSetup] = useState(false)
+  const [setupError, setSetupError] = useState('')
+
+  // Persist setup config across reloads
+  useEffect(() => {
+    saveStoredJSON(CBT_STORAGE_KEYS.SETUP, {
+      examType, topics, difficulty, duration, count, year,
+    })
+  }, [examType, topics, difficulty, duration, count, year])
+
+  // Persist report state across reloads
+  const [report, setReport] = useState(savedReport)
+  useEffect(() => {
+    if (report) {
+      saveStoredJSON(CBT_STORAGE_KEYS.REPORT, report)
+      window.localStorage.setItem(CBT_STORAGE_KEYS.SCREEN, 'report')
+    } else {
+      removeStored(CBT_STORAGE_KEYS.REPORT)
+      removeStored(CBT_STORAGE_KEYS.SCREEN)
+    }
+  }, [report])
 
   // Exam state
   const [questions, setQuestions] = useState([])
@@ -158,7 +224,6 @@ export default function CBT() {
   const timerRef = useRef(null)
 
   // Report state
-  const [report, setReport] = useState(null)
   const [expandedQ, setExpandedQ] = useState(null)
   const [explanations, setExplanations] = useState({})
   const [loadingExpl, setLoadingExpl] = useState({})
@@ -235,28 +300,60 @@ export default function CBT() {
   const toggleTopic = (t) =>
     setTopics(prev => prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t])
 
-  const startExam = async () => {
-    // Guard: NABTEB is theory-only, redirect user
-    if (isTheoryOnly) return
+  const parseTopicsFromHistory = (topicString) => {
+    if (!topicString) return []
+    return topicString.split(',').map(t => t.trim()).filter(Boolean)
+  }
 
-    setLoadingSetup(true)
-    const { data: qs } = await fetchCBTQuestions({
-      examType: examType === 'Mixed' ? null : examType,
-      topics: topics.length > 0 ? topics : null,
-      difficulty,
-      year: year ? parseInt(year) : null,
-      count,
-    })
+  const buildTopicLabel = (topicsList) => {
+    if (!topicsList || topicsList.length === 0) return ''
+    return topicsList.join(', ')
+  }
 
-    if (!qs || qs.length === 0) {
-      alert('No questions found for these settings. Try different filters or upload more questions.')
-      setLoadingSetup(false)
+  const prepareExam = async ({ examType: targetExam, topics: targetTopics, difficulty: targetDifficulty, year: targetYear, count: targetCount, duration: targetDuration }) => {
+    if (THEORY_ONLY_EXAMS.includes(targetExam)) {
+      navigate('/theory')
       return
     }
 
+    setReport(null)
+    setLoadingSetup(true)
+    setSetupError('')
+
+    const { data: qs } = await fetchCBTQuestions({
+      examType: targetExam === 'Mixed' ? null : targetExam,
+      topics: targetTopics && targetTopics.length > 0 ? targetTopics : null,
+      difficulty: targetDifficulty,
+      year: targetYear ? parseInt(targetYear) : null,
+      count: targetCount,
+    })
+
+    if (!qs || qs.length === 0) {
+      setSetupError('No questions found for this exam configuration. Try a different history item or adjust filters.')
+      setLoadingSetup(false)
+      return
+    }
+    setSetupError('')
+
+    setExamType(targetExam)
+    setTopics(targetTopics || [])
+    setDifficulty(targetDifficulty)
+    setYear(targetYear || '')
+    setDuration(targetDuration)
+    setCount(targetCount)
+
+    const topicLabel = buildTopicLabel(targetTopics)
     const { data: session } = await createCBTSession(user.id, {
-      examType, topic: topic || null, difficulty,
-      year: year ? parseInt(year) : null, duration, count: qs.length,
+      examType: targetExam,
+      topic: topicLabel || null,
+      difficulty: targetDifficulty,
+      year: targetYear ? parseInt(targetYear) : null,
+      duration: targetDuration,
+      count: qs.length,
+      questions_snapshot: qs,
+      answers_so_far: {},
+      flagged_so_far: {},
+      current_idx: 0,
     })
 
     setQuestions(qs)
@@ -264,20 +361,33 @@ export default function CBT() {
     setCurrentIdx(0)
     setAnswers({})
     setFlagged({})
-    setTimeLeft(duration * 60)
+    setTimeLeft(targetDuration * 60)
     setStartTime(Date.now())
     setScreen('exam')
     setLoadingSetup(false)
+  }
 
-    // Save question snapshot so we can restore on reload
-    if (session?.id) {
-      supabase.from('cbt_sessions').update({
-        questions_snapshot: qs,
-        answers_so_far: {},
-        flagged_so_far: {},
-        current_idx: 0,
-      }).eq('id', session.id).then(() => {})
-    }
+  const startExam = async () => {
+    await prepareExam({
+      examType,
+      topics,
+      difficulty,
+      year,
+      count,
+      duration,
+    })
+  }
+
+  const retakeExam = async (historyItem) => {
+    const targetTopics = parseTopicsFromHistory(historyItem.topic)
+    await prepareExam({
+      examType: historyItem.exam_type,
+      topics: targetTopics,
+      difficulty: historyItem.difficulty,
+      year: historyItem.year,
+      count: historyItem.total_questions,
+      duration: historyItem.duration_mins || duration,
+    })
   }
 
   // ── Auto-save answers + progress whenever they change ────────────
@@ -325,12 +435,15 @@ export default function CBT() {
 
     const { score, percentage } = await completeCBTSession(sessionId, answerRows, timeTaken)
 
-    // ── Show report screen immediately ────────────────────────────────
-    setReport({
+    const nextReport = {
       answers: answerRows, score, percentage,
       total: questions.length, timeTaken,
       autoSubmit, examType, topic, difficulty,
-    })
+      year, duration, count, topics,
+    }
+
+    // ── Show report screen immediately ────────────────────────────────
+    setReport(nextReport)
     setScreen('report')
     setSubmitting(false)
 
@@ -441,7 +554,13 @@ export default function CBT() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
+        {setupError && (
+          <div className="card bg-red-50 border border-red-200 rounded-2xl p-4 mb-6 text-sm text-red-700">
+            {setupError}
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6 items-stretch">
           <div className="card overflow-hidden">
             <div className="bg-[var(--color-teal)] px-6 py-4">
               <p className="font-serif font-bold text-white text-lg">
@@ -620,11 +739,15 @@ export default function CBT() {
           </div>
 
           {/* History */}
-          <div className="card overflow-hidden">
-            <div className="bg-[var(--color-ink)] px-5 py-4">
+          <div className="card overflow-hidden flex flex-col h-full">
+            <div className="bg-[var(--color-ink)] px-5 py-4 flex items-center justify-between gap-3">
               <p className="font-serif font-bold text-white">📊 Recent Exams</p>
+              <button type="button" onClick={() => navigate('/cbt-history')}
+                className="btn-secondary py-2 px-3 text-xs">
+                View full history
+              </button>
             </div>
-            <div className="bg-white divide-y divide-[var(--color-border)] max-h-96 overflow-y-auto">
+            <div className="bg-white divide-y divide-[var(--color-border)] flex-1 overflow-y-auto min-h-[320px]">
               {history.length === 0 ? (
                 <div className="p-8 text-center">
                   <p className="text-[var(--color-muted)] text-sm">No exams taken yet</p>
@@ -633,18 +756,33 @@ export default function CBT() {
                 const grade = getGrade(h.percentage)
                 const cfg = GRADE_CONFIG[grade]
                 return (
-                  <div key={h.id} className="px-5 py-3 flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-semibold text-[var(--color-ink)]">
+                  <div key={h.id} className="px-5 py-3 flex items-start justify-between gap-4">
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-[var(--color-ink)] truncate">
                         {h.exam_type} {h.year || ''}
                         {h.topic ? ` · ${h.topic.slice(0, 20)}` : ''}
                       </p>
                       <p className="text-xs text-[var(--color-muted)] mt-0.5">
-                        {h.total_questions}Q · {h.difficulty} · {new Date(h.completed_at).toLocaleDateString('en-GB')}
+                        {h.total_questions}Q · {h.difficulty}
+                      </p>
+                      <p className="text-[11px] text-[var(--color-muted)] mt-1">
+                        {formatTakenAt(h.completed_at)}
                       </p>
                     </div>
-                    <div className={`font-serif font-black text-xl ${cfg.color}`}>
-                      {h.percentage}%
+                    <div className="text-right shrink-0 flex flex-col items-end gap-2">
+                      <div className={`font-serif font-black text-xl ${cfg.color}`}>
+                        {h.percentage}%
+                      </div>
+                      <div className="flex gap-2">
+                        <button type="button" onClick={() => navigate('/cbt-history', { state: { sessionId: h.id } })}
+                          className="rounded-full border border-[var(--color-teal)] bg-[var(--color-teal)]/10 text-[11px] font-semibold text-[var(--color-teal)] px-3 py-1 hover:bg-[var(--color-teal)]/20 transition">
+                          Review
+                        </button>
+                        <button type="button" onClick={() => retakeExam(h)}
+                          className="rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] text-[11px] font-semibold text-[var(--color-ink)] px-3 py-1 hover:border-[var(--color-teal)] hover:text-[var(--color-teal)] transition">
+                          Retake
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )
@@ -893,10 +1031,20 @@ export default function CBT() {
               )}
             </div>
 
-            <button onClick={() => setScreen('setup')}
-              className="w-full btn-primary py-3 text-sm justify-center">
-              🔄 New Exam
-            </button>
+            <div className="grid gap-3">
+              <button onClick={() => {
+                  setReport(null)
+                  setScreen('setup')
+                }}
+                className="w-full btn-secondary py-3 text-sm justify-center">
+                🔄 New Exam
+              </button>
+              <button onClick={startExam}
+                disabled={loadingSetup}
+                className="w-full btn-primary py-3 text-sm justify-center disabled:opacity-50">
+                {loadingSetup ? '⏳ Retaking...' : '↻ Retake This Exam'}
+              </button>
+            </div>
           </div>
         </div>
 

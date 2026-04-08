@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
+import { useLocalStorageState } from '../hooks/useLocalStorageState'
 
 const TEACH_LEVEL_KEY = 'mathgenius_teach_level'
+const TEACH_TOPIC_KEY = 'mathgenius_teach_topic'
 import TopicSidebar from '../components/teach/TopicSidebar'
 import ChatWindow from '../components/teach/ChatWindow'
 import ConversationSidebar from '../components/teach/ConversationSidebar'
@@ -10,18 +12,15 @@ import { supabase } from '../lib/supabase'
 
 export default function Teach() {
   const { user, profile, updateProfile } = useAuth()
-  const [selectedTopic,        setSelectedTopic]        = useState(null)
-  const [selectedLevel, setSelectedLevel] = useState(
-    () => { try { return localStorage.getItem(TEACH_LEVEL_KEY) || 'secondary' } catch { return 'secondary' } }
-  )
+  const [selectedTopic, setSelectedTopic] = useLocalStorageState(TEACH_TOPIC_KEY, null)
+  const [selectedLevel, setSelectedLevel] = useLocalStorageState(TEACH_LEVEL_KEY, 'secondary')
 
-  // Persist whenever level changes → localStorage (fast) + Supabase profile (cross-device)
+  // Persist whenever level changes → Supabase profile (cross-device)
   useEffect(() => {
-    try { localStorage.setItem(TEACH_LEVEL_KEY, selectedLevel) } catch {}
     if (profile && profile.level !== selectedLevel) {
       updateProfile({ level: selectedLevel }).catch(() => {})
     }
-  }, [selectedLevel])
+  }, [selectedLevel, profile, updateProfile])
   const [currentConversation,  setCurrentConversation]  = useState(null)
   const [convRefreshKey,       setConvRefreshKey]        = useState(0)
 

@@ -33,21 +33,17 @@ app = FastAPI(
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# ── CORS ──────────────────────────────────────────────────────────────
-# In development this uses localhost.
-# When you deploy, add this to your .env:
-#   ALLOWED_ORIGINS=https://yourdomain.com
-ALLOWED_ORIGINS = os.environ.get(
-    "ALLOWED_ORIGINS",
-    "http://localhost:5173,http://localhost:3000"
-).split(",")
+# In development, open CORS so any localhost port works (Vite increments ports).
+# In production, set ALLOWED_ORIGINS=https://yourdomain.com in .env
+_raw_origins = os.environ.get("ALLOWED_ORIGINS", "")
+ALLOWED_ORIGINS = _raw_origins.split(",") if _raw_origins else ["*"]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allow_headers=["Authorization", "Content-Type"],
+    allow_credentials=ALLOWED_ORIGINS != ["*"],  # can't combine * with credentials
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # ── Global error handler — hides internal errors from users ──────────

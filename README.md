@@ -10,7 +10,7 @@ MathGenius is a full-stack web application that combines symbolic math solving, 
 
 ### 🧠 AI-Powered Learning
 - **AI Solver** — Step-by-step solutions for typed or image-based math problems using Groq LLMs + SymPy
-- **AI Tutor (Teach)** — Ask math questions by topic and get structured, curriculum-aligned explanations
+- **AI Tutor (Teach)** — Ask math questions by topic and get structured, curriculum-aligned explanations grounded in level-specific textbooks
 - **Topic Wiki** — Auto-generated study notes and overviews for any math topic
 - **Floating Chat** — Persistent AI assistant available across the app
 - **Practice Grading** — Submit open-ended answers and get AI feedback
@@ -211,7 +211,7 @@ VITE_SUPABASE_URL=https://your-project.supabase.co
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-> ⚠️ **Never commit real `.env` files.** Keep `SUPABASE_SERVICE_KEY` backend-only — it bypasses row-level security.
+> ⚠️ **Store real credentials only in your local `.env` files.** Keep backend secrets out of the frontend and out of Git history.
 
 ---
 
@@ -280,8 +280,8 @@ App opens at: **`http://localhost:5173`**
 ### `/teach` — AI Tutor
 | Method | Endpoint | Description |
 |---|---|---|
-| `POST` | `/teach/ask` | Ask the AI tutor a topic question |
-| `POST` | `/teach/overview` | Get a topic overview/study note |
+| `POST` | `/teach/ask` | Ask the AI tutor a topic question with level-aware textbook grounding |
+| `POST` | `/teach/overview` | Get a topic overview/study note with level-aware textbook grounding |
 | `GET` | `/teach/topics` | List all available curriculum topics |
 | `GET` | `/teach/wiki/{topic}` | Retrieve pre-generated wiki for a topic |
 
@@ -348,6 +348,14 @@ To enable textbook-based context in AI answers:
    ```
 3. The vector store is built under `backend/qdrant_db/` and used automatically on subsequent API calls.
 
+Current Teach-mode textbook grounding:
+
+- `primary` uses `Mathematics_Textbook_For_Primary_Schools.pdf`
+- `jss` uses `Mathematics_Textbook_For_Junior_Secondary_Schools.pdf`
+- `sss`, `secondary`, and `university` currently use `Engineering_Mathematics_Stroud.pdf`
+
+This means the AI tutor does not rely on one generic book for every student level. It retrieves context from the textbook mapped to the learner's selected level before generating a response.
+
 ---
 
 ## 🛠️ Data Pipeline Scripts
@@ -402,6 +410,7 @@ Row-Level Security (RLS) is enforced — users can only access their own data. T
 - Frontend falls back to `http://localhost:8000` if `VITE_API_URL` is not set
 - The PWA service worker (`src/sw.js`) caches core assets for offline use
 - KaTeX is used for all math rendering; LaTeX strings are sanitized on the backend before being sent to the frontend
+- Teach mode uses level-aware retrieval from the local textbook vector store in `backend/qdrant_db/`
 
 ---
 

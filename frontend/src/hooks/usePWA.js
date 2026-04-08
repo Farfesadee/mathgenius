@@ -6,11 +6,6 @@ export function usePWA() {
   const [isOnline,       setIsOnline]       = useState(navigator.onLine)
 
   useEffect(() => {
-    // Register service worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(console.error)
-    }
-
     // Capture install prompt
     const handler = (e) => {
       e.preventDefault()

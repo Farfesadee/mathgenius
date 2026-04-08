@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
-import { useNavigate } from 'react-router-dom'
 
 function getGrade(pct) {
   if (pct >= 75) return { grade: 'A', color: 'text-green-600',  bg: 'bg-green-500'  }
@@ -14,6 +14,8 @@ function getGrade(pct) {
 export default function CBTHistory() {
   const { user }   = useAuth()
   const navigate   = useNavigate()
+  const location   = useLocation()
+  const selectedSessionId = location.state?.sessionId || null
   const [sessions,  setSessions]  = useState([])
   const [loading,   setLoading]   = useState(true)
   const [expanded,  setExpanded]  = useState(null)
@@ -34,6 +36,15 @@ export default function CBTHistory() {
     setSessions(data || [])
     setLoading(false)
   }
+
+  useEffect(() => {
+    if (!loading && selectedSessionId && sessions.length > 0) {
+      const sessionExists = sessions.some(s => s.id === selectedSessionId)
+      if (sessionExists) {
+        handleExpand(selectedSessionId)
+      }
+    }
+  }, [loading, selectedSessionId, sessions])
 
   const loadAnswers = async (sessionId) => {
     if (answers[sessionId]) return
@@ -71,16 +82,24 @@ export default function CBTHistory() {
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-10">
-      <div className="mb-8">
-        <p className="font-mono text-xs tracking-widest uppercase
-                      text-[var(--color-gold)] mb-2 flex items-center gap-3">
-          <span className="block w-6 h-px bg-[var(--color-gold)]" />
-          CBT Records
-        </p>
-        <h1 className="font-serif font-black text-5xl tracking-tight">
-          Exam History
-        </h1>
-        <p className="text-[var(--color-muted)] mt-2">
+      <div className="mb-8 flex flex-col gap-4">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <p className="font-mono text-xs tracking-widest uppercase
+                          text-[var(--color-gold)] mb-2 flex items-center gap-3">
+              <span className="block w-6 h-px bg-[var(--color-gold)]" />
+              CBT Records
+            </p>
+            <h1 className="font-serif font-black text-5xl tracking-tight">
+              Exam History
+            </h1>
+          </div>
+          <button onClick={() => navigate('/cbt')}
+            className="btn-secondary px-4 py-3 text-sm rounded-xl">
+            ← Back to CBT
+          </button>
+        </div>
+        <p className="text-[var(--color-muted)]">
           Full record of all your past CBT sessions.
         </p>
       </div>

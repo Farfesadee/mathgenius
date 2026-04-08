@@ -340,19 +340,19 @@ async def get_daily_challenge(exam_type: str = "JAMB"):
     sb_key = os.getenv("SUPABASE_SERVICE_KEY", "")
     hdrs   = {"apikey": sb_key, "Authorization": f"Bearer {sb_key}"}
 
-    res = httpx.get(
-        f"{sb_url}/rest/v1/exam_questions",
-        params={
-            "select": "*",
-            "exam_type": f"eq.{exam_type}",
-            "option_a": "not.is.null",
-            "correct_answer": "not.is.null",
-            "order": "id",
-            "limit": "500",
-        },
-        headers=hdrs,
-        timeout=15,
-    )
+    async with httpx.AsyncClient(timeout=15) as aclient:
+        res = await aclient.get(
+            f"{sb_url}/rest/v1/exam_questions",
+            params={
+                "select": "*",
+                "exam_type": f"eq.{exam_type}",
+                "option_a": "not.is.null",
+                "correct_answer": "not.is.null",
+                "order": "id",
+                "limit": "500",
+            },
+            headers=hdrs,
+        )
     questions = res.json()
     if not questions:
         raise HTTPException(status_code=404, detail="No questions available")

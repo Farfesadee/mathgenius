@@ -12,10 +12,10 @@ from pathlib import Path
 from fastapi import APIRouter
 from pydantic import BaseModel
 from typing import Optional
-from groq import Groq
+from groq import AsyncGroq
 
 router = APIRouter()
-client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+client = AsyncGroq(api_key=os.environ.get("GROQ_API_KEY"))
 
 IMAGES_BASE_DIR = "images"
 
@@ -206,7 +206,7 @@ async def generate_solution(req: SolutionRequest):
             model = "llama-3.1-8b-instant"
 
         # Call Groq
-        response = client.chat.completions.create(
+        response = await client.chat.completions.create(
             model=model,
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
