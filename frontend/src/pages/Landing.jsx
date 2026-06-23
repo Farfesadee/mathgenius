@@ -412,8 +412,8 @@ export default function Landing() {
                   className="bg-[var(--color-cream)] border-2 border-[var(--color-border)]
                                 rounded-2xl p-6 hover:border-[var(--color-teal)]
                                 hover:shadow-md transition-all duration-200">
-                  <div className="text-[var(--color-teal)] mb-4">
-                    <Icon size={40} strokeWidth={1.5} />
+                  <div className="text-[var(--color-teal)] mb-6">
+                    <Icon size={80} strokeWidth={1} />
                   </div>
                   <h3 className="font-serif font-bold text-lg
                                  text-[var(--color-ink)] mb-2">
