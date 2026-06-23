@@ -3,35 +3,36 @@ import { useAuth } from '../context/AuthContext'
 import { useEffect, useState, useRef } from 'react'
 import { askTutor, getApprovedTestimonials } from '../services/api'
 import { ExplanationBody } from '../utils/RenderMath'
+import { Lightbulb, Monitor, BarChart3, Flame, Calendar, BookOpen } from 'lucide-react'
 
 const FEATURES = [
   {
-    icon: '🤖',
+    icon: Lightbulb,
     title: 'AI Explanations',
     desc: 'Ask Euler — our AI tutor — to explain any maths concept in simple terms, step by step.',
   },
   {
-    icon: '🖥️',
+    icon: Monitor,
     title: 'CBT Simulations',
     desc: 'Practice with real WAEC, NECO and JAMB past questions in a timed exam environment.',
   },
   {
-    icon: '📊',
+    icon: BarChart3,
     title: 'Topic Mastery',
     desc: 'See exactly which topics you\'re strong or weak in, with visual progress tracking.',
   },
   {
-    icon: '🔥',
+    icon: Flame,
     title: 'Streak & XP System',
     desc: 'Earn XP for every session, maintain daily streaks and climb the leaderboard.',
   },
   {
-    icon: '📅',
+    icon: Calendar,
     title: 'AI Study Planner',
     desc: 'Euler builds a personalised 7-day study plan based on your weak areas.',
   },
   {
-    icon: '📐',
+    icon: BookOpen,
     title: 'Formula Sheet',
     desc: '70+ WAEC & JAMB formulas in one searchable reference — always at your fingertips.',
   },
@@ -404,21 +405,26 @@ export default function Landing() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {FEATURES.map((f, i) => (
-              <div key={i}
-                className="bg-[var(--color-cream)] border-2 border-[var(--color-border)]
-                              rounded-2xl p-6 hover:border-[var(--color-teal)]
-                              hover:shadow-md transition-all duration-200">
-                <div className="text-4xl mb-4">{f.icon}</div>
-                <h3 className="font-serif font-bold text-lg
-                               text-[var(--color-ink)] mb-2">
-                  {f.title}
-                </h3>
-                <p className="text-sm text-[var(--color-muted)] leading-relaxed">
-                  {f.desc}
-                </p>
-              </div>
-            ))}
+            {FEATURES.map((f, i) => {
+              const Icon = f.icon
+              return (
+                <div key={i}
+                  className="bg-[var(--color-cream)] border-2 border-[var(--color-border)]
+                                rounded-2xl p-6 hover:border-[var(--color-teal)]
+                                hover:shadow-md transition-all duration-200">
+                  <div className="text-[var(--color-teal)] mb-4">
+                    <Icon size={40} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="font-serif font-bold text-lg
+                                 text-[var(--color-ink)] mb-2">
+                    {f.title}
+                  </h3>
+                  <p className="text-sm text-[var(--color-muted)] leading-relaxed">
+                    {f.desc}
+                  </p>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
