@@ -3,6 +3,7 @@ import json
 import logging
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import StreamingResponse
+from pydantic import BaseModel, Field
 from typing import Optional
 from groq import Groq
 from app.services.math_service import solve_expression, differentiate, integrate_expr
