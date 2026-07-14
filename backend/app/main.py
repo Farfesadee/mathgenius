@@ -16,6 +16,7 @@ from app.routers.cbt import router as cbt_router
 from app.routers.tracking import router as tracking_router
 from app.routers.past_questions import router as past_questions_router
 from app.routers.study_plan import router as study_plan_router
+from app.routers.health import router as health_router
 from solution_generator import router as solution_router
 
 setup_logging()
@@ -62,6 +63,7 @@ async def global_exception_handler(request: Request, exc: Exception):
     )
 
 # ── Routers ────────────────────────────────────────────────────────────
+app.include_router(health_router)
 app.include_router(solve.router)
 app.include_router(teach.router)
 app.include_router(exams_router)
@@ -76,17 +78,12 @@ app.mount("/images", StaticFiles(directory="images"), name="images")
 
 @app.get("/")
 async def root():
-    logger.info("API health check")
+    """Root endpoint with API information."""
+    logger.info("API root endpoint accessed")
     return {
         "message": "MathGenius API is running!",
         "version": "1.0.0",
         "environment": settings.environment,
-        "modules": ["solve", "teach", "cbt", "exams", "tracking", "past_questions"]
+        "modules": ["solve", "teach", "cbt", "exams", "tracking", "past_questions"],
+        "docs": "/docs" if not settings.debug else None,
     }
-
-
-@app.get("/health")
-async def health():
-    """Health check endpoint for monitoring."""
-    logger.debug("Health check")
-    return {"status": "healthy", "environment": settings.environment}
