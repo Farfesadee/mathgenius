@@ -20,15 +20,41 @@ API.interceptors.request.use(async (config) => {
   return config
 })
 
-// ── If the server says "not logged in", sign out and go to login page ─
+// ── Handle responses and errors consistently ────────────────────────
 API.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Extract data from response — some endpoints return {success, data} or {data}
+    return response.data || response
+  },
   (error) => {
-    if (error.response?.status === 401) {
+    // Standardize error response
+    const status = error.response?.status
+    const detail = error.response?.data?.detail || error.response?.data?.error || error.message
+    const requestId = error.response?.data?.request_id
+
+    // Handle auth failures
+    if (status === 401) {
       supabase.auth.signOut()
       window.location.href = '/login'
+      return Promise.reject({ status, detail, requestId })
     }
-    return Promise.reject(error)
+
+    // Handle rate limiting
+    if (status === 429) {
+      console.warn('Rate limited. Please wait before trying again.')
+    }
+
+    // Log errors with request ID for debugging
+    if (status >= 500) {
+      console.error(`Server error [${requestId}]:`, detail)
+    }
+
+    return Promise.reject({
+      status,
+      detail,
+      requestId,
+      fullError: error.response?.data,
+    })
   }
 )
 // ── SOLVE ──────────────────────────────────────

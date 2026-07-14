@@ -2,13 +2,17 @@ import asyncio
 import os
 import json
 import httpx
+import logging
 from datetime import datetime
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 from app.services.groq_service import ask_groq, ask_groq_stream
 from app.dependencies import require_auth
+from app.schemas import TeachRequest
+from app.errors import ValidationError, ExternalServiceError
 
+logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/teach", tags=["Teach"])
 
 SUPABASE_URL         = os.environ.get("SUPABASE_URL", "").rstrip("/")
@@ -101,8 +105,15 @@ def get_textbook(level: str) -> str:
 
 @router.post("/ask")
 async def ask_tutor(request: TeachRequest, http_request: Request, user=Depends(require_auth)):
-    level_desc = get_level_description(request.level)
-    prompt = f"""You are Euler, an expert Nigerian mathematics tutor.
+    """Get AI tutoring response for a math question."""
+    try:
+        logger.info(f"Tutoring request: topic={request.topic}, level={request.level}")
+
+        if not request.question.strip():
+            raise ValidationError(detail="Question cannot be empty")
+
+        level_desc = get_level_description(request.level)
+        prompt = f"""You are Euler, an expert Nigerian mathematics tutor.
 You are teaching a {level_desc}.
 Textbook reference: {get_textbook(request.level)}
 
@@ -113,22 +124,30 @@ Please explain thoroughly with step-by-step working.
 Use LaTeX for all mathematical expressions (e.g. \\(x^2\\) inline, $$....$$ for display).
 Be encouraging and patient."""
 
-    response = await ask_groq(
-        prompt,
-        request.conversation_history,
-        rag_query=f"{request.topic}\n{request.question}",
-        rag_level=request.level,
-    )
+        response = await ask_groq(
+            prompt,
+            request.conversation_history,
+            rag_query=f"{request.topic}\n{request.question}",
+            rag_level=request.level,
+        )
 
-    asyncio.create_task(_log_teach(
-        user_id=user.id,
-        topic=request.topic,
-        question=request.question,
-        response_length=len(response),
-        level=request.level,
-    ))
+        # Log interaction asynchronously (non-blocking)
+        asyncio.create_task(_log_teach(
+            user_id=user.id,
+            topic=request.topic,
+            question=request.question,
+            response_length=len(response),
+            level=request.level,
+        ))
 
-    return {"success": True, "response": response, "topic": request.topic}
+        logger.info(f"Tutoring response generated ({len(response)} chars)")
+        return {"success": True, "response": response, "topic": request.topic}
+
+    except ValidationError:
+        raise
+    except Exception as exc:
+        logger.error(f"Tutoring request failed: {exc}", exc_info=True)
+        raise ExternalServiceError("Groq", detail=str(exc)[:100])
 
 
 @router.post("/ask/stream")
