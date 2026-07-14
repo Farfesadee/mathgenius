@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { ThumbsUp, ThumbsDown, Bookmark } from 'lucide-react'
 import { ExplanationBody } from '../../utils/RenderMath'
 import { useAuth } from '../../context/AuthContext'
 import { saveBookmark } from '../../lib/bookmarks'
@@ -70,9 +71,9 @@ export default function MessageBubble({ message, topic }) {
     {/* Thumbs rating */}
     <div className="flex gap-1">
       {[
-        { emoji: '👍', val: 5, label: 'helpful' },
-        { emoji: '👎', val: 1, label: 'not helpful' },
-      ].map(({ emoji, val, label }) => (
+        { icon: ThumbsUp, val: 5, label: 'helpful' },
+        { icon: ThumbsDown, val: 1, label: 'not helpful' },
+      ].map(({ icon: Icon, val, label }) => (
         <button
           key={val}
           onClick={async () => {
@@ -87,7 +88,7 @@ export default function MessageBubble({ message, topic }) {
                      bg-white hover:border-[var(--color-teal)] transition-all"
           title={`Mark as ${label}`}
         >
-          {emoji}
+          <Icon size={18} />
         </button>
       ))}
     </div>
@@ -102,7 +103,7 @@ export default function MessageBubble({ message, topic }) {
           : 'bg-white border-[var(--color-border)] text-[var(--color-muted)] hover:text-[var(--color-ink)]'
         }`}
     >
-      {saved ? '🔖 Saved!' : '🔖 Save'}
+      {saved ? <><Bookmark size={16} /> Saved!</> : <><Bookmark size={16} /> Save</>}
     </button>
   </div>
 )}

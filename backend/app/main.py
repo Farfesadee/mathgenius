@@ -1,4 +1,4 @@
-import os
+import logging
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -7,6 +7,9 @@ from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
+from app.config import settings
+from app.logging_config import setup_logging, get_logger
+from app.middleware import ErrorHandlingMiddleware, LoggingMiddleware
 from app.routers import solve, teach
 from app.routers.exams import router as exams_router
 from app.routers.cbt import router as cbt_router
@@ -15,47 +18,50 @@ from app.routers.past_questions import router as past_questions_router
 from app.routers.study_plan import router as study_plan_router
 from solution_generator import router as solution_router
 
+setup_logging()
+logger = get_logger(__name__)
+
 # ── Rate limiter (shared across all routers) ──────────────────────────
 limiter = Limiter(key_func=get_remote_address)
 
-# ── Hide docs in production ───────────────────────────────────────────
-IS_PROD = os.environ.get("ENV") == "production"
-
+# ── API Configuration ────────────────────────────────────────────────
 app = FastAPI(
     title="MathGenius API",
     description="AI-powered mathematics learning platform",
     version="1.0.0",
-    docs_url=None if IS_PROD else "/docs",
-    redoc_url=None if IS_PROD else "/redoc",
-    openapi_url=None if IS_PROD else "/openapi.json",
+    docs_url=None if settings.environment == "production" else "/docs",
+    redoc_url=None if settings.environment == "production" else "/redoc",
+    openapi_url=None if settings.environment == "production" else "/openapi.json",
 )
 
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# In development, open CORS so any localhost port works (Vite increments ports).
-# In production, set ALLOWED_ORIGINS=https://yourdomain.com in .env
-_raw_origins = os.environ.get("ALLOWED_ORIGINS", "")
-ALLOWED_ORIGINS = _raw_origins.split(",") if _raw_origins else ["*"]
+# ── Middleware (order matters) ─────────────────────────────────────────
+app.add_middleware(LoggingMiddleware)
+app.add_middleware(ErrorHandlingMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,
-    allow_credentials=ALLOWED_ORIGINS != ["*"],  # can't combine * with credentials
+    allow_origins=settings.allowed_origins,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# ── Global error handler — hides internal errors from users ──────────
+# ── Global exception handler ────────────────────────────────────────────
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
-    print(f"[ERROR] {request.method} {request.url} → {exc}")
+    logger.error(
+        f"Unhandled exception in {request.method} {request.url.path}",
+        exc_info=True,
+    )
     return JSONResponse(
         status_code=500,
-        content={"error": "Something went wrong. Please try again."}
+        content={"error": "Internal server error. Please try again."}
     )
 
-# ── Routers ───────────────────────────────────────────────────────────
+# ── Routers ────────────────────────────────────────────────────────────
 app.include_router(solve.router)
 app.include_router(teach.router)
 app.include_router(exams_router)
@@ -65,12 +71,22 @@ app.include_router(past_questions_router)
 app.include_router(solution_router)
 app.include_router(study_plan_router)
 
+# ── Static Files ───────────────────────────────────────────────────────
 app.mount("/images", StaticFiles(directory="images"), name="images")
 
 @app.get("/")
 async def root():
+    logger.info("API health check")
     return {
         "message": "MathGenius API is running!",
         "version": "1.0.0",
+        "environment": settings.environment,
         "modules": ["solve", "teach", "cbt", "exams", "tracking", "past_questions"]
     }
+
+
+@app.get("/health")
+async def health():
+    """Health check endpoint for monitoring."""
+    logger.debug("Health check")
+    return {"status": "healthy", "environment": settings.environment}

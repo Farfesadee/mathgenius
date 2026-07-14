@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { getUserStats } from '../lib/stats'
 import { getDashboardStats } from '../lib/progress'
+import { BarChart3, Printer, Monitor, FileText, Trophy, Flame, Zap, Check, PartyPopper } from 'lucide-react'
 
 function getWeekBounds() {
     const now = new Date()
@@ -56,7 +57,6 @@ export default function WeeklyReport() {
         setStats(dash)
         setXpStats(xp)
 
-        // Fetch this week's CBT sessions
         const { data } = await supabase
             .from('cbt_sessions')
             .select('*')
@@ -82,12 +82,12 @@ export default function WeeklyReport() {
     const weekCorrect = weekSessions.reduce((a, s) => a + (s.total_questions ? Math.round(s.score / 100 * s.total_questions) : 0), 0)
     const weekAttempted = weekSessions.reduce((a, s) => a + (s.total_questions || 0), 0)
     const weekAccuracy = weekAttempted > 0 ? Math.round((weekCorrect / weekAttempted) * 100) : 0
-    const weekXP = weekSessions.length * 20   // estimate
+    const weekXP = weekSessions.length * 20
     const bestScore = weekSessions.length > 0 ? Math.max(...weekSessions.map(s => s.score)) : 0
 
     const grade = weekAccuracy >= 80 ? 'A' : weekAccuracy >= 65 ? 'B' : weekAccuracy >= 50 ? 'C' : weekAccuracy >= 40 ? 'D' : 'F'
     const gradeMsg = {
-        A: 'Outstanding performance this week! 🎉',
+        A: 'Outstanding performance this week!',
         B: 'Great work! Keep pushing for that A grade.',
         C: 'Decent week. Focus on your weak topics to improve.',
         D: 'You need more practice. Book daily drills.',
@@ -97,13 +97,11 @@ export default function WeeklyReport() {
     return (
         <div className="max-w-3xl mx-auto px-6 py-10 print:p-8 print:max-w-none">
 
-            {/* Print-only header */}
             <div className="hidden print:block text-center mb-8">
                 <h1 className="font-serif font-black text-4xl">MathGenius</h1>
                 <p className="text-gray-500 text-sm mt-1">Weekly Progress Report</p>
             </div>
 
-            {/* Page header */}
             <div className="mb-8 flex items-end justify-between flex-wrap gap-4 print:hidden">
                 <div>
                     <p className="font-mono text-xs tracking-widest uppercase
@@ -111,20 +109,20 @@ export default function WeeklyReport() {
                         <span className="block w-6 h-px bg-[var(--color-gold)]" />
                         Weekly Report · w/c {weekLabel}
                     </p>
-                    <h1 className="font-serif font-black text-5xl tracking-tight">📊 Report Card</h1>
+                    <h1 className="font-serif font-black text-5xl tracking-tight flex items-center gap-3">
+                        <BarChart3 size={40} /> Report Card
+                    </h1>
                 </div>
                 <div className="flex gap-3">
                     <button onClick={handlePrint}
                         className="btn-primary px-5 py-2.5 text-sm">
-                        🖨️ Print / Save PDF
+                        <Printer size={18} className="inline mr-2" /> Print / Save PDF
                     </button>
                     <Link to="/dashboard" className="btn-secondary px-5 py-2.5 text-sm">← Dashboard</Link>
                 </div>
             </div>
 
-            {/* Report card */}
             <div className="card overflow-hidden">
-                {/* Header band */}
                 <div className="bg-[var(--color-teal)] px-8 py-6 text-white print:bg-teal-600">
                     <div className="flex items-center justify-between flex-wrap gap-4">
                         <div>
@@ -141,32 +139,30 @@ export default function WeeklyReport() {
 
                 <div className="bg-white p-8 space-y-8">
 
-                    {/* Grade message */}
                     <p className="text-center text-[var(--color-ink)] font-medium text-lg italic">
+                        {grade === 'A' && <PartyPopper size={20} className="inline mr-1" />}
                         "{gradeMsg[grade]}"
                     </p>
 
-                    {/* Accuracy ring + stats */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-center">
                         <GradeRing pct={weekAttempted > 0 ? weekAccuracy : stats?.accuracy || 0} />
                         <div className="space-y-4">
                             {[
-                                { label: 'CBT Sessions This Week', value: weekSessions.length, icon: '🖥️' },
-                                { label: 'Questions Attempted', value: weekAttempted || stats?.totalAttempted || 0, icon: '📝' },
-                                { label: 'Best Score This Week', value: `${bestScore}%`, icon: '🏆' },
-                                { label: 'Current Streak', value: `${xpStats?.streak_current || 0} days`, icon: '🔥' },
-                                { label: 'Total XP', value: (xpStats?.xp || 0).toLocaleString(), icon: '⚡' },
+                                { label: 'CBT Sessions This Week', value: weekSessions.length, Icon: Monitor },
+                                { label: 'Questions Attempted', value: weekAttempted || stats?.totalAttempted || 0, Icon: FileText },
+                                { label: 'Best Score This Week', value: `${bestScore}%`, Icon: Trophy },
+                                { label: 'Current Streak', value: `${xpStats?.streak_current || 0} days`, Icon: Flame },
+                                { label: 'Total XP', value: (xpStats?.xp || 0).toLocaleString(), Icon: Zap },
                             ].map(s => (
                                 <div key={s.label} className="flex items-center justify-between
                                               border-b border-[var(--color-border)] pb-2">
-                                    <span className="text-sm text-[var(--color-muted)]">{s.icon} {s.label}</span>
+                                    <span className="text-sm text-[var(--color-muted)]"><s.Icon size={16} className="inline mr-1" /> {s.label}</span>
                                     <span className="font-serif font-black text-lg text-[var(--color-ink)]">{s.value}</span>
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                    {/* Weak topics */}
                     {stats?.weakTopics?.length > 0 && (
                         <div>
                             <p className="font-mono text-[10px] uppercase tracking-widest
@@ -189,7 +185,6 @@ export default function WeeklyReport() {
                         </div>
                     )}
 
-                    {/* Strong topics */}
                     {stats?.strongTopics?.length > 0 && (
                         <div>
                             <p className="font-mono text-[10px] uppercase tracking-widest
@@ -199,14 +194,13 @@ export default function WeeklyReport() {
                                     <span key={t.topic}
                                         className="text-xs px-3 py-1.5 bg-green-50 border border-green-200
                                text-green-700 rounded-full font-medium">
-                                        ✅ {t.topic}
+                                        <Check size={14} className="inline mr-1" /> {t.topic}
                                     </span>
                                 ))}
                             </div>
                         </div>
                     )}
 
-                    {/* Footer */}
                     <div className="border-t-2 border-[var(--color-border)] pt-6 text-center">
                         <p className="font-mono text-xs text-[var(--color-muted)]">
                             Generated by MathGenius · {new Date().toLocaleDateString('en-GB', {

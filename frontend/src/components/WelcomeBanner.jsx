@@ -1,6 +1,7 @@
 import { useAuth } from '../context/AuthContext'
 import { getDailyNugget, getFormattedDate, getGreeting,
          getFormattedTime, useLiveClock } from '../lib/nugget'
+import { Lightbulb } from 'lucide-react'
 
 export default function WelcomeBanner({ compact = false }) {
   const { profile } = useAuth()
@@ -21,7 +22,7 @@ export default function WelcomeBanner({ compact = false }) {
             {date}
           </p>
           <p className="font-serif font-bold text-white text-lg">
-            {greeting}, {firstName}! 👋
+            {greeting}, {firstName}!
           </p>
         </div>
 
@@ -37,7 +38,7 @@ export default function WelcomeBanner({ compact = false }) {
         <div className="hidden sm:block bg-white/10 rounded-xl px-4 py-2 max-w-xs">
           <p className="font-mono text-[10px] uppercase tracking-widest
                         text-[var(--color-gold)] mb-1">
-            💡 Daily Nugget
+            <Lightbulb size={14} className="inline mr-1" /> Daily Nugget
           </p>
           <p className="text-white/80 text-xs leading-snug line-clamp-2">
             {nugget}
@@ -57,7 +58,7 @@ export default function WelcomeBanner({ compact = false }) {
               {date}
             </p>
             <h2 className="font-serif font-black text-3xl text-white mb-1">
-              {greeting}, {firstName}! 👋
+              {greeting}, {firstName}!
             </h2>
             <p className="text-white/60 text-sm">
               Ready to learn something new today?
@@ -82,7 +83,7 @@ export default function WelcomeBanner({ compact = false }) {
       <div className="bg-[var(--color-gold)] px-6 py-4">
         <p className="font-mono text-[10px] uppercase tracking-widest
                       text-[var(--color-ink)]/60 mb-1">
-          💡 Mathematics Nugget of the Day
+          <Lightbulb size={16} className="inline mr-1" /> Mathematics Nugget of the Day
         </p>
         <p className="text-[var(--color-ink)] font-medium text-sm leading-relaxed">
           {nugget}

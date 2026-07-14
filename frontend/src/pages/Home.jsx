@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import WelcomeBanner from '../components/WelcomeBanner'
 import AppRating from '../components/AppRating'
+import { Calculator, Book, Brain, Hash, Triangle, FileText, Monitor, BarChart3, BookOpen, Target, TrendingUp, Rocket } from 'lucide-react'
 
 export default function Home() {
   const navigate = useNavigate()
@@ -45,10 +46,10 @@ export default function Home() {
 
           <div className="flex gap-3 flex-wrap">
             <button onClick={() => navigate('/solve')} className="btn-primary">
-              🔢 Open Solver
+              <Calculator size={20} /> Open Solver
             </button>
             <button onClick={() => navigate('/teach')} className="btn-secondary">
-              📖 Start Learning
+              <Book size={20} /> Start Learning
             </button>
           </div>
         </div>
@@ -97,44 +98,47 @@ export default function Home() {
                         max-w-5xl mx-auto mt-12">
           {[
             {
-              icon: '🧠',
+              Icon: Brain,
               title: 'AI Tutor',
               desc: 'Powered by Groq LLaMA 4 — explains every topic step-by-step in language students can actually understand.',
             },
             {
-              icon: '🔣',
+              Icon: Hash,
               title: 'Full Symbol Calculator',
               desc: 'Every mathematical symbol at your fingertips — arithmetic, surds, bearings, integrals, Greek letters and more.',
             },
             {
-              icon: '📐',
+              Icon: Triangle,
               title: 'Complete Curriculum',
               desc: 'Covers SS1–SS3 fully — all the way to university Laplace Transforms and Differential Equations.',
             },
             {
-              icon: '📝',
+              Icon: FileText,
               title: 'Past Questions',
               desc: 'Real WAEC, NECO, JAMB and BECE past questions from 1998 to present with full worked solutions from Euler.',
             },
             {
-              icon: '🖥️',
+              Icon: Monitor,
               title: 'CBT Mode',
               desc: 'Timed exam simulation with auto-grading, topic filters, difficulty levels and a full performance report.',
             },
             {
-              icon: '📊',
+              Icon: BarChart3,
               title: 'Progress Tracking',
               desc: 'Track weak topics, accuracy, streaks and practice history — all in one personalised dashboard.',
             },
-          ].map(f => (
+          ].map(f => {
+            const Icon = f.Icon
+            return (
             <div key={f.title}
                  className="p-8 border border-white/10 rounded-2xl
                             hover:border-white/30 transition-colors duration-200">
-              <span className="text-4xl block mb-4">{f.icon}</span>
+              <Icon size={32} className="block mb-4 text-[var(--color-gold-light)]" />
               <h3 className="font-serif text-xl text-white mb-2">{f.title}</h3>
               <p className="text-sm text-white/50 leading-relaxed">{f.desc}</p>
             </div>
-          ))}
+            )
+          })}
         </div>
       </section>
 
@@ -158,21 +162,23 @@ export default function Home() {
                 step: '01',
                 title: 'Learn with Euler',
                 desc:  'Pick any topic and chat with Euler — your AI tutor. He explains clearly, answers follow-up questions, and adapts to your level.',
-                icon:  '📚',
+                Icon:  BookOpen,
               },
               {
                 step: '02',
                 title: 'Practice & Test',
                 desc:  'Take timed CBT exams or practice sessions. Euler generates questions, grades your answers and explains every mistake.',
-                icon:  '🎯',
+                Icon:  Target,
               },
               {
                 step: '03',
                 title: 'Track & Improve',
                 desc:  'Your dashboard shows exactly which topics need work. Focus your revision where it matters most before the exam.',
-                icon:  '📈',
+                Icon:  TrendingUp,
               },
-            ].map(s => (
+            ].map(s => {
+              const Icon = s.Icon
+              return (
               <div key={s.step} className="flex gap-4">
                 <div className="shrink-0">
                   <div className="w-12 h-12 rounded-2xl bg-[var(--color-ink)]
@@ -182,7 +188,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div>
-                  <div className="text-2xl mb-2">{s.icon}</div>
+                  <Icon size={28} className="mb-2 text-[var(--color-teal)]" />
                   <h3 className="font-serif font-bold text-lg
                                  text-[var(--color-ink)] mb-2">
                     {s.title}
@@ -192,7 +198,8 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
@@ -214,13 +221,13 @@ export default function Home() {
                       className="bg-white text-[var(--color-teal)] font-bold
                                  px-8 py-3.5 rounded-2xl hover:bg-[var(--color-cream)]
                                  transition-all text-sm">
-                📚 Continue Learning
+                <BookOpen size={20} /> Continue Learning
               </button>
               <button onClick={() => navigate('/cbt')}
                       className="bg-[var(--color-ink)] text-white font-bold
                                  px-8 py-3.5 rounded-2xl hover:opacity-90
                                  transition-all text-sm">
-                🖥️ Take a CBT Exam
+                <Monitor size={20} /> Take a CBT Exam
               </button>
             </div>
           ) : (
@@ -229,13 +236,13 @@ export default function Home() {
                       className="bg-white text-[var(--color-teal)] font-bold
                                  px-8 py-3.5 rounded-2xl hover:bg-[var(--color-cream)]
                                  transition-all text-sm">
-                🚀 Get Started Free
+                <Rocket size={20} /> Get Started Free
               </button>
               <button onClick={() => navigate('/solve')}
                       className="bg-[var(--color-ink)] text-white font-bold
                                  px-8 py-3.5 rounded-2xl hover:opacity-90
                                  transition-all text-sm">
-                🔢 Try the Solver
+                <Calculator size={20} /> Try the Solver
               </button>
             </div>
           )}

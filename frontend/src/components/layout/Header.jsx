@@ -4,15 +4,16 @@ import { useAuth } from '../../context/AuthContext'
 import NotificationBell from '../NotificationBell'
 import { useTheme } from '../../context/ThemeContext'
 import { getStreak } from '../../lib/learning'
+import { Home, Settings, BookOpen, Monitor, Target, ClipboardList, BarChart3, User, Bookmark, Flame, Trophy, FileText, BookOpen as Book, Bot, Brain, Triangle, Microscope, Swords, Gamepad2, Users, School, Map, GraduationCap, StickyNote, Calendar, FolderArchive, DoorOpen, Moon, Sun, Banana, Presentation, Zap } from 'lucide-react'
 
 const NAV_LINKS = [
-  { path: '/home',     label: 'Home',     icon: '🏠', auth: false },
-  { path: '/solve',    label: 'Solve',    icon: '⚙️', auth: false },
-  { path: '/teach',    label: 'Teach',    icon: '📚', auth: true  },
-  { path: '/cbt',      label: 'CBT',      icon: '🖥️', auth: true  },
-  { path: '/practice', label: 'Practice', icon: '🎯', auth: true  },
-  { path: '/mock-exam',label: 'Mock Exam',icon: '📋', auth: true  },
-  { path: '/dashboard',label: 'Dashboard',icon: '📊', auth: true  },
+  { path: '/home',     label: 'Home',     icon: Home,      auth: false },
+  { path: '/solve',    label: 'Solve',    icon: Settings,  auth: false },
+  { path: '/teach',    label: 'Teach',    icon: BookOpen,  auth: true  },
+  { path: '/cbt',      label: 'CBT',      icon: Monitor,   auth: true  },
+  { path: '/practice', label: 'Practice', icon: Target,    auth: true  },
+  { path: '/mock-exam',label: 'Mock Exam',icon: ClipboardList, auth: true  },
+  { path: '/dashboard',label: 'Dashboard',icon: BarChart3, auth: true  },
 ]
 
 export default function Header() {
@@ -84,7 +85,7 @@ export default function Header() {
                     ? 'bg-[var(--color-ink)] text-[var(--color-paper)]'
                     : 'text-[var(--color-muted)] hover:text-[var(--color-ink)]'
                   }`}>
-                {link.icon} {link.label}
+                <link.icon size={20} /> {link.label}
               </Link>
             ))}
           </nav>
@@ -92,14 +93,14 @@ export default function Header() {
           {/* Right side */}
           <div className="flex items-center gap-2">
 
-            {/* 🍌 Streak counter — only when streak > 0 */}
+            {/* Streak counter — only when streak > 0 */}
             {user && streak > 0 && (
               <Link to="/practice"
                 title={`${streak}-day streak! Keep it up`}
                 className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl
                            border-2 border-amber-300 bg-amber-50 hover:bg-amber-100
                            transition-all shrink-0">
-                <span className="text-base leading-none">🍌</span>
+                <Flame size={20} className="text-amber-500" />
                 <span className="font-mono font-bold text-sm text-amber-700">
                   {streak}
                 </span>
@@ -113,7 +114,7 @@ export default function Header() {
                          hover:border-[var(--color-ink)] transition-all
                          bg-[var(--color-cream)] text-lg"
               title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}>
-              {isDark ? '☀️' : '🌙'}
+              {isDark ? <Sun size={20} /> : <Moon size={20} />}
             </button>
 
             {user && <NotificationBell />}
@@ -158,7 +159,7 @@ export default function Header() {
                       {/* Streak badge inside dropdown */}
                       {streak > 0 && (
                         <p className="text-xs text-amber-600 font-semibold mt-1">
-                          🍌 {streak}-day streak!
+                          <Flame size={14} className="inline text-amber-500" /> {streak}-day streak!
                         </p>
                       )}
                     </div>
@@ -167,34 +168,34 @@ export default function Header() {
                     <div className="overflow-y-auto flex-1">
                       {[
                         // ── Account ──────────────────────────────────
-                        { path: '/profile',       icon: '👤', label: 'My Profile'       },
-                        { path: '/bookmarks',     icon: '🔖', label: 'My Bookmarks'     },
+                        { path: '/profile',       icon: User,        label: 'My Profile'       },
+                        { path: '/bookmarks',     icon: Bookmark,    label: 'My Bookmarks'     },
                         // ── Daily engagement ─────────────────────────
-                        { path: '/daily',         icon: '🔥', label: 'Daily Challenge'  },
-                        { path: '/leaderboard',   icon: '🏆', label: 'Leaderboard'      },
+                        { path: '/daily',         icon: Flame,       label: 'Daily Challenge'  },
+                        { path: '/leaderboard',   icon: Trophy,      label: 'Leaderboard'      },
                         // ── Study tools ──────────────────────────────
-                        { path: '/past-questions',icon: '📝', label: 'Past Questions'   },
-                        { path: '/theory',        icon: '📖', label: 'Theory Practice'  },
-                        { path: '/ai-quiz',       icon: '🤖', label: 'AI Quiz'          },
-                        { path: '/review',        icon: '🧠', label: 'Spaced Review'    },
-                        { path: '/question-bank', icon: '📚', label: 'Question Bank'    },
-                        { path: '/formulas',      icon: '📐', label: 'Formula Sheet'    },
-                        { path: '/wiki/Quadratic+Equations', icon: '🔬', label: 'Topic Wiki' },
+                        { path: '/past-questions',icon: FileText,    label: 'Past Questions'   },
+                        { path: '/theory',        icon: Book,        label: 'Theory Practice'  },
+                        { path: '/ai-quiz',       icon: Bot,         label: 'AI Quiz'          },
+                        { path: '/review',        icon: Brain,       label: 'Spaced Review'    },
+                        { path: '/question-bank', icon: BookOpen,    label: 'Question Bank'    },
+                        { path: '/formulas',      icon: Triangle,    label: 'Formula Sheet'    },
+                        { path: '/wiki/Quadratic+Equations', icon: Microscope, label: 'Topic Wiki' },
                         // ── Social / competitive ──────────────────────
-                        { path: '/battle',        icon: '⚔️', label: 'Battle'           },
-                        { path: '/challenge',     icon: '🎮', label: 'Challenge Friend' },
-                        { path: '/groups',        icon: '👥', label: 'Study Groups'     },
-                        { path: '/classroom',     icon: '🏫', label: 'Classroom'        },
+                        { path: '/battle',        icon: Swords,      label: 'Battle'           },
+                        { path: '/challenge',     icon: Gamepad2,    label: 'Challenge Friend' },
+                        { path: '/groups',        icon: Users,       label: 'Study Groups'     },
+                        { path: '/classroom',     icon: School,      label: 'Classroom'        },
                         // ── Progress & extras ─────────────────────────
-                        { path: '/mastery',       icon: '🗺️', label: 'Mastery Map'      },
-                        { path: '/weekly-report', icon: '📊', label: 'Weekly Report'    },
-                        { path: '/certificate',   icon: '🎓', label: 'Certificate'      },
-                        { path: '/notes',         icon: '🗒️', label: 'My Notes'         },
-                        { path: '/planner',       icon: '📅', label: 'Study Planner'    },
-                        { path: '/cbt-history',   icon: '🗂️', label: 'CBT History'      },
+                        { path: '/mastery',       icon: Map,         label: 'Mastery Map'      },
+                        { path: '/weekly-report', icon: BarChart3,   label: 'Weekly Report'    },
+                        { path: '/certificate',   icon: GraduationCap, label: 'Certificate'    },
+                        { path: '/notes',         icon: StickyNote,  label: 'My Notes'         },
+                        { path: '/planner',       icon: Calendar,    label: 'Study Planner'    },
+                        { path: '/cbt-history',   icon: FolderArchive, label: 'CBT History'    },
                         // ── Teacher / Parent only ─────────────────────
                         ...(isTeacherOrParent ? [
-                          { path: '/monitor', icon: '👨‍🏫', label: 'Monitor Students', highlight: true },
+                          { path: '/monitor', icon: Presentation, label: 'Monitor Students', highlight: true },
                         ] : []),
                       ].map(item => (
                         <Link key={item.path} to={item.path}
@@ -205,7 +206,7 @@ export default function Header() {
                               ? 'text-[var(--color-teal)] font-semibold hover:bg-[#e8f4f4]'
                               : 'hover:bg-[var(--color-cream)]'
                             }`}>
-                          {item.icon} {item.label}
+                          <item.icon size={20} /> {item.label}
                         </Link>
                       ))}
                     </div>
@@ -215,7 +216,7 @@ export default function Header() {
                       <button onClick={handleSignOut}
                         className="w-full flex items-center gap-2 px-4 py-2.5
                                    text-sm text-red-500 hover:bg-red-50 transition-colors">
-                        🚪 Sign Out
+                        <DoorOpen size={18} /> Sign Out
                       </button>
                     </div>
                   </div>
@@ -266,7 +267,7 @@ export default function Header() {
                       ? 'bg-[var(--color-ink)] text-[var(--color-paper)]'
                       : 'text-[var(--color-ink)] hover:bg-[var(--color-cream)]'
                     }`}>
-                  <span>{link.icon}</span>
+                  <link.icon size={22} />
                   {link.label}
                 </Link>
               ))}
@@ -281,17 +282,17 @@ export default function Header() {
                         ? 'bg-[var(--color-ink)] text-[var(--color-paper)]'
                         : 'text-[var(--color-ink)] hover:bg-[var(--color-cream)]'
                       }`}>
-                    <span>🏫</span> Classroom
+                    <School size={22} /> Classroom
                   </Link>
                   <Link to="/battle" onClick={() => setMobileOpen(false)}
                     className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm
                                hover:bg-[var(--color-paper)] text-[var(--color-ink)]">
-                    <span>⚔️</span> Battle
+                    <Swords size={22} /> Battle
                   </Link>
                   <Link to="/question-bank" onClick={() => setMobileOpen(false)}
                     className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm
                                hover:bg-[var(--color-paper)] text-[var(--color-ink)]">
-                    <span>📚</span> Question Bank
+                    <BookOpen size={22} /> Question Bank
                   </Link>
                   {isTeacherOrParent && (
                     <Link to="/monitor" onClick={() => setMenuOpen(false)}
@@ -301,7 +302,7 @@ export default function Header() {
                           ? 'bg-[var(--color-ink)] text-[var(--color-paper)]'
                           : 'text-[var(--color-teal)] hover:bg-[#e8f4f4]'
                         }`}>
-                      <span>👨‍🏫</span> Monitor Students
+                      <Presentation size={22} /> Monitor Students
                     </Link>
                   )}
                 </>
@@ -330,7 +331,7 @@ export default function Header() {
                   {streak > 0 && (
                     <div className="flex items-center gap-2 px-4 py-1.5 rounded-xl
                                     bg-amber-50 border border-amber-200 mx-0">
-                      <span>🍌</span>
+                      <Flame size={20} className="text-amber-500" />
                       <span className="text-sm font-semibold text-amber-700">
                         {streak}-day streak!
                       </span>
@@ -339,7 +340,7 @@ export default function Header() {
                   <button onClick={handleSignOut}
                     className="w-full flex items-center gap-2 px-4 py-2.5 rounded-xl
                                text-sm text-red-500 hover:bg-red-50 transition-colors">
-                    🚪 Sign Out
+                    <DoorOpen size={18} /> Sign Out
                   </button>
                 </div>
               ) : (

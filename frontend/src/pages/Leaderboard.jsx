@@ -1,6 +1,25 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { getLeaderboard, xpProgress, BADGES } from '../lib/stats'
+import { Flame, Trophy, Medal, Zap, Book, Sparkles, Crown, Award, Star } from 'lucide-react'
+
+const BADGE_ICONS = {
+  'target': Zap,
+  'flame': Flame,
+  'zap': Zap,
+  'crown': Crown,
+  'award': Award,
+  'trophy': Trophy,
+  'star': Star,
+  'sparkles': Sparkles,
+  'book': Book,
+}
+
+function BadgeIcon({ emoji, size }) {
+  const Icon = BADGE_ICONS[emoji]
+  if (!Icon) return <span className="text-xs">{emoji}</span>
+  return <Icon size={size || 16} className="inline-block" />
+}
 
 export default function Leaderboard() {
   const { user } = useAuth()
@@ -58,7 +77,7 @@ export default function Leaderboard() {
               Streak
             </p>
             <p className="font-serif font-black text-2xl">
-              🔥 {board[myRank - 1]?.streak_current || 0}
+              <Flame size={24} className="inline-block" /> {board[myRank - 1]?.streak_current || 0}
             </p>
           </div>
         </div>
@@ -68,7 +87,7 @@ export default function Leaderboard() {
       <div className="card overflow-hidden">
         <div className="bg-[var(--color-ink)] px-6 py-4">
           <p className="font-serif font-bold text-white text-lg">
-            🏆 Top Students
+            <Trophy size={24} className="inline-block" /> Top Students
           </p>
         </div>
 
@@ -86,7 +105,7 @@ export default function Leaderboard() {
           </div>
         ) : board.length === 0 ? (
           <div className="bg-white p-12 text-center">
-            <div className="text-4xl mb-3">🏆</div>
+            <div className="text-4xl mb-3"><Trophy size={48} className="inline-block" /></div>
             <p className="text-[var(--color-muted)]">
               No rankings yet — complete a CBT exam to appear here!
             </p>
@@ -100,9 +119,9 @@ export default function Leaderboard() {
               const firstName = entry.full_name?.split(' ')[0] || 'Student'
               const initials  = entry.full_name?.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() || '?'
 
-              const rankDisplay = rank === 1 ? '🥇'
-                : rank === 2 ? '🥈'
-                : rank === 3 ? '🥉'
+              const rankDisplay = rank === 1 ? <Medal size={32} className="inline-block" color="#FFD700" />
+                : rank === 2 ? <Medal size={32} className="inline-block" color="#C0C0C0" />
+                : rank === 3 ? <Medal size={32} className="inline-block" color="#CD7F32" />
                 : `#${rank}`
 
               return (
@@ -144,7 +163,7 @@ export default function Leaderboard() {
                           const b = BADGES.find(x => x.id === bId)
                           return b ? (
                             <span key={bId} title={b.label} className="text-xs">
-                              {b.emoji}
+                              <BadgeIcon emoji={b.emoji} size={14} />
                             </span>
                           ) : null
                         })}
@@ -167,7 +186,7 @@ export default function Leaderboard() {
                       <span className="font-mono text-[10px] text-[var(--color-muted)]"> XP</span>
                     </p>
                     <p className="text-xs text-[var(--color-muted)]">
-                      🔥 {entry.streak_current || 0} day streak
+                      <Flame size={16} className="inline-block" /> {entry.streak_current || 0} day streak
                     </p>
                   </div>
                 </div>

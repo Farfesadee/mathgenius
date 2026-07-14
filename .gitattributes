@@ -1,0 +1,37 @@
+# Normalize line endings for all text files
+* text=auto
+
+# Python
+*.py text eol=lf
+*.pyx text eol=lf
+*.pyi text eol=lf
+
+# Shell
+*.sh text eol=lf
+*.bash text eol=lf
+
+# JavaScript
+*.js text eol=lf
+*.jsx text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.json text eol=lf
+
+# Markdown
+*.md text eol=lf
+
+# YAML
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Docker
+Dockerfile text eol=lf
+docker-compose.yml text eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.zip binary

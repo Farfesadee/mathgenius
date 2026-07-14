@@ -5,6 +5,16 @@ import {
   getNotifications, markAllRead, markOneRead,
   deleteNotification, getUnreadCount,
 } from '../lib/notifications'
+import { Bell, X, Trophy, BarChart3, FileText, Flame, Gift } from 'lucide-react'
+
+const ICON_MAP = {
+  trophy:    Trophy,
+  bar_chart: BarChart3,
+  file_text: FileText,
+  flame:     Flame,
+  gift:      Gift,
+  bell:      Bell,
+}
 
 export default function NotificationBell() {
   const { user }    = useAuth()
@@ -81,7 +91,7 @@ export default function NotificationBell() {
                    hover:border-[var(--color-ink)] transition-all
                    bg-[var(--color-cream)]"
       >
-        🔔
+        <Bell size={20} />
         {unread > 0 && (
           <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full
                            bg-red-500 text-white text-[10px] font-bold
@@ -97,8 +107,8 @@ export default function NotificationBell() {
                         rounded-2xl shadow-2xl overflow-hidden z-50">
           <div className="bg-[var(--color-ink)] px-4 py-3
                           flex items-center justify-between">
-            <p className="font-serif font-bold text-white text-sm">
-              🔔 Notifications
+            <p className="font-serif font-bold text-white text-sm flex items-center gap-2">
+              <Bell size={16} /> Notifications
             </p>
             {unread > 0 && (
               <button
@@ -115,7 +125,7 @@ export default function NotificationBell() {
                           divide-[var(--color-border)]">
             {notifs.length === 0 ? (
               <div className="p-8 text-center">
-                <div className="text-3xl mb-2">🔔</div>
+                <div className="text-3xl mb-2 flex justify-center"><Bell size={32} /></div>
                 <p className="text-sm text-[var(--color-muted)]">
                   No notifications yet
                 </p>
@@ -128,7 +138,7 @@ export default function NotificationBell() {
                             transition-colors hover:bg-[var(--color-cream)]
                             ${!n.read ? 'bg-[#e8f4f4]' : 'bg-white'}`}
               >
-                <span className="text-xl shrink-0 mt-0.5">{n.icon}</span>
+                {(() => { const Icon = ICON_MAP[n.icon] || Bell; return <Icon size={20} className="shrink-0 mt-0.5 text-[var(--color-teal)]" /> })()}
                 <div className="flex-1 min-w-0">
                   <p className={`text-sm font-semibold text-[var(--color-ink)]
                                  leading-snug
@@ -153,9 +163,9 @@ export default function NotificationBell() {
                   <button
                     onClick={(e) => handleDelete(e, n.id)}
                     className="text-[var(--color-muted)] hover:text-red-500
-                               text-xs transition-colors p-1"
+                               transition-colors p-1"
                   >
-                    ✕
+                    <X size={14} />
                   </button>
                 </div>
               </div>

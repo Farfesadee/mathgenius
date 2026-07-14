@@ -9,8 +9,10 @@ import {
   submitAssignment, getAssignmentResults, closeAssignment,
 } from '../lib/social2'
 import { useNavigate } from 'react-router-dom'
+import { Medal, X, Check, School, Trophy, Circle, ClipboardList, Target, Star } from 'lucide-react'
 
-const MEDAL = { 1: '🥇', 2: '🥈', 3: '🥉' }
+const MEDAL_ICON = { 1: Medal, 2: Medal, 3: Medal }
+const MEDAL_COLOR = { 1: 'text-yellow-500', 2: 'text-gray-400', 3: 'text-orange-400' }
 const MASTERY_COLOR = {
   master: 'text-emerald-600', proficient: 'text-blue-600',
   developing: 'text-amber-600', beginner: 'text-slate-500',
@@ -106,9 +108,9 @@ export default function Classroom() {
     setJoining(true); setJoinMsg('')
     const { data, error } = await joinClassroom(user.id, code)
     if (error) {
-      setJoinMsg('❌ ' + error)
+      setJoinMsg(<><X size={16} className="inline-block mr-1 text-red-500" /> {error}</>)
     } else {
-      setJoinMsg('✅ Joined!')
+      setJoinMsg(<><Check size={16} className="inline-block mr-1 text-green-500" /> Joined!</>)
       setCode('')
       await loadAll()
     }
@@ -279,7 +281,7 @@ export default function Classroom() {
           {!selectedClass ? (
             <div className="flex flex-col items-center justify-center min-h-[400px]
                             text-center text-[var(--color-muted)]">
-              <p className="text-4xl mb-3">🏫</p>
+              <School size={48} className="mb-3 text-[var(--color-muted)]" />
               <p className="font-semibold">Select a class to view the leaderboard</p>
             </div>
           ) : selectedStudent ? (
@@ -307,7 +309,7 @@ export default function Classroom() {
                         <MiniStatBox label="Sessions"  value={selectedStudent.sessCount} />
                         <MiniStatBox label="Mastered"  value={selectedStudent.topicsMaster} />
                         <MiniStatBox label="Streak"
-                          value={`${studentStats.streak.current_streak}🍌`}
+                          value={`${studentStats.streak.current_streak}`}
                           color="text-amber-600" />
                       </div>
                       {studentStats.mastery.length > 0 && (
@@ -374,8 +376,8 @@ export default function Classroom() {
               <div className="flex gap-1 bg-[var(--color-paper)] rounded-xl p-1 mb-5
                               w-fit border border-[var(--color-border)]">
                 {[
-                  { id: 'leaderboard', label: '🏆 Leaderboard' },
-                  { id: 'assignments', label: `📋 Assignments (${assignments.length})` },
+                  { id: 'leaderboard', label: <><Trophy size={16} className="inline-block mr-1" /> Leaderboard</> },
+                  { id: 'assignments', label: <><ClipboardList size={16} className="inline-block mr-1" /> Assignments ({assignments.length})</> },
                 ].map(t => (
                   <button key={t.id} onClick={() => setClassTab(t.id)}
                     className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors
@@ -392,7 +394,7 @@ export default function Classroom() {
               <>
               {leaderboard.length === 0 ? (
                 <div className="card p-12 text-center">
-                  <p className="text-4xl mb-3">🏆</p>
+                  <Trophy size={48} className="mx-auto mb-3 text-[var(--color-muted)]" />
                   <p className="font-semibold text-[var(--color-ink)]">No students yet</p>
                   <p className="text-sm text-[var(--color-muted)] mt-1">
                     Share the invite code <span className="font-mono font-bold">{selectedClass.invite_code}</span> to get started.
@@ -416,8 +418,8 @@ export default function Classroom() {
                         className={`w-full grid grid-cols-12 px-6 py-4 items-center text-left
                           ${isTeacher ? 'hover:bg-[var(--color-cream)] transition-colors' : ''}
                           ${student.userId === user?.id ? 'bg-[var(--color-teal)]/5' : ''}`}>
-                        <span className="col-span-1 font-serif font-black text-lg">
-                          {MEDAL[student.rank] || `#${student.rank}`}
+                        <span className="col-span-1 font-serif font-black text-lg flex items-center gap-1">
+                          {student.rank <= 3 ? <Medal size={24} className={MEDAL_COLOR[student.rank]} /> : `#${student.rank}`}
                         </span>
                         <span className="col-span-4">
                           <span className="font-semibold text-sm text-[var(--color-ink)]">
@@ -436,7 +438,7 @@ export default function Classroom() {
                           {student.sessCount}
                         </span>
                         <span className="col-span-2 text-center text-sm text-[var(--color-teal)] font-semibold">
-                          {student.topicsMaster} 🏆
+                          {student.topicsMaster} <Trophy size={14} className="inline-block text-yellow-500" />
                         </span>
                         <span className="col-span-1 text-center font-mono font-bold text-sm">
                           {student.points}
@@ -489,9 +491,9 @@ export default function Classroom() {
                                 onChange={e => setAssignForm(f => ({ ...f, difficulty: e.target.value }))}
                                 className="w-full border-2 border-[var(--color-border)] rounded-xl
                                            px-3 py-2 text-sm bg-white">
-                                <option value="easy">🟢 Easy</option>
-                                <option value="medium">🟡 Medium</option>
-                                <option value="hard">🔴 Hard</option>
+                                <option value="easy">Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="hard">Hard</option>
                               </select>
                             </div>
                             <div>
@@ -521,7 +523,7 @@ export default function Classroom() {
 
                   {assignments.length === 0 ? (
                     <div className="card p-10 text-center">
-                      <p className="text-3xl mb-2">📋</p>
+                      <ClipboardList size={40} className="mx-auto mb-2 text-[var(--color-muted)]" />
                       <p className="text-[var(--color-muted)] text-sm">
                         {isTeacher ? 'No assignments yet. Create one above.'
                           : 'No assignments from your teacher yet.'}
@@ -567,7 +569,7 @@ export default function Classroom() {
                               )}
                               {!isTeacher && mySubmit && (
                                 <span className="text-xs text-green-600 font-semibold">
-                                  ✅ Submitted ({mySubmit.score}%)
+                                  <Check size={16} className="inline-block mr-1" /> Submitted ({mySubmit.score}%)
                                 </span>
                               )}
                               {/* Teacher: close button */}

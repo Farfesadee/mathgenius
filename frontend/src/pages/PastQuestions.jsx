@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext'
 import { askExamQuestion, listExamPapers, ingestExamPaper } from '../services/api'
 import { ExplanationBody } from '../utils/RenderMath'
 import { saveBookmark } from '../lib/bookmarks'
+import { Target, Folder, Upload, Brain, Bookmark, Lightbulb, Clock, ClipboardList, TriangleAlert, Calculator, Sparkles, FileText, Check, X } from 'lucide-react'
 
 const EXAM_TYPES = ['WAEC', 'NECO', 'JAMB', 'OTHER']
 const YEARS      = Array.from({ length: 25 }, (_, i) => 2024 - i)
@@ -97,7 +98,7 @@ export default function PastQuestions() {
       const res = await askExamQuestion(question, examType, year)
       setResponse(res.data.response)
     } catch {
-      setResponse('⚠️ Could not connect to backend. Make sure it is running.')
+      setResponse('Could not connect to backend. Make sure it is running.')
     }
     setLoading(false)
   }
@@ -134,17 +135,17 @@ export default function PastQuestions() {
         const base64 = ev.target.result.split(',')[1]
         try {
           await ingestExamPaper(base64, uploadTitle, uploadExamType, uploadYear)
-          setUploadSuccess(`✅ "${uploadTitle}" uploaded and ingested successfully!`)
+          setUploadSuccess(<><Check size={16} className="inline-block mr-1" /> "{uploadTitle}" uploaded and ingested successfully!</>)
           setUploadTitle('')
           await loadPapers()
         } catch (err) {
-          setUploadError('❌ Upload failed. Check that the backend is running.')
+          setUploadError(<><X size={16} className="inline-block mr-1" /> Upload failed. Check that the backend is running.</>)
         }
         setUploading(false)
       }
       reader.readAsDataURL(file)
     } catch {
-      setUploadError('❌ Could not read the file.')
+      setUploadError(<><X size={16} className="inline-block mr-1" /> Could not read the file.</>)
       setUploading(false)
     }
   }
@@ -171,9 +172,9 @@ export default function PastQuestions() {
       <div className="flex border-2 border-[var(--color-ink)] rounded-2xl
                       overflow-hidden mb-8 w-fit">
         {[
-          { id: 'practice', label: '🎯 Practice Questions' },
-          { id: 'papers',   label: '📁 Available Papers'   },
-          { id: 'upload',   label: '⬆️ Upload Paper'       },
+          { id: 'practice', label: 'Practice Questions', icon: Target },
+          { id: 'papers',   label: 'Available Papers',   icon: Folder },
+          { id: 'upload',   label: 'Upload Paper',       icon: Upload },
         ].map(t => (
           <button
             key={t.id}
@@ -184,7 +185,7 @@ export default function PastQuestions() {
                 : 'bg-white text-[var(--color-muted)] hover:text-[var(--color-ink)]'
               }`}
           >
-            {t.label}
+            <t.icon size={16} className="inline-block mr-1.5" />{t.label}
           </button>
         ))}
       </div>
@@ -280,7 +281,7 @@ export default function PastQuestions() {
                       Euler is solving...
                     </>
                   ) : (
-                    '🧮 Solve with Full Working'
+                    <><Calculator size={18} className="inline-block mr-1.5" /> Solve with Full Working</>
                   )}
                 </button>
               </div>
@@ -292,7 +293,7 @@ export default function PastQuestions() {
                 <div className="bg-[var(--color-teal)] px-6 py-3
                                 flex items-center justify-between">
                   <span className="font-serif font-bold text-white">
-                    🧠 Euler's Solution
+                    <Brain size={20} className="inline-block mr-1.5" /> Euler's Solution
                   </span>
                   {user && (
                     <button
@@ -304,7 +305,7 @@ export default function PastQuestions() {
                           : 'bg-white/20 hover:bg-white/30 text-white'
                         }`}
                     >
-                      {bookmarked ? '🔖 Saved!' : '🔖 Save'}
+                      {bookmarked ? <><Check size={14} className="inline-block mr-1" /> Saved!</> : <><Bookmark size={14} className="inline-block mr-1" /> Save</>}
                     </button>
                   )}
                 </div>
@@ -319,7 +320,7 @@ export default function PastQuestions() {
               <div className="card bg-white p-6 space-y-3">
                 <p className="font-mono text-[10px] uppercase tracking-widest
                                text-[var(--color-muted)]">
-                  ⏳ Euler is working through this...
+                  <Clock size={14} className="inline-block mr-1" /> Euler is working through this...
                 </p>
                 {[...Array(6)].map((_, i) => (
                   <div key={i}
@@ -336,7 +337,7 @@ export default function PastQuestions() {
             <div className="card overflow-hidden">
               <div className="bg-[var(--color-gold)] px-5 py-3">
                 <p className="font-serif font-bold text-[var(--color-ink)]">
-                  📋 Sample {examType} Questions
+                  <ClipboardList size={18} className="inline-block mr-1.5" /> Sample {examType} Questions
                 </p>
               </div>
               <div className="bg-white divide-y divide-[var(--color-border)]">
@@ -361,7 +362,7 @@ export default function PastQuestions() {
             <div className="card bg-white overflow-hidden">
               <div className="bg-[var(--color-ink)] px-5 py-3">
                 <p className="font-serif font-bold text-white text-sm">
-                  💡 Exam Tips
+                  <Lightbulb size={16} className="inline-block mr-1.5" /> Exam Tips
                 </p>
               </div>
               <div className="p-4 space-y-3">
@@ -390,7 +391,7 @@ export default function PastQuestions() {
         <div>
           {papers.length === 0 ? (
             <div className="card bg-white p-12 text-center">
-              <div className="text-5xl mb-4">📁</div>
+              <div className="flex justify-center mb-4"><Folder size={48} /></div>
               <h3 className="font-serif font-bold text-xl text-[var(--color-ink)] mb-2">
                 No papers uploaded yet
               </h3>
@@ -401,7 +402,7 @@ export default function PastQuestions() {
                 onClick={() => setTab('upload')}
                 className="btn-primary px-6 py-3 text-sm"
               >
-                ⬆️ Upload First Paper
+                <Upload size={16} className="inline-block mr-1" /> Upload First Paper
               </button>
             </div>
           ) : (
@@ -425,7 +426,7 @@ export default function PastQuestions() {
           <div className="card overflow-hidden">
             <div className="bg-[var(--color-teal)] px-6 py-4">
               <p className="font-serif font-bold text-white text-lg">
-                ⬆️ Upload Past Paper
+                <Upload size={22} className="inline-block mr-1.5" /> Upload Past Paper
               </p>
               <p className="text-white/70 text-xs mt-1">
                 Euler will learn from the uploaded PDF and use it to answer questions
@@ -505,7 +506,7 @@ export default function PastQuestions() {
                              hover:border-[var(--color-teal)] rounded-xl p-8
                              text-center cursor-pointer transition-colors"
                 >
-                  <div className="text-3xl mb-2">📄</div>
+                  <div className="flex justify-center mb-2"><FileText size={36} /></div>
                   <p className="text-sm text-[var(--color-muted)]">
                     Click to select a PDF file
                   </p>
@@ -548,7 +549,7 @@ export default function PastQuestions() {
 
               {!uploadTitle && (
                 <p className="text-xs text-[var(--color-muted)]">
-                  ⚠️ Enter a title before selecting a file
+                  <TriangleAlert size={14} className="inline-block mr-1" /> Enter a title before selecting a file
                 </p>
               )}
             </div>

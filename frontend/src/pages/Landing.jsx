@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext'
 import { useEffect, useState, useRef } from 'react'
 import { askTutor, getApprovedTestimonials } from '../services/api'
 import { ExplanationBody } from '../utils/RenderMath'
-import { Lightbulb, Monitor, BarChart3, Flame, Calendar, BookOpen } from 'lucide-react'
+import { Lightbulb, Monitor, BarChart3, Flame, Calendar, BookOpen, Triangle, Rocket, Calculator, ArrowRight, FileText, Trophy, Star, Globe, AlertTriangle } from 'lucide-react'
 
 const FEATURES = [
   {
@@ -85,7 +85,7 @@ function LandingChat() {
     } catch {
       setMessages(prev => [
         ...prev.filter(m => !m.loading),
-        { role: 'assistant', content: '⚠️ Could not connect. Make sure the backend is running.' },
+        { role: 'assistant', content: 'Could not connect. Make sure the backend is running.' },
       ])
     }
     setLoading(false)
@@ -137,7 +137,7 @@ function LandingChat() {
                       h-72 overflow-y-auto px-4 py-4 space-y-3">
         {messages.length === 0 && (
           <div className="h-full flex flex-col items-center justify-center text-center gap-3">
-            <div className="text-5xl">🧮</div>
+            <Calculator size={48} strokeWidth={1.5} className="text-[var(--color-teal)]" />
             <p className="font-serif font-bold text-[var(--color-ink)] text-lg">
               Try Euler — no account needed
             </p>
@@ -190,11 +190,11 @@ function LandingChat() {
         {limitReached ? (
           <div className="text-center py-2">
             <p className="text-sm font-semibold text-[var(--color-ink)] mb-3">
-              You've used your 5 free questions! 🎉
+              You've used your 5 free questions!
             </p>
             <Link to="/signup"
               className="btn-primary px-6 py-2.5 text-sm justify-center inline-flex">
-              🚀 Sign up free for unlimited access
+              <Rocket size={16} className="inline" /> Sign up free for unlimited access
             </Link>
           </div>
         ) : (
@@ -218,7 +218,7 @@ function LandingChat() {
                          hover:bg-[var(--color-ink)] transition-colors shrink-0">
               {loading
                 ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                : '➤'
+                : <ArrowRight size={18} strokeWidth={2.5} />
               }
             </button>
           </div>
@@ -308,7 +308,7 @@ export default function Landing() {
                           border border-[var(--color-teal)] rounded-full
                           px-4 py-2 text-sm font-mono text-[var(--color-teal)]
                           mb-6">
-            🇳🇬 Built for Nigerian students
+            <Globe size={16} className="inline" /> Built for Nigerian students
           </div>
 
           <h1 className="font-serif font-black text-5xl sm:text-6xl lg:text-7xl
@@ -333,11 +333,11 @@ export default function Landing() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <Link to="/signup"
               className="btn-primary px-8 py-4 text-base justify-center text-center">
-              🚀 Start Studying Free
+              <Rocket size={18} className="inline" /> Start Studying Free
             </Link>
             <Link to="/formulas"
               className="btn-secondary px-8 py-4 text-base justify-center text-center">
-              📐 View Formula Sheet
+              <Triangle size={18} className="inline" /> View Formula Sheet
             </Link>
           </div>
 
@@ -449,19 +449,19 @@ export default function Landing() {
             {[
               {
                 step: '01',
-                icon: '📝',
+                icon: FileText,
                 title: 'Create your account',
                 desc: 'Sign up free in seconds. No credit card needed.',
               },
               {
                 step: '02',
-                icon: '📚',
+                icon: BookOpen,
                 title: 'Study with Euler',
                 desc: 'Ask the AI tutor to explain any topic, then test yourself with real past questions.',
               },
               {
                 step: '03',
-                icon: '🏆',
+                icon: Trophy,
                 title: 'Track & improve',
                 desc: 'See your weak topics, earn XP, maintain streaks and climb the leaderboard.',
               },
@@ -474,9 +474,9 @@ export default function Landing() {
                 )}
                 <div className="relative z-10 text-center">
                   <div className="w-16 h-16 rounded-2xl bg-[var(--color-ink)]
-                                  flex items-center justify-center text-3xl
+                                  flex items-center justify-center
                                   mx-auto mb-4">
-                    {s.icon}
+                    {(() => { const Icon = s.icon; return <Icon size={28} strokeWidth={1.5} className="text-white" /> })()}
                   </div>
                   <div className="font-mono text-[10px] text-[var(--color-gold)]
                                   tracking-widest uppercase mb-2">
@@ -532,7 +532,7 @@ export default function Landing() {
           {!testimonialsLoading && testimonials.length === 0 && (
             <div className="text-center py-10">
               <p className="text-white/50 text-sm">
-                No reviews yet — be the first to share your result after completing a mock exam! 🚀
+                No reviews yet — be the first to share your result after completing a mock exam!
               </p>
             </div>
           )}
@@ -547,7 +547,7 @@ export default function Landing() {
                   {/* Stars */}
                   <div className="flex gap-0.5 text-base">
                     {[1,2,3,4,5].map(s => (
-                      <span key={s}>{s <= t.rating ? '⭐' : '☆'}</span>
+                      <span key={s}>{s <= t.rating ? <Star size={16} className="inline fill-current text-[var(--color-gold)]" /> : <Star size={16} className="inline text-[var(--color-muted)]" />}</span>
                     ))}
                   </div>
                   <p className="text-white/90 text-sm leading-relaxed italic flex-1">
@@ -583,7 +583,7 @@ export default function Landing() {
                        text-lg px-10 py-4 rounded-2xl
                        hover:bg-[var(--color-cream)] transition-colors
                        shadow-xl">
-            🚀 Start Free Today
+            <Rocket size={20} className="inline" /> Start Free Today
           </Link>
           <p className="text-white/50 text-xs mt-4 font-mono">
             No credit card required · Free forever

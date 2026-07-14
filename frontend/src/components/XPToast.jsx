@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { BADGES } from '../lib/stats'
+import { Zap, Star } from 'lucide-react'
 
 export default function XPToast({ xpGained, newBadges = [], onDone }) {
   const [visible, setVisible] = useState(true)
@@ -23,7 +24,7 @@ export default function XPToast({ xpGained, newBadges = [], onDone }) {
         <div className="bg-[var(--color-ink)] text-white px-5 py-3 rounded-2xl
                         shadow-2xl flex items-center gap-3 border-2
                         border-[var(--color-gold)]">
-          <span className="text-2xl">⚡</span>
+          <Zap size={24} className="text-yellow-300" />
           <div>
             <p className="font-mono text-[10px] uppercase tracking-widest text-white/50">
               XP Earned

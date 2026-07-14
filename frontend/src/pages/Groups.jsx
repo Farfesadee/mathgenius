@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { getUserStats, xpProgress } from '../lib/stats'
+import { Medal, Flame, RefreshCw, Trophy, Users, Key, Check } from 'lucide-react'
 
 function randomCode(len = 6) {
     const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'
@@ -13,7 +14,7 @@ function randomCode(len = 6) {
 function MemberRow({ member, rank, isMe }) {
     const { level } = xpProgress(member.xp || 0)
     const rankColor = rank === 1 ? 'text-yellow-500' : rank === 2 ? 'text-gray-400' : rank === 3 ? 'text-orange-400' : 'text-[var(--color-muted)]'
-    const rankIcon = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`
+    const rankIcon = rank <= 3 ? <Medal size={22} className={rank === 1 ? 'text-yellow-500' : rank === 2 ? 'text-gray-400' : 'text-orange-400'} /> : <span className="text-xs">#{rank}</span>
 
     return (
         <div className={`flex items-center gap-4 px-5 py-4 ${isMe ? 'bg-[#e8f4f4]' : ''}`}>
@@ -27,7 +28,7 @@ function MemberRow({ member, rank, isMe }) {
                     {member.full_name || 'Student'}
                     {isMe && <span className="ml-2 text-[10px] font-mono text-[var(--color-teal)] uppercase">You</span>}
                 </p>
-                <p className="text-xs text-[var(--color-muted)]">Level {level} · {member.streak_current || 0}🔥</p>
+                <p className="text-xs text-[var(--color-muted)] flex items-center gap-1">Level {level} · {member.streak_current || 0}<Flame size={14} className="text-orange-500" /></p>
             </div>
             <div className="text-right shrink-0">
                 <p className="font-serif font-black text-lg text-[var(--color-ink)]">
@@ -111,7 +112,7 @@ function GroupView({ group, userId, onLeave }) {
                 </div>
                 <div className="bg-white px-6 py-3 flex justify-between items-center">
                     <button onClick={loadMembers} className="text-xs text-[var(--color-teal)] font-mono hover:underline">
-                        🔄 Refresh
+                        <RefreshCw size={14} className="inline-block mr-1" /> Refresh
                     </button>
                     <button onClick={leave} className="text-xs text-red-500 font-mono hover:underline">
                         Leave group
@@ -122,7 +123,7 @@ function GroupView({ group, userId, onLeave }) {
             {/* Leaderboard */}
             <div className="card overflow-hidden">
                 <div className="bg-[var(--color-ink)] px-6 py-4">
-                    <p className="font-serif font-bold text-white text-lg">🏆 Group Leaderboard</p>
+                    <p className="font-serif font-bold text-white text-lg flex items-center gap-2"><Trophy size={22} /> Group Leaderboard</p>
                 </div>
                 <div className="bg-white divide-y divide-[var(--color-border)]">
                     {loading ? (
@@ -220,7 +221,7 @@ export default function Groups() {
                         <span className="block w-6 h-px bg-[var(--color-gold)]" />
                         Study Groups
                     </p>
-                    <h1 className="font-serif font-black text-5xl tracking-tight">👥 Groups</h1>
+                    <h1 className="font-serif font-black text-5xl tracking-tight flex items-center gap-3"><Users size={40} /> Groups</h1>
                     <p className="text-[var(--color-muted)] mt-1">
                         Study together and see who's topping the leaderboard.
                     </p>
@@ -229,7 +230,7 @@ export default function Groups() {
                     <button onClick={() => { setView('create'); setActive(null) }}
                         className="btn-primary px-5 py-2.5 text-sm">+ Create</button>
                     <button onClick={() => { setView('join'); setActive(null) }}
-                        className="btn-secondary px-5 py-2.5 text-sm">🔑 Join</button>
+                        className="btn-secondary px-5 py-2.5 text-sm flex items-center gap-2"><Key size={16} /> Join</button>
                 </div>
             </div>
 
@@ -246,7 +247,7 @@ export default function Groups() {
                         <div className="flex gap-3">
                             <button onClick={handleCreate} disabled={!newName.trim() || creating}
                                 className="btn-primary px-6 py-3 text-sm disabled:opacity-50 flex-1 justify-center">
-                                {creating ? 'Creating...' : '✅ Create Group'}
+                                {creating ? 'Creating...' : <><Check size={18} /> Create Group</>}
                             </button>
                             <button onClick={() => setView('list')} className="btn-secondary px-4 py-3 text-sm">Cancel</button>
                         </div>
@@ -269,7 +270,7 @@ export default function Groups() {
                         <div className="flex gap-3">
                             <button onClick={handleJoin} disabled={joinCode.length < 6 || joining}
                                 className="btn-primary px-6 py-3 text-sm disabled:opacity-50 flex-1 justify-center">
-                                {joining ? 'Joining...' : '🔑 Join Group'}
+                                {joining ? 'Joining...' : <><Key size={18} /> Join Group</>}
                             </button>
                             <button onClick={() => setView('list')} className="btn-secondary px-4 py-3 text-sm">Cancel</button>
                         </div>
@@ -295,7 +296,7 @@ export default function Groups() {
                         </div>
                     ) : myGroups.length === 0 ? (
                         <div className="card bg-white p-12 text-center">
-                            <div className="text-5xl mb-4">👥</div>
+                            <Users size={48} className="mx-auto mb-4 text-[var(--color-muted)]" />
                             <h3 className="font-serif font-bold text-xl mb-2">No groups yet</h3>
                             <p className="text-[var(--color-muted)] text-sm mb-6">
                                 Create a group to study with friends and compete on a shared leaderboard.
@@ -304,8 +305,8 @@ export default function Groups() {
                                 <button onClick={() => setView('create')} className="btn-primary px-5 py-3 text-sm">
                                     + Create Group
                                 </button>
-                                <button onClick={() => setView('join')} className="btn-secondary px-5 py-3 text-sm">
-                                    🔑 Join Group
+                                <button onClick={() => setView('join')} className="btn-secondary px-5 py-3 text-sm flex items-center gap-2">
+                                    <Key size={16} /> Join Group
                                 </button>
                             </div>
                         </div>

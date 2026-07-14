@@ -7,6 +7,7 @@
 //   <SolutionDisplay question={q} solutionImages={q.answer_images} />
 
 import { useState, useEffect, useRef } from "react";
+import { BarChart3, Triangle, ClipboardList, RefreshCw, Loader2 } from "lucide-react";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
@@ -190,7 +191,7 @@ export default function SolutionDisplay({
       {/* Loading */}
       {state === "loading" && (
         <div style={{ textAlign: "center", padding: "32px 0", color: "#6b7280" }}>
-          <div style={{ fontSize: 24, marginBottom: 8 }}>⏳</div>
+          <Loader2 size={24} className="animate-spin" style={{ marginBottom: 8 }} />
           Generating solution...
         </div>
       )}
@@ -224,7 +225,7 @@ export default function SolutionDisplay({
           {solution.visual?.type === "chartjs" && solution.visual.content && (
             <div>
               <div style={{ fontSize: 13, color: "#6b7280", marginTop: 16, marginBottom: 4 }}>
-                📊 Graph
+                <BarChart3 size={14} style={{ marginRight: 4, verticalAlign: "middle" }} /> Graph
               </div>
               <ChartVisual configJson={solution.visual.content} />
             </div>
@@ -233,7 +234,7 @@ export default function SolutionDisplay({
           {solution.visual?.type === "svg" && solution.visual.content && (
             <div>
               <div style={{ fontSize: 13, color: "#6b7280", marginTop: 16, marginBottom: 4 }}>
-                📐 Diagram
+                <Triangle size={14} style={{ marginRight: 4, verticalAlign: "middle" }} /> Diagram
               </div>
               <SvgVisual svgContent={solution.visual.content} />
             </div>
@@ -242,7 +243,7 @@ export default function SolutionDisplay({
           {solution.visual?.type === "table" && solution.visual.content && (
             <div>
               <div style={{ fontSize: 13, color: "#6b7280", marginTop: 16, marginBottom: 4 }}>
-                📋 Table
+                <ClipboardList size={14} style={{ marginRight: 4, verticalAlign: "middle" }} /> Table
               </div>
               <TableVisual htmlContent={solution.visual.content} />
             </div>
@@ -262,7 +263,7 @@ export default function SolutionDisplay({
                 color: "#6b7280",
               }}
             >
-              🔄 Regenerate
+              <RefreshCw size={14} style={{ marginRight: 4, verticalAlign: "middle" }} /> Regenerate
             </button>
           </div>
         </div>

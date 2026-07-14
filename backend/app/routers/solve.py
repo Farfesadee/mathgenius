@@ -1,79 +1,55 @@
 import os
 import json
+import logging
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel, Field
 from typing import Optional
 from groq import Groq
 from app.services.math_service import solve_expression, differentiate, integrate_expr
 from app.services.groq_service import ask_groq
 from app.dependencies import require_auth
+from app.schemas import SolveRequest, ExplainRequest, ImageSolveRequest, PracticeRequest, GradeRequest
+from app.errors import ValidationError, ExternalServiceError
 
+logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/solve", tags=["Solve"])
-
-
-class SolveRequest(BaseModel):
-    expression: str = Field(..., max_length=1000)
-    mode: str = "solve"
-
-class ExplainRequest(BaseModel):
-    expression: str = Field(..., max_length=1000)
-    result: str     = Field(..., max_length=2000)
-
-class ImageSolveRequest(BaseModel):
-    image_base64: str
-    image_type: str = "image/jpeg"
-    extra_instruction: Optional[str] = None
-
-class PracticeRequest(BaseModel):
-    topic: str
-    level: str = "secondary"
-    difficulty: str = "easy"
-    question_number: int = 1
-    previous_questions: list = []   # tracks what was already asked this session
-    exam_context: str = ""          # e.g. "WAEC exam style" for predicted mode
-
-class WorkedExampleRequest(BaseModel):
-    topic: str
-    level: str = "secondary"
-    difficulty: str = "easy"
-
-class HintsRequest(BaseModel):
-    topic: str
-    question: str
-    answer: str          # used to craft progressive hints without giving it away
-
-class RetryQuestionRequest(BaseModel):
-    topic: str
-    level: str = "secondary"
-    original_question: str
-    student_wrong_answer: str
-
-class GradeRequest(BaseModel):
-    topic: str
-    question: str
-    correct_answer: str
-    student_answer: str
 
 
 @router.post("/")
 async def solve(request: SolveRequest):
-    if request.mode == "differentiate":
-        result = differentiate(request.expression)
-    elif request.mode == "integrate":
-        result = integrate_expr(request.expression)
-    else:
-        result = solve_expression(request.expression)
-    return {"success": True, "data": result}
+    """Solve a mathematical expression using SymPy."""
+    try:
+        logger.info(f"Solving expression: {request.expression[:50]}...")
+
+        if request.mode == "differentiate":
+            result = differentiate(request.expression)
+        elif request.mode == "integrate":
+            result = integrate_expr(request.expression)
+        else:
+            result = solve_expression(request.expression)
+
+        logger.info(f"Solution computed successfully")
+        return {"success": True, "data": result}
+    except Exception as exc:
+        logger.error(f"Failed to solve expression: {exc}", exc_info=True)
+        raise ValidationError(detail=f"Unable to solve expression: {str(exc)[:100]}")
 
 
 @router.post("/explain")
 async def explain_solution(request: ExplainRequest, user=Depends(require_auth)):
-    prompt = f"""A student solved '{request.expression}' and got '{request.result}'.
+    """Get a step-by-step explanation of a solution."""
+    try:
+        logger.info(f"Generating explanation for: {request.expression[:50]}...")
+        prompt = f"""A student solved '{request.expression}' and got '{request.result}'.
 Show ALL methods for solving this problem step-by-step with full working.
 Make it very clear, warm and easy for a student to understand."""
-    explanation = await ask_groq(prompt)   # ← was missing await
-    return {"success": True, "explanation": explanation}
+
+        explanation = await ask_groq(prompt)
+        logger.info("Explanation generated successfully")
+        return {"success": True, "explanation": explanation}
+    except Exception as exc:
+        logger.error(f"Failed to generate explanation: {exc}", exc_info=True)
+        raise ExternalServiceError("Groq", detail=str(exc)[:100])
 
 
 @router.post("/image")

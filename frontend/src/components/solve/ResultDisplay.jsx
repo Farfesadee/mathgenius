@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Bookmark, Loader, Lightbulb, Brain } from 'lucide-react'
 import { BlockMath } from 'react-katex'
 import { RenderMath, ExplanationBody } from '../../utils/RenderMath'
 import { useAuth } from '../../context/AuthContext'
@@ -55,7 +56,7 @@ export default function ResultDisplay({ result, onExplain, explaining, explanati
                   : 'bg-white/20 hover:bg-white/30 text-white'
                 }`}
             >
-              {bookmarked ? '🔖 Saved!' : '🔖 Save'}
+              {bookmarked ? <><Bookmark size={16} /> Saved!</> : <><Bookmark size={16} /> Save</>}
             </button>
           )}
           <button
@@ -64,7 +65,7 @@ export default function ResultDisplay({ result, onExplain, explaining, explanati
             className="text-sm font-medium bg-white/20 hover:bg-white/30 text-white
                        px-4 py-1.5 rounded-lg transition-all disabled:opacity-50"
           >
-            {explaining ? '⏳ Loading...' : '💡 Show All Methods'}
+            {explaining ? <><Loader size={16} className="animate-spin" /> Loading...</> : <><Lightbulb size={16} /> Show All Methods</>}
           </button>
         </div>
       </div>
@@ -108,7 +109,7 @@ export default function ResultDisplay({ result, onExplain, explaining, explanati
         <div className="border-t-2 border-[var(--color-ink)] bg-[var(--color-paper)] p-6">
           <p className="font-mono text-[10px] uppercase tracking-widest
                          text-[var(--color-muted)] mb-3">
-            ⏳ Euler is preparing all methods...
+            <Loader size={16} className="animate-spin" /> Euler is preparing all methods...
           </p>
           <div className="space-y-2">
             {[...Array(5)].map((_, i) => (
@@ -125,7 +126,7 @@ export default function ResultDisplay({ result, onExplain, explaining, explanati
           <div className="flex items-center justify-between mb-4">
             <p className="font-mono text-[10px] uppercase tracking-widest
                            text-[var(--color-muted)] flex items-center gap-2">
-              <span>🧠</span> All Methods — Euler
+              <Brain size={20} /> All Methods — Euler
             </p>
             {user && (
               <button
@@ -136,7 +137,7 @@ export default function ResultDisplay({ result, onExplain, explaining, explanati
                     : 'bg-white border-[var(--color-border)] hover:border-[var(--color-ink)]'
                   }`}
               >
-                {bookmarkingExpl ? '🔖 Saved!' : '🔖 Save Explanation'}
+                {bookmarkingExpl ? <><Bookmark size={16} /> Saved!</> : <><Bookmark size={16} /> Save Explanation</>}
               </button>
             )}
           </div>

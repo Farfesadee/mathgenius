@@ -30,7 +30,7 @@ export async function deleteNotification(id) {
 
 export async function createNotification(userId, { type, title, message, icon, link }) {
   await supabase.from('notifications').insert({
-    user_id: userId, type, title, message, icon: icon || '🔔', link,
+    user_id: userId, type, title, message, icon: icon || 'bell', link,
   })
 }
 

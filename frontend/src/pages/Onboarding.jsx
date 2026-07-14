@@ -1,45 +1,46 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { PartyPopper, Calculator, GraduationCap, Rocket, Sparkles, Flag, Settings, BookOpen, Target, FileText, Bookmark, BarChart3, Check, Lightbulb, Zap, School, Microscope, Brain, Monitor } from 'lucide-react'
 
 const STEPS = [
   {
     id: 'welcome',
-    title: 'Welcome to MathGenius! 🎉',
+    title: 'Welcome to MathGenius!',
     subtitle: 'Your personal AI mathematics tutor',
     content: 'Euler is here to help you master mathematics — from basic arithmetic to university-level calculus. Let\'s get you set up in 3 quick steps.',
-    icon: '🧮',
+    Icon: Calculator,
   },
   {
     id: 'level',
-    title: 'What level are you? 📚',
+    title: 'What level are you?',
     subtitle: 'We\'ll personalise your experience',
     content: null,
-    icon: '🎓',
+    Icon: GraduationCap,
   },
   {
     id: 'tour',
-    title: 'Here\'s what you can do 🚀',
+    title: 'Here\'s what you can do',
     subtitle: 'Quick tour of MathGenius',
     content: null,
-    icon: '⚡',
+    Icon: Zap,
   },
   {
     id: 'ready',
-    title: 'You\'re all set! 🌟',
+    title: 'You\'re all set!',
     subtitle: 'Let\'s start learning',
     content: 'Euler is ready to help you tackle any mathematics problem. Start by exploring a topic or solving a question.',
-    icon: '🏁',
+    Icon: Sparkles,
   },
 ]
 
 const FEATURES = [
-  { icon: '⚙️', title: 'Solve', desc: 'Solve equations, differentiate and integrate with full step-by-step working' },
-  { icon: '📚', title: 'Teach', desc: 'Learn any topic with Euler — your AI tutor explains everything clearly' },
-  { icon: '🎯', title: 'Practice', desc: 'Test yourself with questions Euler generates and grades for you' },
-  { icon: '📝', title: 'Past Questions', desc: 'Practice real WAEC, NECO and JAMB questions with worked solutions' },
-  { icon: '🔖', title: 'Bookmarks', desc: 'Save important solutions and explanations for exam revision' },
-  { icon: '📊', title: 'Dashboard', desc: 'Track your progress, see weak topics and improve over time' },
+  { Icon: Settings, title: 'Solve', desc: 'Solve equations, differentiate and integrate with full step-by-step working' },
+  { Icon: BookOpen, title: 'Teach', desc: 'Learn any topic with Euler — your AI tutor explains everything clearly' },
+  { Icon: Target, title: 'Practice', desc: 'Test yourself with questions Euler generates and grades for you' },
+  { Icon: FileText, title: 'Past Questions', desc: 'Practice real WAEC, NECO and JAMB questions with worked solutions' },
+  { Icon: Bookmark, title: 'Bookmarks', desc: 'Save important solutions and explanations for exam revision' },
+  { Icon: BarChart3, title: 'Dashboard', desc: 'Track your progress, see weak topics and improve over time' },
 ]
 
 export default function Onboarding() {
@@ -49,14 +50,12 @@ export default function Onboarding() {
   const [level, setLevel] = useState('')
 
   const handleNext = async () => {
-    // Store level in sessionStorage — will be saved after signup
     if (step === 1 && level) {
       sessionStorage.setItem('onboarding_level', level)
     }
     if (step < STEPS.length - 1) {
       setStep(s => s + 1)
     } else {
-      // Mark onboarding as done so returning visitors skip it
       localStorage.setItem('mg_onboarding_done', '1')
       navigate('/signup')
     }
@@ -70,7 +69,6 @@ export default function Onboarding() {
                     justify-center px-4 py-10">
       <div className="w-full max-w-lg">
 
-        {/* Progress */}
         <div className="mb-8">
           <div className="flex justify-between text-xs font-mono
                           text-[var(--color-muted)] mb-2">
@@ -87,9 +85,8 @@ export default function Onboarding() {
 
         <div className="card overflow-hidden">
 
-          {/* Header */}
           <div className="bg-[var(--color-ink)] px-8 py-8 text-center">
-            <div className="text-6xl mb-4">{current.icon}</div>
+            <div className="mb-4 flex justify-center"><current.Icon size={48} className="text-white" /></div>
             <h1 className="font-serif font-black text-3xl text-white leading-tight">
               {current.title}
             </h1>
@@ -98,25 +95,27 @@ export default function Onboarding() {
 
           <div className="bg-white p-8">
 
-            {/* Step 0 — Welcome */}
             {step === 0 && (
               <div className="text-center space-y-4">
                 <p className="text-[var(--color-ink)] text-lg leading-relaxed">
                   {current.content}
                 </p>
                 <div className="grid grid-cols-3 gap-3 mt-6">
-                  {['⚡ Instant Solutions', '🧠 Smart Explanations', '📈 Track Progress'].map(f => (
-                    <div key={f}
+                  {[
+                    { Icon: Zap, text: 'Instant Solutions' },
+                    { Icon: Brain, text: 'Smart Explanations' },
+                    { Icon: BarChart3, text: 'Track Progress' },
+                  ].map(f => (
+                    <div key={f.text}
                       className="bg-[var(--color-cream)] rounded-xl p-3
                                     text-xs font-medium text-center text-[var(--color-ink)]">
-                      {f}
+                      <f.Icon size={16} className="inline-block mr-1" />{f.text}
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* Step 1 — Level */}
             {step === 1 && (
               <div className="space-y-3">
                 <p className="text-[var(--color-muted)] text-sm text-center mb-4">
@@ -124,15 +123,15 @@ export default function Onboarding() {
                 </p>
                 {[
                   {
-                    value: 'secondary', icon: '🏫', label: 'Secondary School',
+                    value: 'secondary', Icon: School, label: 'Secondary School',
                     desc: 'JSS1 to SS3 — WAEC and NECO preparation'
                   },
                   {
-                    value: 'university', icon: '🎓', label: 'Undergraduate',
+                    value: 'university', Icon: GraduationCap, label: 'Undergraduate',
                     desc: '100L to 400L — University mathematics'
                   },
                   {
-                    value: 'graduate', icon: '🔬', label: 'Graduate',
+                    value: 'graduate', Icon: Microscope, label: 'Graduate',
                     desc: 'Postgraduate and advanced mathematics'
                   },
                 ].map(opt => (
@@ -147,7 +146,7 @@ export default function Onboarding() {
                       }`}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="text-2xl">{opt.icon}</span>
+                      <span className="text-2xl"><opt.Icon size={24} /></span>
                       <div>
                         <p className={`font-semibold text-sm
                           ${level === opt.value
@@ -161,7 +160,7 @@ export default function Onboarding() {
                         </p>
                       </div>
                       {level === opt.value && (
-                        <span className="ml-auto text-[var(--color-teal)] text-lg">✓</span>
+                        <span className="ml-auto text-[var(--color-teal)]"><Check size={20} /></span>
                       )}
                     </div>
                   </button>
@@ -169,14 +168,13 @@ export default function Onboarding() {
               </div>
             )}
 
-            {/* Step 2 — Tour */}
             {step === 2 && (
               <div className="grid grid-cols-1 gap-3">
                 {FEATURES.map(f => (
                   <div key={f.title}
                     className="flex items-start gap-3 p-3 rounded-xl
                                   bg-[var(--color-cream)]">
-                    <span className="text-xl shrink-0">{f.icon}</span>
+                    <f.Icon size={20} className="shrink-0" />
                     <div>
                       <p className="font-semibold text-sm text-[var(--color-ink)]">
                         {f.title}
@@ -190,7 +188,6 @@ export default function Onboarding() {
               </div>
             )}
 
-            {/* Step 3 — Ready */}
             {step === 3 && (
               <div className="text-center space-y-4">
                 <p className="text-[var(--color-ink)] text-lg leading-relaxed">
@@ -198,7 +195,7 @@ export default function Onboarding() {
                 </p>
                 <div className="bg-[var(--color-cream)] rounded-2xl p-5 mt-4">
                   <p className="font-serif font-bold text-[var(--color-teal)] text-lg mb-1">
-                    💡 First suggestion:
+                    <Lightbulb size={20} className="inline-block mr-1" /> First suggestion:
                   </p>
                   <p className="text-sm text-[var(--color-ink)]">
                     Go to <strong>Teach</strong> and pick a topic you're currently
@@ -209,7 +206,6 @@ export default function Onboarding() {
               </div>
             )}
 
-            {/* Navigation */}
             <div className="flex gap-3 mt-8">
               {step > 0 && (
                 <button
@@ -225,11 +221,10 @@ export default function Onboarding() {
                 className="flex-1 btn-primary py-3.5 justify-center
                            flex items-center gap-2 disabled:opacity-50"
               >
-                {step === STEPS.length - 1 ? '🚀 Start Learning' : 'Next →'}
+                {step === STEPS.length - 1 ? <><Rocket size={20} /> Start Learning</> : 'Next →'}
               </button>
             </div>
 
-            {/* Skip */}
             {step < STEPS.length - 1 && (
               <button
                 onClick={() => {

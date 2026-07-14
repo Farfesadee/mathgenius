@@ -3,6 +3,7 @@
 // instead of a blank white page. Also logs the exact error.
 
 import { Component } from 'react'
+import { AlertTriangle } from 'lucide-react'
 
 export default class ErrorBoundary extends Component {
   constructor(props) {
@@ -32,7 +33,7 @@ export default class ErrorBoundary extends Component {
           padding: '2rem',
           background: '#faf9f7',
         }}>
-          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>⚠️</div>
+          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}><AlertTriangle size={48} /></div>
           <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>
             Something went wrong
           </h1>

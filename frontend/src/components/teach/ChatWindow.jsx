@@ -2,6 +2,7 @@
 // Drop-in replacement — streaming, working thumbs up/down, copy button
 
 import { useState, useRef, useEffect, useCallback } from 'react'
+import { ThumbsUp, ThumbsDown, Check, Copy, Bookmark, PartyPopper, ArrowLeft, AlertTriangle } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { supabase } from '../../lib/supabase'
 import { saveBookmark } from '../../lib/bookmarks'
@@ -301,7 +302,7 @@ function MessageBubble({ msg, topic, level, lastUserQuestion, onFeedbackSent }) 
                           ? 'opacity-30 border-[var(--color-border)] text-[var(--color-muted)]'
                           : 'border-[var(--color-border)] text-[var(--color-muted)] hover:border-emerald-400 hover:text-emerald-500 hover:bg-emerald-50'
                         }`}>
-            👍
+            <ThumbsUp size={18} />
           </button>
 
           {/* Thumbs down */}
@@ -317,7 +318,7 @@ function MessageBubble({ msg, topic, level, lastUserQuestion, onFeedbackSent }) 
                           ? 'opacity-30 border-[var(--color-border)] text-[var(--color-muted)]'
                           : 'border-[var(--color-border)] text-[var(--color-muted)] hover:border-red-300 hover:text-red-400 hover:bg-red-50'
                         }`}>
-            👎
+            <ThumbsDown size={18} />
           </button>
 
           {/* Copy */}
@@ -328,7 +329,7 @@ function MessageBubble({ msg, topic, level, lastUserQuestion, onFeedbackSent }) 
                        border border-[var(--color-border)] text-[var(--color-muted)]
                        hover:border-[var(--color-teal)] hover:text-[var(--color-teal)]
                        transition-all">
-            {copied ? '✓' : '⎘'}
+            {copied ? <Check size={16} /> : <Copy size={16} />}
           </button>
 
           {/* Bookmark */}
@@ -345,14 +346,14 @@ function MessageBubble({ msg, topic, level, lastUserQuestion, onFeedbackSent }) 
                          }`}>
               {bookmarking
                 ? <span className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" />
-                : '🔖'}
+                : <Bookmark size={16} />}
             </button>
           )}
 
           {/* Feedback sent confirmation */}
           {rating && !showNote && (
             <span className="text-xs text-[var(--color-muted)] ml-1">
-              {rating === 'up' ? 'Thanks! 🎉' : 'Got it, thanks.'}
+              {rating === 'up' ? <span className="inline-flex items-center gap-1">Thanks! <PartyPopper size={18} /></span> : 'Got it, thanks.'}
             </span>
           )}
         </div>
@@ -533,7 +534,7 @@ export default function ChatWindow({ topic, level, conversation, onConversationU
     return (
       <div className="rounded-2xl border-2 border-dashed border-[var(--color-border)]
                       flex flex-col items-center justify-center min-h-[480px] text-center p-8">
-        <p className="text-5xl mb-4">👈</p>
+        <ArrowLeft size={48} className="mb-4 text-[var(--color-muted)]" />
         <p className="font-bold text-[var(--color-ink)] text-lg">Select a topic to start</p>
         <p className="text-[var(--color-muted)] text-sm mt-2 max-w-xs">
           Choose any topic from the sidebar and Euler will explain it, answer your questions,
@@ -584,7 +585,7 @@ export default function ChatWindow({ topic, level, conversation, onConversationU
 
         {error && (
           <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-            ⚠️ Something went wrong. Please check your connection and try again.
+            <AlertTriangle size={20} className="shrink-0" /> Something went wrong. Please check your connection and try again.
           </div>
         )}
 

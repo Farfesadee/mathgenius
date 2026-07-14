@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { MessageCircle, Pencil, FolderOpen, Trash2, Check } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import {
   getConversations,
@@ -77,7 +78,7 @@ export default function ConversationSidebar({
       {/* Header */}
       <div className="bg-[var(--color-ink)] px-4 py-3 flex items-center
                       justify-between shrink-0">
-        <span className="font-serif font-bold text-white">💬 Chats</span>
+        <span className="font-serif font-bold text-white flex items-center gap-2"><MessageCircle size={22} /> Chats</span>
         <button
           onClick={handleNew}
           title="New conversation"
@@ -133,7 +134,7 @@ export default function ConversationSidebar({
                       className="text-xs bg-[var(--color-teal)] text-white
                                  px-2 rounded-lg"
                     >
-                      ✓
+                      <Check size={18} />
                     </button>
                   </div>
                 ) : (
@@ -196,7 +197,7 @@ export default function ConversationSidebar({
                       className="w-full text-left px-4 py-2.5 text-sm
                                  hover:bg-[var(--color-cream)] transition-colors"
                     >
-                      ✏️ Rename
+                      <Pencil size={18} className="mr-2" /> Rename
                     </button>
                     <button
                       onClick={() => {
@@ -206,7 +207,7 @@ export default function ConversationSidebar({
                       className="w-full text-left px-4 py-2.5 text-sm
                                  hover:bg-[var(--color-cream)] transition-colors"
                     >
-                      📂 Open
+                      <FolderOpen size={18} className="mr-2" /> Open
                     </button>
                     <div className="border-t border-[var(--color-border)]">
                       <button
@@ -214,7 +215,7 @@ export default function ConversationSidebar({
                         className="w-full text-left px-4 py-2.5 text-sm
                                    text-red-500 hover:bg-red-50 transition-colors"
                       >
-                        🗑️ Delete
+                        <Trash2 size={18} className="mr-2" /> Delete
                       </button>
                     </div>
                   </div>

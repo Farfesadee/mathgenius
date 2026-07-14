@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { saveRating } from '../lib/ratings'
+import { Heart, Star, Loader } from 'lucide-react'
 
 export default function AppRating({ context = 'general' }) {
   const { user } = useAuth()
@@ -13,7 +14,7 @@ export default function AppRating({ context = 'general' }) {
   if (!user || submitted) {
     return submitted ? (
       <div className="text-center py-4">
-        <span className="text-2xl">🙏</span>
+        <Heart size={24} className="inline-block text-red-400 mx-auto" />
         <p className="text-sm text-[var(--color-teal)] font-medium mt-1">
           Thanks for your feedback!
         </p>
@@ -56,7 +57,7 @@ export default function AppRating({ context = 'general' }) {
             onClick={() => setSelected(star)}
             className="text-3xl transition-all duration-100 hover:scale-110"
           >
-            {star <= (hovered || selected) ? '⭐' : '☆'}
+            {star <= (hovered || selected) ? <Star className="fill-yellow-500 text-yellow-500" size={24} /> : <Star className="text-gray-300" size={24} />}
           </button>
         ))}
       </div>
@@ -84,7 +85,7 @@ export default function AppRating({ context = 'general' }) {
             className="btn-primary px-8 py-2.5 text-sm justify-center
                        flex items-center gap-2 mx-auto disabled:opacity-50"
           >
-            {loading ? '⏳' : 'Submit Rating'}
+            {loading ? <Loader className="animate-spin" size={18} /> : 'Submit Rating'}
           </button>
         </>
       )}

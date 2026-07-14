@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { ExplanationBody } from '../utils/RenderMath'
 import { askTutor } from '../services/api'
 import { createConversation, saveMessage } from '../lib/conversations'
+import { AlertTriangle, X, Calculator, ArrowRight } from 'lucide-react'
 
 const QUICK_TOPICS = [
   'Quadratic Equations', 'Differentiation', 'Integration',
@@ -78,7 +79,7 @@ export default function FloatChat() {
     } catch {
       setMessages(prev => [
         ...prev.filter(m => !m.loading),
-        { role: 'assistant', content: '⚠️ Could not connect. Is the backend running?' }
+        { role: 'assistant', content: 'Could not connect. Is the backend running?', error: true }
       ])
     }
     setLoading(false)
@@ -113,7 +114,7 @@ export default function FloatChat() {
             : 'bg-[var(--color-teal)] border-[var(--color-teal)] text-white'
           }`}
       >
-        {open ? '✕' : '🧮'}
+        {open ? <X size={24} /> : <Calculator size={24} />}
       </button>
 
       {/* Chat window */}
@@ -136,7 +137,7 @@ export default function FloatChat() {
               <div>
                 <p className="font-serif font-bold text-white text-sm">Euler</p>
                 <p className="text-white/70 text-[10px]">
-                  Hi {firstName}! Ask me anything 👋
+                  Hi {firstName}! Ask me anything
                 </p>
               </div>
             </div>
@@ -174,9 +175,9 @@ export default function FloatChat() {
           <div className="flex-1 overflow-y-auto px-3 py-3 space-y-3">
             {messages.length === 0 && (
               <div className="text-center py-8">
-                <div className="text-4xl mb-2">🧮</div>
+                <div className="flex justify-center mb-2"><Calculator size={40} /></div>
                 <p className="text-sm font-semibold text-[var(--color-ink)] mb-1">
-                  Hi {firstName}! I'm Euler 👋
+                  Hi {firstName}! I'm Euler
                 </p>
                 <p className="text-xs text-[var(--color-muted)] leading-relaxed max-w-[200px] mx-auto">
                   Pick a topic above or ask me any maths question — I track your progress as you learn!
@@ -207,6 +208,11 @@ export default function FloatChat() {
                                          bg-[var(--color-teal)] animate-bounce"
                           style={{ animationDelay: `${j * 0.15}s` }} />
                       ))}
+                    </div>
+                  ) : msg.error ? (
+                    <div className="flex items-start gap-1.5">
+                      <AlertTriangle size={16} className="shrink-0 text-red-500 mt-0.5" />
+                      <p className="leading-snug">{msg.content}</p>
                     </div>
                   ) : msg.role === 'user' ? (
                     <p className="leading-snug">{msg.content}</p>
@@ -243,8 +249,8 @@ export default function FloatChat() {
                            flex items-center justify-center disabled:opacity-40
                            hover:bg-[var(--color-ink)] transition-colors shrink-0"
               >
-                ➤
-              </button>
+                  <ArrowRight size={20} />
+                </button>
             </div>
           </div>
         </div>

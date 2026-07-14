@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { generateBattleQuestions, gradeBattleAnswer } from '../services/api'
+import { Swords, Circle, BookOpen, School, GraduationCap, Landmark, Home, Key, Rocket, Lightbulb, Search, Map, Trophy, Handshake, Frown, Check, X, Flag, ClipboardList, Clock } from 'lucide-react'
 import {
   createBattleRoom, joinBattleRoom, getBattleRoom, saveRoomQuestions,
   submitBattleAnswer, finishBattleForPlayer, getBattleAnswers,
@@ -10,12 +11,13 @@ import {
 import { ExplanationBody } from '../utils/RenderMath'
 
 const DIFFICULTY_CONFIG = {
-  easy:   { label: 'Easy',   emoji: '🟢', color: 'text-green-600 bg-green-50 border-green-200' },
-  medium: { label: 'Medium', emoji: '🟡', color: 'text-yellow-600 bg-yellow-50 border-yellow-200' },
-  hard:   { label: 'Hard',   emoji: '🔴', color: 'text-red-600 bg-red-50 border-red-200' },
+  easy:   { label: 'Easy',   Icon: Circle, iconColor: 'text-green-500 fill-green-500', color: 'text-green-600 bg-green-50 border-green-200' },
+  medium: { label: 'Medium', Icon: Circle, iconColor: 'text-yellow-500 fill-yellow-500', color: 'text-yellow-600 bg-yellow-50 border-yellow-200' },
+  hard:   { label: 'Hard',   Icon: Circle, iconColor: 'text-red-500 fill-red-500', color: 'text-red-600 bg-red-50 border-red-200' },
 }
 const LEVELS = ['primary', 'jss', 'secondary', 'university']
-const LEVEL_LABELS = { primary: '📚 Primary', jss: '🏫 JSS', secondary: '🎓 Secondary', university: '🏛️ University' }
+const LEVEL_LABELS = { primary: 'Primary', jss: 'JSS', secondary: 'Secondary', university: 'University' }
+const LEVEL_ICONS = { primary: BookOpen, jss: School, secondary: GraduationCap, university: Landmark }
 
 // ── Phase components ──────────────────────────────────────────────────────
 
@@ -33,7 +35,7 @@ function WaitingRoom({ room, user, onCancel }) {
     <div className="max-w-md mx-auto px-6 py-16 text-center">
       <div className="card overflow-hidden">
         <div className="bg-[var(--color-teal)] px-6 py-8">
-          <div className="text-5xl mb-3">⚔️</div>
+          <Swords size={48} className="mx-auto mb-3 text-white" />
           <p className="font-serif font-bold text-white text-2xl">Battle Room</p>
           <p className="text-white/70 text-sm mt-1">{room.topic} · {room.level}</p>
         </div>
@@ -52,7 +54,7 @@ function WaitingRoom({ room, user, onCancel }) {
                   </div>
                   <button onClick={copyCode}
                     className="btn-secondary px-4 py-4 rounded-2xl text-sm">
-                    {copied ? '✅' : '📋'}
+                    {copied ? <Check size={20} /> : <ClipboardList size={20} />}
                   </button>
                 </div>
               </div>
@@ -92,7 +94,9 @@ function ResultsScreen({ room, myAnswers, opponentAnswers, user, onPlayAgain }) 
         {/* Result header */}
         <div className={`px-6 py-8 text-center
           ${won ? 'bg-[var(--color-teal)]' : tied ? 'bg-purple-600' : 'bg-slate-700'}`}>
-          <div className="text-6xl mb-2">{won ? '🏆' : tied ? '🤝' : '😤'}</div>
+          <div className="mb-2 flex justify-center">
+            {won ? <Trophy size={56} className="text-yellow-300" /> : tied ? <Handshake size={56} className="text-purple-200" /> : <Frown size={56} className="text-slate-300" />}
+          </div>
           <p className="font-serif font-bold text-white text-2xl">
             {won ? 'You Won!' : tied ? 'It\'s a Tie!' : 'You Lost'}
           </p>
@@ -134,9 +138,9 @@ function ResultsScreen({ room, myAnswers, opponentAnswers, user, onPlayAgain }) 
                                        text-xs font-bold text-[var(--color-muted)]">
                         {i + 1}
                       </span>
-                      <span>{a.is_correct ? '✅' : '❌'} You</span>
+                      <span className="flex items-center gap-1">{a.is_correct ? <Check size={16} className="text-green-600" /> : <X size={16} className="text-red-500" />} You</span>
                       <span className="text-[var(--color-muted)]">vs</span>
-                      <span>{opA?.is_correct ? '✅' : '❌'} Opponent</span>
+                      <span className="flex items-center gap-1">{opA?.is_correct ? <Check size={16} className="text-green-600" /> : <X size={16} className="text-red-500" />} Opponent</span>
                       {a.time_taken > 0 && (
                         <span className="ml-auto text-xs text-[var(--color-muted)]">
                           {a.time_taken}s
@@ -150,7 +154,7 @@ function ResultsScreen({ room, myAnswers, opponentAnswers, user, onPlayAgain }) 
           )}
 
           <button onClick={onPlayAgain} className="btn-primary w-full py-4 justify-center">
-            ⚔️ Play Again
+            <Swords size={20} className="mr-2" /> Play Again
           </button>
         </div>
       </div>
@@ -322,7 +326,7 @@ export default function Battle() {
             Social Mode
           </p>
           <h1 className="font-serif font-black text-4xl text-[var(--color-ink)]">
-            ⚔️ Head-to-Head Battle
+            <Swords size={32} className="inline-block mr-2" /> Head-to-Head Battle
           </h1>
           <p className="text-[var(--color-muted)] mt-2">
             Challenge another student — same 5 questions, first to finish with the higher score wins.
@@ -340,7 +344,7 @@ export default function Battle() {
           {/* Create room */}
           <div className="card overflow-hidden">
             <div className="bg-[var(--color-teal)] px-5 py-4">
-              <p className="font-serif font-bold text-white">🏠 Create a Room</p>
+              <p className="font-serif font-bold text-white flex items-center gap-2"><Home size={20} /> Create a Room</p>
               <p className="text-white/70 text-xs mt-0.5">Set the topic and share your code</p>
             </div>
             <div className="p-5 space-y-4">
@@ -365,7 +369,7 @@ export default function Battle() {
                         ${level === l
                           ? 'bg-[var(--color-teal)] text-white border-[var(--color-teal)]'
                           : 'border-[var(--color-border)] text-[var(--color-muted)] hover:border-[var(--color-teal)]'}`}>
-                      {LEVEL_LABELS[l]}
+                      {(() => { const LvlIcon = LEVEL_ICONS[l]; return <><LvlIcon size={14} className="inline-block mr-1" />{LEVEL_LABELS[l]}</> })()}
                     </button>
                   ))}
                 </div>
@@ -379,7 +383,7 @@ export default function Battle() {
                       className={`flex-1 text-xs px-2 py-2 rounded-lg border font-medium transition-colors
                         ${difficulty === d ? DIFFICULTY_CONFIG[d].color + ' border-current'
                           : 'border-[var(--color-border)] text-[var(--color-muted)]'}`}>
-                      {DIFFICULTY_CONFIG[d].emoji} {DIFFICULTY_CONFIG[d].label}
+                      {(() => { const DcfIcon = DIFFICULTY_CONFIG[d].Icon; return <><DcfIcon size={16} className={`inline-block mr-1 ${DIFFICULTY_CONFIG[d].iconColor}`} />{DIFFICULTY_CONFIG[d].label}</> })()}
                     </button>
                   ))}
                 </div>
@@ -388,7 +392,7 @@ export default function Battle() {
                 onClick={handleCreateRoom}
                 disabled={loading || !topic.trim()}
                 className="btn-primary w-full py-3 justify-center disabled:opacity-50">
-                {loading ? 'Creating...' : '⚔️ Create Room'}
+                {loading ? 'Creating...' : <><Swords size={20} /> Create Room</>}
               </button>
             </div>
           </div>
@@ -396,7 +400,7 @@ export default function Battle() {
           {/* Join room */}
           <div className="card overflow-hidden">
             <div className="bg-slate-800 px-5 py-4">
-              <p className="font-serif font-bold text-white">🔑 Join a Room</p>
+              <p className="font-serif font-bold text-white flex items-center gap-2"><Key size={20} /> Join a Room</p>
               <p className="text-white/70 text-xs mt-0.5">Enter the 6-character code</p>
             </div>
             <div className="p-5 space-y-4">
@@ -418,7 +422,7 @@ export default function Battle() {
                 disabled={loading || joinCode.length < 6}
                 className="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold
                            py-3 rounded-xl transition-colors disabled:opacity-50 text-sm">
-                {loading ? 'Joining...' : '🚀 Join Battle'}
+                {loading ? 'Joining...' : <><Rocket size={20} /> Join Battle</>}
               </button>
               <p className="text-xs text-[var(--color-muted)] text-center">
                 Ask your opponent for their room code
@@ -455,7 +459,7 @@ export default function Battle() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-gold)]">
-            ⚔️ Battle · {room.topic}
+            <Swords size={16} className="inline-block mr-1" /> Battle · {room.topic}
           </p>
           <div className="flex items-center gap-2 mt-1">
             {[0, 1, 2, 3, 4].map(i => (
@@ -469,7 +473,7 @@ export default function Battle() {
         <div className="text-right">
           <p className="font-mono text-xs text-[var(--color-muted)]">Q{qIdx + 1}/5</p>
           <p className="font-mono text-lg font-bold text-[var(--color-ink)]">
-            ⏱ {Math.floor(elapsed / 60)}:{String(elapsed % 60).padStart(2, '0')}
+            <Clock size={18} className="inline-block mr-1" /> {Math.floor(elapsed / 60)}:{String(elapsed % 60).padStart(2, '0')}
           </p>
         </div>
       </div>
@@ -490,7 +494,7 @@ export default function Battle() {
                   : i === 1 ? 'bg-orange-50 border-orange-200 text-orange-900'
                   : 'bg-red-50 border-red-200 text-red-900'}`}>
                 <span className="font-bold text-xs uppercase tracking-wide mr-2">
-                  {i === 0 ? '💡 Hint 1' : i === 1 ? '🔍 Hint 2' : '🗺️ Hint 3'}
+                    {i === 0 ? <><Lightbulb size={14} className="inline-block mr-1" /> Hint 1</> : i === 1 ? <><Search size={14} className="inline-block mr-1" /> Hint 2</> : <><Map size={14} className="inline-block mr-1" /> Hint 3</>}
                 </span>{h}
               </div>
             ))}
@@ -498,7 +502,7 @@ export default function Battle() {
               <button onClick={() => setHintLevel(l => l + 1)}
                 className="text-xs font-mono uppercase tracking-widest
                            text-[var(--color-muted)] hover:text-yellow-600 transition-colors">
-                {hintLevel === 0 ? '💡 Show Hint' : 'Show Next Hint'}
+                {hintLevel === 0 ? <><Lightbulb size={14} className="inline-block mr-1" /> Show Hint</> : 'Show Next Hint'}
               </button>
             )}
           </div>
@@ -520,7 +524,7 @@ export default function Battle() {
               onClick={handleSubmit}
               disabled={!myAnswer.trim()}
               className="btn-primary w-full py-4 justify-center text-base disabled:opacity-50">
-              Submit ➤
+              Submit →
             </button>
           </div>
         ) : (
@@ -529,7 +533,7 @@ export default function Battle() {
             <div className={`rounded-2xl px-5 py-4 border-2
               ${gradeResult?.is_correct ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
               <p className={`font-bold text-sm ${gradeResult?.is_correct ? 'text-green-700' : 'text-red-600'}`}>
-                {gradeResult?.is_correct ? '✅ Correct!' : '❌ Wrong'} — {gradeResult?.feedback}
+                {(gradeResult?.is_correct ? <><Check size={20} className="inline-block mr-1" /> Correct!</> : <><X size={20} className="inline-block mr-1" /> Wrong</>)} — {gradeResult?.feedback}
               </p>
             </div>
 
@@ -551,7 +555,7 @@ export default function Battle() {
             <button
               onClick={handleNext}
               className="btn-primary w-full py-4 justify-center">
-              {qIdx >= 4 ? '🏁 Finish Battle' : 'Next Question →'}
+              {qIdx >= 4 ? <><Flag size={20} className="inline-block mr-1" /> Finish Battle</> : 'Next Question →'}
             </button>
           </div>
         )}

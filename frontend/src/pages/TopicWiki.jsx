@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { ExplanationBody } from '../utils/RenderMath'
 import { API_BASE } from '../services/api'
+import { TriangleAlert, Book, Check, Clipboard, RefreshCw, Zap, BookOpen } from 'lucide-react'
 
 // Cache wiki articles in localStorage to avoid re-fetching
 function cacheGet(topic) {
@@ -50,7 +51,7 @@ export default function TopicWiki() {
             setContent(data.content)
             cacheSet(topic, data)
         } catch {
-            setError('⚠️ Could not load wiki. Make sure the backend is running.')
+            setError(<><TriangleAlert size={16} className="inline-block" /> Could not load wiki. Make sure the backend is running.</>)
         }
         setLoading(false)
     }
@@ -75,16 +76,16 @@ export default function TopicWiki() {
                 </p>
                 <div className="flex items-start justify-between gap-4 flex-wrap">
                     <h1 className="font-serif font-black text-4xl sm:text-5xl tracking-tight">
-                        📖 {topic}
+                        <Book size={40} className="inline-block" /> {topic}
                     </h1>
                     <div className="flex gap-2">
                         <button onClick={handleCopy}
                             className="btn-secondary px-4 py-2 text-xs">
-                            {copied ? '✅ Copied' : '📋 Copy'}
+                            {copied ? <><Check size={14} className="inline-block" /> Copied</> : <><Clipboard size={14} className="inline-block" /> Copy</>}
                         </button>
                         <button onClick={fetchWiki} disabled={loading}
                             className="btn-secondary px-4 py-2 text-xs disabled:opacity-50">
-                            🔄 Refresh
+                            <RefreshCw size={14} className="inline-block" /> Refresh
                         </button>
                     </div>
                 </div>
@@ -143,10 +144,10 @@ export default function TopicWiki() {
             <div className="flex gap-3 mt-6 flex-wrap">
                 <Link to={`/practice?topic=${encodeURIComponent(topic)}&auto=true`}
                     className="btn-primary px-5 py-2.5 text-sm">
-                    ⚡ Quick Drill on {topic.split(' ').slice(0, 2).join(' ')}
+                    <Zap size={18} className="inline-block" /> Quick Drill on {topic.split(' ').slice(0, 2).join(' ')}
                 </Link>
                 <Link to="/teach" className="btn-secondary px-5 py-2.5 text-sm">
-                    📚 Ask Euler About It
+                    <BookOpen size={18} className="inline-block" /> Ask Euler About It
                 </Link>
             </div>
         </div>

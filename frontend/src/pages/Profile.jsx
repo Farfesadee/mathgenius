@@ -7,6 +7,7 @@ import { getReferralCode, getReferralStats, getReferralLink, applyReferralCode }
 import { createNotification } from '../lib/notifications'
 import { getUserProfile, updateUserProfile } from '../services/api'
 import PushNotificationToggle from '../components/PushNotificationToggle'
+import { Eye, Swords, Trophy, Presentation, Users, GraduationCap, Gift, Award, Settings, User, Check, Save, Clipboard, Share2, Target, Zap, Flame, Calendar, Bookmark, Star } from 'lucide-react'
 
 const AVATAR_COLORS = [
   { id: 'teal',   bg: 'bg-[var(--color-teal)]', label: 'Teal'   },
@@ -146,14 +147,14 @@ export default function Profile() {
     if (!refInput.trim()) return
     const result = await applyReferralCode(user.id, refInput.trim())
     if (result.success) {
-      setRefMsg({ type: 'success', text: '✅ Code applied! +50 XP added to your account.' })
+      setRefMsg({ type: 'success', text: 'Code applied! +50 XP added to your account.' })
       await createNotification(user.id, {
         type: 'referral', title: 'Referral Code Applied!',
         message: 'You earned 50 XP for joining via a referral.',
-        icon: '🎁', link: '/mastery',
+        icon: 'gift', link: '/mastery',
       })
     } else {
-      setRefMsg({ type: 'error', text: `❌ ${result.error}` })
+      setRefMsg({ type: 'error', text: `${result.error}` })
     }
     setTimeout(() => setRefMsg(null), 4000)
   }
@@ -198,9 +199,9 @@ export default function Profile() {
                             ${role === 'teacher' ? 'bg-blue-100 text-blue-700'
                               : role === 'parent' ? 'bg-purple-100 text-purple-700'
                               : 'bg-[var(--color-paper)] text-[var(--color-muted)]'}`}>
-            {role === 'teacher' ? '👨‍🏫 Teacher'
-              : role === 'parent' ? '👪 Parent'
-              : '🎓 Student'}
+            {role === 'teacher' ? <><Presentation size={14} className="inline-block mr-1" />Teacher</>
+              : role === 'parent' ? <><Users size={14} className="inline-block mr-1" />Parent</>
+              : <><GraduationCap size={14} className="inline-block mr-1" />Student</>}
           </span>
           {stats && (
             <div className="flex items-center gap-3 mt-2 flex-wrap">
@@ -208,14 +209,14 @@ export default function Profile() {
                 Level {level}
               </span>
               <span className="font-mono text-xs text-[var(--color-muted)]">
-                ⚡ {(stats.xp || 0).toLocaleString()} XP
+                <Zap size={14} className="inline-block mr-1" />{(stats.xp || 0).toLocaleString()} XP
               </span>
               <span className="font-mono text-xs text-orange-500">
-                🔥 {stats.streak_current || 0} day streak
+                <Flame size={14} className="inline-block mr-1" />{stats.streak_current || 0} day streak
               </span>
               {daysToExam !== null && (
                 <span className="font-mono text-xs text-red-500 font-bold">
-                  📅 {daysToExam}d to {examTarget}
+                  <Calendar size={14} className="inline-block mr-1" />{daysToExam}d to {examTarget}
                 </span>
               )}
             </div>
@@ -247,21 +248,21 @@ export default function Profile() {
                      border-[var(--color-border)] text-sm font-semibold
                      text-[var(--color-ink)] hover:border-[var(--color-teal)]
                      hover:text-[var(--color-teal)] transition-all bg-white">
-          👀 Share Profile (Parent / Teacher)
+          <Eye size={18} className="inline-block mr-1.5" />Share Profile (Parent / Teacher)
         </button>
         <a href="/challenge"
           className="flex items-center gap-2 px-4 py-2.5 rounded-xl border-2
                      border-[var(--color-border)] text-sm font-semibold
                      text-[var(--color-ink)] hover:border-purple-500
                      hover:text-purple-600 transition-all bg-white">
-          ⚔️ Challenge a Friend
+          <Swords size={18} className="inline-block mr-1.5" />Challenge a Friend
         </a>
         <a href="/certificate"
           className="flex items-center gap-2 px-4 py-2.5 rounded-xl border-2
                      border-[var(--color-border)] text-sm font-semibold
                      text-[var(--color-ink)] hover:border-[var(--color-gold)]
                      hover:text-[var(--color-gold)] transition-all bg-white">
-          🏆 View Certificate
+          <Trophy size={18} className="inline-block mr-1.5" />View Certificate
         </a>
         {(role === 'teacher' || role === 'parent') && (
           <a href="/monitor"
@@ -269,7 +270,7 @@ export default function Profile() {
                        border-[var(--color-teal)] text-sm font-semibold
                        text-[var(--color-teal)] hover:bg-[#e8f4f4]
                        transition-all bg-white">
-            {role === 'teacher' ? '👨‍🏫 Monitor Dashboard' : '👪 Monitor Dashboard'}
+            {role === 'teacher' ? <><Presentation size={18} className="inline-block mr-1.5" />Monitor Dashboard</> : <><Users size={18} className="inline-block mr-1.5" />Monitor Dashboard</>}
           </a>
         )}
       </div>
@@ -277,17 +278,17 @@ export default function Profile() {
       {/* Tabs */}
       <div className="flex gap-2 mb-6 flex-wrap">
         {[
-          { id: 'profile',  label: '👤 Profile'   },
-          { id: 'referral', label: '🎁 Referrals' },
-          { id: 'badges',   label: '🏅 Badges'    },
-          { id: 'settings', label: '⚙️ Settings'  },
+          { id: 'profile',  label: 'Profile',   icon: User },
+          { id: 'referral', label: 'Referrals', icon: Gift },
+          { id: 'badges',   label: 'Badges',    icon: Award },
+          { id: 'settings', label: 'Settings',  icon: Settings },
         ].map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
             className={`px-4 py-2 rounded-xl text-sm font-semibold border-2 transition-all
               ${tab === t.id
                 ? 'border-[var(--color-teal)] bg-[#e8f4f4] text-[var(--color-teal)]'
                 : 'border-[var(--color-border)] text-[var(--color-muted)]'}`}>
-            {t.label}
+            <t.icon size={16} className="inline-block mr-1.5" />{t.label}
           </button>
         ))}
       </div>
@@ -369,7 +370,7 @@ export default function Profile() {
           {/* Study Goals */}
           <div className="border-t-2 border-[var(--color-border)] pt-5">
             <p className="font-mono text-[10px] uppercase tracking-widest
-                           text-[var(--color-teal)] mb-4">🎯 Study Goals</p>
+                           text-[var(--color-teal)] mb-4 flex items-center gap-1.5"><Target size={14} />Study Goals</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
                 <label className="font-mono text-[10px] uppercase tracking-widest
@@ -404,7 +405,7 @@ export default function Profile() {
             </div>
             {targetScore && (
               <p className="text-xs text-[var(--color-teal)] mt-2 font-medium">
-                🎯 Goal: Score {targetScore} in {examTarget}{targetYear ? ` ${targetYear}` : ''} · Study {studyGoalMins} min/day
+                <Target size={14} className="inline-block mr-1" />Goal: Score {targetScore} in {examTarget}{targetYear ? ` ${targetYear}` : ''} · Study {studyGoalMins} min/day
               </p>
             )}
           </div>
@@ -415,7 +416,7 @@ export default function Profile() {
             {saving
               ? <><span className="w-4 h-4 border-2 border-white/30 border-t-white
                                    rounded-full animate-spin" /> Saving...</>
-              : saved ? '✅ Saved!' : '💾 Save Changes'
+              : saved ? <><Check size={16} className="inline-block mr-1" />Saved!</> : <><Save size={16} className="inline-block mr-1" />Save Changes</>
             }
           </button>
         </div>
@@ -435,7 +436,7 @@ export default function Profile() {
             <div className="flex gap-3">
               <button onClick={handleCopyLink}
                 className="flex-1 btn-primary py-3 text-sm justify-center">
-                {copied ? '✅ Copied!' : '📋 Copy Link'}
+                {copied ? <><Check size={16} className="inline-block mr-1" />Copied!</> : <><Clipboard size={16} className="inline-block mr-1" />Copy Link</>}
               </button>
               {navigator.share && refCode && (
                 <button
@@ -445,13 +446,13 @@ export default function Profile() {
                     url: getReferralLink(refCode),
                   })}
                   className="btn-secondary px-5 py-3 text-sm">
-                  📤 Share
+                  <Share2 size={16} className="inline-block mr-1" />Share
                 </button>
               )}
             </div>
             <div className="mt-4 bg-[#e8f4f4] border border-[var(--color-teal)] rounded-xl p-4">
               <p className="text-sm font-semibold text-[var(--color-teal)] mb-1">
-                🎁 Earn 100 XP per referral!
+                <Gift size={16} className="inline-block mr-1" />Earn 100 XP per referral!
               </p>
               <p className="text-xs text-[var(--color-muted)]">
                 When a friend signs up with your link and completes their first exam,
@@ -554,12 +555,12 @@ export default function Profile() {
                     ${earned
                       ? 'border-[var(--color-gold)] bg-yellow-50'
                       : 'border-[var(--color-border)] opacity-40 grayscale'}`}>
-                  <span className="text-3xl">{badge.emoji}</span>
+                  <Star size={32} className="text-[var(--color-gold)] shrink-0" />
                   <div>
                     <p className="font-semibold text-sm text-[var(--color-ink)]">{badge.label}</p>
                     <p className="text-xs text-[var(--color-muted)]">{badge.desc}</p>
                   </div>
-                  {earned && <span className="ml-auto text-[var(--color-gold)] text-lg">✓</span>}
+                  {earned && <span className="ml-auto text-[var(--color-gold)]"><Check size={20} /></span>}
                 </div>
               )
             })}
@@ -581,9 +582,9 @@ export default function Profile() {
             </div>
             <div className="grid grid-cols-3 gap-2">
               {[
-                { id: 'student', icon: '🎓', label: 'Student', desc: 'Practice & learn'  },
-                { id: 'teacher', icon: '👨‍🏫', label: 'Teacher', desc: 'Monitor classes'  },
-                { id: 'parent',  icon: '👪',  label: 'Parent',  desc: 'Track your child' },
+                { id: 'student', icon: GraduationCap, label: 'Student', desc: 'Practice & learn'  },
+                { id: 'teacher', icon: Presentation, label: 'Teacher', desc: 'Monitor classes'  },
+                { id: 'parent',  icon: Users,        label: 'Parent',  desc: 'Track your child' },
               ].map(r => (
                 <button key={r.id} onClick={() => setRole(r.id)}
                   className={`flex flex-col items-center gap-1 px-3 py-3 rounded-xl
@@ -592,7 +593,7 @@ export default function Profile() {
                       ? 'border-[var(--color-teal)] bg-[#e8f4f4] text-[var(--color-teal)]'
                       : 'border-[var(--color-border)] text-[var(--color-muted)] hover:border-[var(--color-teal)]'
                     }`}>
-                  <span className="text-xl">{r.icon}</span>
+                  <r.icon size={24} />
                   <span className="text-xs font-bold">{r.label}</span>
                   <span className="text-[10px] opacity-70">{r.desc}</span>
                 </button>
@@ -600,14 +601,14 @@ export default function Profile() {
             </div>
             {role !== 'student' && (
               <p className="mt-2 text-xs text-[var(--color-teal)] font-medium">
-                {role === 'teacher' ? '👨‍🏫 Teacher' : '👪 Parent'} dashboard unlocked —{' '}
+                {role === 'teacher' ? <><Presentation size={16} className="inline-block mr-1" />Teacher</> : <><Users size={16} className="inline-block mr-1" />Parent</>} dashboard unlocked —{' '}
                 <a href="/monitor" className="underline hover:opacity-80">Go to Monitor →</a>
               </p>
             )}
             <button onClick={handleSave} disabled={saving}
               className="mt-3 w-full btn-primary py-2.5 text-sm justify-center
                          flex items-center gap-2 disabled:opacity-50">
-              {saving ? 'Saving...' : saved ? '✅ Role Saved!' : '💾 Save Role'}
+              {saving ? 'Saving...' : saved ? <><Check size={16} className="inline-block mr-1" />Role Saved!</> : <><Save size={16} className="inline-block mr-1" />Save Role</>}
             </button>
           </div>
 
@@ -659,7 +660,7 @@ export default function Profile() {
               className="w-full btn-primary py-2 text-sm justify-center flex items-center
                          gap-2 disabled:opacity-50"
             >
-              {savingEmail ? 'Saving...' : emailSaved ? '✅ Saved!' : '💾 Save Alert Settings'}
+              {savingEmail ? 'Saving...' : emailSaved ? <><Check size={16} className="inline-block mr-1" />Saved!</> : <><Save size={16} className="inline-block mr-1" />Save Alert Settings</>}
             </button>
           </div>
 
@@ -705,7 +706,7 @@ export default function Profile() {
                 className="text-xs text-[var(--color-muted)] hover:text-[var(--color-ink)]
                            transition-colors border border-[var(--color-border)]
                            rounded-lg px-2 py-1">
-                {copied ? '✅' : '📋'}
+                {copied ? <Check size={16} /> : <Clipboard size={16} />}
               </button>
             </div>
           </div>

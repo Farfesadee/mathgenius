@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
+import { FileText, BarChart3, Trophy, Check, X, Rocket, ClipboardList, Clock } from 'lucide-react'
 
 function getGrade(pct) {
   if (pct >= 75) return { grade: 'A', color: 'text-green-600',  bg: 'bg-green-500'  }
@@ -108,21 +109,25 @@ export default function CBTHistory() {
       {sessions.length > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
           {[
-            { label: 'Total Exams', value: sessions.length,      color: 'text-[var(--color-ink)]',  icon: '📝' },
-            { label: 'Average',     value: `${avgScore}%`,        color: 'text-[var(--color-teal)]', icon: '📊' },
-            { label: 'Best Score',  value: `${best}%`,            color: 'text-green-600',            icon: '🏆' },
+            { label: 'Total Exams', value: sessions.length,      color: 'text-[var(--color-ink)]',  Icon: FileText },
+            { label: 'Average',     value: `${avgScore}%`,        color: 'text-[var(--color-teal)]', Icon: BarChart3 },
+            { label: 'Best Score',  value: `${best}%`,            color: 'text-green-600',            Icon: Trophy },
             { label: 'Pass Rate',   value: `${Math.round((sessions.filter(s => s.percentage >= 45).length / sessions.length) * 100)}%`,
-              color: 'text-[var(--color-gold)]', icon: '✅' },
-          ].map(s => (
+              color: 'text-[var(--color-gold)]', Icon: Check },
+          ].map(s => {
+            const StatIcon = s.Icon
+            return (
             <div key={s.label} className="card bg-white p-4 text-center">
-              <div className="text-xl mb-1">{s.icon}</div>
+              <StatIcon size={24} className="mx-auto mb-1" />
               <div className={`font-serif font-black text-2xl ${s.color}`}>{s.value}</div>
               <div className="font-mono text-[10px] uppercase tracking-widest
                               text-[var(--color-muted)] mt-1">{s.label}</div>
             </div>
-          ))}
+            )
+          })}
         </div>
       )}
+      
 
       {/* Filter tabs */}
       <div className="flex flex-wrap gap-2 mb-6">
@@ -132,8 +137,8 @@ export default function CBTHistory() {
           { value: 'WAEC', label: 'WAEC' },
           { value: 'NECO', label: 'NECO' },
           { value: 'BECE', label: 'BECE' },
-          { value: 'pass', label: '✅ Passed' },
-          { value: 'fail', label: '❌ Failed' },
+          { value: 'pass', label: <><Check size={14} className="inline-block mr-1" /> Passed</> },
+          { value: 'fail', label: <><X size={14} className="inline-block mr-1" /> Failed</> },
         ].map(f => (
           <button key={f.value} onClick={() => setFilter(f.value)}
             className={`px-4 py-2 rounded-xl text-xs font-semibold border-2 transition-all
@@ -153,13 +158,13 @@ export default function CBTHistory() {
         </div>
       ) : filtered.length === 0 ? (
         <div className="text-center py-20">
-          <div className="text-5xl mb-4">📝</div>
+          <FileText size={48} className="mx-auto mb-4 text-[var(--color-muted)]" />
           <p className="text-[var(--color-muted)] text-lg mb-6">
             {sessions.length === 0 ? 'No exams taken yet.' : 'No exams match this filter.'}
           </p>
           {sessions.length === 0 && (
             <button onClick={() => navigate('/cbt')} className="btn-primary px-8 py-3">
-              🚀 Take First Exam
+              <Rocket size={20} className="inline-block mr-1" /> Take First Exam
             </button>
           )}
         </div>
@@ -167,7 +172,7 @@ export default function CBTHistory() {
         <div className="card overflow-hidden">
           <div className="bg-[var(--color-ink)] px-6 py-4">
             <p className="font-serif font-bold text-white">
-              📋 {filtered.length} Session{filtered.length !== 1 ? 's' : ''}
+              <ClipboardList size={22} className="inline-block mr-2" /> {filtered.length} Session{filtered.length !== 1 ? 's' : ''}
             </p>
           </div>
           <div className="divide-y divide-[var(--color-border)]">
@@ -210,7 +215,7 @@ export default function CBTHistory() {
                       <div className="flex items-center gap-3 mt-1 text-xs
                                       text-[var(--color-muted)]">
                         <span>{s.total_questions}Q</span>
-                        <span>⏱ {mins}m {secs}s</span>
+                        <span className="flex items-center gap-1"><Clock size={14} /> {mins}m {secs}s</span>
                         <span>{new Date(s.completed_at).toLocaleDateString('en-GB')}</span>
                       </div>
                     </div>
@@ -276,7 +281,7 @@ export default function CBTHistory() {
                                                   flex items-center justify-center
                                                   text-white text-xs font-bold mt-0.5
                                   ${a.is_correct ? 'bg-green-500' : 'bg-red-500'}`}>
-                                  {a.is_correct ? '✓' : '✗'}
+                                  {a.is_correct ? <Check size={14} /> : <X size={14} />}
                                 </span>
                                 <div className="flex-1 min-w-0">
                                   <p className="text-xs text-[var(--color-ink)]

@@ -1,4 +1,4 @@
-# 📐 MathGenius
+# MathGenius
 
 > **AI-powered Mathematics Learning Platform for Nigerian Exam Prep**
 
@@ -6,16 +6,16 @@ MathGenius is a full-stack web application that combines symbolic math solving, 
 
 ---
 
-## ✨ Features
+## Features
 
-### 🧠 AI-Powered Learning
+### AI-Powered Learning
 - **AI Solver** — Step-by-step solutions for typed or image-based math problems using Groq LLMs + SymPy
 - **AI Tutor (Teach)** — Ask math questions by topic and get structured, curriculum-aligned explanations grounded in level-specific textbooks
 - **Topic Wiki** — Auto-generated study notes and overviews for any math topic
 - **Floating Chat** — Persistent AI assistant available across the app
 - **Practice Grading** — Submit open-ended answers and get AI feedback
 
-### 📝 Exam Practice
+### Exam Practice
 - **CBT Mode** — Timed multiple-choice sessions with automatic marking, difficulty classification, and report summaries
 - **Past Questions** — WAEC, JAMB, NECO, BECE, and NABTEB past questions with filtering by year, topic, and exam type
 - **Theory Practice** — Long-answer theory questions with model-answer comparison
@@ -24,7 +24,7 @@ MathGenius is a full-stack web application that combines symbolic math solving, 
 - **AI Quiz** — Dynamically generated MCQs on any topic
 - **Question Bank** — Browse and filter all stored questions
 
-### 🏆 Gamification & Social
+### Gamification & Social
 - **XP & Streak System** — Earn experience points and build daily streaks
 - **Leaderboard** — Compete with other users globally or by school
 - **Challenges** — Challenge a friend to a head-to-head question set
@@ -33,7 +33,7 @@ MathGenius is a full-stack web application that combines symbolic math solving, 
 - **Certificates** — Downloadable achievement certificates
 - **Share Profile / Results** — Share progress cards to social media
 
-### 📊 Progress & Analytics
+### Progress & Analytics
 - **Dashboard** — Overview of XP, streaks, weak topics, and performance prediction
 - **Topic Mastery** — Per-topic mastery percentages with drill-down
 - **Weekly Report** — Printable/downloadable weekly performance report cards
@@ -41,7 +41,7 @@ MathGenius is a full-stack web application that combines symbolic math solving, 
 - **Bookmarks** — Save and revisit specific questions
 - **Spaced Repetition Reviews** — Optimal review scheduling for weak questions
 
-### 🛠️ Utilities & Accessibility
+### Utilities & Accessibility
 - **Study Planner** — AI-generated personalized study schedules
 - **Formula Sheet** — Quick-reference sheet of key formulas by topic
 - **Notes** — Personal in-app notes with Markdown support
@@ -51,7 +51,7 @@ MathGenius is a full-stack web application that combines symbolic math solving, 
 
 ---
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -70,7 +70,7 @@ MathGenius is a full-stack web application that combines symbolic math solving, 
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
 Math_Genius/
@@ -151,7 +151,7 @@ Math_Genius/
 
 ---
 
-## ⚙️ Requirements
+## Requirements
 
 ### System
 | Tool | Version |
@@ -193,7 +193,7 @@ Managed via `frontend/package.json`. Key packages:
 
 ---
 
-## 🔐 Environment Variables
+## Environment Variables
 
 ### Backend — `backend/.env`
 ```env
@@ -211,11 +211,11 @@ VITE_SUPABASE_URL=https://your-project.supabase.co
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-> ⚠️ **Store real credentials only in your local `.env` files.** Keep backend secrets out of the frontend and out of Git history.
+> **Store real credentials only in your local `.env` files.** Keep backend secrets out of the frontend and out of Git history.
 
 ---
 
-## 🚀 Local Setup
+## Local Setup
 
 ### 1. Clone the Repository
 ```bash
@@ -266,7 +266,7 @@ App opens at: **`http://localhost:5173`**
 
 ---
 
-## 🌐 API Reference
+## API Reference
 
 ### `/solve` — Math Solver
 | Method | Endpoint | Description |
@@ -336,7 +336,7 @@ App opens at: **`http://localhost:5173`**
 
 ---
 
-## 📚 RAG Pipeline (Textbook-Grounded Answers)
+## RAG Pipeline (Textbook-Grounded Answers)
 
 To enable textbook-based context in AI answers:
 
@@ -358,7 +358,7 @@ This means the AI tutor does not rely on one generic book for every student leve
 
 ---
 
-## 🛠️ Data Pipeline Scripts
+## Data Pipeline Scripts
 
 The `backend/` directory contains utility scripts for question data management:
 
@@ -385,7 +385,7 @@ The `backend/` directory contains utility scripts for question data management:
 
 ---
 
-## 🗄️ Database (Supabase)
+## Database (Supabase)
 
 The app uses Supabase (PostgreSQL + auth) with approximately the following table structure:
 
@@ -403,7 +403,7 @@ Row-Level Security (RLS) is enforced — users can only access their own data. T
 
 ---
 
-## 🔧 Development Notes
+## Development Notes
 
 - **CORS** is configured to allow `http://localhost:5173` and `http://localhost:3000`
 - Static question images are served from `backend/images/` at `/images/{filename}`
@@ -414,7 +414,7 @@ Row-Level Security (RLS) is enforced — users can only access their own data. T
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 | Problem | Solution |
 |---|---|
@@ -428,6 +428,6 @@ Row-Level Security (RLS) is enforced — users can only access their own data. T
 
 ---
 
-## 📜 License
+## License
 
 No license file is currently present in this repository. If you plan to distribute this project publicly, add an appropriate license (e.g., MIT, Apache 2.0).

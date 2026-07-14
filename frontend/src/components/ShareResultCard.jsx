@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
+import { Share2, Check, Clipboard, MessageCircle, AlertTriangle, X, Flame } from 'lucide-react'
 
 // ── Grade config ───────────────────────────────────────────────────
 const GRADES = [
@@ -192,7 +193,7 @@ function drawCard(canvas, data) {
   // Stats row
   const stats = [
     { label: 'SCORE',   value: `${pct}%`           },
-    { label: 'STREAK',  value: `${streakDays || 0}🍌` },
+    { label: 'STREAK',  value: `${streakDays || 0}` },
     { label: 'MASTERY', value: masteryLevel || '—'  },
   ]
   stats.forEach((s, i) => {
@@ -251,7 +252,7 @@ function roundRect(ctx, x, y, w, h, r) {
 async function shareOrDownload(canvas, data) {
   const blob   = await new Promise(res => canvas.toBlob(res, 'image/png'))
   const file   = new File([blob], `mathgenius-result-${data.pct}pct.png`, { type: 'image/png' })
-  const msgTxt = `🎓 I just scored ${data.pct}% (${data.grade}) in ${data.examType} Maths on MathGenius!\nStudying smarter every day 📚 #MathGenius #WAEC #StudyGoals`
+  const msgTxt = `I just scored ${data.pct}% (${data.grade}) in ${data.examType} Maths on MathGenius!\nStudying smarter every day #MathGenius #WAEC #StudyGoals`
 
   if (navigator.share && navigator.canShare?.({ files: [file] })) {
     try {
@@ -329,7 +330,7 @@ export default function ShareResultCard({
           style={{ backgroundColor: gInfo.accent }}>
           {sharing
             ? <span className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-            : <span className="text-xl">📲</span>
+            : <Share2 size={24} />
           }
           <span>Share / Save</span>
         </button>
@@ -338,19 +339,19 @@ export default function ShareResultCard({
           className="flex flex-col items-center gap-1.5 py-3 px-2 rounded-2xl
                      border-2 border-[var(--color-border)] hover:border-[var(--color-teal)]
                      text-xs font-bold transition-all">
-          <span className="text-xl">{status === 'copied' ? '✅' : '📋'}</span>
+          <span className="text-xl">{status === 'copied' ? <Check size={24} className="text-green-500" /> : <Clipboard size={24} />}</span>
           <span>{status === 'copied' ? 'Copied!' : 'Copy Image'}</span>
         </button>
 
         {/* WhatsApp shortcut */}
         <a href={`https://wa.me/?text=${encodeURIComponent(
-            `🎓 I scored ${pct}% (${gInfo.grade}) in ${examType} Maths on MathGenius! 📚`
+            `I scored ${pct}% (${gInfo.grade}) in ${examType} Maths on MathGenius!`
           )}`}
           target="_blank" rel="noopener noreferrer"
           className="flex flex-col items-center gap-1.5 py-3 px-2 rounded-2xl
                      bg-[#25D366] text-white text-xs font-bold
                      transition-all hover:opacity-90">
-          <span className="text-xl">💬</span>
+          <MessageCircle size={24} />
           <span>WhatsApp</span>
         </a>
       </div>
@@ -358,9 +359,9 @@ export default function ShareResultCard({
       {/* Status feedback */}
       {status && status !== 'copied' && (
         <p className="text-center text-xs font-medium text-[var(--color-teal)]">
-          {status === 'shared'     ? '✅ Shared successfully!'
-          : status === 'downloaded' ? '✅ Image saved to downloads!'
-          : status === 'copy_failed' ? '⚠️ Copy not supported — use Share instead'
+          {status === 'shared'     ? <><Check size={16} className="inline text-green-500" /> Shared successfully!</>
+          : status === 'downloaded' ? <><Check size={16} className="inline text-green-500" /> Image saved to downloads!</>
+          : status === 'copy_failed' ? <><AlertTriangle size={16} className="inline text-red-500" /> Copy not supported — use Share instead</>
           : null}
         </p>
       )}
@@ -393,9 +394,9 @@ export default function ShareResultCard({
           {onClose && (
             <button onClick={onClose}
               className="w-8 h-8 rounded-full border-2 border-[var(--color-border)]
-                         flex items-center justify-center text-sm font-bold
+                         flex items-center justify-center
                          hover:border-[var(--color-ink)] transition-colors">
-              ✕
+              <X size={16} />
             </button>
           )}
         </div>

@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import { Camera, X, Search, AlertTriangle, Brain, Loader } from 'lucide-react'
 import { solveFromImage } from '../../services/api'
 import { ExplanationBody } from '../../utils/RenderMath'
 
@@ -85,7 +86,7 @@ export default function ImageSolver() {
             className="hidden"
             onChange={handleFileChange}
           />
-          <div className="text-5xl mb-4">📷</div>
+          <Camera size={48} className="mx-auto mb-4 text-[var(--color-muted)]" />
           <p className="font-serif font-semibold text-xl text-[var(--color-ink)] mb-2">
             Upload or Drop Your Question
           </p>
@@ -101,12 +102,12 @@ export default function ImageSolver() {
       ) : (
         <div className="card overflow-hidden">
           <div className="bg-[var(--color-ink)] px-5 py-3 flex items-center justify-between">
-            <span className="font-serif text-white font-semibold">📷 Your Question</span>
+            <span className="font-serif text-white font-semibold flex items-center gap-2"><Camera size={20} /> Your Question</span>
             <button
               onClick={handleClear}
               className="text-white/60 hover:text-white text-sm transition-colors"
             >
-              ✕ Clear
+              <X size={16} /> Clear
             </button>
           </div>
           <div className="bg-[var(--color-paper)] p-4">
@@ -145,8 +146,8 @@ export default function ImageSolver() {
           className="w-full btn-primary py-4 text-base flex items-center justify-center gap-2 disabled:opacity-50"
         >
           {loading
-            ? <><span className="animate-spin">⏳</span> Reading and Solving...</>
-            : '🔍 Read & Solve This Question'
+            ? <><Loader size={20} className="animate-spin" /> Reading and Solving...</>
+            : <><Search size={20} /> Read & Solve This Question</>
           }
         </button>
       )}
@@ -154,7 +155,7 @@ export default function ImageSolver() {
       {/* Error */}
       {error && (
         <div className="border-2 border-red-300 bg-red-50 rounded-2xl p-5 text-red-600 font-mono text-sm">
-          ⚠️ {error}
+          <AlertTriangle size={20} className="shrink-0" /> {error}
         </div>
       )}
 
@@ -163,7 +164,7 @@ export default function ImageSolver() {
         <div className="card">
           <div className="bg-[var(--color-teal)] px-6 py-3">
             <span className="font-serif text-white font-semibold text-lg">
-              🧠 Euler's Solution
+              <Brain size={24} /> Euler's Solution
             </span>
           </div>
           <div className="bg-white p-6">

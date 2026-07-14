@@ -3,11 +3,12 @@ import { useAuth } from '../context/AuthContext'
 import { getBookmarks, deleteBookmark } from '../lib/bookmarks'
 import { ExplanationBody } from '../utils/RenderMath'
 import { BlockMath } from 'react-katex'
+import { Settings, Brain, MessageCircle, Trash2, Bookmark, Search } from 'lucide-react'
 
 const TYPE_LABELS = {
-  solution:    { icon: '⚙️', label: 'Solution',    color: 'bg-blue-50   border-blue-200   text-blue-700'   },
-  explanation: { icon: '🧠', label: 'Explanation', color: 'bg-teal-50   border-teal-200   text-teal-700'   },
-  message:     { icon: '💬', label: 'Message',     color: 'bg-yellow-50 border-yellow-200 text-yellow-700' },
+  solution:    { Icon: Settings, label: 'Solution',    color: 'bg-blue-50   border-blue-200   text-blue-700'   },
+  explanation: { Icon: Brain,    label: 'Explanation', color: 'bg-teal-50   border-teal-200   text-teal-700'   },
+  message:     { Icon: MessageCircle, label: 'Message', color: 'bg-yellow-50 border-yellow-200 text-yellow-700' },
 }
 
 function BookmarkCard({ bookmark, onDelete }) {
@@ -25,7 +26,7 @@ function BookmarkCard({ bookmark, onDelete }) {
       {/* Header */}
       <div className="px-5 py-4 bg-white flex items-start justify-between gap-4">
         <div className="flex items-start gap-3 flex-1 min-w-0">
-          <span className="text-2xl shrink-0">{meta.icon}</span>
+          <meta.Icon size={24} className="shrink-0 text-[var(--color-ink)]" />
           <div className="flex-1 min-w-0">
             <h3 className="font-serif font-bold text-[var(--color-ink)] text-base
                            leading-snug truncate">
@@ -67,7 +68,7 @@ function BookmarkCard({ bookmark, onDelete }) {
                        text-red-500 rounded-lg hover:bg-red-500 hover:text-white
                        transition-all font-medium disabled:opacity-50"
           >
-            {deleting ? '...' : '🗑️'}
+            {deleting ? '...' : <Trash2 size={16} />}
           </button>
         </div>
       </div>
@@ -173,13 +174,15 @@ export default function Bookmarks() {
       {/* Stats bar */}
       <div className="grid grid-cols-3 gap-4 mb-8">
         {[
-          { label: 'Total Saved',   value: bookmarks.length,                          icon: '🔖' },
-          { label: 'Solutions',     value: bookmarks.filter(b => b.type === 'solution').length,     icon: '⚙️' },
-          { label: 'Explanations',  value: bookmarks.filter(b => b.type === 'explanation').length,  icon: '🧠' },
-        ].map(stat => (
+          { label: 'Total Saved',   value: bookmarks.length,                          Icon: Bookmark },
+          { label: 'Solutions',     value: bookmarks.filter(b => b.type === 'solution').length,     Icon: Settings },
+          { label: 'Explanations',  value: bookmarks.filter(b => b.type === 'explanation').length,  Icon: Brain },
+        ].map(stat => {
+          const StatIcon = stat.Icon
+          return (
           <div key={stat.label}
                className="card bg-white p-4 text-center">
-            <div className="text-2xl mb-1">{stat.icon}</div>
+            <StatIcon size={24} className="mx-auto mb-1 text-[var(--color-teal)]" />
             <div className="font-serif font-black text-3xl text-[var(--color-ink)]">
               {stat.value}
             </div>
@@ -188,7 +191,8 @@ export default function Bookmarks() {
               {stat.label}
             </div>
           </div>
-        ))}
+          )
+        })}
       </div>
 
       {/* Bookmark list */}
@@ -201,7 +205,7 @@ export default function Bookmarks() {
         </div>
       ) : filtered.length === 0 ? (
         <div className="card bg-white p-12 text-center">
-          <div className="text-5xl mb-4">🔖</div>
+          <Bookmark size={48} className="mx-auto mb-4 text-[var(--color-muted)]" />
           <h3 className="font-serif font-bold text-xl text-[var(--color-ink)] mb-2">
             {bookmarks.length === 0 ? 'No bookmarks yet' : 'No results found'}
           </h3>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { usePWA } from '../hooks/usePWA'
+import { Wifi, Smartphone, X } from 'lucide-react'
 
 export default function InstallBanner() {
   const { installPrompt, isInstalled, install, isOnline } = usePWA()
@@ -18,7 +19,7 @@ export default function InstallBanner() {
       {!isOnline && (
         <div className="fixed top-0 left-0 right-0 z-[100] bg-orange-500
                         text-white text-center text-xs font-mono py-2 px-4">
-          📶 You're offline — some features may be unavailable
+          <Wifi size={14} className="inline mr-1" /> You're offline — some features may be unavailable
         </div>
       )}
 
@@ -29,7 +30,7 @@ export default function InstallBanner() {
                         rounded-2xl shadow-2xl p-4 border-2
                         border-[var(--color-gold)]">
           <div className="flex items-start gap-3">
-            <div className="text-2xl shrink-0">📱</div>
+            <Smartphone size={24} className="shrink-0" />
             <div className="flex-1 min-w-0">
               <p className="font-serif font-bold text-sm">
                 Install MathGenius
@@ -56,9 +57,9 @@ export default function InstallBanner() {
               </div>
             </div>
             <button onClick={handleDismiss}
-              className="text-white/40 hover:text-white text-lg shrink-0
-                         transition-colors leading-none">
-              ✕
+              className="text-white/40 hover:text-white shrink-0
+                         transition-colors">
+              <X size={18} />
             </button>
           </div>
         </div>

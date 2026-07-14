@@ -4,17 +4,18 @@ import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { API_BASE } from '../services/api'
 import { ExplanationBody } from '../utils/RenderMath'
+import { Skull, Frown, Target, Check, X, RefreshCw, Brain, PartyPopper, ArrowRight, Minus } from 'lucide-react'
 
 const OPTION_LABELS = ['A', 'B', 'C', 'D']
 
 // Quality rating labels for SM-2
 const QUALITY_LABELS = [
-    { q: 0, label: 'Forgot completely', color: 'bg-red-600 text-white', emoji: '💀' },
-    { q: 1, label: 'Nearly forgot', color: 'bg-red-400 text-white', emoji: '😣' },
-    { q: 2, label: 'Struggled', color: 'bg-orange-400 text-white', emoji: '😓' },
-    { q: 3, label: 'Got it (hard)', color: 'bg-yellow-400 text-[var(--color-ink)]', emoji: '😐' },
-    { q: 4, label: 'Good recall', color: 'bg-green-400 text-white', emoji: '😊' },
-    { q: 5, label: 'Perfect recall', color: 'bg-green-600 text-white', emoji: '🎯' },
+    { q: 0, label: 'Forgot completely', color: 'bg-red-600 text-white', icon: 'skull' },
+    { q: 1, label: 'Nearly forgot', color: 'bg-red-400 text-white', icon: 'frown' },
+    { q: 2, label: 'Struggled', color: 'bg-orange-400 text-white', icon: 'frown' },
+    { q: 3, label: 'Got it (hard)', color: 'bg-yellow-400 text-[var(--color-ink)]', icon: 'minus' },
+    { q: 4, label: 'Good recall', color: 'bg-green-400 text-white', icon: 'check' },
+    { q: 5, label: 'Perfect recall', color: 'bg-green-600 text-white', icon: 'target' },
 ]
 
 async function callAPI(path, opts = {}) {
@@ -62,9 +63,9 @@ function AddQueuePanel({ userId, onAdded }) {
                 repetitions: 0,
             }))
             await supabase.from('spaced_repetition').upsert(rows, { onConflict: 'user_id,question_id', ignoreDuplicates: true })
-            setMsg(`✅ ${questions.length} questions added to your review queue!`)
+            setMsg(<><Check size={14} className="inline-block" /> {questions.length} questions added to your review queue!</>)
             onAdded()
-        } catch (e) { setMsg('❌ Error adding questions.') }
+        } catch (e) { setMsg(<><X size={14} className="inline-block" /> Error adding questions.</>) }
         setLoading(false)
     }
 
@@ -170,10 +171,10 @@ export default function Review() {
                         <span className="block w-6 h-px bg-[var(--color-gold)]" />
                         Spaced Repetition
                     </p>
-                    <h1 className="font-serif font-black text-5xl tracking-tight">🧠 Review Queue</h1>
+                    <h1 className="font-serif font-black text-5xl tracking-tight"><Brain size={40} className="inline-block" /> Review Queue</h1>
                 </div>
                 <div className="card bg-white p-12 text-center mb-6">
-                    <div className="text-6xl mb-4">🎉</div>
+                    <div className="mb-4"><PartyPopper size={64} /></div>
                     <h3 className="font-serif font-bold text-2xl mb-2">All caught up!</h3>
                     <p className="text-[var(--color-muted)] max-w-sm mx-auto">
                         No questions due for review right now. Add topics below to start building
@@ -189,7 +190,7 @@ export default function Review() {
     if (!loading && idx >= questions.length) {
         return (
             <div className="max-w-2xl mx-auto px-6 py-16 text-center">
-                <div className="text-7xl mb-4">🧠</div>
+                <div className="mb-4"><Brain size={72} /></div>
                 <h1 className="font-serif font-black text-4xl mb-2">Review Complete!</h1>
                 <p className="text-[var(--color-muted)] text-lg mb-2">
                     You reviewed <strong>{doneCount}</strong> question{doneCount !== 1 ? 's' : ''}.
@@ -198,7 +199,7 @@ export default function Review() {
                     Questions you found hard will come back sooner. Easy ones later. That's the power of SM-2.
                 </p>
                 <div className="flex gap-3 justify-center flex-wrap">
-                    <button onClick={load} className="btn-primary px-6 py-3">🔄 Check for More</button>
+                    <button onClick={load} className="btn-primary px-6 py-3"><RefreshCw size={18} className="inline-block" /> Check for More</button>
                     <Link to="/dashboard" className="btn-secondary px-6 py-3">← Dashboard</Link>
                 </div>
             </div>
@@ -231,7 +232,7 @@ export default function Review() {
                     Spaced Repetition · {due} due today
                 </p>
                 <div className="flex items-center justify-between flex-wrap gap-4 mb-3">
-                    <h1 className="font-serif font-black text-4xl tracking-tight">🧠 Review</h1>
+                    <h1 className="font-serif font-black text-4xl tracking-tight"><Brain size={32} className="inline-block" /> Review</h1>
                     <span className="font-mono text-sm text-[var(--color-muted)]">
                         {idx + 1} / {due}
                     </span>
@@ -308,7 +309,7 @@ export default function Review() {
             {!submitted && (
                 <button onClick={handleSubmit} disabled={!selected}
                     className="w-full btn-primary py-4 text-base justify-center flex disabled:opacity-50">
-                    Check Answer ➤
+                    Check Answer <ArrowRight size={20} className="inline-block" />
                 </button>
             )}
 
@@ -317,7 +318,7 @@ export default function Review() {
                 <div className="card bg-white overflow-hidden">
                     <div className={`px-6 py-4 ${selected === q?.correct_answer ? 'bg-green-50' : 'bg-red-50'}`}>
                         <p className="font-serif font-bold text-lg text-[var(--color-ink)] mb-1">
-                            {selected === q?.correct_answer ? '✅ Correct!' : `❌ The answer was ${q?.correct_answer}`}
+                            {selected === q?.correct_answer ? <><Check size={18} className="inline-block" /> Correct!</> : <><X size={18} className="inline-block" /> The answer was {q?.correct_answer}</>}
                         </p>
                         {q?.explanation && (
                             <div className="bg-white rounded-xl p-3 text-sm mt-2">
@@ -330,11 +331,17 @@ export default function Review() {
                             How well did you recall this? (adjusts your review schedule)
                         </p>
                         <div className="grid grid-cols-3 gap-2">
-                            {QUALITY_LABELS.map(({ q: qNum, label, color, emoji }) => (
+                            {QUALITY_LABELS.map(({ q: qNum, label, color, icon }) => (
                                 <button key={qNum} onClick={() => handleQuality(qNum)}
                                     className={`${color} rounded-xl py-2 px-2 text-xs font-semibold
                                text-center transition-all hover:opacity-90`}>
-                                    <div className="text-xl mb-0.5">{emoji}</div>
+                                    <div className="mb-0.5">
+                                        {icon === 'skull' && <Skull size={20} className="inline-block" />}
+                                        {icon === 'frown' && <Frown size={20} className="inline-block" />}
+                                        {icon === 'minus' && <Minus size={20} className="inline-block" />}
+                                        {icon === 'check' && <Check size={20} className="inline-block" />}
+                                        {icon === 'target' && <Target size={20} className="inline-block" />}
+                                    </div>
                                     <div className="leading-tight">{label}</div>
                                 </button>
                             ))}

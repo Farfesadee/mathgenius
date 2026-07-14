@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    container_name: mathgenius_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY}
+      - LOG_LEVEL=DEBUG
+    volumes:
+      - ./backend:/app/backend
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  frontend-dev:
+    image: node:20-slim
+    container_name: mathgenius_frontend
+    working_dir: /app
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    command: sh -c "npm install && npm run dev"
+    depends_on:
+      - backend
+
+volumes:
+  logs:

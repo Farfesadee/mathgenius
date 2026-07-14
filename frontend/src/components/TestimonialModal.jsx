@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
+import { Star, PartyPopper } from 'lucide-react'
 
 const STORAGE_KEY = 'mg_testimonial_submitted'
 
@@ -18,7 +19,7 @@ export function TestimonialPrompt() {
       <div className="mt-4 flex items-center justify-between gap-3
                       bg-amber-50 border border-amber-200 rounded-2xl px-5 py-3">
         <p className="text-sm text-amber-800 font-medium">
-          ⭐ Enjoying MathGenius? Share your result — it helps other students!
+          <Star size={18} className="fill-yellow-500 text-yellow-500 inline mr-1" /> Enjoying MathGenius? Share your result — it helps other students!
         </p>
         <div className="flex items-center gap-2 shrink-0">
           <button
@@ -94,7 +95,7 @@ export default function TestimonialModal({ onClose }) {
         {done ? (
           /* ── Success state ── */
           <div className="p-8 text-center space-y-4">
-            <div className="text-6xl">🎉</div>
+            <PartyPopper size={64} className="mx-auto text-yellow-500" />
             <h3 className="font-serif font-black text-2xl text-[var(--color-ink)]">
               Thank you!
             </h3>
@@ -147,7 +148,7 @@ export default function TestimonialModal({ onClose }) {
                     onMouseLeave={() => setHovered(0)}
                     onClick={() => setRating(star)}
                     className="text-3xl transition-transform hover:scale-110">
-                    {star <= (hovered || rating) ? '⭐' : '☆'}
+                    {star <= (hovered || rating) ? <Star className="fill-yellow-500 text-yellow-500" size={24} /> : <Star className="text-gray-300" size={24} />}
                   </button>
                 ))}
               </div>
@@ -189,7 +190,7 @@ export default function TestimonialModal({ onClose }) {
               {loading
                 ? <><span className="w-4 h-4 border-2 border-white/30 border-t-white
                                      rounded-full animate-spin" /> Submitting...</>
-                : '⭐ Submit Review'
+                : <><Star size={18} className="fill-yellow-500 text-yellow-500" /> Submit Review</>
               }
             </button>
 

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { BookOpen, School, GraduationCap, Landmark } from 'lucide-react'
 
 const LEVEL_TOPICS = {
   primary: {
@@ -300,10 +301,10 @@ const LEVEL_TOPICS = {
 
 // ── Level tab config ──────────────────────────────────────────────────
 const LEVELS = [
-  { value: 'primary',    label: '📚 Primary'   },
-  { value: 'jss',        label: '🏫 JSS'        },
-  { value: 'secondary',  label: '🎓 Secondary'  },
-  { value: 'university', label: '🏛️ University' },
+  { value: 'primary',    label: 'Primary',    icon: BookOpen },
+  { value: 'jss',        label: 'JSS',        icon: School },
+  { value: 'secondary',  label: 'Secondary',  icon: GraduationCap },
+  { value: 'university', label: 'University', icon: Landmark },
 ]
 
 export default function TopicSidebar({ selectedTopic, selectedLevel, onTopicSelect, onLevelChange }) {
@@ -320,7 +321,7 @@ export default function TopicSidebar({ selectedTopic, selectedLevel, onTopicSele
 
       {/* Header */}
       <div className="bg-[var(--color-teal)] px-5 py-4 shrink-0">
-        <p className="font-serif font-bold text-white text-lg">📚 Topics</p>
+        <p className="font-serif font-bold text-white text-lg flex items-center gap-2"><BookOpen size={24} /> Topics</p>
       </div>
 
       {/* Level switcher — 4 tabs in 2×2 grid */}
@@ -338,7 +339,7 @@ export default function TopicSidebar({ selectedTopic, selectedLevel, onTopicSele
                 : 'bg-[var(--color-cream)] text-[var(--color-muted)] hover:text-[var(--color-ink)]'
               }`}
           >
-            {lvl.label}
+            <lvl.icon size={20} className="mr-1.5 inline-block" />{lvl.label}
           </button>
         ))}
       </div>

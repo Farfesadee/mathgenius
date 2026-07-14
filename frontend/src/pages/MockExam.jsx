@@ -6,12 +6,13 @@ import { ExplanationBody } from '../utils/RenderMath'
 import { explainCBTAnswer } from '../services/api'
 import ShareResultCard from '../components/ShareResultCard'
 import { TestimonialPrompt } from '../components/TestimonialModal'
+import { Clock, Check, X, Share2, Flag, Brain, Book, BookOpen } from 'lucide-react'
 
 const EXAM_CONFIG = {
-  WAEC:   { label: 'WAEC', color: '#1a8a7a', questions: 50, minutes: 90,  emoji: '📗' },
-  NECO:   { label: 'NECO', color: '#2a6bc1', questions: 50, minutes: 90,  emoji: '📘' },
-  BECE:   { label: 'BECE', color: '#c17c2a', questions: 50, minutes: 80,  emoji: '📙' },
-  JAMB:   { label: 'JAMB', color: '#7c3aed', questions: 60, minutes: 100, emoji: '📕' },
+  WAEC:   { label: 'WAEC', color: '#1a8a7a', questions: 50, minutes: 90,  icon: BookOpen },
+  NECO:   { label: 'NECO', color: '#2a6bc1', questions: 50, minutes: 90,  icon: Book },
+  BECE:   { label: 'BECE', color: '#c17c2a', questions: 50, minutes: 80,  icon: Book },
+  JAMB:   { label: 'JAMB', color: '#7c3aed', questions: 60, minutes: 100, icon: Book },
 }
 
 const GRADE_BANDS = [
@@ -53,8 +54,8 @@ function OptionBtn({ letter, text, selected, correct, revealed, onClick }) {
         {letter}
       </span>
       <span className="text-sm leading-snug flex-1">{text}</span>
-      {revealed && letter === correct  && <span className="shrink-0 text-green-600 text-lg">✓</span>}
-      {revealed && letter === selected && letter !== correct && <span className="shrink-0 text-red-500 text-lg">✗</span>}
+      {revealed && letter === correct  && <span className="shrink-0 text-green-600"><Check size={20} /></span>}
+      {revealed && letter === selected && letter !== correct && <span className="shrink-0 text-red-500"><X size={20} /></span>}
     </button>
   )
 }
@@ -206,7 +207,7 @@ export default function MockExam() {
             className={`rounded-2xl p-4 border-2 text-left transition-all
               ${examType === type ? 'border-transparent text-white shadow-lg' : 'border-[var(--color-border)] hover:border-current'}`}
             style={examType === type ? { backgroundColor: c.color } : {}}>
-            <div className="text-2xl mb-1">{c.emoji}</div>
+            <div className="flex justify-center mb-1"><c.icon size={28} /></div>
             <div className="font-bold text-sm">{c.label}</div>
             <div className={`text-xs mt-0.5 ${examType === type ? 'text-white/70' : 'text-[var(--color-muted)]'}`}>
               {c.questions}q · {c.minutes}min
@@ -218,7 +219,7 @@ export default function MockExam() {
       <div className="card overflow-hidden">
         <div className="px-6 py-4 border-b border-[var(--color-border)] flex items-center gap-3"
              style={{ backgroundColor: cfg.color + '15' }}>
-          <span className="text-2xl">{cfg.emoji}</span>
+          <cfg.icon size={28} />
           <div>
             <p className="font-bold" style={{ color: cfg.color }}>{cfg.label} Mock Exam</p>
             <p className="text-xs text-[var(--color-muted)]">
@@ -254,7 +255,7 @@ export default function MockExam() {
           </div>
 
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
-            ⏱️ Once started the timer cannot be paused. Answer all questions — unanswered questions
+            <Clock size={16} className="inline-block mr-1 shrink-0" /> Once started the timer cannot be paused. Answer all questions — unanswered questions
             count as wrong. You can flag questions to review before submitting.
           </div>
 
@@ -265,7 +266,7 @@ export default function MockExam() {
             style={{ backgroundColor: cfg.color }}>
             {loading
               ? <><span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Loading questions...</>
-              : `${cfg.emoji} Start ${cfg.label} Mock Exam`
+              : <><cfg.icon size={20} className="inline-block mr-1.5" /> Start {cfg.label} Mock Exam</>
             }
           </button>
         </div>
@@ -282,8 +283,8 @@ export default function MockExam() {
       <div className="sticky top-0 z-10 bg-[var(--color-paper)] border-b-2 border-[var(--color-border)]
                       px-4 py-3 mb-6 -mx-4 flex items-center justify-between gap-4 flex-wrap">
         <div className="flex items-center gap-3">
-          <span className="font-mono font-bold text-sm" style={{ color: cfg.color }}>
-            {cfg.emoji} {cfg.label}
+          <span className="font-mono font-bold text-sm flex items-center gap-1.5" style={{ color: cfg.color }}>
+            <cfg.icon size={18} />{cfg.label}
           </span>
           <span className="text-xs text-[var(--color-muted)] font-mono">
             Q {current + 1}/{questions.length}
@@ -303,7 +304,7 @@ export default function MockExam() {
             ${timeLeft < 300 ? 'text-red-600 border-red-300 bg-red-50 animate-pulse'
             : timeLeft < 600 ? 'text-orange-600 border-orange-300 bg-orange-50'
             : 'text-green-700 border-green-300 bg-green-50'}`}>
-            ⏱ {formatTime(timeLeft)}
+            <Clock size={18} className="inline-block mr-1.5" />{formatTime(timeLeft)}
           </span>
           <button onClick={() => { if (confirm('Submit exam? Unanswered questions will be marked wrong.')) submitExam() }}
             disabled={submitting}
@@ -329,7 +330,7 @@ export default function MockExam() {
                   })}
                   className={`text-xs px-2 py-1 rounded-lg font-semibold transition-colors
                     ${flagged.has(current) ? 'bg-amber-400 text-white' : 'bg-white/10 text-white/60 hover:bg-white/20'}`}>
-                  {flagged.has(current) ? '🚩 Flagged' : '🏳 Flag'}
+                  {flagged.has(current) ? <><Flag size={14} className="inline-block mr-1" />Flagged</> : <><Flag size={14} className="inline-block mr-1" />Flag</>}
                 </button>
               </div>
             </div>
@@ -442,7 +443,7 @@ export default function MockExam() {
               className="py-3 rounded-xl text-white text-sm font-bold
                          transition-all hover:opacity-90"
               style={{ backgroundColor: cfg.color }}>
-              📲 Share Result
+              <Share2 size={18} className="inline-block mr-1.5" /> Share Result
             </button>
           </div>
 
@@ -465,7 +466,7 @@ export default function MockExam() {
                   {q.topic && <span className="ml-2 text-xs text-[var(--color-muted)] font-normal">{q.topic}</span>}
                 </span>
                 <span className={`font-bold text-sm ${isCorrect ? 'text-green-600' : isSkipped ? 'text-amber-600' : 'text-red-500'}`}>
-                  {isCorrect ? '✓ Correct' : isSkipped ? '— Skipped' : '✗ Wrong'}
+                  {isCorrect ? <><Check size={16} className="inline-block mr-1" />Correct</> : isSkipped ? '— Skipped' : <><X size={16} className="inline-block mr-1" />Wrong</>}
                 </span>
               </div>
               <div className="px-5 py-4">
@@ -491,7 +492,7 @@ export default function MockExam() {
                                    hover:underline flex items-center gap-1.5 disabled:opacity-50">
                         {explaining === i
                           ? <><span className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" /> Explaining...</>
-                          : '🧠 Explain this answer'
+                          : <><Brain size={16} className="inline-block mr-1" /> Explain this answer</>
                         }
                       </button>
                     )}

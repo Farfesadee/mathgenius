@@ -10,6 +10,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { getStudyPlan, generateStudyPlan, getTopicProgress } from '../services/api'
 import { supabase } from '../lib/supabase'
+import { Check, TriangleAlert, Target, Calendar, Circle, RefreshCw, Sparkles, Clipboard, Book, PartyPopper, Zap, ArrowRight } from 'lucide-react'
 
 // ── Helpers ────────────────────────────────────────────────────────
 
@@ -32,10 +33,10 @@ function masteryColor(level) {
   return 'bg-green-100 text-green-700'
 }
 
-function topicEmoji(score) {
-  if (score >= 75) return '✅'
-  if (score >= 50) return '⚠️'
-  return '🔴'
+function TopicScoreIcon({ score }) {
+  if (score >= 75) return <Check size={14} className="inline-block text-green-600" />
+  if (score >= 50) return <TriangleAlert size={14} className="inline-block text-amber-500" />
+  return <Circle size={14} className="inline-block text-red-500" fill="currentColor" />
 }
 
 // ── Sub-components ─────────────────────────────────────────────────
@@ -87,7 +88,7 @@ function DayCard({ day, isToday }) {
         <div className="px-4 pb-4 space-y-3 border-t border-[var(--color-border)] pt-3">
           {day.focus && (
             <p className="text-sm text-[var(--color-muted)] italic">
-              🎯 {day.focus}
+              <Target size={16} className="inline-block shrink-0" /> {day.focus}
             </p>
           )}
           <ul className="space-y-2">
@@ -117,7 +118,7 @@ function WeakTopicsBadges({ topics }) {
         <span key={t.topic}
           className={`text-xs px-2 py-1 rounded-full font-medium
             ${masteryColor(t.mastery_level)}`}>
-          {topicEmoji(t.avg_score || 0)} {t.topic}
+          <TopicScoreIcon score={t.avg_score || 0} /> {t.topic}
           {t.avg_score != null && ` · ${Math.round(t.avg_score)}%`}
         </span>
       ))}
@@ -279,7 +280,7 @@ export default function StudyPlanner() {
       {!examDate && (
         <div className="card bg-amber-50 border border-amber-200 rounded-2xl p-4
                         flex items-start gap-3">
-          <span className="text-xl">⚠️</span>
+          <span><TriangleAlert size={24} className="text-amber-500" /></span>
           <div>
             <p className="font-semibold text-sm text-amber-800">No exam date set</p>
             <p className="text-xs text-amber-700 mt-0.5">
@@ -294,8 +295,8 @@ export default function StudyPlanner() {
       {/* ── Tabs ────────────────────────────────────────────────── */}
       <div className="flex gap-1 bg-[var(--color-bg)] rounded-xl p-1">
         {[
-          { id: 'plan',   label: '📅 Study Plan' },
-          { id: 'topics', label: `🔴 Weak Topics (${weakTopics.length})` },
+          { id: 'plan',   label: <><Calendar size={16} className="inline-block" /> Study Plan</> },
+          { id: 'topics', label: <><Circle size={16} className="inline-block text-red-500" fill="currentColor" /> Weak Topics ({weakTopics.length})</> },
         ].map(t => (
           <button key={t.id} onClick={() => setActiveTab(t.id)}
             className={`flex-1 py-2 rounded-lg text-sm font-semibold transition-all
@@ -320,10 +321,10 @@ export default function StudyPlanner() {
                        flex items-center justify-center gap-2 disabled:opacity-50"
           >
             {generating
-              ? <><span className="animate-spin">⏳</span> Generating your plan...</>
+              ? <><RefreshCw size={16} className="animate-spin" /> Generating your plan...</>
               : plan
-                ? '🔄 Regenerate Plan'
-                : '✨ Generate My Study Plan'
+                ? <><RefreshCw size={16} className="inline-block" /> Regenerate Plan</>
+                : <><Sparkles size={16} className="inline-block" /> Generate My Study Plan</>
             }
           </button>
 
@@ -338,7 +339,7 @@ export default function StudyPlanner() {
           {streaming && !plan && (
             <div className="card bg-white rounded-2xl p-4 space-y-2">
               <p className="text-sm font-semibold text-[var(--color-teal)] animate-pulse">
-                ✨ Euler is building your plan...
+                <Sparkles size={16} className="inline-block" /> Euler is building your plan...
               </p>
               <p className="text-xs text-[var(--color-muted)] font-mono
                             max-h-32 overflow-hidden">
@@ -351,7 +352,7 @@ export default function StudyPlanner() {
           {plan && plan.plan?.summary && (
             <div className="card bg-[#f0fdfa] border border-[#99f6e4] rounded-2xl p-4">
               <p className="text-sm font-semibold text-[var(--color-teal)] mb-1">
-                📋 Strategy
+                <Clipboard size={16} className="inline-block" /> Strategy
               </p>
               <p className="text-sm text-[var(--color-ink)]">{plan.plan.summary}</p>
               <p className="text-xs text-[var(--color-muted)] mt-2">
@@ -368,7 +369,7 @@ export default function StudyPlanner() {
           {/* No plan yet */}
           {!plan && !generating && !streaming && (
             <div className="card bg-white rounded-2xl p-8 text-center space-y-3">
-              <p className="text-4xl">📚</p>
+              <p><Book size={48} /></p>
               <p className="font-semibold text-[var(--color-ink)]">
                 No study plan yet
               </p>
@@ -399,7 +400,7 @@ export default function StudyPlanner() {
         <div className="space-y-4">
           {weakTopics.length === 0 ? (
             <div className="card bg-white rounded-2xl p-8 text-center space-y-3">
-              <p className="text-4xl">🎉</p>
+              <p><PartyPopper size={48} /></p>
               <p className="font-semibold text-[var(--color-ink)]">
                 No weak topics yet!
               </p>

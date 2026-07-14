@@ -6,6 +6,7 @@ import { getUserStats, xpProgress } from '../lib/stats'
 import { getTopicMastery } from '../lib/learning'
 import WelcomeBanner from '../components/WelcomeBanner'
 import AppRating from '../components/AppRating'
+import { Trophy, TrendingUp, AlertTriangle, BarChart3, Target, BookOpen, Book, Flame, Star, Sparkles, Zap, Award, Crown, Calendar, Monitor, Check, Rocket, Brain, Home, Swords, Medal, Users, Key, Flag, Lightbulb, Search, Map, ClipboardList, Clock, GraduationCap, PartyPopper, Circle, FileText, RefreshCw } from 'lucide-react'
 
 const TODAY = new Date().toISOString().slice(0, 10)
 const DAILY_KEY = `dailyChallenge_${TODAY}`
@@ -111,7 +112,8 @@ function PredictionWidget({ stats, xpStats, masteryData, examTarget }) {
     : predicted >= 40            ? { label: 'E8 – Pass',        color: 'text-orange-600', bg: 'bg-orange-500' }
     :                              { label: 'F9 – Fail',        color: 'text-red-600',    bg: 'bg-red-500'    }
 
-  const emoji = predicted >= 75 ? '🏆' : predicted >= 60 ? '📈' : predicted >= 50 ? '⚠️' : '🆘'
+  const PredIcon = predicted >= 75 ? Trophy : predicted >= 60 ? TrendingUp : predicted >= 50 ? AlertTriangle : AlertTriangle
+  const predIconColor = predicted >= 75 ? 'text-yellow-300' : predicted >= 60 ? 'text-green-300' : predicted >= 50 ? 'text-orange-300' : 'text-red-300'
 
   const msg = predicted >= 75 ? 'On track for Distinction! Maintain this consistency.'
     : predicted >= 60 ? 'Predicted Credit. Strengthen weak topics to reach Distinction.'
@@ -142,7 +144,7 @@ function PredictionWidget({ stats, xpStats, masteryData, examTarget }) {
             {exam} Score Prediction
           </p>
           <p className="font-serif font-bold text-white text-xl">
-            {emoji} Predicted: ~{predicted}%
+            <PredIcon size={24} className={`inline-block mr-2 ${predIconColor}`} /> Predicted: ~{predicted}%
           </p>
           <p className="text-white/80 text-xs mt-0.5">{msg}</p>
         </div>
@@ -188,26 +190,26 @@ function PredictionWidget({ stats, xpStats, masteryData, examTarget }) {
         <div className="flex flex-wrap gap-2 text-xs">
           <span className="px-3 py-1 rounded-full bg-[var(--color-paper)] border
                            border-[var(--color-border)] font-mono text-[var(--color-muted)]">
-            📊 {total} questions answered
+            <BarChart3 size={14} className="inline-block mr-1" /> {total} questions answered
           </span>
           <span className="px-3 py-1 rounded-full bg-[var(--color-paper)] border
                            border-[var(--color-border)] font-mono text-[var(--color-muted)]">
-            🎯 {accuracy}% accuracy
+            <Target size={14} className="inline-block mr-1" /> {accuracy}% accuracy
           </span>
           <span className="px-3 py-1 rounded-full bg-[var(--color-paper)] border
                            border-[var(--color-border)] font-mono text-[var(--color-muted)]">
-            📚 {coveragePct}% syllabus covered
+            <BookOpen size={14} className="inline-block mr-1" /> {coveragePct}% syllabus covered
           </span>
           {streakBonus > 0 && (
             <span className="px-3 py-1 rounded-full bg-orange-50 border border-orange-200
                              font-mono text-orange-600">
-              🔥 +{streakBonus}% streak bonus
+              <Flame size={14} className="inline-block mr-1" /> +{streakBonus}% streak bonus
             </span>
           )}
           {trendBonus > 0 && (
             <span className="px-3 py-1 rounded-full bg-green-50 border border-green-200
                              font-mono text-green-600">
-              📈 +{trendBonus}% improving trend
+              <TrendingUp size={14} className="inline-block mr-1" /> +{trendBonus}% improving trend
             </span>
           )}
         </div>
@@ -228,7 +230,7 @@ function PredictionWidget({ stats, xpStats, masteryData, examTarget }) {
               <div>
                 <p className="font-mono text-[10px] uppercase tracking-widest
                                text-red-500 mb-2">
-                  🔴 High-impact weak topics — fix these first
+                  <Circle size={14} className="inline-block mr-1 text-red-500 fill-red-500" /> High-impact weak topics — fix these first
                 </p>
                 <div className="space-y-2">
                   {weakByImpact.map(t => (
@@ -264,7 +266,7 @@ function PredictionWidget({ stats, xpStats, masteryData, examTarget }) {
               <div>
                 <p className="font-mono text-[10px] uppercase tracking-widest
                                text-amber-600 mb-2">
-                  🟡 High-value topics not yet studied
+                  <Circle size={14} className="inline-block mr-1 text-yellow-500 fill-yellow-500" /> High-value topics not yet studied
                 </p>
                 <div className="space-y-2">
                   {highValueMissing.map(t => (
@@ -296,7 +298,7 @@ function PredictionWidget({ stats, xpStats, masteryData, examTarget }) {
               <div>
                 <p className="font-mono text-[10px] uppercase tracking-widest
                                text-green-600 mb-2">
-                  🟢 Strong topics
+                  <Circle size={14} className="inline-block mr-1 text-green-500 fill-green-500" /> Strong topics
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {coveredTopics
@@ -318,7 +320,7 @@ function PredictionWidget({ stats, xpStats, masteryData, examTarget }) {
             <div className="bg-[var(--color-paper)] rounded-xl p-4 border border-[var(--color-border)]">
               <p className="font-mono text-[10px] uppercase tracking-widest
                              text-[var(--color-muted)] mb-2">
-                📈 How to reach the next grade
+                <TrendingUp size={14} className="inline-block mr-1" /> How to reach the next grade
               </p>
               {predicted < 75 && (
                 <p className="text-sm text-[var(--color-ink)]">
@@ -339,7 +341,7 @@ function PredictionWidget({ stats, xpStats, masteryData, examTarget }) {
               )}
               {predicted >= 75 && (
                 <p className="text-sm text-green-700 font-medium">
-                  🏆 You're already on track for Distinction! Keep your consistency
+                  <Trophy size={18} className="inline-block mr-1" /> You're already on track for Distinction! Keep your consistency
                   and make sure you've covered all syllabus topics.
                 </p>
               )}
@@ -373,7 +375,7 @@ function SpacedReviewCard({ userId }) {
           Spaced Repetition
         </p>
         <p className="font-serif font-bold text-white text-xl">
-          🧠 {due} card{due !== 1 ? 's' : ''} due for review
+          <Brain size={24} className="inline-block mr-2" /> {due} card{due !== 1 ? 's' : ''} due for review
         </p>
         <p className="text-white/70 text-xs mt-0.5">Click to start your review session</p>
       </div>
@@ -383,7 +385,7 @@ function SpacedReviewCard({ userId }) {
 }
 
 // ── Stat Card ─────────────────────────────────────────────
-function StatCard({ icon, label, value, sub, color = 'teal' }) {
+function StatCard({ icon: Icon, label, value, sub, color = 'teal' }) {
   const colors = {
     teal:  'bg-[var(--color-teal)] text-white',
     gold:  'bg-[var(--color-gold)] text-[var(--color-ink)]',
@@ -394,7 +396,7 @@ function StatCard({ icon, label, value, sub, color = 'teal' }) {
   return (
     <div className="card overflow-hidden">
       <div className={`${colors[color]} px-5 py-4 flex items-center gap-3`}>
-        <span className="text-3xl">{icon}</span>
+        <Icon size={28} />
         <div>
           <div className="font-serif font-black text-3xl leading-none">{value}</div>
           <div className="text-sm font-medium opacity-80 mt-0.5">{label}</div>
@@ -454,7 +456,7 @@ function ExamCountdown({ profile }) {
         <p className="text-white/80 text-sm">until {target}</p>
       </div>
       <div className="text-5xl">
-        {days === 0 ? '🎯' : days <= 7 ? '🔥' : days <= 30 ? '📚' : '⏳'}
+        {days === 0 ? <Target size={44} /> : days <= 7 ? <Flame size={44} /> : days <= 30 ? <BookOpen size={44} /> : <Clock size={44} />}
       </div>
     </div>
   )
@@ -475,13 +477,13 @@ function XPBar({ xpStats }) {
           <div>
             <p className="font-semibold text-sm text-[var(--color-ink)]">Level {level}</p>
             <p className="text-xs text-[var(--color-muted)]">
-              ⚡ {(xpStats.xp || 0).toLocaleString()} XP total
+              <Zap size={16} className="inline-block mr-1" /> {(xpStats.xp || 0).toLocaleString()} XP total
             </p>
           </div>
         </div>
         <div className="flex items-center gap-4 text-xs font-mono">
           <span className="text-orange-500 font-bold">
-            🔥 {xpStats.streak_current || 0} day streak
+            <Flame size={16} className="inline-block mr-1" /> {xpStats.streak_current || 0} day streak
           </span>
           <span className="text-[var(--color-muted)]">Best: {xpStats.streak_best || 0}d</span>
         </div>
@@ -498,12 +500,13 @@ function XPBar({ xpStats }) {
       {xpStats.badges?.length > 0 && (
         <div className="flex gap-1 mt-3 flex-wrap">
           {xpStats.badges.slice(0, 8).map((b, i) => {
-            const EMOJI = {
-              first_exam: '🎯', streak_3: '🔥', streak_7: '⚡', streak_30: '👑',
-              perfect: '💯', century: '🏆', level_5: '⭐', level_10: '🌟',
-              speed_demon: '⚡', consistent: '📚',
+            const BadgeIcon = {
+              first_exam: Target, streak_3: Flame, streak_7: Zap, streak_30: Crown,
+              perfect: Award, century: Trophy, level_5: Star, level_10: Sparkles,
+              speed_demon: Zap, consistent: BookOpen,
             }
-            return <span key={i} className="text-lg" title={b}>{EMOJI[b] || '🏅'}</span>
+            const BIcon = BadgeIcon[b] || Award
+            return <span key={i} className="text-lg" title={b}><BIcon size={20} /></span>
           })}
           {xpStats.badges.length > 8 && (
             <span className="text-xs text-[var(--color-muted)] font-mono self-center">
@@ -519,19 +522,19 @@ function XPBar({ xpStats }) {
 // ── Quick Actions ─────────────────────────────────────────
 function QuickActions() {
   const actions = [
-    { path: '/daily',        icon: '🔥', label: 'Daily',    color: 'bg-orange-500 text-white' },
-    { path: '/cbt',          icon: '🖥️', label: 'CBT Exam', color: 'bg-[var(--color-ink)] text-white' },
-    { path: '/practice',     icon: '🎯', label: 'Practice', color: 'bg-[var(--color-teal)] text-white' },
-    { path: '/teach',        icon: '📚', label: 'Study',    color: 'bg-[var(--color-gold)] text-[var(--color-ink)]' },
-    { path: '/planner',      icon: '📅', label: 'Planner',  color: 'bg-purple-500 text-white' },
-    { path: '/mastery',      icon: '📊', label: 'Mastery',  color: 'bg-green-500 text-white' },
-    { path: '/leaderboard',  icon: '🏆', label: 'Leaders',  color: 'bg-orange-400 text-white' },
-    { path: '/question-bank',icon: '📖', label: 'Q Bank',   color: 'bg-blue-500 text-white' },
+    { path: '/daily',        Icon: Flame, label: 'Daily',    color: 'bg-orange-500 text-white' },
+    { path: '/cbt',          Icon: Monitor, label: 'CBT Exam', color: 'bg-[var(--color-ink)] text-white' },
+    { path: '/practice',     Icon: Target, label: 'Practice', color: 'bg-[var(--color-teal)] text-white' },
+    { path: '/teach',        Icon: BookOpen, label: 'Study',    color: 'bg-[var(--color-gold)] text-[var(--color-ink)]' },
+    { path: '/planner',      Icon: Calendar, label: 'Planner',  color: 'bg-purple-500 text-white' },
+    { path: '/mastery',      Icon: BarChart3, label: 'Mastery',  color: 'bg-green-500 text-white' },
+    { path: '/leaderboard',  Icon: Trophy, label: 'Leaders',  color: 'bg-orange-400 text-white' },
+    { path: '/question-bank',Icon: Book, label: 'Q Bank',   color: 'bg-blue-500 text-white' },
   ]
   return (
     <div className="card bg-white overflow-hidden mb-6">
       <div className="bg-[var(--color-ink)] px-6 py-4">
-        <p className="font-serif font-bold text-white">⚡ Quick Actions</p>
+        <p className="font-serif font-bold text-white flex items-center gap-2"><Zap size={22} /> Quick Actions</p>
       </div>
       <div className="p-4 grid grid-cols-4 sm:grid-cols-8 gap-2">
         {actions.map(a => (
@@ -539,7 +542,7 @@ function QuickActions() {
             className={`${a.color} rounded-xl flex flex-col items-center
                         justify-center gap-1.5 py-3 px-2 text-center
                         hover:opacity-90 transition-opacity`}>
-            <span className="text-xl">{a.icon}</span>
+            <a.Icon size={22} />
             <span className="font-mono text-[9px] uppercase tracking-wide font-bold leading-none">
               {a.label}
             </span>
@@ -603,8 +606,8 @@ export default function Dashboard() {
           <h1 className="font-serif font-black text-5xl tracking-tight">Your Progress</h1>
         </div>
         <div className="flex gap-3">
-          <Link to="/practice" className="btn-primary px-5 py-2.5 text-sm">🎯 Practice</Link>
-          <Link to="/teach"    className="btn-secondary px-5 py-2.5 text-sm">📚 Study</Link>
+          <Link to="/practice" className="btn-primary px-5 py-2.5 text-sm flex items-center gap-2"><Target size={18} /> Practice</Link>
+          <Link to="/teach"    className="btn-secondary px-5 py-2.5 text-sm flex items-center gap-2"><BookOpen size={18} /> Study</Link>
         </div>
       </div>
 
@@ -615,17 +618,17 @@ export default function Dashboard() {
 
       {/* Stats grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <StatCard icon="📚" label="Topics Studied"
+        <StatCard icon={BookOpen} label="Topics Studied"
           value={stats.topicsStudied}
           sub="Keep exploring new topics!" color="teal" />
-        <StatCard icon="🎯" label="Questions Done"
+        <StatCard icon={Target} label="Questions Done"
           value={stats.totalAttempted}
           sub={`${stats.totalCorrect} answered correctly`} color="ink" />
-        <StatCard icon="📊" label="Accuracy"
+        <StatCard icon={BarChart3} label="Accuracy"
           value={`${stats.accuracy}%`}
           sub={`Avg practice score: ${stats.avgScore}%`}
           color={stats.accuracy >= 70 ? 'green' : 'gold'} />
-        <StatCard icon="🔖" label="Bookmarks"
+        <StatCard icon={Book} label="Bookmarks"
           value={stats.bookmarkCount}
           sub={`${stats.conversationCount} conversations`} color="gold" />
       </div>
@@ -642,13 +645,13 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div className="card overflow-hidden">
           <div className="bg-red-500 px-6 py-4">
-            <p className="font-serif font-bold text-white text-lg">⚠️ Topics Needing Work</p>
+            <p className="font-serif font-bold text-white text-lg flex items-center gap-2"><AlertTriangle size={22} /> Topics Needing Work</p>
             <p className="text-white/70 text-xs mt-0.5">Focus here to improve your score</p>
           </div>
           <div className="bg-white p-6 space-y-4">
             {stats.weakTopics.length === 0 ? (
               <p className="text-green-600 font-medium text-center py-4">
-                🎉 No weak topics yet — keep practising!
+                <PartyPopper size={20} className="inline-block mr-1" /> No weak topics yet — keep practising!
               </p>
             ) : stats.weakTopics.map(t => {
               return (
@@ -659,7 +662,7 @@ export default function Dashboard() {
                     to={`/practice?topic=${encodeURIComponent(t.topic)}&auto=true`}
                     className="inline-flex items-center gap-1 mt-1 text-xs
                                text-[var(--color-teal)] font-semibold hover:underline">
-                    ⚡ Quick Drill
+                    <Zap size={14} className="inline-block mr-1" /> Quick Drill
                   </Link>
                 </div>
               )
@@ -676,7 +679,7 @@ export default function Dashboard() {
 
         <div className="card overflow-hidden">
           <div className="bg-green-500 px-6 py-4">
-            <p className="font-serif font-bold text-white text-lg">✅ Your Strong Topics</p>
+            <p className="font-serif font-bold text-white text-lg flex items-center gap-2"><Check size={22} /> Your Strong Topics</p>
             <p className="text-white/70 text-xs mt-0.5">Topics you've mastered</p>
           </div>
           <div className="bg-white p-6 space-y-4">
@@ -710,7 +713,7 @@ export default function Dashboard() {
                 Daily Challenge · {TODAY}
               </p>
               <p className="font-serif font-bold text-white text-xl">
-                {done ? '✅ Completed Today!' : "🔥 Today's Challenge"}
+                {done ? <><Check size={20} className="inline-block mr-1" /> Completed Today!</> : <><Flame size={20} className="inline-block mr-1" /> Today's Challenge</>}
               </p>
               <p className="text-white/80 text-sm mt-0.5">
                 {done
@@ -719,7 +722,7 @@ export default function Dashboard() {
               </p>
             </div>
             {done
-              ? <span className="text-4xl">🎉</span>
+              ? <PartyPopper size={40} className="text-white" />
               : <Link to="/daily"
                   className="bg-white text-orange-500 font-bold font-serif
                              px-5 py-2.5 rounded-xl text-sm hover:bg-orange-50
@@ -736,7 +739,7 @@ export default function Dashboard() {
         <div className="card overflow-hidden mb-6">
           <div className="bg-[var(--color-ink)] px-6 py-4">
             <p className="font-serif font-bold text-white text-lg">
-              🕒 Recent Practice Sessions
+              <Clock size={22} className="inline-block mr-2" /> Recent Practice Sessions
             </p>
           </div>
           <div className="bg-white divide-y divide-[var(--color-border)]">
@@ -767,7 +770,7 @@ export default function Dashboard() {
 
       {stats.topicsStudied === 0 && (
         <div className="card bg-white p-12 text-center mt-6">
-          <div className="text-6xl mb-4">🚀</div>
+          <Rocket size={56} className="mx-auto mb-4 text-[var(--color-teal)]" />
           <h3 className="font-serif font-bold text-2xl text-[var(--color-ink)] mb-2">
             Your journey starts here!
           </h3>
@@ -776,8 +779,8 @@ export default function Dashboard() {
             to start tracking your progress.
           </p>
           <div className="flex gap-3 justify-center">
-            <Link to="/teach"    className="btn-primary px-6 py-3">📚 Start Learning</Link>
-            <Link to="/practice" className="btn-secondary px-6 py-3">🎯 Practice Now</Link>
+            <Link to="/teach"    className="btn-primary px-6 py-3 flex items-center gap-2"><BookOpen size={20} /> Start Learning</Link>
+            <Link to="/practice" className="btn-secondary px-6 py-3 flex items-center gap-2"><Target size={20} /> Practice Now</Link>
           </div>
         </div>
       )}

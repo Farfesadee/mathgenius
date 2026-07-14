@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { getTopicMastery, getUserStats, xpProgress, BADGES } from '../lib/stats'
 import { useNavigate } from 'react-router-dom'
+import { Star, Zap, Flame, Target, Award, BookOpen, Trophy, TriangleAlert, Monitor, BarChart3 } from 'lucide-react'
 
 function MasteryBar({ pct }) {
   const color = pct >= 80 ? 'bg-green-500'
@@ -72,17 +73,16 @@ export default function TopicMastery() {
         </p>
       </div>
 
-      {/* Stats row */}
       {stats && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
           {[
-            { label: 'Level',     value: level,                      color: 'text-[var(--color-teal)]',  emoji: '⭐' },
-            { label: 'Total XP',  value: (stats.xp||0).toLocaleString(), color: 'text-[var(--color-gold)]', emoji: '⚡' },
-            { label: 'Streak',    value: `${stats.streak_current||0}d`, color: 'text-orange-500',            emoji: '🔥' },
-            { label: 'Accuracy',  value: `${accuracy}%`,              color: 'text-green-600',              emoji: '🎯' },
+            { label: 'Level',     value: level,                      color: 'text-[var(--color-teal)]',  Icon: Star },
+            { label: 'Total XP',  value: (stats.xp||0).toLocaleString(), color: 'text-[var(--color-gold)]', Icon: Zap },
+            { label: 'Streak',    value: `${stats.streak_current||0}d`, color: 'text-orange-500',            Icon: Flame },
+            { label: 'Accuracy',  value: `${accuracy}%`,              color: 'text-green-600',              Icon: Target },
           ].map(s => (
             <div key={s.label} className="card bg-white p-5 text-center">
-              <div className="text-2xl mb-1">{s.emoji}</div>
+              <div className="mb-1"><s.Icon size={24} className="mx-auto" /></div>
               <div className={`font-serif font-black text-2xl ${s.color}`}>
                 {s.value}
               </div>
@@ -95,7 +95,6 @@ export default function TopicMastery() {
         </div>
       )}
 
-      {/* Level XP bar */}
       {stats && (
         <div className="card bg-white p-5 mb-8">
           <div className="flex items-center justify-between mb-2">
@@ -113,12 +112,11 @@ export default function TopicMastery() {
         </div>
       )}
 
-      {/* Badges */}
       {stats?.badges?.length > 0 && (
         <div className="card bg-white p-5 mb-8">
           <p className="font-mono text-[10px] uppercase tracking-widest
-                        text-[var(--color-muted)] mb-3">
-            🏅 Badges Earned
+                        text-[var(--color-muted)] mb-3 flex items-center gap-2">
+            <Award size={20} /> Badges Earned
           </p>
           <div className="flex flex-wrap gap-3">
             {(stats.badges || []).map(bId => {
@@ -127,10 +125,9 @@ export default function TopicMastery() {
               return (
                 <div key={bId}
                      className="flex items-center gap-2 bg-[var(--color-paper)]
-                                border border-[var(--color-border)] rounded-xl
-                                px-3 py-2"
+                                 border border-[var(--color-border)] rounded-xl
+                                 px-3 py-2"
                      title={badge.desc}>
-                  <span className="text-xl">{badge.emoji}</span>
                   <div>
                     <p className="text-xs font-semibold text-[var(--color-ink)]">
                       {badge.label}
@@ -146,12 +143,11 @@ export default function TopicMastery() {
         </div>
       )}
 
-      {/* Topic mastery */}
       <div className="card overflow-hidden">
         <div className="bg-[var(--color-ink)] px-6 py-4
                         flex flex-wrap items-center justify-between gap-3">
-          <p className="font-serif font-bold text-white text-lg">
-            📚 Topic Breakdown
+          <p className="font-serif font-bold text-white text-lg flex items-center gap-2">
+            <BookOpen size={20} /> Topic Breakdown
           </p>
           <div className="flex items-center gap-2 text-xs">
             <span className="text-white/50">
@@ -160,14 +156,13 @@ export default function TopicMastery() {
           </div>
         </div>
 
-        {/* Filter tabs */}
         <div className="bg-[var(--color-paper)] px-6 py-3 flex gap-2
                         border-b border-[var(--color-border)]">
           {[
             { value: 'all',    label: 'All Topics' },
-            { value: 'strong', label: '💪 Strong (70%+)' },
-            { value: 'medium', label: '📖 Getting There' },
-            { value: 'weak',   label: '⚠️ Needs Work' },
+            { value: 'strong', label: <><Trophy size={16} className="inline mr-1" />Strong (70%+)</> },
+            { value: 'medium', label: <><BookOpen size={16} className="inline mr-1" />Getting There</> },
+            { value: 'weak',   label: <><TriangleAlert size={16} className="inline mr-1" />Needs Work</> },
           ].map(f => (
             <button key={f.value} onClick={() => setFilter(f.value)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold
@@ -191,7 +186,7 @@ export default function TopicMastery() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="bg-white p-12 text-center">
-            <div className="text-4xl mb-3">📚</div>
+            <div className="mb-3"><BookOpen size={48} className="mx-auto" /></div>
             <p className="text-[var(--color-muted)] mb-4">
               {mastery.length === 0
                 ? 'Complete a CBT exam to see your topic mastery!'
@@ -199,7 +194,7 @@ export default function TopicMastery() {
             </p>
             {mastery.length === 0 && (
               <button onClick={() => navigate('/cbt')} className="btn-primary px-6 py-2.5 text-sm">
-                🖥️ Take a CBT Exam
+                <Monitor size={20} className="inline mr-2" /> Take a CBT Exam
               </button>
             )}
           </div>
@@ -208,10 +203,10 @@ export default function TopicMastery() {
             {filtered.map(t => {
               const pct   = t.attempted > 0
                 ? Math.round((t.correct / t.attempted) * 100) : 0
-              const label = pct >= 80 ? '💪 Strong'
-                : pct >= 60 ? '📈 Good'
-                : pct >= 40 ? '📖 Building'
-                : '⚠️ Weak'
+              const label = pct >= 80 ? <><Trophy size={14} className="inline mr-1" />Strong</>
+                : pct >= 60 ? <><BarChart3 size={14} className="inline mr-1" />Good</>
+                : pct >= 40 ? <><BookOpen size={14} className="inline mr-1" />Building</>
+                : <><TriangleAlert size={14} className="inline mr-1" />Weak</>
               const labelColor = pct >= 80 ? 'text-green-600'
                 : pct >= 60 ? 'text-[var(--color-teal)]'
                 : pct >= 40 ? 'text-yellow-600'

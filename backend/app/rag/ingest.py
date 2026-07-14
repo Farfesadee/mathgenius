@@ -65,7 +65,7 @@ def extract_pdf_text(pdf_path: str) -> tuple:
                 failed += 1
 
     except Exception as e:
-        print_step('⚠️', f"pypdf could not open file: {e}")
+        print_step('[WARN]', f"pypdf could not open file: {e}")
 
     # ── Strategy 2: pdfplumber fallback ───────────────────
     # Use if pypdf found nothing or failed on more than 30% of pages
@@ -74,7 +74,7 @@ def extract_pdf_text(pdf_path: str) -> tuple:
     if need_fallback:
         try:
             import pdfplumber
-            print_step('🔄', 'Running pdfplumber fallback...')
+            print_step('[RETRY]', 'Running pdfplumber fallback...')
             pages   = []
             failed  = 0
 
@@ -91,10 +91,10 @@ def extract_pdf_text(pdf_path: str) -> tuple:
                         failed += 1
 
             good = total_pages - failed
-            print_step('✅', f"pdfplumber extracted {good}/{total_pages} pages")
+            print_step('[OK]', f"pdfplumber extracted {good}/{total_pages} pages")
 
         except Exception as e:
-            print_step('❌', f"pdfplumber also failed: {e}")
+            print_step('[FAIL]', f"pdfplumber also failed: {e}")
             print()
             print("      This PDF is likely DRM-protected or scanned.")
             print("      Solutions:")
@@ -152,7 +152,7 @@ def ingest_books(force_reingest: bool = False):
 
     if not pdfs:
         separator()
-        print("⚠️  No PDF files found.")
+        print("[WARN]  No PDF files found.")
         print(f"\n   Add your textbooks to:")
         print(f"   {os.path.abspath(BOOKS_DIR)}")
         print()
@@ -164,25 +164,25 @@ def ingest_books(force_reingest: bool = False):
         separator()
         return
 
-    print(f"\n📚 Found {len(pdfs)} book(s):")
+    print(f"\n[BOOKS] Found {len(pdfs)} book(s):")
     for pdf in pdfs:
         size_mb = os.path.getsize(os.path.join(BOOKS_DIR, pdf)) / (1024 * 1024)
         print(f"   • {pdf}  ({size_mb:.1f} MB)")
 
     # ── Load embedding model ──────────────────────────────
-    print(f"\n🔧 Loading embedding model  [{EMBED_MODEL}]")
+    print(f"\n[SETUP] Loading embedding model  [{EMBED_MODEL}]")
     model = SentenceTransformer(EMBED_MODEL)
-    print_step('✅', 'Model ready')
+    print_step('[OK]', 'Model ready')
 
     # ── Set up Qdrant ─────────────────────────────────────
-    print(f"\n🔧 Setting up vector database")
-    print_step('📁', f"Location: {os.path.abspath(QDRANT_DIR)}")
+    print(f"\n[SETUP] Setting up vector database")
+    print_step('[DIR]', f"Location: {os.path.abspath(QDRANT_DIR)}")
     client = QdrantClient(path=QDRANT_DIR)
 
     if force_reingest:
         try:
             client.delete_collection(COLLECTION)
-            print_step('🗑️', 'Cleared existing collection')
+            print_step('[CLEAR]', 'Cleared existing collection')
         except Exception:
             pass
 
@@ -192,14 +192,14 @@ def ingest_books(force_reingest: bool = False):
             collection_name=COLLECTION,
             vectors_config=VectorParams(size=VECTOR_SIZE, distance=Distance.COSINE)
         )
-        print_step('✨', 'Created new collection')
+        print_step('[NEW]', 'Created new collection')
     else:
-        print_step('📂', 'Loaded existing collection')
+        print_step('[LOAD]', 'Loaded existing collection')
 
     # Check already-ingested books
     already_ingested = get_ingested_sources(client)
     if already_ingested:
-        print_step('ℹ️', f"Already ingested: {', '.join(already_ingested)}")
+        print_step('[INFO]', f"Already ingested: {', '.join(already_ingested)}")
 
     # Text splitter
     splitter = RecursiveCharacterTextSplitter(
@@ -225,47 +225,47 @@ def ingest_books(force_reingest: bool = False):
         pdf_path  = os.path.join(BOOKS_DIR, pdf_file)
 
         separator()
-        print(f"📖  [{pdf_index}/{len(pdfs)}]  {book_name}")
+        print(f"[BOOK]  [{pdf_index}/{len(pdfs)}]  {book_name}")
 
         # Skip if already done (unless forcing)
         if book_name in already_ingested and not force_reingest:
-            print_step('⏭️', 'Already ingested — skipping')
-            print_step('💡', 'Use --force to reingest everything')
+            print_step('[SKIP]', 'Already ingested — skipping')
+            print_step('[HINT]', 'Use --force to reingest everything')
             skipped_books += 1
             continue
 
         # Extract text
-        print_step('📄', 'Extracting text from PDF...')
+        print_step('[FILE]', 'Extracting text from PDF...')
         book_start = time.time()
 
         try:
             text, total_pages, good_pages = extract_pdf_text(pdf_path)
         except Exception as e:
-            print_step('❌', f"Unexpected error reading PDF: {e}")
+            print_step('[FAIL]', f"Unexpected error reading PDF: {e}")
             failed_books += 1
             continue
 
         if not text.strip():
-            print_step('❌', 'No text extracted — skipping this book')
+            print_step('[FAIL]', 'No text extracted — skipping this book')
             failed_books += 1
             continue
 
         coverage = (good_pages / total_pages * 100) if total_pages > 0 else 0
-        print_step('✅', f"{good_pages}/{total_pages} pages extracted  ({coverage:.0f}% coverage)")
+        print_step('[OK]', f"{good_pages}/{total_pages} pages extracted  ({coverage:.0f}% coverage)")
 
         # Chunk the text
         chunks = splitter.split_text(text)
         if not chunks:
-            print_step('❌', 'No chunks produced — skipping')
+            print_step('[FAIL]', 'No chunks produced — skipping')
             failed_books += 1
             continue
 
         avg_chunk = len(text) // len(chunks) if chunks else 0
-        print_step('✂️', f"{len(chunks)} chunks created  (avg {avg_chunk} chars each)")
+        print_step('[CHUNK]', f"{len(chunks)} chunks created  (avg {avg_chunk} chars each)")
 
         # Embed and store
         batch_size = 50
-        print_step('💾', f"Embedding and storing  [{batch_size} chunks/batch]...")
+        print_step('[STORE]', f"Embedding and storing  [{batch_size} chunks/batch]...")
         print()
 
         for batch_start in range(0, len(chunks), batch_size):
@@ -291,7 +291,7 @@ def ingest_books(force_reingest: bool = False):
             try:
                 client.upsert(collection_name=COLLECTION, points=points)
             except Exception as e:
-                print(f"\n   ⚠️  Batch error at chunk {batch_start}: {e}")
+                print(f"\n   [WARN]  Batch error at chunk {batch_start}: {e}")
                 continue
 
             # Progress bar
@@ -312,12 +312,12 @@ def ingest_books(force_reingest: bool = False):
         book_time     = time.time() - book_start
 
         print(f"\n")
-        print_step('✅', f"Completed in {format_duration(book_time)}  —  {len(chunks)} chunks stored")
+        print_step('[OK]', f"Completed in {format_duration(book_time)}  —  {len(chunks)} chunks stored")
 
     # ── Final summary ─────────────────────────────────────
     total_time = time.time() - start_time
     separator('═')
-    print(f"  ✅ Ingest Complete!")
+    print(f"  [OK] Ingest Complete!")
     print(f"     Books processed  : {len(pdfs) - skipped_books - failed_books}")
     print(f"     Books skipped    : {skipped_books}")
     print(f"     Books failed     : {failed_books}")
@@ -328,10 +328,10 @@ def ingest_books(force_reingest: bool = False):
     print()
 
     if total_chunks > 0:
-        print("  🚀 Textbooks are ready!")
+        print("  [DONE] Textbooks are ready!")
         print("     Euler will now ground answers in your books.")
     else:
-        print("  ⚠️  No chunks were stored.")
+        print("  [WARN]  No chunks were stored.")
         print("     Add clean PDFs to the books/ folder and run again.")
     print()
 
@@ -340,5 +340,5 @@ def ingest_books(force_reingest: bool = False):
 if __name__ == '__main__':
     force = '--force' in sys.argv
     if force:
-        print("\n⚠️  Force mode — all books will be re-ingested from scratch.")
+        print("\n[WARN]  Force mode — all books will be re-ingested from scratch.")
     ingest_books(force_reingest=force)

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { PartyPopper, Check, Monitor, Target, Flame, ArrowRight, X, Book, TriangleAlert } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { getDailyChallenge } from '../services/api'
 import { awardXP, XP, updateStreak } from '../lib/stats'
@@ -85,7 +86,7 @@ export default function DailyChallenge() {
   if (alreadyDone && !submitted) {
     return (
       <div className="max-w-2xl mx-auto px-6 py-16 text-center">
-        <div className="text-7xl mb-4">🎉</div>
+        <div className="text-7xl mb-4"><PartyPopper size={48} className="inline-block" /></div>
         <h1 className="font-serif font-black text-4xl mb-3">
           Challenge Complete!
         </h1>
@@ -93,14 +94,14 @@ export default function DailyChallenge() {
           You've already done today's challenge. Come back tomorrow for a new one!
         </p>
         <p className="font-mono text-sm text-[var(--color-teal)] mb-8 font-bold">
-          +{DAILY_XP} XP awarded ✅
+          +{DAILY_XP} XP awarded <Check size={18} className="inline-block" />
         </p>
         <div className="flex gap-4 justify-center flex-wrap">
           <Link to="/cbt" className="btn-primary px-6 py-3">
-            🖥️ Try a Full CBT
+            <Monitor size={20} className="inline-block" /> Try a Full CBT
           </Link>
           <Link to="/practice" className="btn-secondary px-6 py-3">
-            🎯 Practice Now
+            <Target size={20} className="inline-block" /> Practice Now
           </Link>
         </div>
       </div>
@@ -116,7 +117,7 @@ export default function DailyChallenge() {
           Daily Challenge · {TODAY}
         </p>
         <h1 className="font-serif font-black text-5xl tracking-tight">
-          🔥 Daily Challenge
+          <Flame size={32} className="inline-block" /> Daily Challenge
         </h1>
         <p className="text-[var(--color-muted)] mt-2">
           One question per day. Answer correctly to earn{' '}
@@ -227,12 +228,12 @@ export default function DailyChallenge() {
               disabled={!selected}
               className="w-full btn-primary py-4 text-base justify-center flex disabled:opacity-50"
             >
-              Submit Answer ➤
+              Submit Answer <ArrowRight size={20} className="inline-block" />
             </button>
           ) : (
             <div className="card p-6 bg-white text-center">
               <div className="text-3xl mb-3">
-                {correct ? '🎉' : '❌'}
+                {correct ? <PartyPopper size={32} className="inline-block" /> : <X size={32} className="inline-block" />}
               </div>
               <p className="font-bold text-lg mb-2">
                 {correct
@@ -242,7 +243,7 @@ export default function DailyChallenge() {
 
               {question.explanation && (
                 <div className="bg-gray-50 rounded-xl p-4 text-sm mt-4">
-                  <p className="font-semibold mb-1">📖 Explanation</p>
+                  <p className="font-semibold mb-1"><Book size={18} className="inline-block" /> Explanation</p>
                   {question.explanation}
                 </div>
               )}
@@ -252,13 +253,13 @@ export default function DailyChallenge() {
                   to="/cbt"
                   className="flex-1 btn-primary py-3 text-sm text-center"
                 >
-                  🖥️ Full CBT
+                  <Monitor size={20} className="inline-block" /> Full CBT
                 </Link>
                 <Link
                   to="/practice"
                   className="flex-1 btn-secondary py-3 text-sm text-center"
                 >
-                  🎯 Practice
+                  <Target size={20} className="inline-block" /> Practice
                 </Link>
               </div>
             </div>
@@ -268,7 +269,7 @@ export default function DailyChallenge() {
 
       {!loading && !question && (
         <div className="card bg-white p-10 text-center">
-          ⚠️ Could not load today's challenge. Make sure the backend is running.
+          <TriangleAlert size={20} className="inline-block" /> Could not load today's challenge. Make sure the backend is running.
         </div>
       )}
     </div>

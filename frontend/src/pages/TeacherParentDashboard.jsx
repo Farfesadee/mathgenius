@@ -7,13 +7,13 @@ import {
 } from '../lib/classroom'
 import { getStrugglingAlerts, resolveAlert } from '../lib/social2'
 import { downloadProgressReport } from '../services/api'
+import { Trophy, Star, TrendingUp, Sprout, Medal, FileText, BookOpen, TriangleAlert, X, Check, Lock, School, Users } from 'lucide-react'
 
-// ── Tiny helpers ────────────────────────────────────────────────────
 const MASTERY_CFG = {
-  master:     { icon: '🏆', color: '#10b981', bg: 'bg-emerald-50', border: 'border-emerald-200' },
-  proficient: { icon: '⭐', color: '#3b82f6', bg: 'bg-blue-50',    border: 'border-blue-200'    },
-  developing: { icon: '📈', color: '#f59e0b', bg: 'bg-amber-50',   border: 'border-amber-200'   },
-  beginner:   { icon: '🌱', color: '#94a3b8', bg: 'bg-slate-50',   border: 'border-slate-200'   },
+  master:     { Icon: Trophy,       color: '#10b981', bg: 'bg-emerald-50', border: 'border-emerald-200' },
+  proficient: { Icon: Star,         color: '#3b82f6', bg: 'bg-blue-50',    border: 'border-blue-200'    },
+  developing: { Icon: TrendingUp,   color: '#f59e0b', bg: 'bg-amber-50',   border: 'border-amber-200'   },
+  beginner:   { Icon: Sprout,       color: '#94a3b8', bg: 'bg-slate-50',   border: 'border-slate-200'   },
 }
 
 function scoreColor(s) {
@@ -31,11 +31,11 @@ function MiniBar({ value, max = 100, color = '#1a8a7a' }) {
   )
 }
 
-function StatTile({ label, value, sub, icon, color = 'var(--color-teal)' }) {
+function StatTile({ label, value, sub, Icon, color = 'var(--color-teal)' }) {
   return (
     <div className="bg-[var(--color-paper)] border-2 border-[var(--color-border)] rounded-2xl p-5">
       <div className="flex items-start justify-between mb-3">
-        <span className="text-2xl">{icon}</span>
+        <span className="text-2xl"><Icon size={24} /></span>
         <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--color-muted)]">
           {label}
         </span>
@@ -46,7 +46,6 @@ function StatTile({ label, value, sub, icon, color = 'var(--color-teal)' }) {
   )
 }
 
-// ── Student card (compact, clickable) ──────────────────────────────
 function StudentCard({ student, rank, onClick, isTeacher }) {
   const topMastery = student.mastery?.[0]
   const mCfg = topMastery ? MASTERY_CFG[topMastery.mastery_level] || MASTERY_CFG.beginner : null
@@ -58,7 +57,7 @@ function StudentCard({ student, rank, onClick, isTeacher }) {
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
           {rank <= 3 ? (
-            <span className="text-2xl">{['🥇','🥈','🥉'][rank - 1]}</span>
+            <Medal size={24} />
           ) : (
             <span className="w-8 h-8 rounded-full bg-[var(--color-cream)] flex items-center
                              justify-center font-mono font-bold text-sm text-[var(--color-muted)]">
@@ -69,7 +68,7 @@ function StudentCard({ student, rank, onClick, isTeacher }) {
             <p className="font-bold text-sm text-[var(--color-ink)]">{student.name}</p>
             {mCfg && (
               <p className="text-[10px] font-mono mt-0.5" style={{ color: mCfg.color }}>
-                {mCfg.icon} {topMastery.mastery_level} · {topMastery.topic}
+                <mCfg.Icon size={14} className="inline-block mr-1" /> {topMastery.mastery_level} · {topMastery.topic}
               </p>
             )}
           </div>
@@ -82,8 +81,8 @@ function StudentCard({ student, rank, onClick, isTeacher }) {
       <MiniBar value={student.avgScore} color="#1a8a7a" />
 
       <div className="flex items-center justify-between mt-3 text-xs text-[var(--color-muted)]">
-        <span>📝 {student.sessCount} session{student.sessCount !== 1 ? 's' : ''}</span>
-        <span>🏆 {student.topicsMaster} mastered</span>
+        <span><FileText size={14} className="inline-block mr-1" /> {student.sessCount} session{student.sessCount !== 1 ? 's' : ''}</span>
+        <span><Trophy size={14} className="inline-block mr-1" /> {student.topicsMaster} mastered</span>
         <span className="opacity-0 group-hover:opacity-100 transition-opacity font-medium
                          text-[var(--color-teal)]">
           {isTeacher ? 'View detail →' : 'View progress →'}
@@ -93,9 +92,8 @@ function StudentCard({ student, rank, onClick, isTeacher }) {
   )
 }
 
-// ── Student detail panel ───────────────────────────────────────────
 function StudentDetail({ student, stats, onBack, onDownloadPDF, downloadingPDF }) {
-  const [tab, setTab] = useState('overview')  // overview | topics | sessions
+  const [tab, setTab] = useState('overview')
 
   if (!stats) return (
     <div className="flex items-center justify-center py-20">
@@ -121,13 +119,12 @@ function StudentDetail({ student, stats, onBack, onDownloadPDF, downloadingPDF }
         ← All students
       </button>
 
-      {/* Student header */}
       <div className="bg-[var(--color-ink)] rounded-2xl p-6 mb-5">
         <div className="flex items-start justify-between">
           <div>
             <h2 className="font-serif font-black text-3xl text-white">{student.name}</h2>
             <p className="text-white/50 text-sm font-mono mt-1">
-              #{student.rank} in class · {streak.current_streak || 0} day streak 🍌
+              #{student.rank} in class · {streak.current_streak || 0} day streak
             </p>
           </div>
           <div className="text-right space-y-3">
@@ -148,21 +145,19 @@ function StudentDetail({ student, stats, onBack, onDownloadPDF, downloadingPDF }
               {downloadingPDF
                 ? <><span className="w-3 h-3 border border-white/40 border-t-white
                                      rounded-full animate-spin" /> Generating…</>
-                : <>📄 Download Report</>}
+                : <><FileText size={16} className="inline-block mr-1" /> Download Report</>}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Stat tiles */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
-        <StatTile label="Sessions"    value={sessions.length}           icon="📝" />
-        <StatTile label="Topics done" value={topics.length}             icon="📚" />
-        <StatTile label="Mastered"    value={strongTopics.length}       icon="🏆" color="#10b981" />
-        <StatTile label="Need work"   value={weakTopics.length}         icon="⚠️" color="#f59e0b" />
+        <StatTile label="Sessions"    value={sessions.length}           Icon={FileText} />
+        <StatTile label="Topics done" value={topics.length}             Icon={BookOpen} />
+        <StatTile label="Mastered"    value={strongTopics.length}       Icon={Trophy} color="#10b981" />
+        <StatTile label="Need work"   value={weakTopics.length}         Icon={TriangleAlert} color="#f59e0b" />
       </div>
 
-      {/* Tab bar */}
       <div className="flex gap-0 border-b-2 border-[var(--color-border)] mb-5">
         {[['overview','Overview'], ['topics','Topic Mastery'], ['sessions','Recent Sessions']].map(([id, label]) => (
           <button key={id} onClick={() => setTab(id)}
@@ -175,10 +170,8 @@ function StudentDetail({ student, stats, onBack, onDownloadPDF, downloadingPDF }
         ))}
       </div>
 
-      {/* Overview tab */}
       {tab === 'overview' && (
         <div className="space-y-5">
-          {/* Score trend chart (bar chart from sessions) */}
           {sessions.length > 0 && (
             <div className="card p-5">
               <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-muted)] mb-4">
@@ -200,11 +193,10 @@ function StudentDetail({ student, stats, onBack, onDownloadPDF, downloadingPDF }
             </div>
           )}
 
-          {/* Weak topics callout */}
           {weakTopics.length > 0 && (
             <div className="rounded-2xl border-2 border-amber-200 bg-amber-50 p-5">
               <p className="font-semibold text-amber-800 mb-3 flex items-center gap-2">
-                ⚠️ Topics needing attention
+                <TriangleAlert size={20} /> Topics needing attention
               </p>
               <div className="space-y-2">
                 {weakTopics.map(t => (
@@ -224,10 +216,9 @@ function StudentDetail({ student, stats, onBack, onDownloadPDF, downloadingPDF }
             </div>
           )}
 
-          {/* Strong topics */}
           {strongTopics.length > 0 && (
             <div className="rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-5">
-              <p className="font-semibold text-emerald-800 mb-3">🏆 Strong topics</p>
+              <p className="font-semibold text-emerald-800 mb-3"><Trophy size={20} className="inline mr-2" /> Strong topics</p>
               <div className="flex flex-wrap gap-2">
                 {strongTopics.map(t => (
                   <span key={t.topic}
@@ -242,7 +233,6 @@ function StudentDetail({ student, stats, onBack, onDownloadPDF, downloadingPDF }
         </div>
       )}
 
-      {/* Topics tab */}
       {tab === 'topics' && (
         <div className="space-y-2">
           {topics.length === 0 ? (
@@ -252,7 +242,7 @@ function StudentDetail({ student, stats, onBack, onDownloadPDF, downloadingPDF }
             return (
               <div key={t.topic}
                 className={`flex items-center gap-4 p-3 rounded-xl border-2 ${mc.border} ${mc.bg}`}>
-                <span className="text-lg shrink-0">{mc.icon}</span>
+                <mc.Icon size={20} className="shrink-0" />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-sm font-semibold text-[var(--color-ink)] truncate">{t.topic}</span>
@@ -271,7 +261,6 @@ function StudentDetail({ student, stats, onBack, onDownloadPDF, downloadingPDF }
         </div>
       )}
 
-      {/* Sessions tab */}
       {tab === 'sessions' && (
         <div className="card overflow-hidden">
           {sessions.length === 0 ? (
@@ -301,30 +290,26 @@ function StudentDetail({ student, stats, onBack, onDownloadPDF, downloadingPDF }
   )
 }
 
-// ── Main component ─────────────────────────────────────────────────
 export default function TeacherParentDashboard() {
   const { user, profile } = useAuth()
   const isTeacher = profile?.role === 'teacher'
   const isParent  = profile?.role === 'parent'
 
   const [loading,     setLoading]     = useState(true)
-  const [classes,     setClasses]     = useState([])       // teacher: my classrooms; parent: joined
+  const [classes,     setClasses]     = useState([])
   const [selectedCls, setSelectedCls] = useState(null)
-  const [students,    setStudents]    = useState([])       // leaderboard-style list
+  const [students,    setStudents]    = useState([])
   const [selStudent,  setSelStudent]  = useState(null)
   const [studentStats, setStudentStats] = useState(null)
   const [downloadingPDF, setDownloadingPDF] = useState(false)
 
-  // Struggling student alerts
   const [alerts,      setAlerts]      = useState([])
   const [alertsLoaded,setAlertsLoaded]= useState(false)
 
-  // Parent: link child
   const [childEmail,  setChildEmail]  = useState('')
   const [linkMsg,     setLinkMsg]     = useState('')
   const [linking,     setLinking]     = useState(false)
 
-  // Parent: children list
   const [children,   setChildren]    = useState([])
 
   useEffect(() => { if (user) init() }, [user])
@@ -342,13 +327,10 @@ export default function TeacherParentDashboard() {
         name: c.profiles?.display_name || c.profiles?.email?.split('@')[0] || 'Student',
       }))
       setChildren(kids)
-      // Also get any classes they're monitoring
       const { data: joined } = await getJoinedClassrooms(user.id)
       setClasses((joined || []).map(j => j.classrooms).filter(Boolean))
-      // Auto-load first child
       if (kids[0]) loadSingleStudent(kids[0])
     }
-    // Load struggling alerts for this teacher/parent
     const { data: alertData } = await getStrugglingAlerts(user.id)
     setAlerts(alertData || [])
     setAlertsLoaded(true)
@@ -400,7 +382,6 @@ export default function TeacherParentDashboard() {
     setSelStudent(null)
     setStudentStats(null)
     const { data: board } = await getClassroomLeaderboard(cls.id)
-    // Enrich with mastery for top topic
     const enriched = await Promise.all((board || []).map(async s => {
       const st = await getStudentStats(s.userId)
       return { ...s, mastery: st.mastery?.slice(0, 1) }
@@ -419,9 +400,9 @@ export default function TeacherParentDashboard() {
     if (!childEmail.trim()) return
     setLinking(true); setLinkMsg('')
     const { error } = await linkChild(user.id, childEmail.trim())
-    if (error) setLinkMsg('❌ ' + error)
+    if (error) setLinkMsg(<><X size={14} className="inline mr-1" />{error}</>)
     else {
-      setLinkMsg('✅ Child linked!')
+      setLinkMsg(<><Check size={14} className="inline mr-1" /> Child linked!</>)
       setChildEmail('')
       await init()
     }
@@ -435,10 +416,9 @@ export default function TeacherParentDashboard() {
     </div>
   )
 
-  // If user is not teacher or parent, show instructions
   if (!isTeacher && !isParent) return (
     <div className="max-w-lg mx-auto px-6 py-20 text-center">
-      <p className="text-5xl mb-4">🔒</p>
+      <Lock size={48} className="mx-auto mb-4" />
       <h2 className="font-serif font-black text-2xl mb-2">Teacher & Parent Access Only</h2>
       <p className="text-[var(--color-muted)] text-sm">
         This dashboard is for teachers and parents monitoring student progress.
@@ -449,7 +429,6 @@ export default function TeacherParentDashboard() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-10">
-      {/* Header */}
       <div className="mb-8">
         <p className="font-mono text-xs tracking-widest uppercase text-[var(--color-gold)]
                       mb-2 flex items-center gap-3">
@@ -468,10 +447,8 @@ export default function TeacherParentDashboard() {
 
       <div className="grid grid-cols-1 xl:grid-cols-[260px_1fr] gap-6">
 
-        {/* ── SIDEBAR ── */}
         <div className="space-y-4">
 
-          {/* Teacher: class picker */}
           {isTeacher && classes.length > 0 && (
             <div className="card overflow-hidden">
               <div className="bg-[var(--color-ink)] px-4 py-3">
@@ -494,7 +471,6 @@ export default function TeacherParentDashboard() {
             </div>
           )}
 
-          {/* Parent: link child form */}
           {isParent && (
             <div className="card p-4 space-y-3">
               <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-muted)]">
@@ -516,7 +492,6 @@ export default function TeacherParentDashboard() {
             </div>
           )}
 
-          {/* Parent: child list */}
           {isParent && children.length > 0 && (
             <div className="card overflow-hidden">
               <div className="bg-[var(--color-ink)] px-4 py-3">
@@ -536,7 +511,6 @@ export default function TeacherParentDashboard() {
             </div>
           )}
 
-          {/* Overview stats (teacher only when class loaded) */}
           {isTeacher && students.length > 0 && (
             <div className="card p-4 space-y-3">
               <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-muted)]">
@@ -556,9 +530,7 @@ export default function TeacherParentDashboard() {
           )}
         </div>
 
-        {/* ── MAIN CONTENT ── */}
         <div>
-          {/* Student detail */}
           {selStudent ? (
             <StudentDetail
               student={selStudent}
@@ -568,15 +540,13 @@ export default function TeacherParentDashboard() {
               downloadingPDF={downloadingPDF}
             />
           ) : students.length > 0 ? (
-            // Class grid
             <div>
-              {/* ── Struggling Student Alerts ── */}
               {alertsLoaded && alerts.length > 0 && (
                 <div className="mb-6 space-y-2">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
                     <p className="font-mono text-[10px] uppercase tracking-widest text-red-600 font-bold">
-                      ⚠️ {alerts.length} Struggling Student{alerts.length > 1 ? 's' : ''}
+                      <TriangleAlert size={16} className="inline-block mr-1" /> {alerts.length} Struggling Student{alerts.length > 1 ? 's' : ''}
                     </p>
                   </div>
                   {alerts.map(a => {
@@ -641,8 +611,8 @@ export default function TeacherParentDashboard() {
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
-              <p className="text-5xl mb-3">
-                {isTeacher ? '🏫' : '👨‍👩‍👧'}
+              <p className="mb-3">
+                {isTeacher ? <School size={48} /> : <Users size={48} />}
               </p>
               <p className="font-semibold text-[var(--color-ink)]">
                 {isTeacher ? 'Select a class from the sidebar' : 'Link your child to get started'}

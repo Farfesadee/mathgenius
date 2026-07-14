@@ -152,6 +152,7 @@
 
 
 import { useState, useRef } from 'react'
+import { Settings } from 'lucide-react'
 import SymbolBar from './SymbolBar'
 
 const KEYS = [
@@ -195,7 +196,7 @@ const KEY_STYLES = {
 }
 
 const MODE_LABELS = {
-  solve:         '⚙️ Solve',
+  solve:         <><Settings size={20} /> Solve</>,
   differentiate: 'd/dx Differentiate',
   integrate:     '∫ Integrate',
 }

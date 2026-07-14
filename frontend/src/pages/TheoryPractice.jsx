@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { getTheoryQuestions, getTheoryTopics, getTheoryYears, getMarkingScheme } from '../lib/theory'
 import { askTutor } from '../services/api'
 import { ExplanationBody } from '../utils/RenderMath'
+import { Inbox } from 'lucide-react'
 
 const EXAM_TYPES = ['All', 'WAEC', 'NECO', 'BECE', 'NABTEB']
 
@@ -513,7 +514,7 @@ export default function TheoryPractice() {
       ) : questions.length === 0 ? (
         <div className="text-center py-20 border-2 border-[var(--color-border)]
                         rounded-2xl bg-[var(--color-paper)]">
-          <p className="text-4xl mb-4">📭</p>
+          <p className="mb-4 flex justify-center"><Inbox size={48} className="text-[var(--color-muted)]" /></p>
           <p className="text-[var(--color-muted)]">
             No questions found. Try different filters.
           </p>

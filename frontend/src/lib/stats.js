@@ -13,16 +13,16 @@ export const XP = {
 
 // ── Badges ────────────────────────────────────────────────
 export const BADGES = [
-  { id: 'first_exam', emoji: '🎯', label: 'First Exam', desc: 'Completed your first CBT' },
-  { id: 'streak_3', emoji: '🔥', label: '3-Day Streak', desc: '3 days in a row' },
-  { id: 'streak_7', emoji: '⚡', label: 'Week Warrior', desc: '7 days in a row' },
-  { id: 'streak_30', emoji: '👑', label: 'Monthly Master', desc: '30 days in a row' },
-  { id: 'perfect', emoji: '💯', label: 'Perfect Score', desc: 'Got 100% in a CBT exam' },
-  { id: 'century', emoji: '🏆', label: 'Century', desc: 'Answered 100 questions correctly' },
-  { id: 'level_5', emoji: '⭐', label: 'Rising Star', desc: 'Reached Level 5' },
-  { id: 'level_10', emoji: '🌟', label: 'Expert', desc: 'Reached Level 10' },
-  { id: 'speed_demon', emoji: '⚡', label: 'Speed Demon', desc: 'Finished exam with 10+ mins to spare' },
-  { id: 'consistent', emoji: '📚', label: 'Consistent', desc: 'Completed 10 CBT exams' },
+  { id: 'first_exam', emoji: '', label: 'First Exam', desc: 'Completed your first CBT' },
+  { id: 'streak_3', emoji: '', label: '3-Day Streak', desc: '3 days in a row' },
+  { id: 'streak_7', emoji: '', label: 'Week Warrior', desc: '7 days in a row' },
+  { id: 'streak_30', emoji: '', label: 'Monthly Master', desc: '30 days in a row' },
+  { id: 'perfect', emoji: '', label: 'Perfect Score', desc: 'Got 100% in a CBT exam' },
+  { id: 'century', emoji: '', label: 'Century', desc: 'Answered 100 questions correctly' },
+  { id: 'level_5', emoji: '', label: 'Rising Star', desc: 'Reached Level 5' },
+  { id: 'level_10', emoji: '', label: 'Expert', desc: 'Reached Level 10' },
+  { id: 'speed_demon', emoji: '', label: 'Speed Demon', desc: 'Finished exam with 10+ mins to spare' },
+  { id: 'consistent', emoji: '', label: 'Consistent', desc: 'Completed 10 CBT exams' },
 ]
 
 // ── XP Utilities ──────────────────────────────────────────

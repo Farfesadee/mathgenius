@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { getNotes, createNote, updateNote, deleteNote, togglePin } from '../lib/notes'
+import { Bot, Pencil, Trash2, FileText, X, Save, Frown, PartyPopper, BookOpen, TriangleAlert, Check, RefreshCw, MapPin, Tag, Lightbulb, ArrowRight } from 'lucide-react'
 
 const COLORS = [
   { id: 'yellow', bg: 'bg-yellow-50',  border: 'border-yellow-300', dot: 'bg-yellow-400' },
@@ -23,7 +24,7 @@ function NoteCard({ note, onEdit, onDelete, onTogglePin, onPractice }) {
                      flex flex-col gap-3 relative group transition-all
                      hover:shadow-md`}>
       {note.pinned && (
-        <span className="absolute -top-2 -right-2 text-base">📌</span>
+        <span className="absolute -top-2 -right-2"><MapPin size={16} /></span>
       )}
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
@@ -45,26 +46,26 @@ function NoteCard({ note, onEdit, onDelete, onTogglePin, onPractice }) {
             className="text-sm p-1 hover:bg-black/10 rounded-lg transition-colors"
             title="Practice from this note"
           >
-            🤖
+            <Bot size={16} />
           </button>
           <button
             onClick={() => onTogglePin(note)}
             className="text-sm p-1 hover:bg-black/10 rounded-lg transition-colors"
             title={note.pinned ? 'Unpin' : 'Pin'}
           >
-            📌
+            <MapPin size={16} />
           </button>
           <button
             onClick={() => onEdit(note)}
             className="text-sm p-1 hover:bg-black/10 rounded-lg transition-colors"
           >
-            ✏️
+            <Pencil size={16} />
           </button>
           <button
             onClick={() => onDelete(note.id)}
             className="text-sm p-1 hover:bg-red-100 rounded-lg transition-colors"
           >
-            🗑️
+            <Trash2 size={16} />
           </button>
         </div>
       </div>
@@ -82,7 +83,7 @@ function NoteCard({ note, onEdit, onDelete, onTogglePin, onPractice }) {
                      hover:underline transition-colors opacity-0
                      group-hover:opacity-100"
         >
-          🤖 Practice →
+          <Bot size={12} className="inline-block" /> Practice <ArrowRight size={12} className="inline-block" />
         </button>
       </div>
     </div>
@@ -112,10 +113,10 @@ function NoteModal({ note, onSave, onClose }) {
         <div className="bg-[var(--color-ink)] px-6 py-4 flex items-center
                         justify-between">
           <p className="font-serif font-bold text-white">
-            {note ? '✏️ Edit Note' : '📝 New Note'}
+            {note ? <><Pencil size={16} className="inline-block" /> Edit Note</> : <><FileText size={16} className="inline-block" /> New Note</>}
           </p>
-          <button onClick={onClose} className="text-white/60 hover:text-white text-xl">
-            ✕
+          <button onClick={onClose} className="text-white/60 hover:text-white transition-colors">
+            <X size={20} />
           </button>
         </div>
         <div className="p-6 space-y-4">
@@ -174,7 +175,7 @@ function NoteModal({ note, onSave, onClose }) {
               className="flex-1 btn-primary py-3 text-sm justify-center
                          disabled:opacity-50"
             >
-              {saving ? 'Saving...' : '💾 Save Note'}
+              {saving ? 'Saving...' : <><Save size={16} className="inline-block" /> Save Note</>}
             </button>
           </div>
         </div>
@@ -259,15 +260,15 @@ Respond ONLY with this exact JSON (no markdown, no extra text):
                         justify-between sticky top-0 z-10">
           <div>
             <p className="font-serif font-bold text-white">
-              🤖 Practice from: {note.title}
+              <Bot size={16} className="inline-block" /> Practice from: {note.title}
             </p>
             <p className="text-white/60 text-xs mt-0.5">
               Euler generated 5 questions from your note
             </p>
           </div>
           <button onClick={onClose}
-            className="text-white/60 hover:text-white text-xl transition-colors">
-            ✕
+            className="text-white/60 hover:text-white transition-colors">
+            <X size={20} />
           </button>
         </div>
 
@@ -286,7 +287,7 @@ Respond ONLY with this exact JSON (no markdown, no extra text):
           {/* Error */}
           {!loading && questions.length === 0 && (
             <div className="py-12 text-center">
-              <div className="text-4xl mb-3">😕</div>
+              <div className="mb-3"><Frown size={48} /></div>
               <p className="text-[var(--color-muted)] mb-4">
                 Could not generate questions. Try a longer, more detailed note.
               </p>
@@ -316,10 +317,10 @@ Respond ONLY with this exact JSON (no markdown, no extra text):
                       : score >= questions.length / 2 ? 'text-yellow-700'
                       : 'text-red-600'}`}>
                     {score === questions.length
-                      ? '🎉 Perfect! Your notes are paying off!'
+                      ? <><PartyPopper size={16} className="inline-block" /> Perfect! Your notes are paying off!</>
                       : score >= questions.length / 2
-                      ? '📚 Good effort — review the red ones'
-                      : '⚠️ Review your notes again and try once more'}
+                      ? <><BookOpen size={16} className="inline-block" /> Good effort — review the red ones</>
+                      : <><TriangleAlert size={16} className="inline-block" /> Review your notes again and try once more</>}
                   </p>
                 </div>
               )}
@@ -361,9 +362,9 @@ Respond ONLY with this exact JSON (no markdown, no extra text):
                           </span>
                           <span className="flex-1">{text}</span>
                           {revealed && letter === q.correct &&
-                            <span className="text-green-600 shrink-0">✓</span>}
+                            <span className="text-green-600 shrink-0"><Check size={14} /></span>}
                           {revealed && letter === answers[i] && letter !== q.correct &&
-                            <span className="text-red-500 shrink-0">✗</span>}
+                            <span className="text-red-500 shrink-0"><X size={14} /></span>}
                         </button>
                       )
                     })}
@@ -374,7 +375,7 @@ Respond ONLY with this exact JSON (no markdown, no extra text):
                                       rounded-xl px-4 py-3">
                         <p className="text-xs font-mono text-[var(--color-teal)]
                                       uppercase tracking-widest mb-1">
-                          💡 Explanation
+                          <Lightbulb size={14} className="inline-block" /> Explanation
                         </p>
                         <p className="text-sm text-[var(--color-ink)]">
                           {q.explanation}
@@ -401,7 +402,7 @@ Respond ONLY with this exact JSON (no markdown, no extra text):
                 ) : (
                   <button onClick={generate}
                     className="flex-1 btn-primary py-3 text-sm justify-center">
-                    🔄 New Questions
+                    <RefreshCw size={16} className="inline-block" /> New Questions
                   </button>
                 )}
                 <button onClick={onClose}
@@ -545,8 +546,8 @@ export default function Notes() {
       {!loading && notes.length > 0 && (
         <div className="flex gap-4 mb-6 text-xs font-mono text-[var(--color-muted)]">
           <span>{notes.length} note{notes.length !== 1 ? 's' : ''}</span>
-          {pinned.length > 0 && <span>📌 {pinned.length} pinned</span>}
-          {topics.length > 0 && <span>🏷️ {topics.length} topic{topics.length !== 1 ? 's' : ''}</span>}
+          {pinned.length > 0 && <span><MapPin size={12} className="inline-block" /> {pinned.length} pinned</span>}
+          {topics.length > 0 && <span><Tag size={12} className="inline-block" /> {topics.length} topic{topics.length !== 1 ? 's' : ''}</span>}
         </div>
       )}
 
@@ -562,7 +563,7 @@ export default function Notes() {
       /* Empty */
       ) : filtered.length === 0 ? (
         <div className="text-center py-20">
-          <div className="text-5xl mb-4">📝</div>
+          <div className="mb-4"><FileText size={48} /></div>
           <p className="text-[var(--color-muted)] text-lg mb-6">
             {notes.length === 0
               ? 'No notes yet — create your first one!'

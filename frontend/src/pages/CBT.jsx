@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
+import { Dices, Circle, Check, X, FileText, TriangleAlert, Trophy, BarChart3, Flame, Settings, Book, Rocket, Flag, Brain, RefreshCw, Clock, ClipboardList } from 'lucide-react'
 import {
   fetchCBTQuestions, createCBTSession, completeCBTSession,
   getCBTHistory, getAvailableTopics, getAvailableYears,
@@ -29,10 +30,10 @@ const EXAM_INFO = {
 const DURATIONS = [5, 10, 15, 20, 25, 30, 45, 60]
 const COUNTS = [5, 10, 15, 20, 25, 30, 35, 40, 50, 60]
 const DIFFICULTIES = [
-  { value: 'mixed', label: 'Mixed', emoji: '🎲' },
-  { value: 'easy', label: 'Easy', emoji: '🟢' },
-  { value: 'medium', label: 'Medium', emoji: '🟡' },
-  { value: 'hard', label: 'Hard', emoji: '🔴' },
+  { value: 'mixed', label: 'Mixed', Icon: Dices, iconColor: 'text-[var(--color-muted)]' },
+  { value: 'easy', label: 'Easy', Icon: Circle, iconColor: 'text-green-500 fill-green-500' },
+  { value: 'medium', label: 'Medium', Icon: Circle, iconColor: 'text-yellow-500 fill-yellow-500' },
+  { value: 'hard', label: 'Hard', Icon: Circle, iconColor: 'text-red-500 fill-red-500' },
 ]
 
 const GRADE_CONFIG = {
@@ -113,8 +114,8 @@ function OptionBtn({ letter, text, selected, correct, revealed, onClick }) {
         {letter}
       </span>
       <span className="text-sm leading-snug flex-1">{text}</span>
-      {revealed && letter === correct && <span className="shrink-0 text-green-600 text-lg">✓</span>}
-      {revealed && letter === selected && letter !== correct && <span className="shrink-0 text-red-500 text-lg">✗</span>}
+      {revealed && letter === correct && <Check size={20} className="shrink-0 text-green-600" />}
+      {revealed && letter === selected && letter !== correct && <X size={20} className="shrink-0 text-red-500" />}
     </button>
   )
 }
@@ -126,7 +127,7 @@ function SubmitModal({ answered, total, onConfirm, onCancel }) {
                     bg-black/50 backdrop-blur-sm px-4">
       <div className="bg-white rounded-2xl border-2 border-[var(--color-ink)]
                       shadow-2xl p-8 max-w-sm w-full text-center">
-        <div className="text-5xl mb-4">📝</div>
+        <FileText size={48} className="mx-auto mb-4 text-[var(--color-ink)]" />
         <h3 className="font-serif font-black text-2xl text-[var(--color-ink)] mb-2">
           Submit Exam?
         </h3>
@@ -138,11 +139,11 @@ function SubmitModal({ answered, total, onConfirm, onCancel }) {
         </p>
         {unanswered > 0 ? (
           <p className="text-orange-500 text-sm font-semibold mb-6">
-            ⚠️ {unanswered} question{unanswered !== 1 ? 's' : ''} still unanswered
+            <TriangleAlert size={16} className="inline-block mr-1" /> {unanswered} question{unanswered !== 1 ? 's' : ''} still unanswered
           </p>
         ) : (
-          <p className="text-green-600 text-sm font-semibold mb-6">
-            ✅ All questions answered!
+          <p className="text-green-600 text-sm font-semibold mb-6 flex items-center gap-1">
+            <Check size={16} /> All questions answered!
           </p>
         )}
         <div className="flex gap-3">
@@ -473,16 +474,16 @@ export default function CBT() {
           type: 'cbt_complete',
           title: `CBT Result: ${percentage}% (${getGrade(percentage)})`,
           message: `${examType} · ${score}/${questions.length} correct · ${Math.round(timeTaken / 60)}m`,
-          icon: percentage >= 70 ? '🏆' : percentage >= 50 ? '📊' : '📝',
+          icon: percentage >= 70 ? 'trophy' : percentage >= 50 ? 'bar_chart' : 'file_text',
           link: '/cbt-history',
         })
 
         if (streakResult?.streakIncreased && streakResult.newStreak > 1) {
           await createNotification(user.id, {
             type: 'streak',
-            title: `🔥 ${streakResult.newStreak}-day streak!`,
+            title: `${streakResult.newStreak}-day streak!`,
             message: 'Keep it up — study again tomorrow to extend your streak.',
-            icon: '🔥',
+            icon: 'flame',
             link: '/mastery',
           })
         }
@@ -564,7 +565,7 @@ export default function CBT() {
           <div className="card overflow-hidden">
             <div className="bg-[var(--color-teal)] px-6 py-4">
               <p className="font-serif font-bold text-white text-lg">
-                ⚙️ Configure Your Exam
+                <Settings size={20} className="inline-block mr-2" /> Configure Your Exam
               </p>
             </div>
             <div className="bg-white p-6 space-y-5">
@@ -599,7 +600,7 @@ export default function CBT() {
               {isTheoryOnly ? (
                 <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-5">
                   <p className="font-semibold text-amber-800 text-sm mb-1">
-                    📖 NABTEB is Theory Only
+                    <Book size={18} className="inline-block mr-1" /> NABTEB is Theory Only
                   </p>
                   <p className="text-amber-700 text-xs leading-relaxed">
                     NABTEB past questions are essay/theory format — there are no
@@ -633,7 +634,7 @@ export default function CBT() {
                               ${topics.includes(t)
                                 ? 'border-[var(--color-teal)] bg-[#e8f4f4] text-[var(--color-teal)]'
                                 : 'border-[var(--color-border)] text-[var(--color-muted)] hover:border-[var(--color-ink)]'}`}>
-                            {topics.includes(t) ? '✓ ' : ''}{t}
+                            {topics.includes(t) ? <Check size={14} className="inline-block mr-1" /> : ''}{t}
                           </button>
                         ))}
                       </div>
@@ -678,7 +679,7 @@ export default function CBT() {
                             ${difficulty === d.value
                               ? 'border-[var(--color-teal)] bg-[#e8f4f4] text-[var(--color-teal)]'
                               : 'border-[var(--color-border)] text-[var(--color-muted)]'}`}>
-                          {d.emoji} {d.label}
+                          <d.Icon size={16} className={`inline-block mr-1 ${d.iconColor}`} /> {d.label}
                         </button>
                       ))}
                     </div>
@@ -731,7 +732,7 @@ export default function CBT() {
                                          border-t-white rounded-full animate-spin" />
                         Preparing questions...
                       </>
-                    ) : `🚀 Start ${count}-Question ${examType} Exam`}
+                    ) : <><Rocket size={20} /> Start {count}-Question {examType} Exam</>}
                   </button>
                 </>
               )}
@@ -741,7 +742,7 @@ export default function CBT() {
           {/* History */}
           <div className="card overflow-hidden flex flex-col h-full">
             <div className="bg-[var(--color-ink)] px-5 py-4 flex items-center justify-between gap-3">
-              <p className="font-serif font-bold text-white">📊 Recent Exams</p>
+              <p className="font-serif font-bold text-white flex items-center gap-2"><BarChart3 size={20} /> Recent Exams</p>
               <button type="button" onClick={() => navigate('/cbt-history')}
                 className="btn-secondary py-2 px-3 text-xs">
                 View full history
@@ -835,13 +836,13 @@ export default function CBT() {
           <div className="flex items-center gap-3 shrink-0">
             <div className={`font-mono font-black text-xl tabular-nums
               ${timerUrgent ? 'text-red-500 animate-pulse' : 'text-[var(--color-ink)]'}`}>
-              ⏱ {formatTime(timeLeft)}
+              <Clock size={22} className="inline-block mr-1" /> {formatTime(timeLeft)}
             </div>
             <button
               onClick={() => setShowSubmitModal(true)}
               disabled={submitting}
               className="btn-primary px-4 py-2 text-sm disabled:opacity-50">
-              {submitting ? '⏳' : 'Submit'}
+              {submitting ? <Clock size={20} className="animate-spin" /> : 'Submit'}
             </button>
           </div>
         </div>
@@ -864,7 +865,7 @@ export default function CBT() {
                     className={`text-lg transition-all
                       ${isFlagged ? 'opacity-100' : 'opacity-40 hover:opacity-80'}`}
                     title="Flag for review">
-                    🚩
+                    <Flag size={20} />
                   </button>
                 </div>
               </div>
@@ -939,7 +940,7 @@ export default function CBT() {
                           ? 'border-[var(--color-teal)] bg-[#e8f4f4] text-[var(--color-teal)]'
                           : 'border-[var(--color-border)] text-[var(--color-muted)]'}`}>
                     {i + 1}
-                    {isFlag && <span className="absolute -top-1 -right-1 text-[8px]">🚩</span>}
+                    {isFlag && <Flag size={10} className="absolute -top-1 -right-1 text-red-500" />}
                   </button>
                 )
               })}
@@ -954,7 +955,7 @@ export default function CBT() {
                 Unanswered ({unanswered})
               </div>
               <div className="flex items-center gap-2">
-                <span>🚩</span> Flagged
+                <Flag size={12} /> Flagged
               </div>
             </div>
           </div>
@@ -987,7 +988,7 @@ export default function CBT() {
           <div className={`${cfg.bg} px-8 py-8 text-center text-white`}>
             {report.autoSubmit && (
               <div className="bg-white/20 rounded-xl px-4 py-2 text-sm mb-4 inline-block">
-                ⏰ Time expired — auto submitted
+                <Clock size={18} className="inline-block mr-2" /> Time expired — auto submitted
               </div>
             )}
             <div className="font-serif font-black text-8xl mb-2">{grade}</div>
@@ -1015,7 +1016,7 @@ export default function CBT() {
                             rounded-2xl p-5 mb-4">
               <p className="font-mono text-[10px] uppercase tracking-widest
                              text-[var(--color-teal)] mb-2">
-                🧠 Euler's Feedback
+                <Brain size={16} className="inline-block mr-1" /> Euler's Feedback
               </p>
               {aiSummary ? (
                 <p className="text-[var(--color-ink)] text-sm leading-relaxed">{aiSummary}</p>
@@ -1037,12 +1038,12 @@ export default function CBT() {
                   setScreen('setup')
                 }}
                 className="w-full btn-secondary py-3 text-sm justify-center">
-                🔄 New Exam
+                <RefreshCw size={18} className="inline-block mr-2" /> New Exam
               </button>
               <button onClick={startExam}
                 disabled={loadingSetup}
                 className="w-full btn-primary py-3 text-sm justify-center disabled:opacity-50">
-                {loadingSetup ? '⏳ Retaking...' : '↻ Retake This Exam'}
+                {loadingSetup ? <><RefreshCw size={18} className="animate-spin mr-2" /> Retaking...</> : '↻ Retake This Exam'}
               </button>
             </div>
           </div>
@@ -1050,10 +1051,10 @@ export default function CBT() {
 
         <div className="card overflow-hidden">
           <div className="bg-[var(--color-ink)] px-6 py-4 flex items-center justify-between">
-            <p className="font-serif font-bold text-white text-lg">📋 Question Review</p>
+            <p className="font-serif font-bold text-white text-lg flex items-center gap-2"><ClipboardList size={22} /> Question Review</p>
             <div className="flex gap-3 text-sm text-white/70">
-              <span>✅ {correct.length} correct</span>
-              <span>❌ {wrong.length} wrong</span>
+              <span className="flex items-center gap-1"><Check size={16} /> {correct.length} correct</span>
+              <span className="flex items-center gap-1"><X size={16} /> {wrong.length} wrong</span>
             </div>
           </div>
 
@@ -1073,7 +1074,7 @@ export default function CBT() {
                   <span className={`shrink-0 w-7 h-7 rounded-full flex items-center
                                     justify-center text-white text-xs font-bold mt-0.5
                     ${a.is_correct ? 'bg-green-500' : 'bg-red-500'}`}>
-                    {a.is_correct ? '✓' : '✗'}
+                    {a.is_correct ? <Check size={14} /> : <X size={14} />}
                   </span>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-[var(--color-ink)] leading-snug">
@@ -1126,7 +1127,7 @@ export default function CBT() {
                                     rounded-xl p-4 mt-3">
                       <p className="font-mono text-[10px] uppercase tracking-widest
                                      text-[var(--color-teal)] mb-2">
-                        🧠 Euler's Explanation
+                        <Brain size={16} className="inline-block mr-1" /> Euler's Explanation
                       </p>
                       {loadingExpl[a.question_id] ? (
                         <div className="space-y-2">

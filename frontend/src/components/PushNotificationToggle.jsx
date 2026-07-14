@@ -9,6 +9,7 @@ import {
   unsubscribeFromPush,
   isSubscribed,
 } from '../lib/pushNotifications'
+import { Check, Ban, Lock, Calendar, Flame, Moon, Trophy } from 'lucide-react'
 
 export default function PushNotificationToggle({ userId }) {
   const [supported,   setSupported]   = useState(false)
@@ -56,7 +57,7 @@ export default function PushNotificationToggle({ userId }) {
       } else if (success) {
         setSubscribed(true)
         setPermission('granted')
-        setStatusMsg(`✅ Notifications enabled on ${device}`)
+        setStatusMsg(<><Check size={14} className="inline" /> Notifications enabled on {device}</>)
       }
     }
     setLoading(false)
@@ -106,8 +107,8 @@ export default function PushNotificationToggle({ userId }) {
       {/* Status / blocked message */}
       {permission === 'denied' && (
         <p className="mt-1.5 text-xs text-red-500">
-          🚫 Notifications are blocked in your browser settings.
-          Click the 🔒 icon in your address bar to allow them.
+          <Ban size={16} className="inline" /> Notifications are blocked in your browser settings.
+          Click the <Lock size={14} className="inline" /> icon in your address bar to allow them.
         </p>
       )}
       {statusMsg && permission !== 'denied' && (
@@ -121,12 +122,14 @@ export default function PushNotificationToggle({ userId }) {
             You'll be notified about:
           </p>
           {[
-            '📅 Daily practice reminder at 8:00 PM',
-            '🔥 Streak about to break (if no session by 9 PM)',
-            '💤 Re-engagement nudge after 3 days away',
-            '🏆 When a classmate beats your score',
-          ].map(item => (
-            <p key={item} className="text-xs text-[var(--color-muted)]">{item}</p>
+            { icon: Calendar, text: 'Daily practice reminder at 8:00 PM' },
+            { icon: Flame, text: 'Streak about to break (if no session by 9 PM)' },
+            { icon: Moon, text: 'Re-engagement nudge after 3 days away' },
+            { icon: Trophy, text: 'When a classmate beats your score' },
+          ].map(({ icon: Icon, text }) => (
+            <p key={text} className="text-xs text-[var(--color-muted)] flex items-center gap-1">
+              <Icon size={14} /> {text}
+            </p>
           ))}
         </div>
       )}

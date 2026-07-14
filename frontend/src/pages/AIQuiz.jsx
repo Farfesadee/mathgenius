@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext'
 import { useLocalStorageState } from '../hooks/useLocalStorageState'
 import { generateMCQ } from '../services/api'
 import { ExplanationBody } from '../utils/RenderMath'
+import { BookOpen, School, GraduationCap, Landmark, AlertTriangle, Bot, Target, Circle, PartyPopper, X, Book, Sparkles } from 'lucide-react'
 
 // ── localStorage key shared with Teach.jsx ───────────────────────────
 const TEACH_LEVEL_KEY = 'mathgenius_teach_level'
@@ -107,10 +108,10 @@ const LEVEL_API_MAP = {
 
 // ── Human-readable level labels ───────────────────────────────────────
 const LEVEL_META = {
-  primary:    { label: 'Primary',    emoji: '📚', color: '#2a9d8f' },
-  jss:        { label: 'JSS',        emoji: '🏫', color: '#e76f51' },
-  secondary:  { label: 'Secondary',  emoji: '🎓', color: '#1a8a7a' },
-  university: { label: 'University', emoji: '🏛️', color: '#264653' },
+  primary:    { label: 'Primary',    Icon: BookOpen, color: '#2a9d8f' },
+  jss:        { label: 'JSS',        Icon: School, color: '#e76f51' },
+  secondary:  { label: 'Secondary',  Icon: GraduationCap, color: '#1a8a7a' },
+  university: { label: 'University', Icon: Landmark, color: '#264653' },
 }
 
 const DIFFICULTY_OPTIONS = ['easy', 'medium', 'hard']
@@ -186,7 +187,7 @@ export default function AIQuiz() {
       const res = await generateMCQ(topic.trim(), difficulty, apiLevel)
       setQuestion(res.data)
     } catch {
-      setError('⚠️ Could not generate question. Make sure the backend is running.')
+      setError('Could not generate question. Make sure the backend is running.')
     }
     setGenerating(false)
   }
@@ -214,7 +215,7 @@ export default function AIQuiz() {
           <span className="block w-6 h-px bg-[var(--color-gold)]" />
           AI Question Generator
         </p>
-        <h1 className="font-serif font-black text-5xl tracking-tight">🤖 AI Quiz</h1>
+        <h1 className="font-serif font-black text-5xl tracking-tight flex items-center gap-3"><Bot size={40} /> AI Quiz</h1>
         <p className="text-[var(--color-muted)] mt-2">
           Type any topic and Euler generates a multiple-choice question instantly.
         </p>
@@ -223,7 +224,7 @@ export default function AIQuiz() {
       {/* Setup card */}
       <div className="card overflow-hidden mb-6">
         <div className="bg-[var(--color-teal)] px-6 py-4">
-          <p className="font-serif font-bold text-white text-lg">🎯 Generate a Question</p>
+          <p className="font-serif font-bold text-white text-lg flex items-center gap-2"><Target size={22} /> Generate a Question</p>
         </div>
         <div className="bg-white p-6 space-y-5">
 
@@ -246,7 +247,7 @@ export default function AIQuiz() {
                     }`}
                   style={level === key ? { backgroundColor: meta.color } : {}}
                 >
-                  <span className="text-base">{meta.emoji}</span>
+                  <meta.Icon size={20} />
                   <span>{meta.label}</span>
                 </button>
               ))}
@@ -306,7 +307,7 @@ export default function AIQuiz() {
                     ${difficulty === d
                       ? 'border-[var(--color-teal)] bg-[#e8f4f4] text-[var(--color-teal)]'
                       : 'border-[var(--color-border)] text-[var(--color-muted)]'}`}>
-                  {d === 'easy' ? '🟢' : d === 'medium' ? '🟡' : '🔴'} {d}
+                  {d === 'easy' ? <Circle size={16} className="inline-block mr-1 text-green-500 fill-green-500" /> : d === 'medium' ? <Circle size={16} className="inline-block mr-1 text-yellow-500 fill-yellow-500" /> : <Circle size={16} className="inline-block mr-1 text-red-500 fill-red-500" />} {d}
                 </button>
               ))}
             </div>
@@ -318,7 +319,7 @@ export default function AIQuiz() {
             {generating
               ? <><span className="w-4 h-4 border-2 border-white/30 border-t-white
                                    rounded-full animate-spin" /> Generating...</>
-              : '🤖 Generate Question'
+              : <><Bot size={20} /> Generate Question</>
             }
           </button>
         </div>
@@ -342,7 +343,7 @@ export default function AIQuiz() {
 
       {/* Error */}
       {error && (
-        <div className="card bg-white p-6 text-center text-[var(--color-muted)]">{error}</div>
+        <div className="card bg-white p-6 text-center text-[var(--color-muted)] flex items-center justify-center gap-2"><AlertTriangle size={20} className="text-orange-500" />{error}</div>
       )}
 
       {/* Question card */}
@@ -352,7 +353,7 @@ export default function AIQuiz() {
             <div className="bg-[var(--color-ink)] px-6 py-3 flex items-center justify-between">
               <span className="font-serif font-bold text-white">AI-Generated Question</span>
               <span className="font-mono text-white/60 text-xs capitalize">
-                {currentMeta.emoji} {currentMeta.label} · {topic} · {difficulty}
+                <currentMeta.Icon size={16} className="inline-block mr-1" /> {currentMeta.label} · {topic} · {difficulty}
               </span>
             </div>
             <div className="bg-white p-6">
@@ -401,19 +402,19 @@ export default function AIQuiz() {
           {!submitted ? (
             <button onClick={handleSubmit} disabled={!selected}
               className="w-full btn-primary py-4 text-base justify-center flex disabled:opacity-50">
-              Submit Answer ➤
+              Submit Answer →
             </button>
           ) : (
             <div className="card overflow-hidden">
               <div className={`px-6 py-4 ${selected === question.correct_answer ? 'bg-green-50' : 'bg-red-50'}`}>
                 <p className="font-serif font-bold text-lg text-[var(--color-ink)] mb-2">
                   {selected === question.correct_answer
-                    ? '🎉 Correct!'
-                    : `❌ Incorrect — Answer was ${question.correct_answer}`}
+                    ? <><PartyPopper size={24} className="inline-block mr-2" /> Correct!</>
+                    : <><X size={24} className="inline-block mr-2 text-red-500" /> Incorrect — Answer was {question.correct_answer}</>}
                 </p>
                 {question.explanation && (
                   <div className="bg-white rounded-xl p-4 text-sm leading-relaxed">
-                    <p className="font-semibold text-[var(--color-teal)] mb-1">📖 Explanation</p>
+                    <p className="font-semibold text-[var(--color-teal)] mb-1 flex items-center gap-1"><Book size={18} /> Explanation</p>
                     <ExplanationBody text={question.explanation} />
                   </div>
                 )}
@@ -421,7 +422,7 @@ export default function AIQuiz() {
               <div className="bg-white p-4">
                 <button onClick={generate}
                   className="w-full btn-primary py-3.5 text-sm justify-center flex">
-                  🤖 Generate Next Question ➤
+                  <Bot size={20} className="inline-block mr-2" /> Generate Next Question
                 </button>
               </div>
             </div>

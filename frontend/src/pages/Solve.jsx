@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
 import { saveBookmark } from '../lib/bookmarks'
+import { Brain, X, Camera, Search, TriangleAlert, RefreshCw, Pencil, Calculator, Check, Bookmark, ClipboardList, Lightbulb, Image, Keyboard } from 'lucide-react'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
@@ -156,7 +157,7 @@ function ResultPanel({ raw, mode, expression, onExplain, explaining, explanation
                        hover:text-[var(--color-teal)] transition-all disabled:opacity-40">
             {explaining
               ? <><span className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" /> Explaining...</>
-              : '🧠 Explain Steps'
+              : <><Brain size={16} className="inline-block mr-1" />Explain Steps</>
             }
           </button>
           {!parsed.error && userId && (
@@ -294,12 +295,12 @@ function ImageTab() {
               onClick={e => { e.stopPropagation(); setPreview(null); setImage(null); setResult(null) }}
               className="absolute top-3 right-3 w-7 h-7 rounded-full bg-[var(--color-ink)]
                          text-white text-xs flex items-center justify-center hover:bg-red-500 transition-colors">
-              ✕
+              <X size={14} />
             </button>
           </>
         ) : (
           <div className="text-center p-8">
-            <p className="text-4xl mb-2">📸</p>
+            <Camera size={48} className="mx-auto mb-2" />
             <p className="font-semibold text-[var(--color-ink)]">Drop a photo or click to upload</p>
             <p className="text-sm text-[var(--color-muted)] mt-1">Photos of questions, textbooks, handwritten work</p>
           </div>
@@ -317,10 +318,10 @@ function ImageTab() {
         className="w-full py-3.5 rounded-xl bg-[var(--color-ink)] text-[var(--color-paper)]
                    font-semibold text-sm flex items-center justify-center gap-2
                    hover:opacity-90 transition-opacity disabled:opacity-40">
-        {loading ? <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Reading...</> : '🔍 Read & Solve This Question'}
+        {loading ? <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Reading...</> : <><Search size={18} className="inline-block mr-1.5" />Read & Solve This Question</>}
       </button>
 
-      {error && <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">⚠️ {error}</div>}
+      {error && <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 flex items-center gap-1.5"><TriangleAlert size={16} />{error}</div>}
       {result && (
         <div className="rounded-2xl border-2 border-[var(--color-border)] bg-[var(--color-paper)] overflow-hidden">
           <div className="bg-[var(--color-teal)] px-5 py-3">
@@ -464,7 +465,7 @@ function CameraTab() {
       <div className="max-w-2xl space-y-4">
         {camError ? (
           <div className="rounded-2xl border-2 border-red-200 bg-red-50 px-5 py-8 text-center space-y-3">
-            <p className="text-3xl">📷</p>
+            <Camera size={36} className="mx-auto" />
             <p className="font-semibold text-red-800 text-sm">{camError}</p>
             <button onClick={startCamera}
               className="px-5 py-2 rounded-xl bg-red-500 text-white text-sm font-bold
@@ -506,7 +507,7 @@ function CameraTab() {
                 className="absolute top-3 right-3 w-10 h-10 rounded-full bg-black/50
                            text-white flex items-center justify-center text-lg
                            hover:bg-black/70 transition-colors backdrop-blur-sm">
-                🔄
+                <RefreshCw size={20} />
               </button>
 
               {/* Hint text */}
@@ -525,7 +526,7 @@ function CameraTab() {
                            flex items-center justify-center transition-all shadow-lg group">
                 <div className="w-14 h-14 rounded-full bg-[var(--color-teal)] group-hover:bg-white
                                 flex items-center justify-center transition-all">
-                  <span className="text-2xl">📸</span>
+                  <Camera size={28} />
                 </div>
               </button>
             </div>
@@ -545,8 +546,8 @@ function CameraTab() {
           <img src={capturedImg.dataUrl} alt="Captured" className="w-full object-contain max-h-72" />
         </div>
         {error && (
-          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-            ⚠️ {error}
+          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 flex items-center gap-1.5">
+            <TriangleAlert size={16} />{error}
           </div>
         )}
         <div className="grid grid-cols-2 gap-3">
@@ -554,12 +555,12 @@ function CameraTab() {
             className="py-3 rounded-xl border-2 border-[var(--color-border)]
                        text-sm font-semibold text-[var(--color-muted)]
                        hover:border-[var(--color-ink)] hover:text-[var(--color-ink)] transition-all">
-            🔄 Retake
+            <RefreshCw size={16} className="inline-block mr-1.5" />Retake
           </button>
           <button onClick={extractText}
             className="py-3 rounded-xl bg-[var(--color-teal)] text-white
                        text-sm font-bold hover:opacity-90 transition-opacity">
-            🔍 Read Question →
+            <Search size={16} className="inline-block mr-1.5" /> Read Question →
           </button>
         </div>
       </div>
@@ -598,7 +599,7 @@ function CameraTab() {
         <div className="rounded-2xl border-2 border-[var(--color-teal)] overflow-hidden">
           <div className="bg-[var(--color-teal)] px-4 py-3 flex items-center justify-between">
             <div>
-              <p className="font-semibold text-white text-sm">✏️ Confirm the Question</p>
+              <p className="font-semibold text-white text-sm flex items-center gap-1.5"><Pencil size={16} />Confirm the Question</p>
               <p className="text-white/70 text-xs mt-0.5">
                 Euler extracted this — correct any errors before solving
               </p>
@@ -622,8 +623,8 @@ function CameraTab() {
         </div>
 
         {error && (
-          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-            ⚠️ {error}
+          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 flex items-center gap-1.5">
+            <TriangleAlert size={16} />{error}
           </div>
         )}
 
@@ -631,7 +632,7 @@ function CameraTab() {
           className="w-full py-4 rounded-xl bg-[var(--color-ink)] text-white font-bold
                      text-sm flex items-center justify-center gap-2
                      hover:opacity-90 transition-opacity disabled:opacity-40">
-          🧮 Solve This Question →
+          <Calculator size={18} className="inline-block mr-1.5" /> Solve This Question →
         </button>
       </div>
     )
@@ -674,7 +675,7 @@ function CameraTab() {
         <div className="rounded-2xl border-2 border-[var(--color-teal)] overflow-hidden">
           <div className="bg-[var(--color-teal)] px-5 py-3 flex items-center justify-between">
             <p className="font-mono text-[10px] uppercase tracking-widest text-white">
-              ✅ Euler's Solution
+              <Check size={18} className="inline-block mr-1.5" /> Euler's Solution
             </p>
             <button onClick={() => setPhase('edit')}
               className="text-white/60 hover:text-white text-xs font-mono transition-colors">
@@ -693,7 +694,7 @@ function CameraTab() {
           className="w-full py-3 rounded-xl border-2 border-[var(--color-border)]
                      text-sm font-semibold text-[var(--color-muted)]
                      hover:border-[var(--color-ink)] hover:text-[var(--color-ink)] transition-all">
-          📷 Snap Another Question
+          <Camera size={18} className="inline-block mr-1.5" /> Snap Another Question
         </button>
       </div>
     )
@@ -733,7 +734,7 @@ function BookmarkButton({ userId, title, content, expression, result, topic, typ
                     : 'border-[var(--color-border)] hover:border-[var(--color-gold)] hover:text-[var(--color-gold)]'
                  }`}>
       {saving ? <span className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" />
-               : saved ? '🔖 Saved' : '🔖 Save'}
+               : saved ? <span><Check size={14} className="inline-block mr-1" />Saved</span> : <span><Bookmark size={14} className="inline-block mr-1" />Save</span>}
     </button>
   )
 }
@@ -878,15 +879,15 @@ export default function Solve() {
       {/* Tab switcher */}
       <div className="flex border-b-2 border-[var(--color-border)] mb-6">
         {[
-          { id: 'type',   label: '⌨️  Type Expression' },
-          { id: 'camera', label: '📷  Snap a Question' },
-          { id: 'image',  label: '🖼️  Upload Photo' },
+          { id: 'type',   label: 'Type Expression', icon: Keyboard },
+          { id: 'camera', label: 'Snap a Question', icon: Camera },
+          { id: 'image',  label: 'Upload Photo',    icon: Image },
         ].map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
             className={`px-5 py-3 text-sm font-semibold border-b-2 -mb-0.5 transition-all
               ${tab === t.id ? 'border-[var(--color-ink)] text-[var(--color-ink)]'
                              : 'border-transparent text-[var(--color-muted)] hover:text-[var(--color-ink)]'}`}>
-            {t.label}
+            <t.icon size={18} className="inline-block mr-1.5" />{t.label}
           </button>
         ))}
       </div>
@@ -1075,7 +1076,7 @@ export default function Solve() {
             {error && (
               <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3
                               text-sm text-red-600 flex items-center gap-2">
-                ⚠️ {error}
+                <TriangleAlert size={16} className="inline-block shrink-0" />{error}
               </div>
             )}
           </div>
@@ -1096,7 +1097,7 @@ export default function Solve() {
               /* Placeholder when no result yet */
               <div className="rounded-2xl border-2 border-dashed border-[var(--color-border)]
                               flex flex-col items-center justify-center py-16 px-6 text-center">
-                <span className="text-4xl mb-3">🧮</span>
+                <Calculator size={48} className="mb-3" />
                 <p className="text-sm font-semibold text-[var(--color-muted)]">
                   Result appears here
                 </p>
@@ -1114,7 +1115,7 @@ export default function Solve() {
             <div className="rounded-2xl border-2 border-[var(--color-border)] bg-[var(--color-paper)] overflow-hidden">
               <div className="bg-[var(--color-ink)] px-4 py-3">
                 <p className="font-mono text-[10px] uppercase tracking-widest text-white/60">
-                  📋 How to Type Expressions
+                  <ClipboardList size={14} className="inline-block mr-1.5" /> How to Type Expressions
                 </p>
               </div>
               <div className="divide-y divide-[var(--color-border)]">
@@ -1158,7 +1159,7 @@ export default function Solve() {
                   }
                 </p>
                 <p className="text-xs font-semibold mt-1.5" style={{ color: activeMode?.color }}>
-                  💡 Switch modes anytime — re-evaluates instantly.
+                  <Lightbulb size={14} className="inline-block mr-1" /> Switch modes anytime — re-evaluates instantly.
                 </p>
               </div>
             </div>

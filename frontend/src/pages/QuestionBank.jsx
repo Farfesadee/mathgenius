@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { searchPastQuestions, getPastQuestionMeta, getPastQuestionTopics } from '../services/api'
 import { ExplanationBody } from '../utils/RenderMath'
+import { Eye, Rocket, Search, Circle, FileText, Book, X } from 'lucide-react'
 
 // ── Constants ─────────────────────────────────────────────────────────────
 const EXAM_COLORS = {
@@ -70,7 +71,7 @@ function QuestionCard({ q, onPractice }) {
           </span>
         </div>
         <span className="text-[10px] font-mono text-[var(--color-muted)] shrink-0">
-          {q.question_type === 'mcq' ? '🔘 MCQ' : '📝 Theory'}
+          {q.question_type === 'mcq' ? <><Circle size={14} className="inline-block" /> MCQ</> : <><FileText size={14} className="inline-block" /> Theory</>}
         </span>
       </div>
 
@@ -109,7 +110,7 @@ function QuestionCard({ q, onPractice }) {
                 }`}>
               {revealed
                 ? (q.question_type === 'mcq' ? `✓ Answer: ${q.answer}` : '✓ Hide Answer')
-                : '👁 Show Answer'
+                : <><Eye size={18} className="inline-block" /> Show Answer</>
               }
             </button>
           )}
@@ -127,7 +128,7 @@ function QuestionCard({ q, onPractice }) {
             className="ml-auto px-3 py-1.5 rounded-lg text-xs font-semibold
                        bg-[var(--color-teal)] text-white hover:opacity-90 transition-opacity
                        flex items-center gap-1.5">
-            🚀 Practice this
+            <Rocket size={18} className="inline-block" /> Practice this
           </button>
         </div>
       </div>
@@ -259,7 +260,7 @@ export default function QuestionBank() {
       {/* ── Search + filters ── */}
       <div className="card bg-white overflow-hidden mb-6">
         <div className="bg-[var(--color-teal)] px-5 py-3">
-          <p className="font-serif font-bold text-white">🔍 Search & Filter</p>
+          <p className="font-serif font-bold text-white"><Search size={20} className="inline-block" /> Search & Filter</p>
         </div>
         <div className="p-5 space-y-4">
 
@@ -382,13 +383,13 @@ export default function QuestionBank() {
               {loading
                 ? <><span className="w-4 h-4 border-2 border-white/30 border-t-white
                                      rounded-full animate-spin" /> Searching...</>
-                : '🔍 Search Questions'
+                : <><Search size={18} className="inline-block" /> Search Questions</>
               }
             </button>
             {hasFilters && (
               <button onClick={clearFilters}
                 className="text-xs text-[var(--color-muted)] hover:text-red-500 transition-colors">
-                ✕ Clear filters
+                <X size={14} className="inline-block" /> Clear filters
               </button>
             )}
             {searched && (
@@ -411,7 +412,7 @@ export default function QuestionBank() {
 
       {!loading && searched && questions.length === 0 && (
         <div className="card bg-white p-12 text-center">
-          <p className="text-4xl mb-4">🔍</p>
+          <p className="text-4xl mb-4"><Search size={48} className="inline-block" /></p>
           <p className="font-semibold text-[var(--color-ink)]">No questions found</p>
           <p className="text-sm text-[var(--color-muted)] mt-2">
             Try different filters or a broader search term.
@@ -421,13 +422,13 @@ export default function QuestionBank() {
 
       {!loading && !searched && (
         <div className="card bg-white p-12 text-center">
-          <p className="text-4xl mb-4">📚</p>
+          <p className="text-4xl mb-4"><Book size={48} className="inline-block" /></p>
           <p className="font-semibold text-[var(--color-ink)]">
             Search to browse past questions
           </p>
           <p className="text-sm text-[var(--color-muted)] mt-2 max-w-md mx-auto">
             Filter by exam, year, topic, or search for a keyword.
-            Click "🚀 Practice this" on any question to drill it in Practice mode.
+            Click <Rocket size={14} className="inline-block" /> Practice this on any question to drill it in Practice mode.
           </p>
         </div>
       )}

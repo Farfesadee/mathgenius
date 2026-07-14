@@ -3,14 +3,15 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { getUserStats, xpProgress } from '../lib/stats'
 import { getDashboardStats } from '../lib/progress'
+import { Flame, Crown, FileText, Trophy, Award, BookOpen, Printer, Check, Star } from 'lucide-react'
 
 const MILESTONE_CONFIG = [
-    { key: 'streak_7', icon: '🔥', label: '7-Day Streak', check: s => (s?.streak_current || 0) >= 7 },
-    { key: 'streak_30', icon: '👑', label: '30-Day Streak', check: s => (s?.streak_current || 0) >= 30 },
-    { key: 'questions_50', icon: '📝', label: '50 Questions Done', check: (_, d) => (d?.totalAttempted || 0) >= 50 },
-    { key: 'questions_100', icon: '🏆', label: '100 Questions Done', check: (_, d) => (d?.totalAttempted || 0) >= 100 },
-    { key: 'accuracy_80', icon: '💯', label: '80% Accuracy', check: (_, d) => (d?.accuracy || 0) >= 80 },
-    { key: 'topics_10', icon: '📚', label: '10 Topics Studied', check: (_, d) => (d?.topicsStudied || 0) >= 10 },
+    { key: 'streak_7', Icon: Flame, label: '7-Day Streak', check: s => (s?.streak_current || 0) >= 7 },
+    { key: 'streak_30', Icon: Crown, label: '30-Day Streak', check: s => (s?.streak_current || 0) >= 30 },
+    { key: 'questions_50', Icon: FileText, label: '50 Questions Done', check: (_, d) => (d?.totalAttempted || 0) >= 50 },
+    { key: 'questions_100', Icon: Trophy, label: '100 Questions Done', check: (_, d) => (d?.totalAttempted || 0) >= 100 },
+    { key: 'accuracy_80', Icon: Award, label: '80% Accuracy', check: (_, d) => (d?.accuracy || 0) >= 80 },
+    { key: 'topics_10', Icon: BookOpen, label: '10 Topics Studied', check: (_, d) => (d?.topicsStudied || 0) >= 10 },
 ]
 
 export default function Certificate() {
@@ -57,14 +58,14 @@ export default function Certificate() {
                         <span className="block w-6 h-px bg-[var(--color-gold)]" />
                         Achievements
                     </p>
-                    <h1 className="font-serif font-black text-5xl tracking-tight">🏆 Certificate</h1>
+                    <h1 className="font-serif font-black text-5xl tracking-tight flex items-center gap-3"><Trophy size={40} /> Certificate</h1>
                     <p className="text-[var(--color-muted)] mt-1 text-sm">
                         Your earned milestones and achievement certificate
                     </p>
                 </div>
                 <div className="flex gap-3">
                     <button onClick={handlePrint} className="btn-primary px-5 py-2.5 text-sm">
-                        🖨️ Print Certificate
+                        <Printer size={20} className="inline-block mr-1" /> Print Certificate
                     </button>
                     <Link to="/dashboard" className="btn-secondary px-5 py-2.5 text-sm">← Dashboard</Link>
                 </div>
@@ -73,14 +74,17 @@ export default function Certificate() {
             {/* Milestones earned */}
             {earned.length > 0 ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8 print:hidden">
-                    {earned.map(m => (
+                    {earned.map(m => {
+                        const MilestoneIcon = m.Icon
+                        return (
                         <div key={m.key}
                             className="card bg-white p-5 text-center hover:shadow-md transition-all">
-                            <div className="text-4xl mb-2">{m.icon}</div>
+                            <MilestoneIcon size={36} className="mx-auto mb-2 text-[var(--color-teal)]" />
                             <p className="font-semibold text-sm text-[var(--color-ink)]">{m.label}</p>
-                            <p className="text-[10px] text-green-600 font-mono uppercase mt-1">✅ Earned</p>
+                            <p className="text-[10px] text-green-600 font-mono uppercase mt-1 flex items-center justify-center gap-1"><Check size={14} /> Earned</p>
                         </div>
-                    ))}
+                        )
+                    })}
                 </div>
             ) : (
                 <div className="card bg-white p-8 text-center mb-8 print:hidden">
@@ -151,7 +155,7 @@ export default function Certificate() {
 
                 {/* Bottom ribbon */}
                 <div className="bg-[var(--color-gold)] px-8 py-3 flex items-center justify-center">
-                    {'⭐'.repeat(Math.min(5, level))}
+                    {Array.from({ length: Math.min(5, level) }).map((_, i) => <Star key={i} size={20} className="fill-current text-[var(--color-ink)]" />)}
                 </div>
             </div>
         </div>

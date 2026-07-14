@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Triangle, Search, Check, Clipboard } from 'lucide-react'
 
 const FORMULAS = {
   'Algebra': [
@@ -162,7 +163,7 @@ export default function FormulaSheet() {
         {!search && (
           <div className="bg-[var(--color-ink)] px-6 py-4">
             <p className="font-serif font-bold text-white text-lg">
-              📐 {activeCategory}
+              <Triangle size={24} className="inline-block" /> {activeCategory}
             </p>
             <p className="text-white/50 text-xs font-mono mt-0.5">
               {displayFormulas.length} formulas
@@ -173,7 +174,7 @@ export default function FormulaSheet() {
         {search && (
           <div className="bg-[var(--color-teal)] px-6 py-4">
             <p className="font-serif font-bold text-white">
-              🔍 Search results for "{search}"
+              <Search size={20} className="inline-block" /> Search results for "{search}"
             </p>
             <p className="text-white/70 text-xs mt-0.5">
               {displayFormulas.length} formula{displayFormulas.length !== 1 ? 's' : ''} found
@@ -212,7 +213,7 @@ export default function FormulaSheet() {
                              text-xs text-[var(--color-muted)] hover:text-[var(--color-teal)]
                              border border-[var(--color-border)] rounded-lg px-2 py-1"
                 >
-                  {copied === i ? '✅' : '📋'}
+                  {copied === i ? <Check size={18} className="inline-block" /> : <Clipboard size={18} className="inline-block" />}
                 </button>
               </div>
             ))}

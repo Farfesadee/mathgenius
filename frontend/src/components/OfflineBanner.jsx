@@ -3,6 +3,7 @@
 // Disappears automatically when they reconnect.
 
 import { useState, useEffect } from 'react'
+import { Info, Check, WifiOff } from 'lucide-react'
 
 export default function OfflineBanner() {
   const [offline,     setOffline]     = useState(!navigator.onLine)
@@ -51,7 +52,7 @@ export default function OfflineBanner() {
     return (
       <div className="fixed top-0 left-0 right-0 z-[9999] flex items-center justify-between
                       bg-[#0d9488] text-white px-4 py-2 text-sm shadow-lg">
-        <span>🆕 A new version of MathGenius is ready.</span>
+        <span><Info size={18} className="inline mr-1.5" />A new version of MathGenius is ready.</span>
         <button
           onClick={handleUpdate}
           className="ml-4 bg-white text-[#0d9488] font-semibold
@@ -67,7 +68,7 @@ export default function OfflineBanner() {
     return (
       <div className="fixed top-0 left-0 right-0 z-[9999] flex items-center justify-center
                       bg-green-600 text-white px-4 py-2 text-sm shadow-lg animate-pulse">
-        ✅ You're back online
+        <Check size={18} className="inline mr-1.5" /> You're back online
       </div>
     )
   }
@@ -78,7 +79,7 @@ export default function OfflineBanner() {
                       px-4 py-2 shadow-lg">
         <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
           <div className="flex items-center gap-2 text-sm">
-            <span className="text-lg">📵</span>
+            <WifiOff size={20} />
             <span>
               <strong>You're offline.</strong>{' '}
               Previously visited pages and past questions are still available.

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useLocalStorageState } from '../hooks/useLocalStorageState'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
@@ -14,6 +14,7 @@ import {
   updateSpacedRepetition, getDueTopics,
 } from '../lib/learning'
 import { updateTopicProgress } from '../lib/progress'
+import { Monitor, Target, Shuffle, Sparkles, Book, BookOpen, School, GraduationCap, Landmark, Check, X, ClipboardList, Zap, Clock, Lightbulb, Search, Map, Brain, RefreshCw, ArrowUp, ArrowRight, PartyPopper, Trophy, Award, Rocket, Bell, BarChart3, TrendingUp, Star, Mic, Bot, Repeat, Flag, Clapperboard, TriangleAlert } from 'lucide-react'
 
 function formatPracticeTakenAt(timestamp) {
   if (!timestamp) return ''
@@ -80,7 +81,7 @@ function VideoCard({ video, compact = false }) {
         </div>
         <div className="bg-white px-4 py-3">
           <p className="font-semibold text-sm text-[var(--color-ink)] leading-snug">{video.title}</p>
-          {video.channel && <p className="text-xs text-[var(--color-muted)] mt-0.5">📺 {video.channel}</p>}
+          {video.channel && <p className="text-xs text-[var(--color-muted)] mt-0.5 flex items-center gap-1"><Monitor size={12} />{video.channel}</p>}
         </div>
       </div>
     )
@@ -147,7 +148,7 @@ function VideoPanel({ topic, level }) {
         className="w-full flex items-center justify-between px-4 py-3
                    bg-red-50 hover:bg-red-100 transition-colors">
         <div className="flex items-center gap-2">
-          <span className="text-lg">📺</span>
+          <Monitor size={24} />
           <div className="text-left">
             <p className="font-semibold text-sm text-red-800">Watch a video explanation</p>
             <p className="text-xs text-red-600 mt-0.5">
@@ -221,7 +222,7 @@ function VideoBrowser({ topicsByLevel, selectedLevel }) {
         </div>
       ) : Object.keys(grouped).length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-4xl mb-3">📺</p>
+          <Monitor size={48} className="mx-auto mb-3" />
           <p className="text-[var(--color-muted)] text-sm">No videos found for this search.</p>
         </div>
       ) : (
@@ -247,18 +248,26 @@ function VideoBrowser({ topicsByLevel, selectedLevel }) {
 }
 
 const DIFFICULTY_CONFIG = {
-  easy:   { label: 'Easy',   color: 'text-green-600 bg-green-50 border-green-200',   emoji: '🟢' },
-  medium: { label: 'Medium', color: 'text-yellow-600 bg-yellow-50 border-yellow-200', emoji: '🟡' },
-  hard:   { label: 'Hard',   color: 'text-red-600 bg-red-50 border-red-200',          emoji: '🔴' },
+  easy:   { label: 'Easy',   color: 'text-green-600 bg-green-50 border-green-200',   icon: Check },
+  medium: { label: 'Medium', color: 'text-yellow-600 bg-yellow-50 border-yellow-200', icon: Star },
+  hard:   { label: 'Hard',   color: 'text-red-600 bg-red-50 border-red-200',          icon: Zap },
 }
 
 // Human-readable level labels
 const LEVEL_LABELS = {
-  primary:    '📚 Primary',
-  jss:        '🏫 JSS',
-  sss:        '🎓 SSS',
-  secondary:  '🎓 SSS',   // legacy alias — treated as SSS
-  university: '🏛️ University',
+  primary:    'Primary',
+  jss:        'JSS',
+  sss:        'SSS',
+  secondary:  'SSS',   // legacy alias — treated as SSS
+  university: 'University',
+}
+
+const LEVEL_ICONS = {
+  primary:    BookOpen,
+  jss:        School,
+  sss:        GraduationCap,
+  secondary:  GraduationCap,
+  university: Landmark,
 }
 
 // Subtitle shown beneath each level tab
@@ -272,10 +281,10 @@ const LEVEL_SUBTITLES = {
 
 // Mastery level config
 const MASTERY_CONFIG = {
-  beginner:   { label: 'Beginner',   color: '#94a3b8', bg: 'bg-slate-100',   pct: 15,  icon: '🌱' },
-  developing: { label: 'Developing', color: '#f59e0b', bg: 'bg-amber-100',   pct: 45,  icon: '📈' },
-  proficient: { label: 'Proficient', color: '#3b82f6', bg: 'bg-blue-100',    pct: 75,  icon: '⭐' },
-  master:     { label: 'Master',     color: '#10b981', bg: 'bg-emerald-100', pct: 100, icon: '🏆' },
+  beginner:   { label: 'Beginner',   color: '#94a3b8', bg: 'bg-slate-100',   pct: 15,  icon: Sparkles },
+  developing: { label: 'Developing', color: '#f59e0b', bg: 'bg-amber-100',   pct: 45,  icon: TrendingUp },
+  proficient: { label: 'Proficient', color: '#3b82f6', bg: 'bg-blue-100',    pct: 75,  icon: Star },
+  master:     { label: 'Master',     color: '#10b981', bg: 'bg-emerald-100', pct: 100, icon: Trophy },
 }
 
 // Timed challenge duration (seconds)
@@ -288,7 +297,7 @@ function MasteryBar({ topic, mastery }) {
   const pct = Math.min(100, Math.round(mastery.avg_score || 0))
   return (
     <div className="flex items-center gap-3">
-      <span className="text-base shrink-0">{cfg.icon}</span>
+      <cfg.icon size={20} className="shrink-0" />
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between mb-1">
           <span className="text-xs font-semibold text-[var(--color-ink)] truncate">{topic}</span>
@@ -306,9 +315,9 @@ function MasteryBar({ topic, mastery }) {
 }
 
 function ResultBadge({ result }) {
-  if (result === 'CORRECT') return <span className="text-green-600 font-bold text-lg">✅ Correct!</span>
-  if (result === 'PARTIAL') return <span className="text-yellow-600 font-bold text-lg">🌗 Partially Correct</span>
-  return <span className="text-red-500 font-bold text-lg">❌ Incorrect</span>
+  if (result === 'CORRECT') return <span className="text-green-600 font-bold text-lg flex items-center gap-1.5"><Check size={20} />Correct!</span>
+  if (result === 'PARTIAL') return <span className="text-yellow-600 font-bold text-lg flex items-center gap-1.5"><Star size={20} />Partially Correct</span>
+  return <span className="text-red-500 font-bold text-lg flex items-center gap-1.5"><X size={20} />Incorrect</span>
 }
 
 // ── Step-by-step working breakdown ───────────────────────────────────────
@@ -316,9 +325,9 @@ function StepBreakdown({ steps }) {
   if (!steps || steps.length === 0) return null
 
   const cfg = {
-    CORRECT:   { bg: 'bg-green-50',  border: 'border-green-200', badge: 'bg-green-100 text-green-700',  icon: '✓', label: 'Correct'   },
-    INCORRECT: { bg: 'bg-red-50',    border: 'border-red-200',   badge: 'bg-red-100 text-red-700',      icon: '✗', label: 'Error'     },
-    MISSING:   { bg: 'bg-amber-50',  border: 'border-amber-200', badge: 'bg-amber-100 text-amber-700',  icon: '!', label: 'Missing'   },
+    CORRECT:   { bg: 'bg-green-50',  border: 'border-green-200', badge: 'bg-green-100 text-green-700',  icon: Check, label: 'Correct'   },
+    INCORRECT: { bg: 'bg-red-50',    border: 'border-red-200',   badge: 'bg-red-100 text-red-700',      icon: X, label: 'Error'     },
+    MISSING:   { bg: 'bg-amber-50',  border: 'border-amber-200', badge: 'bg-amber-100 text-amber-700',  icon: AlertTriangle, label: 'Missing'   },
   }
 
   const correctCount   = steps.filter(s => s.status === 'CORRECT').length
@@ -330,7 +339,7 @@ function StepBreakdown({ steps }) {
       {/* Header */}
       <div className="bg-[var(--color-ink)] px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-white font-semibold text-sm">📋 Step-by-Step Breakdown</span>
+          <span className="text-white font-semibold text-sm flex items-center gap-1.5"><ClipboardList size={16} />Step-by-Step Breakdown</span>
         </div>
         <div className="flex items-center gap-2">
           {correctCount > 0 && (
@@ -365,7 +374,7 @@ function StepBreakdown({ steps }) {
                 </span>
                 <span className={`w-5 h-5 rounded-full flex items-center justify-center
                                   text-[11px] font-bold ${c.badge}`}>
-                  {c.icon}
+                  <c.icon size={12} />
                 </span>
               </div>
 
@@ -383,7 +392,7 @@ function StepBreakdown({ steps }) {
                     ${step.status === 'CORRECT'   ? 'text-green-700'
                       : step.status === 'INCORRECT' ? 'text-red-700'
                       : 'text-amber-700'}`}>
-                    {step.status === 'CORRECT'   ? '✓ ' : step.status === 'MISSING' ? '! ' : '✗ '}
+                    {step.status === 'CORRECT'   ? <Check size={12} className="inline-block mr-0.5" /> : step.status === 'MISSING' ? <TriangleAlert size={12} className="inline-block mr-0.5" /> : <X size={12} className="inline-block mr-0.5" />}
                     {step.note}
                   </p>
                 )}
@@ -887,7 +896,7 @@ Be warm, encouraging, and specific. Address the student directly.`
     Object.entries(topicsByLevel).find(([, ts]) => ts.includes(t))?.[0]
       || selectedLevel || 'secondary'
 
-  // ── 🎯 Weak Topic Drill ───────────────────────────────────────────
+  // ── Weak Topic Drill ───────────────────────────────────────────
   const startWeakDrill = async () => {
     if (!masteryData.length) return
     const weakest = [...masteryData]
@@ -905,7 +914,7 @@ Be warm, encouraging, and specific. Address the student directly.`
     await startSessionWith(weakest.topic, lvl, 'medium', 'weak-drill', [], [])
   }
 
-  // ── 🔀 Mixed Topic Session ────────────────────────────────────────
+  // ── Mixed Topic Session ────────────────────────────────────────
   const startMixedSession = async () => {
     const all = Object.entries(topicsByLevel).flatMap(([lvl, topics]) =>
       topics.map(t => ({ topic: t, level: lvl }))
@@ -925,7 +934,7 @@ Be warm, encouraging, and specific. Address the student directly.`
     await startSessionWith('Mixed Topics', shuffled[0].level, difficulty, 'mixed', shuffled, [])
   }
 
-  // ── 🔮 Predicted Exam Questions ───────────────────────────────────
+  // ── Predicted Exam Questions ───────────────────────────────────
   const startPredictedSession = async () => {
     setPredictedLoading(true)
     const examTarget = profile?.exam_target || 'WAEC'
@@ -1167,7 +1176,7 @@ Be warm, encouraging, and specific. Address the student directly.`
             {streak && (
               <div className="flex flex-col items-center bg-[var(--color-paper)] border-2
                               border-[var(--color-border)] rounded-2xl px-5 py-3 shrink-0">
-                <span className="text-3xl">🍌</span>
+                <Zap size={36} className="text-[var(--color-gold)]" />
                 <span className="font-serif font-black text-2xl text-[var(--color-gold)]">
                   {streak.current_streak}
                 </span>
@@ -1187,7 +1196,7 @@ Be warm, encouraging, and specific. Address the student directly.`
           {dueTopics.length > 0 && (
             <div className="mt-4 rounded-2xl border-2 border-amber-200 bg-amber-50 px-5 py-4">
               <p className="font-semibold text-amber-800 text-sm mb-2">
-                🔔 {dueTopics.length} topic{dueTopics.length > 1 ? 's' : ''} due for review today
+                <Bell size={16} className="inline-block mr-1" />{dueTopics.length} topic{dueTopics.length > 1 ? 's' : ''} due for review today
               </p>
               <div className="flex flex-wrap gap-2">
                 {dueTopics.slice(0, 5).map(t => (
@@ -1214,7 +1223,7 @@ Be warm, encouraging, and specific. Address the student directly.`
           <div className="mb-6 card overflow-hidden">
             <div className="bg-[var(--color-ink)] px-5 py-3 flex items-center justify-between">
               <p className="font-mono text-[10px] uppercase tracking-widest text-white/60">
-                📊 Your Topic Mastery
+                <BarChart3 size={14} className="inline-block mr-1.5" /> Your Topic Mastery
               </p>
               <span className="text-[10px] text-white/40 font-mono">
                 {masteryData.filter(m => m.mastery_level === 'master').length} mastered
@@ -1248,7 +1257,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                            border-red-200 bg-red-50 hover:border-red-400 hover:bg-red-100
                            group">
                 <div className="flex items-center justify-between">
-                  <span className="text-2xl">🎯</span>
+                  <Target size={28} />
                   <span className="font-mono text-[10px] uppercase tracking-widest
                                    text-red-400">One-click</span>
                 </div>
@@ -1281,7 +1290,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                            border-purple-200 bg-purple-50 hover:border-purple-400 hover:bg-purple-100
                            group">
                 <div className="flex items-center justify-between">
-                  <span className="text-2xl">🔀</span>
+                  <Shuffle size={28} />
                   <span className="font-mono text-[10px] uppercase tracking-widest
                                    text-purple-400">5 topics</span>
                 </div>
@@ -1304,7 +1313,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                            border-[var(--color-gold)] bg-yellow-50
                            hover:border-yellow-500 hover:bg-yellow-100 group">
                 <div className="flex items-center justify-between">
-                  <span className="text-2xl">🔮</span>
+                  <GraduationCap size={28} />
                   <span className="font-mono text-[10px] uppercase tracking-widest
                                    text-yellow-600">
                     {profile?.exam_target || 'WAEC'}
@@ -1328,15 +1337,15 @@ Be warm, encouraging, and specific. Address the student directly.`
         {/* ── Tab bar: Practice / Videos ── */}
         <div className="flex border-b-2 border-[var(--color-border)] mb-6">
           {[
-            { id: 'practice', label: '🎯 Practice' },
-            { id: 'videos',   label: '📺 Video Lessons' },
+            { id: 'practice', label: 'Practice', icon: Target },
+            { id: 'videos',   label: 'Video Lessons', icon: Monitor },
           ].map(tab => (
             <button key={tab.id} onClick={() => setSetupTab(tab.id)}
               className={`px-5 py-3 font-semibold text-sm border-b-2 transition-all -mb-0.5
                 ${setupTab === tab.id
                   ? 'border-[var(--color-teal)] text-[var(--color-teal)]'
                   : 'border-transparent text-[var(--color-muted)] hover:text-[var(--color-ink)]'}`}>
-              {tab.label}
+              <tab.icon size={16} className="inline-block mr-1.5" />{tab.label}
             </button>
           ))}
         </div>
@@ -1345,10 +1354,10 @@ Be warm, encouraging, and specific. Address the student directly.`
           <div className="card overflow-hidden">
             <div className="bg-red-600 px-6 py-4 flex items-center justify-between">
               <div>
-                <p className="font-serif font-bold text-white text-lg">📺 Video Lessons</p>
+                <p className="font-serif font-bold text-white text-lg flex items-center gap-2"><Monitor size={22} />Video Lessons</p>
                 <p className="text-white/70 text-sm mt-0.5">Curated YouTube explanations matched to your level</p>
               </div>
-              <span className="text-3xl">🎬</span>
+              <Clapperboard size={36} />
             </div>
             <div className="bg-white p-6">
               <VideoBrowser topicsByLevel={topicsByLevel} selectedLevel={selectedLevel} />
@@ -1360,7 +1369,7 @@ Be warm, encouraging, and specific. Address the student directly.`
           {/* ── Setup card ── */}
           <div className="card overflow-hidden">
             <div className="bg-[var(--color-teal)] px-6 py-4">
-              <p className="font-serif font-bold text-white text-lg">🎯 Start a Session</p>
+              <p className="font-serif font-bold text-white text-lg flex items-center gap-2"><Target size={22} />Start a Session</p>
             </div>
             <div className="bg-white p-6 space-y-5">
 
@@ -1376,7 +1385,7 @@ Be warm, encouraging, and specific. Address the student directly.`
               ) : !hasAnyTopics ? (
                 /* ── No topics studied yet ── */
                 <div className="text-center py-8 space-y-4">
-                  <p className="text-4xl">📚</p>
+                  <Book size={48} className="mx-auto" />
                   <p className="font-semibold text-[var(--color-ink)]">
                     No topics studied yet
                   </p>
@@ -1389,7 +1398,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl
                                bg-[var(--color-teal)] text-white text-sm font-semibold
                                hover:opacity-90 transition-opacity">
-                    📖 Go to Teach Mode →
+                    <BookOpen size={16} className="inline-block mr-1" /> Go to Teach Mode →
                   </a>
                 </div>
 
@@ -1413,7 +1422,8 @@ Be warm, encouraging, and specific. Address the student directly.`
                               : 'border-[var(--color-border)] text-[var(--color-muted)]'
                             }`}
                         >
-                          <span>
+                          <span className="flex items-center gap-1">
+                            {React.createElement(LEVEL_ICONS[level] || BookOpen, { size: 14 })}
                             {LEVEL_LABELS[level] || level}
                             <span className="ml-1.5 opacity-70">
                               ({topicsByLevel[level].length})
@@ -1457,7 +1467,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                     </div>
                     {topic && (
                       <p className="mt-2 text-xs text-[var(--color-teal)] font-medium">
-                        ✓ Selected: {topic}
+                        <Check size={14} className="inline-block mr-1" /> Selected: {topic}
                       </p>
                     )}
                   </div>
@@ -1480,7 +1490,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                               : 'border-[var(--color-border)] text-[var(--color-muted)]'
                             }`}
                         >
-                          {cfg.emoji} {cfg.label}
+                          <cfg.icon size={14} className="inline-block mr-1" />{cfg.label}
                         </button>
                       ))}
                     </div>
@@ -1499,7 +1509,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                     <div>
                       <p className={`text-sm font-semibold
                         ${challengeMode ? 'text-orange-700' : 'text-[var(--color-ink)]'}`}>
-                        ⚡ Timed Challenge Mode
+                        <Zap size={16} className="inline-block mr-1" /> Timed Challenge Mode
                       </p>
                       <p className="text-xs text-[var(--color-muted)] mt-0.5">
                         60 seconds per question — tests speed & accuracy
@@ -1515,7 +1525,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                   {sessionError && (
                     <div className="px-4 py-3 rounded-xl bg-red-50 border border-red-200
                                     text-sm text-red-700">
-                      ⚠️ {sessionError}
+                      <TriangleAlert size={16} className="inline-block mr-1 shrink-0" />{sessionError}
                     </div>
                   )}
 
@@ -1532,7 +1542,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                   >
                     {loading
                       ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      : challengeMode ? '⚡ Start Challenge!' : '🚀 Start Practice Session'
+                      : challengeMode ? <><Zap size={18} className="inline-block mr-1.5" />Start Challenge!</> : <><Rocket size={18} className="inline-block mr-1.5" />Start Practice Session</>
                     }
                   </button>
                 </>
@@ -1543,7 +1553,7 @@ Be warm, encouraging, and specific. Address the student directly.`
           {/* ── Recent sessions ── */}
           <div className="card overflow-hidden">
             <div className="bg-[var(--color-ink)] px-6 py-4">
-              <p className="font-serif font-bold text-white text-lg">📊 Recent Sessions</p>
+              <p className="font-serif font-bold text-white text-lg flex items-center gap-2"><BarChart3 size={22} />Recent Sessions</p>
             </div>
             <div className="bg-white divide-y divide-[var(--color-border)] max-h-80 overflow-y-auto">
               {history.length === 0 ? (
@@ -1560,7 +1570,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                         {session.topic}
                       </p>
                       <p className="text-xs text-[var(--color-muted)] mt-0.5">
-                        {DIFFICULTY_CONFIG[session.difficulty]?.emoji} {session.difficulty}
+                        {React.createElement(DIFFICULTY_CONFIG[session.difficulty]?.icon || Check, { size: 12, className: 'inline-block mr-1' })} {session.difficulty}
                         &nbsp;·&nbsp;
                         {session.level && (LEVEL_LABELS[session.level] || session.level)}
                       </p>
@@ -1606,20 +1616,20 @@ Be warm, encouraging, and specific. Address the student directly.`
     const finalPct = Math.round(score / 5)
     const grade    = finalPct >= 80 ? 'A' : finalPct >= 60 ? 'B' : finalPct >= 40 ? 'C' : 'D'
 
-    const assignLabel = assignmentId ? '📋 Assignment Submitted' : null
-    const modeLabel = sessionMode === 'weak-drill' ? '🎯 Weak Topic Drill'
-      : sessionMode === 'mixed'   ? '🔀 Mixed Session'
-      : sessionMode === 'predicted' ? `🔮 ${profile?.exam_target || 'WAEC'} Exam Prep`
+    const assignLabel = assignmentId ? <><ClipboardList size={14} className="inline-block mr-1" />Assignment Submitted</> : null
+    const modeLabel = sessionMode === 'weak-drill' ? <><Target size={14} className="inline-block mr-1" />Weak Topic Drill</>
+      : sessionMode === 'mixed'   ? <><Shuffle size={14} className="inline-block mr-1" />Mixed Session</>
+      : sessionMode === 'predicted' ? <><Sparkles size={14} className="inline-block mr-1" />{profile?.exam_target || 'WAEC'} Exam Prep</>
       : null
 
     const message  = finalPct >= 80
-      ? sessionMode === 'weak-drill' ? "Weak topic conquered! Keep drilling to master it! 🏆"
-        : sessionMode === 'mixed'    ? "Excellent breadth! You're strong across multiple topics! 🎉"
-        : sessionMode === 'predicted'? "Exam-ready performance! You're on track! 🏅"
-        : "Excellent work! You've mastered this topic! 🎉"
-      : finalPct >= 60 ? "Good job! Keep practising to improve further! 💪"
-      : finalPct >= 40 ? "You're getting there! Review the topic and try again! 📚"
-      : "Don't give up! Study the worked examples and try again! 🌟"
+      ? sessionMode === 'weak-drill' ? "Weak topic conquered! Keep drilling to master it!"
+        : sessionMode === 'mixed'    ? "Excellent breadth! You're strong across multiple topics!"
+        : sessionMode === 'predicted'? "Exam-ready performance! You're on track!"
+        : "Excellent work! You've mastered this topic!"
+      : finalPct >= 60 ? "Good job! Keep practising to improve further!"
+      : finalPct >= 40 ? "You're getting there! Review the topic and try again!"
+      : "Don't give up! Study the worked examples and try again!"
 
     return (
       <div className="max-w-lg mx-auto px-6 py-16 text-center">
@@ -1690,14 +1700,14 @@ Be warm, encouraging, and specific. Address the student directly.`
             {streak && streak.current_streak > 0 && (
               <div className="flex items-center gap-3 bg-amber-50 border border-amber-200
                               rounded-xl px-4 py-3">
-                <span className="text-2xl">🍌</span>
+                <Zap size={28} className="text-amber-500" />
                 <div>
                   <p className="font-bold text-amber-800 text-sm">
                     {streak.current_streak} day streak!
                   </p>
                   <p className="text-xs text-amber-600">
                     {streak.current_streak >= streak.longest_streak
-                      ? "🎉 New personal best!"
+                      ? "New personal best!"
                       : `Best: ${streak.longest_streak} days`}
                   </p>
                 </div>
@@ -1714,7 +1724,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                      style={{ borderColor: cfg.color + '60', backgroundColor: cfg.color + '12' }}>
                   <p className="text-xs font-mono uppercase tracking-widest mb-2"
                      style={{ color: cfg.color }}>
-                    {cfg.icon} Topic Mastery Updated
+                    <cfg.icon size={14} className="inline-block mr-1" /> Topic Mastery Updated
                   </p>
                   <MasteryBar topic={topic} mastery={m} />
                 </div>
@@ -1723,11 +1733,11 @@ Be warm, encouraging, and specific. Address the student directly.`
             <div className="flex gap-3 mt-2">
               <button onClick={handleRestart}
                 className="flex-1 btn-primary py-3 text-sm justify-center">
-                🔄 Try Again
+                <RefreshCw size={16} className="inline-block mr-1.5" /> Try Again
               </button>
               <button onClick={() => { handleRestart(); setDifficulty('hard') }}
                 className="flex-1 btn-secondary py-3 text-sm justify-center">
-                ⬆️ Try Harder
+                <ArrowUp size={16} className="inline-block mr-1.5" /> Try Harder
               </button>
             </div>
           </div>
@@ -1748,9 +1758,9 @@ Be warm, encouraging, and specific. Address the student directly.`
         </div>
         <div className="card overflow-hidden">
           <div className="bg-[var(--color-teal)] px-6 py-4">
-            <p className="font-serif font-bold text-white text-lg">
-              📖 Study This Example First
-            </p>
+              <p className="font-serif font-bold text-white text-lg flex items-center gap-2">
+                <BookOpen size={22} />Study This Example First
+              </p>
             <p className="text-white/70 text-sm mt-1">
               {topic} · {LEVEL_LABELS[selectedLevel] || selectedLevel}
             </p>
@@ -1781,7 +1791,7 @@ Be warm, encouraging, and specific. Address the student directly.`
             {workedExample.takeaway && (
               <div className="flex gap-3 bg-amber-50 border-2 border-amber-200
                               rounded-xl px-4 py-3">
-                <span className="text-xl shrink-0">💡</span>
+                <Lightbulb size={24} className="shrink-0" />
                 <div>
                   <p className="font-semibold text-xs text-amber-800 uppercase tracking-wide mb-1">
                     Key Takeaway
@@ -1795,7 +1805,7 @@ Be warm, encouraging, and specific. Address the student directly.`
               onClick={() => setShowWorkedExample(false)}
               className="w-full btn-primary py-4 text-base justify-center
                          flex items-center gap-2">
-              ✅ I understand — Start Questions →
+              <Check size={18} className="inline-block mr-1.5" /> I understand — Start Questions →
             </button>
           </div>
         </div>
@@ -1812,11 +1822,11 @@ Be warm, encouraging, and specific. Address the student directly.`
         <div className="flex items-center justify-between mb-2">
           <span className="font-mono text-xs text-[var(--color-muted)] uppercase tracking-widest">
             {sessionMode === 'mixed' && mixedTopics[questionNumber - 1]
-              ? <>🔀 Q{questionNumber}/5 — <span className="text-purple-600">{mixedTopics[questionNumber - 1].topic}</span></>
+              ? <><Shuffle size={14} className="inline-block mr-1" />Q{questionNumber}/5 — <span className="text-purple-600">{mixedTopics[questionNumber - 1].topic}</span></>
               : sessionMode === 'predicted' && predictedTopics[questionNumber - 1]
-              ? <>🔮 Q{questionNumber}/5 — <span className="text-yellow-700">{predictedTopics[questionNumber - 1].topic}</span></>
+              ? <><Sparkles size={14} className="inline-block mr-1" />Q{questionNumber}/5 — <span className="text-yellow-700">{predictedTopics[questionNumber - 1].topic}</span></>
               : sessionMode === 'weak-drill'
-              ? <>🎯 Weak Drill — {topic}</>
+              ? <><Target size={14} className="inline-block mr-1" />Weak Drill — {topic}</>
               : <>Question {questionNumber} of 5 — {topic}</>
             }
           </span>
@@ -1826,14 +1836,14 @@ Be warm, encouraging, and specific. Address the student directly.`
                 ${sessionMode === 'weak-drill' ? 'bg-red-50 border-red-200 text-red-600'
                   : sessionMode === 'mixed'    ? 'bg-purple-50 border-purple-200 text-purple-600'
                   : 'bg-yellow-50 border-yellow-300 text-yellow-700'}`}>
-                {sessionMode === 'weak-drill' ? '🎯 Weak Drill'
-                  : sessionMode === 'mixed'   ? '🔀 Mixed'
-                  : `🔮 ${profile?.exam_target || 'WAEC'} Prep`}
+                {sessionMode === 'weak-drill' ? <><Target size={12} className="inline-block mr-1" />Weak Drill</>
+                  : sessionMode === 'mixed'   ? <><Shuffle size={12} className="inline-block mr-1" />Mixed</>
+                  : <><Sparkles size={12} className="inline-block mr-1" />{profile?.exam_target || 'WAEC'} Prep</>}
               </span>
             )}
             <span className={`font-mono text-xs px-2 py-1 rounded-lg border
               ${DIFFICULTY_CONFIG[difficulty].color}`}>
-              {DIFFICULTY_CONFIG[difficulty].emoji} {difficulty}
+              {React.createElement(DIFFICULTY_CONFIG[difficulty]?.icon || Check, { size: 12, className: 'inline-block mr-1' })} {difficulty}
             </span>
             {challengeMode ? (
               /* Challenge countdown */
@@ -1844,11 +1854,11 @@ Be warm, encouraging, and specific. Address the student directly.`
                   ? 'text-orange-600 border-orange-300 bg-orange-50'
                   : 'text-green-600 border-green-300 bg-green-50'
                 }`}>
-                ⚡ {timeLeft}s
+                <Zap size={16} className="inline-block mr-1" />{timeLeft}s
               </span>
             ) : (
-              <span className="font-mono text-xs text-[var(--color-muted)]">
-                ⏱ {formatTime(elapsed)}
+              <span className="font-mono text-xs text-[var(--color-muted)] flex items-center gap-1">
+                <Clock size={14} />{formatTime(elapsed)}
               </span>
             )}
           </div>
@@ -1904,8 +1914,8 @@ Be warm, encouraging, and specific. Address the student directly.`
                         ${i === 0 ? 'bg-yellow-50 border-yellow-200 text-yellow-900'
                           : i === 1 ? 'bg-orange-50 border-orange-200 text-orange-900'
                           : 'bg-red-50 border-red-200 text-red-900'}`}>
-                      <span className="font-bold text-xs uppercase tracking-wide mr-2">
-                        {i === 0 ? '💡 Hint 1' : i === 1 ? '🔍 Hint 2' : '🗺️ Hint 3'}
+                      <span className="font-bold text-xs uppercase tracking-wide mr-2 flex items-center gap-1">
+                        {i === 0 ? <><Lightbulb size={12} />Hint 1</> : i === 1 ? <><Search size={12} />Hint 2</> : <><Map size={12} />Hint 3</>}
                       </span>
                       {h}
                     </div>
@@ -1922,9 +1932,9 @@ Be warm, encouraging, and specific. Address the student directly.`
                           ? 'text-yellow-600 hover:text-orange-600'
                           : 'text-orange-600 hover:text-red-600'
                         }`}>
-                      {hintLevel === 0 ? '💡 Show Hint 1'
-                        : hintLevel === 1 ? '🔍 Show Hint 2 (more detail)'
-                        : '🗺️ Show Hint 3 (almost full solution)'}
+                      {hintLevel === 0 ? <><Lightbulb size={12} className="inline-block mr-1" />Show Hint 1</>
+                        : hintLevel === 1 ? <><Search size={12} className="inline-block mr-1" />Show Hint 2 (more detail)</>
+                        : <><Map size={12} className="inline-block mr-1" />Show Hint 3 (almost full solution)</>}
                     </button>
                   )}
                   {hintLevel === hints.length && hintLevel > 0 && (
@@ -1955,11 +1965,11 @@ Be warm, encouraging, and specific. Address the student directly.`
                         : 'border-[var(--color-border)] text-[var(--color-muted)] hover:border-[var(--color-teal)] hover:text-[var(--color-teal)]'
                       }`}
                   >
-                    {isListening ? (
-                      <><span className="w-2 h-2 rounded-full bg-red-500 animate-ping" /> Stop Recording</>
-                    ) : (
-                      <>🎤 Speak Answer</>
-                    )}
+                      {isListening ? (
+                        <><span className="w-2 h-2 rounded-full bg-red-500 animate-ping" /> Stop Recording</>
+                      ) : (
+                        <><Mic size={16} className="inline-block mr-1" />Speak Answer</>
+                      )}
                   </button>
                 )}
               </div>
@@ -1989,7 +1999,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                 />
                 <button onClick={handleSubmit} disabled={!studentAnswer.trim() || loading}
                   className="w-full btn-primary py-3.5 justify-center flex items-center gap-2 disabled:opacity-50">
-                  Submit Answer ➤
+                  Submit Answer <ArrowRight size={16} className="inline-block ml-1" />
                 </button>
               </div>
             </div>
@@ -2028,7 +2038,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                     <div className="px-4 py-3 flex items-center justify-between">
                       <div>
                         <p className="font-semibold text-sm text-orange-800">
-                          🤖 Ask Euler what went wrong
+                          <Bot size={18} className="inline-block mr-1.5" /> Ask Euler what went wrong
                         </p>
                         <p className="text-xs text-orange-600 mt-0.5">
                           Get a targeted explanation of your specific mistake
@@ -2045,7 +2055,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                           {askingEuler
                             ? <><span className="w-3 h-3 border border-white/40 border-t-white
                                                rounded-full animate-spin" /> Thinking...</>
-                            : '✨ Ask Euler'
+                            : <><Sparkles size={14} className="inline-block mr-1" />Ask Euler</>
                           }
                         </button>
                       )}
@@ -2073,7 +2083,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                                   flex items-center justify-between gap-3">
                     <div>
                       <p className="font-semibold text-sm text-blue-800">
-                        🔁 Try a simpler version
+                        <Repeat size={16} className="inline-block mr-1.5" /> Try a simpler version
                       </p>
                       <p className="text-xs text-blue-600 mt-0.5">
                         Euler will generate an easier version of this question to build confidence
@@ -2089,7 +2099,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                       {loadingRetry
                         ? <><span className="w-3 h-3 border border-white/40
                                              border-t-white rounded-full animate-spin" /> Loading...</>
-                        : '🔁 Get Simpler Question'
+                        : <><Repeat size={14} className="inline-block mr-1" />Get Simpler Question</>
                       }
                     </button>
                   </div>
@@ -2100,7 +2110,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                   <div className="rounded-2xl border-2 border-blue-300 overflow-hidden">
                     <div className="bg-blue-500 px-4 py-3 flex items-center justify-between">
                       <div>
-                        <p className="font-bold text-white text-sm">🔁 Retry — Simpler Version</p>
+                        <p className="font-bold text-white text-sm flex items-center gap-1.5"><Repeat size={16} />Retry — Simpler Version</p>
                         <p className="text-blue-100 text-xs mt-0.5">
                           Same concept, easier numbers — build your confidence
                         </p>
@@ -2124,7 +2134,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                                   : i === 1 ? 'bg-orange-50 border-orange-200 text-orange-900'
                                   : 'bg-red-50 border-red-200 text-red-900'}`}>
                               <span className="font-bold uppercase tracking-wide mr-2">
-                                {i === 0 ? '💡 Hint 1' : i === 1 ? '🔍 Hint 2' : '🗺️ Hint 3'}
+                                {i === 0 ? <><Lightbulb size={12} className="inline-block mr-1" />Hint 1</> : i === 1 ? <><Search size={12} className="inline-block mr-1" />Hint 2</> : <><Map size={12} className="inline-block mr-1" />Hint 3</>}
                               </span>{h}
                             </div>
                           ))}
@@ -2133,7 +2143,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                               onClick={() => setRetryHintLevel(l => l + 1)}
                               className="text-[10px] font-mono uppercase tracking-widest
                                          text-[var(--color-muted)] hover:text-yellow-600 transition-colors">
-                              💡 {retryHintLevel === 0 ? 'Show Hint' : 'Next Hint'}
+                              <Lightbulb size={12} className="inline-block mr-1" />{retryHintLevel === 0 ? 'Show Hint' : 'Next Hint'}
                             </button>
                           )}
                         </div>
@@ -2157,7 +2167,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                             className="w-full bg-blue-500 hover:bg-blue-600 text-white
                                        font-bold py-2.5 rounded-xl text-sm transition-colors
                                        disabled:opacity-50">
-                            Submit Retry Answer ➤
+                            Submit Retry Answer <ArrowRight size={16} className="inline-block ml-1" />
                           </button>
                         </div>
                       ) : retryResult && (
@@ -2167,7 +2177,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                             : 'bg-red-50 border-red-200'}`}>
                           <p className={`font-bold text-sm mb-1
                             ${retryResult.is_correct ? 'text-green-700' : 'text-red-700'}`}>
-                            {retryResult.is_correct ? '✅ Correct! Well done!' : '❌ Not quite — see solution below'}
+                            {retryResult.is_correct ? <><Check size={16} className="inline-block mr-1" />Correct! Well done!</> : <><X size={16} className="inline-block mr-1" />Not quite — see solution below</>}
                           </p>
                           <p className="text-xs text-[var(--color-muted)]">{retryResult.feedback}</p>
                           <button
@@ -2206,7 +2216,7 @@ Be warm, encouraging, and specific. Address the student directly.`
 
                 <button onClick={handleNext}
                   className="w-full btn-primary py-3.5 justify-center flex items-center gap-2">
-                  {questionNumber >= 5 ? '🏁 Finish Session' : 'Next Question ➤'}
+                  {questionNumber >= 5 ? <><Flag size={16} className="inline-block mr-1.5" />Finish Session</> : <>Next Question <ArrowRight size={16} className="inline-block ml-1" /></>}
                 </button>
               </div>
             </div>

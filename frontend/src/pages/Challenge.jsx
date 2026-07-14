@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
+import { Swords, Target, FileText, Check, ClipboardList, PartyPopper, Dumbbell, BookOpen, Share2, Copy } from 'lucide-react'
 
 // ── Seed helpers ──────────────────────────────────────────────
 function hashSeed(seed) {
@@ -45,7 +46,7 @@ function CreateChallenge() {
                     <span className="block w-6 h-px bg-[var(--color-gold)]" />
                     Challenge a Friend
                 </p>
-                <h1 className="font-serif font-black text-5xl tracking-tight">⚔️ Create Challenge</h1>
+                <h1 className="font-serif font-black text-5xl tracking-tight flex items-center gap-3"><Swords size={36} /> Create Challenge</h1>
                 <p className="text-[var(--color-muted)] mt-2">
                     Generate a shareable link. Anyone who opens it gets the same {TOTAL_QUESTIONS} questions.
                 </p>
@@ -53,7 +54,7 @@ function CreateChallenge() {
 
             <div className="card overflow-hidden">
                 <div className="bg-[var(--color-teal)] px-6 py-4">
-                    <p className="font-serif font-bold text-white text-lg">🎯 Challenge Settings</p>
+                    <p className="font-serif font-bold text-white text-lg flex items-center gap-2"><Target size={22} /> Challenge Settings</p>
                 </div>
                 <div className="bg-white p-6 space-y-5">
                     <div>
@@ -72,11 +73,11 @@ function CreateChallenge() {
                         </div>
                     </div>
                     <div className="bg-[var(--color-cream)] rounded-2xl p-4 text-sm text-[var(--color-muted)]">
-                        📝 {TOTAL_QUESTIONS} random {examType} questions · same for everyone who opens the link
+                        <FileText size={18} className="inline-block mr-1" /> {TOTAL_QUESTIONS} random {examType} questions · same for everyone who opens the link
                     </div>
                     <button onClick={create} disabled={creating}
                         className="w-full btn-primary py-4 text-base justify-center flex disabled:opacity-50">
-                        {creating ? 'Generating...' : '⚔️ Generate Challenge Link'}
+                        {creating ? 'Generating...' : <><Swords size={20} /> Generate Challenge Link</>}
                     </button>
                 </div>
             </div>
@@ -84,7 +85,7 @@ function CreateChallenge() {
             {link && (
                 <div className="card bg-white overflow-hidden mt-6">
                     <div className="bg-green-500 px-6 py-4">
-                        <p className="font-serif font-bold text-white">✅ Challenge Ready!</p>
+                        <p className="font-serif font-bold text-white flex items-center gap-2"><Check size={22} /> Challenge Ready!</p>
                     </div>
                     <div className="p-6 space-y-4">
                         <p className="text-sm text-[var(--color-muted)]">Share this link with your friends:</p>
@@ -95,7 +96,7 @@ function CreateChallenge() {
                             <button onClick={copy}
                                 className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-all
                   ${copied ? 'bg-green-500 text-white' : 'btn-secondary'}`}>
-                                {copied ? '✅ Copied' : '📋 Copy'}
+                                {copied ? <><Check size={18} /> Copied</> : <><ClipboardList size={18} /> Copy</>}
                             </button>
                         </div>
                         <Link to={link.replace(window.location.origin, '')}
@@ -162,17 +163,17 @@ function TakeChallenge({ seed, examType }) {
                 </div>
                 <div className="bg-white p-8 space-y-4">
                     <p className="font-serif font-bold text-2xl">{score}/{questions.length} correct</p>
-                    <p className="text-[var(--color-muted)]">
-                        {scorePct >= 80 ? '🎉 Excellent! You dominated this challenge!'
-                            : scorePct >= 60 ? '💪 Good! Challenge someone else to beat this score.'
-                                : '📚 Keep studying — review the questions below and try again.'}
+                    <p className="text-[var(--color-muted)] flex items-center justify-center gap-2">
+                        {scorePct >= 80 ? <><PartyPopper size={24} /> Excellent! You dominated this challenge!</>
+                            : scorePct >= 60 ? <><Dumbbell size={24} /> Good! Challenge someone else to beat this score.</>
+                                : <><BookOpen size={24} /> Keep studying — review the questions below and try again.</>}
                     </p>
                     <div className="flex gap-3 justify-center flex-wrap">
                         <button onClick={() => { navigator.clipboard.writeText(shareMsg); setCopied(true) }}
                             className={`btn-primary px-6 py-3 text-sm ${copied ? 'bg-green-600' : ''}`}>
-                            {copied ? '✅ Copied!' : '📤 Share My Score'}
+                            {copied ? <><Check size={18} /> Copied!</> : <><Share2 size={18} /> Share My Score</>}
                         </button>
-                        <Link to="/challenge" className="btn-secondary px-6 py-3 text-sm">⚔️ Create My Own</Link>
+                        <Link to="/challenge" className="btn-secondary px-6 py-3 text-sm flex items-center gap-2"><Swords size={18} /> Create My Own</Link>
                     </div>
                 </div>
             </div>
@@ -197,7 +198,7 @@ function TakeChallenge({ seed, examType }) {
         <div className="max-w-2xl mx-auto px-6 py-10">
             <div className="mb-6">
                 <p className="font-mono text-xs text-[var(--color-gold)] uppercase tracking-widest mb-2">
-                    ⚔️ Challenge · Seed: {seed} · {examType}
+                    <Swords size={16} className="inline-block mr-1" /> Challenge · Seed: {seed} · {examType}
                 </p>
                 <h1 className="font-serif font-black text-4xl">Answer all {questions.length} questions</h1>
                 <p className="text-[var(--color-muted)] text-sm mt-1">
@@ -210,7 +211,7 @@ function TakeChallenge({ seed, examType }) {
                     <div key={q.id} className="card overflow-hidden">
                         <div className="bg-[var(--color-ink)] px-5 py-3 flex items-center justify-between">
                             <span className="font-serif font-bold text-white text-sm">Question {i + 1}</span>
-                            {answers[i] && <span className="text-white/60 text-xs font-mono">✓ Answered: {answers[i]}</span>}
+                            {answers[i] && <span className="text-white/60 text-xs font-mono flex items-center gap-1"><Check size={14} /> Answered: {answers[i]}</span>}
                         </div>
                         <div className="bg-white p-5">
                             <p className="text-sm text-[var(--color-ink)] font-medium leading-relaxed mb-4">

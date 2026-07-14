@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { xpProgress } from '../lib/stats'
+import { Frown, Rocket, Zap, Flame, FileText, Target, Check } from 'lucide-react'
 
 const API = import.meta.env.VITE_API_URL
 
@@ -34,7 +35,7 @@ export default function ShareProfile() {
 
     if (error) return (
         <div className="max-w-xl mx-auto px-6 py-16 text-center">
-            <div className="text-5xl mb-4">😕</div>
+            <div className="flex justify-center mb-4"><Frown size={48} /></div>
             <h2 className="font-serif font-bold text-2xl mb-2">Profile Not Found</h2>
             <p className="text-[var(--color-muted)]">{error}</p>
             <Link to="/" className="btn-primary mt-6 inline-flex px-6 py-3 text-sm">← Go Home</Link>
@@ -73,13 +74,13 @@ export default function ShareProfile() {
                 {/* Stats */}
                 <div className="bg-white p-6 grid grid-cols-2 gap-4">
                     {[
-                        { icon: '⚡', label: 'XP Earned', value: (data.xp || 0).toLocaleString() },
-                        { icon: '🔥', label: 'Study Streak', value: `${data.streak || 0} days` },
-                        { icon: '📝', label: 'Questions Done', value: data.total_questions || 0 },
-                        { icon: '🎯', label: 'Accuracy', value: `${data.accuracy || 0}%` },
+                        { icon: Zap, label: 'XP Earned', value: (data.xp || 0).toLocaleString() },
+                        { icon: Flame, label: 'Study Streak', value: `${data.streak || 0} days` },
+                        { icon: FileText, label: 'Questions Done', value: data.total_questions || 0 },
+                        { icon: Target, label: 'Accuracy', value: `${data.accuracy || 0}%` },
                     ].map(s => (
                         <div key={s.label} className="bg-[var(--color-cream)] rounded-2xl p-4 text-center">
-                            <div className="text-2xl mb-1">{s.icon}</div>
+                            <div className="flex justify-center mb-1"><s.icon size={28} /></div>
                             <div className="font-serif font-black text-xl text-[var(--color-ink)]">{s.value}</div>
                             <div className="text-[10px] font-mono uppercase text-[var(--color-muted)] mt-0.5">{s.label}</div>
                         </div>
@@ -97,7 +98,7 @@ export default function ShareProfile() {
                                 <span key={t.topic || t}
                                     className="text-xs px-3 py-1.5 bg-green-50 border border-green-200
                              text-green-700 rounded-full font-medium">
-                                    ✅ {t.topic || t}
+                                    <Check size={14} className="inline-block mr-1" />{t.topic || t}
                                 </span>
                             ))}
                         </div>
@@ -111,7 +112,7 @@ export default function ShareProfile() {
                     </p>
                     <Link to="/signup"
                         className="btn-primary px-6 py-2.5 text-sm inline-flex justify-center">
-                        🚀 Join MathGenius Free
+                        <Rocket size={18} className="inline-block mr-1" /> Join MathGenius Free
                     </Link>
                 </div>
             </div>
