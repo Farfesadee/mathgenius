@@ -41,6 +41,7 @@ export default function Profile() {
   const [refInput,  setRefInput]  = useState('')
   const [refMsg,    setRefMsg]    = useState(null)
   const [copied,    setCopied]    = useState(false)
+  const [linkShared, setLinkShared] = useState(false)
   const [saving,    setSaving]    = useState(false)
   const [saved,     setSaved]     = useState(false)
   const [tab,       setTab]       = useState('profile')
@@ -162,6 +163,22 @@ export default function Profile() {
     } catch { /* non-fatal */ }
 
     if (refreshProfile) await refreshProfile()
+
+    // Role upgraded to teacher/parent — announce via the app notification bell
+    if (profile?.role !== role && (role === 'teacher' || role === 'parent')) {
+      try {
+        await createNotification(user.id, {
+          type: 'role',
+          title: role === 'teacher' ? 'Teacher dashboard unlocked!' : 'Parent dashboard unlocked!',
+          message: role === 'teacher'
+            ? 'Create classes, share invite codes and track your students from Monitor.'
+            : 'Link your child and follow their progress from Monitor.',
+          icon: 'gift',
+          link: '/monitor',
+        })
+      } catch { /* non-fatal */ }
+    }
+
     setSaving(false)
     setSaved(true)
     setTimeout(() => setSaved(false), 2500)
@@ -273,13 +290,16 @@ export default function Profile() {
         <button
           onClick={() => {
             navigator.clipboard.writeText(`${window.location.origin}/share/${user?.id}`)
-            alert('Share link copied! Send it to a parent or teacher.')
+            setLinkShared(true)
+            setTimeout(() => setLinkShared(false), 2500)
           }}
           className="flex items-center gap-2 px-4 py-2.5 rounded-xl border-2
                      border-[var(--color-border)] text-sm font-semibold
                      text-[var(--color-ink)] hover:border-[var(--color-teal)]
                      hover:text-[var(--color-teal)] transition-all bg-white">
-          <Eye size={18} className="inline-block mr-1.5" />Share Profile (Parent / Teacher)
+          {linkShared
+            ? <><Check size={18} className="inline-block mr-1.5" />Link Copied! Send it to a parent or teacher.</>
+            : <><Eye size={18} className="inline-block mr-1.5" />Share Profile (Parent / Teacher)</>}
         </button>
         <a href="/challenge"
           className="flex items-center gap-2 px-4 py-2.5 rounded-xl border-2

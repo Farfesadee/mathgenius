@@ -6,6 +6,7 @@ import { ThumbsUp, ThumbsDown, Check, Copy, Bookmark, PartyPopper, ArrowLeft, Al
 import { useAuth } from '../../context/AuthContext'
 import { supabase } from '../../lib/supabase'
 import { saveBookmark } from '../../lib/bookmarks'
+import { friendlyError } from '../../utils/friendlyError'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 const overviewSentFor = new Set()
@@ -49,7 +50,7 @@ async function streamTeach({ question, topic, level, history, userId, onToken, o
     }
     onDone()
   } catch (err) {
-    onError(err.message || 'Could not connect to backend.')
+    onError(friendlyError(err))
   }
 }
 
@@ -178,8 +179,18 @@ function renderMessage(text) {
   return <div className="space-y-1.5">{elements}</div>
 }
 
+function escapeHtml(s) {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
 function inlineFormat(text) {
-  return text
+  // Escape first so AI/user content can never inject HTML (XSS),
+  // then apply our own safe markup.
+  return escapeHtml(text)
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g,     '<em>$1</em>')
     .replace(/`([^`]+)`/g,     '<code class="px-1.5 py-0.5 rounded-md bg-[var(--color-teal)]/10 font-mono text-xs text-[var(--color-teal)]">$1</code>')

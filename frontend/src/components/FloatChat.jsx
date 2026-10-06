@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { ExplanationBody } from '../utils/RenderMath'
+import { CONNECTION_ERROR } from '../utils/friendlyError'
 import { askTutor } from '../services/api'
 import { createConversation, saveMessage } from '../lib/conversations'
 import { AlertTriangle, X, Calculator, ArrowRight } from 'lucide-react'
@@ -79,7 +80,7 @@ export default function FloatChat() {
     } catch {
       setMessages(prev => [
         ...prev.filter(m => !m.loading),
-        { role: 'assistant', content: 'Could not connect. Is the backend running?', error: true }
+        { role: 'assistant', content: CONNECTION_ERROR, error: true }
       ])
     }
     setLoading(false)

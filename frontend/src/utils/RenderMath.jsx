@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { InlineMath, BlockMath } from 'react-katex'
 
 // ── Safe KaTeX renderers ──────────────────────────────────────────────────────
@@ -28,6 +29,32 @@ function SafeInline({ math }) {
   }
 }
 
+// ── Inline markdown (**bold**, `code`, *italic*) — React-safe, no innerHTML ──
+function InlineMd({ text }) {
+  const segs = text.split(/(\*\*.+?\*\*|`[^`]+`|\*[^*\n]+\*)/g)
+  return (
+    <>
+      {segs.map((s, j) => {
+        if (s.startsWith('**') && s.endsWith('**') && s.length > 4) {
+          return <strong key={j}>{s.slice(2, -2)}</strong>
+        }
+        if (s.startsWith('`') && s.endsWith('`') && s.length > 2) {
+          return (
+            <code key={j} className="px-1.5 py-0.5 rounded-md bg-[var(--color-teal)]/10
+                                    font-mono text-xs text-[var(--color-teal)]">
+              {s.slice(1, -1)}
+            </code>
+          )
+        }
+        if (s.startsWith('*') && s.endsWith('*') && s.length > 2) {
+          return <em key={j}>{s.slice(1, -1)}</em>
+        }
+        return <Fragment key={j}>{s}</Fragment>
+      })}
+    </>
+  )
+}
+
 // ── Parse [math]...[/math] and [m]...[/m] tags ───────────────────────────────
 export function RenderMath({ text }) {
   if (!text) return null
@@ -48,9 +75,10 @@ export function RenderMath({ text }) {
           const math = token.slice(3, -4).trim()
           return <SafeInline key={i} math={math} />
         }
-        // Plain text — strip any stray $ that leaked through anyway
+        // Plain text — strip any stray $ that leaked through anyway,
+        // then render inline markdown safely
         const clean = token.replace(/\$\$/g, '').replace(/\$/g, '')
-        return <span key={i}>{clean}</span>
+        return <span key={i}><InlineMd text={clean} /></span>
       })}
     </>
   )

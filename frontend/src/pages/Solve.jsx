@@ -371,7 +371,7 @@ function CameraTab() {
           ? 'Camera permission denied. Please allow camera access in your browser settings.'
           : err.name === 'NotFoundError'
           ? 'No camera found on this device.'
-          : 'Could not start camera: ' + err.message
+          : 'Could not start the camera. Please try again or upload a photo instead.'
       )
     }
   }

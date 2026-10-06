@@ -5,6 +5,7 @@ import { askTutor, getApprovedTestimonials } from '../services/api'
 import { ExplanationBody } from '../utils/RenderMath'
 import { Lightbulb, Monitor, BarChart3, Flame, Calendar, BookOpen, Triangle, Rocket, Calculator, ArrowRight, FileText, Trophy, Star, Globe, AlertTriangle, ChevronDown, Send, Check } from 'lucide-react'
 import { supabase } from '../lib/supabase'
+import { CONNECTION_ERROR } from '../utils/friendlyError'
 
 const FEATURES = [
   {
@@ -86,7 +87,7 @@ function LandingChat() {
     } catch {
       setMessages(prev => [
         ...prev.filter(m => !m.loading),
-        { role: 'assistant', content: 'Could not connect. Make sure the backend is running.' },
+          { role: 'assistant', content: CONNECTION_ERROR },
       ])
     }
     setLoading(false)

@@ -10,6 +10,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { getStudyPlan, generateStudyPlan, getTopicProgress } from '../services/api'
 import { supabase } from '../lib/supabase'
+import { friendlyError } from '../utils/friendlyError'
 import { Check, TriangleAlert, Target, Calendar, Circle, RefreshCw, Sparkles, Clipboard, Book, PartyPopper, Zap, ArrowRight } from 'lucide-react'
 
 // ── Helpers ────────────────────────────────────────────────────────
@@ -239,7 +240,7 @@ export default function StudyPlanner() {
       }
 
     } catch (err) {
-      setError(err.message || 'Failed to generate plan. Please try again.')
+      setError(friendlyError(err, 'Failed to generate plan. Please try again.'))
     } finally {
       setGenerating(false)
     }

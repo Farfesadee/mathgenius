@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import NotificationBell from '../NotificationBell'
 import SearchPalette from '../SearchPalette'
+import LogoutModal from '../LogoutModal'
 import { useTheme } from '../../context/ThemeContext'
 import { getStreak } from '../../lib/learning'
 import { Home, Settings, BookOpen, Monitor, Target, ClipboardList, BarChart3, User, Bookmark, Flame, Trophy, FileText, BookOpen as Book, Bot, Brain, Triangle, Microscope, Swords, Gamepad2, Users, School, Map, GraduationCap, StickyNote, Calendar, FolderArchive, DoorOpen, Moon, Sun, Banana, Presentation, Zap, Search } from 'lucide-react'
@@ -19,11 +20,12 @@ const NAV_LINKS = [
 
 export default function Header() {
   const location  = useLocation()
-  const navigate  = useNavigate()
   const { user, profile, signOut } = useAuth()
   const [menuOpen, setMenuOpen] = useState(false)
   const [userMenu, setUserMenu] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
+  const [confirmLogout, setConfirmLogout] = useState(false)
+  const [signingOut, setSigningOut] = useState(false)
   const [streak,   setStreak]   = useState(null)
   const dropdownRef = useRef(null)
   const { isDark, toggleTheme } = useTheme()
@@ -66,11 +68,20 @@ export default function Header() {
     return () => document.removeEventListener('keydown', onKey)
   }, [])
 
-  const handleSignOut = async () => {
-    await signOut()
-    setMenuOpen(false)
+  const handleSignOut = () => {
     setUserMenu(false)
-    navigate('/')
+    setMenuOpen(false)
+    setConfirmLogout(true)
+  }
+
+  const confirmSignOut = async () => {
+    setSigningOut(true)
+    try {
+      await signOut()
+    } finally {
+      setSigningOut(false)
+      setConfirmLogout(false)
+    }
   }
 
   const visibleLinks = NAV_LINKS.filter(l => !l.auth || user)
@@ -378,6 +389,10 @@ export default function Header() {
         </div>
       )}
       {searchOpen && <SearchPalette onClose={() => setSearchOpen(false)} />}
+      <LogoutModal open={confirmLogout}
+        onCancel={() => setConfirmLogout(false)}
+        onConfirm={confirmSignOut}
+        signingOut={signingOut} />
     </>
   )
 }
