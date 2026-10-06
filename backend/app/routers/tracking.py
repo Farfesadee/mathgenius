@@ -2,10 +2,13 @@ import asyncio
 import os
 import httpx
 from datetime import date, datetime
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from typing import Optional, List
 from dotenv import load_dotenv
+
+from app.dependencies import require_auth
+from app.services.email_service import render_welcome_email, send_email
 
 load_dotenv()
 
@@ -205,6 +208,61 @@ async def update_profile(user_id: str, req: ProfileUpdateRequest):
     data = resp.json()
     profile = data[0] if isinstance(data, list) else data
     return {"success": True, "profile": profile}
+
+
+# ════════════════════════════════════════════════════════════════════════════
+#  WELCOME EMAIL — once per user (Google + email signups)
+# ════════════════════════════════════════════════════════════════════════════
+
+@router.post("/welcome")
+async def send_welcome_email(user=Depends(require_auth)):
+    """Send the branded welcome email to the caller's address.
+
+    Idempotent: a `welcome` row in `notifications` marks it sent, so repeat
+    calls (every login fires one from the frontend) are cheap no-ops.
+    Returns {"sent": True/False} — never raises for mail failures.
+    """
+    user_id = getattr(user, "id", None)
+    email = (getattr(user, "email", "") or "").strip()
+    if not user_id or not email:
+        return {"sent": False, "reason": "no-email"}
+
+    async with httpx.AsyncClient(timeout=10) as client:
+        # Already welcomed?
+        chk = await client.get(
+            sb_url("notifications", f"user_id=eq.{user_id}&type=eq.welcome&select=id&limit=1"),
+            headers=HEADERS,
+        )
+        if chk.status_code == 200 and chk.json():
+            return {"sent": False, "reason": "already-sent"}
+
+        # First name for the greeting
+        first_name = ""
+        prof = await client.get(
+            sb_url("profiles", f"id=eq.{user_id}&select=full_name&limit=1"),
+            headers=HEADERS,
+        )
+        if prof.status_code == 200 and prof.json():
+            first_name = (prof.json()[0].get("full_name") or "").split(" ")[0]
+
+        subject, html_body, text_body = render_welcome_email(first_name)
+        ok = await asyncio.to_thread(send_email, email, subject, html_body, text_body)
+        if not ok:
+            return {"sent": False, "reason": "send-failed"}
+
+        await client.post(
+            sb_url("notifications"),
+            headers=HEADERS,
+            json={
+                "user_id": user_id,
+                "type": "welcome",
+                "title": "Welcome to MathGenius!",
+                "message": "Your account is ready — check your inbox for a welcome email.",
+                "icon": "gift",
+                "link": "/dashboard",
+            },
+        )
+        return {"sent": True}
 
 
 # ════════════════════════════════════════════════════════════════════════════

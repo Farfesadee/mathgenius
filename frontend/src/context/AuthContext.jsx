@@ -24,6 +24,16 @@ export function AuthProvider({ children }) {
           await fetchProfile(session.user.id)
           // Redirect new users to onboarding
           if (event === 'SIGNED_IN') {
+            // Branded welcome email (backend dedupes — safe on every login).
+            // Fire-and-forget: must never block or break login.
+            try {
+              if (session?.access_token) {
+                fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/tracking/welcome`, {
+                  method: 'POST',
+                  headers: { Authorization: `Bearer ${session.access_token}` },
+                }).catch(() => {})
+              }
+            } catch { /* ignore */ }
             const { data } = await supabase
               .from('profiles')
               .select('onboarded')
