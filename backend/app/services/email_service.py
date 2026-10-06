@@ -48,6 +48,8 @@ def _smtp_settings() -> dict:
         "password": os.environ.get("SMTP_PASSWORD", ""),
         "from_name": os.environ.get("SMTP_FROM_NAME", "MathGenius").strip() or "MathGenius",
         "from_email": os.environ.get("SMTP_FROM_EMAIL", "").strip() or user,
+        # Replies to automated mail go here (e.g. help@) instead of bouncing.
+        "reply_to": os.environ.get("SMTP_REPLY_TO", "").strip(),
     }
 
 
@@ -68,6 +70,8 @@ def send_email(to_email: str, subject: str, html_body: str, text_body: str = "")
     msg["Subject"] = subject
     msg["From"] = f'{cfg["from_name"]} <{cfg["from_email"]}>'
     msg["To"] = to_email
+    if cfg["reply_to"]:
+        msg["Reply-To"] = cfg["reply_to"]
     if text_body:
         msg.attach(MIMEText(text_body, "plain", "utf-8"))
     msg.attach(MIMEText(html_body, "html", "utf-8"))

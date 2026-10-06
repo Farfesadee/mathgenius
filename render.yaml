@@ -24,9 +24,11 @@ services:
       - key: SMTP_PORT
         value: 465
       - key: SMTP_USER
-        value: help@mathgenius.guru
+        value: noreply@mathgenius.guru
       - key: SMTP_PASSWORD
         sync: false
+      - key: SMTP_REPLY_TO
+        value: help@mathgenius.guru
       - key: FRONTEND_URL
         value: https://mathgenius.guru
       - key: GROQ_API_KEY
