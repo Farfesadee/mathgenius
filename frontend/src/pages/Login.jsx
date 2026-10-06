@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { getFriendlyAuthMessage } from '../utils/authMessages'
 import { getUtm } from '../lib/utm'
+import AuthTopBar from '../components/AuthTopBar'
 
 function EyeIcon({ open }) {
   return open ? (
@@ -180,7 +181,9 @@ export default function Login({ defaultTab = 'login' }) {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-paper)] flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen bg-[var(--color-paper)] flex flex-col px-4 py-6">
+      <AuthTopBar />
+      <div className="flex-1 w-full flex items-center justify-center py-8">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/">
@@ -372,6 +375,7 @@ export default function Login({ defaultTab = 'login' }) {
         <p className="text-center text-xs text-[var(--color-muted)] mt-6">
           By continuing, you agree to our Terms of Service
         </p>
+      </div>
       </div>
     </div>
   )

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { getFriendlyAuthMessage } from '../utils/authMessages'
+import AuthTopBar from '../components/AuthTopBar'
 
 export default function ForgotPassword() {
   const [searchParams] = useSearchParams()
@@ -29,7 +30,9 @@ export default function ForgotPassword() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-paper)] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[var(--color-paper)] flex flex-col px-4 py-6">
+      <AuthTopBar />
+      <div className="flex-1 w-full flex items-center justify-center py-8">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/">
@@ -104,6 +107,7 @@ export default function ForgotPassword() {
             )}
           </div>
         </div>
+      </div>
       </div>
     </div>
   )
