@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { generateUsername } from '../lib/username'
 
 const AuthContext = createContext({})
 
@@ -61,12 +62,38 @@ export function AuthProvider({ children }) {
         .eq('id', userId)
         .single()
 
-      if (!error) setProfile(data)
+      if (!error) {
+        setProfile(data)
+        ensureUsername(userId, data)
+      }
     } catch (err) {
       console.error('Error fetching profile:', err)
     } finally {
       setLoading(false)
     }
+  }
+
+  // Auto-generate a username from the user's name on first sighting.
+  // Runs for Google + email signups and backfills older accounts.
+  // Silent by design: never blocks login (e.g. before the DB column exists).
+  const ensureUsername = async (userId, profileData) => {
+    try {
+      if (!userId || profileData?.username) return
+      for (let attempt = 0; attempt < 3; attempt++) {
+        const candidate = generateUsername(profileData?.full_name)
+        const { error } = await supabase
+          .from('profiles')
+          .update({ username: candidate })
+          .eq('id', userId)
+        if (!error) {
+          setProfile(p => (p ? { ...p, username: candidate } : p))
+          return
+        }
+        // Taken? retry with a fresh suffix. Anything else (e.g. column
+        // missing pre-migration) means stop quietly and try another login.
+        if (!/duplicate|unique|already exists/i.test(error.message || '')) return
+      }
+    } catch { /* never break login */ }
   }
 
   const updateProfile = async (updates) => {

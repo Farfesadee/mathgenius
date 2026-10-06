@@ -1,11 +1,18 @@
+import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import ErrorBoundary from './components/ErrorBoundary'
 import OfflineBanner from './components/OfflineBanner'
+import ScrollProgress from './components/ScrollProgress'
+import BackToTop from './components/BackToTop'
+import ContactFab from './components/ContactFab'
+import CookieBanner from './components/CookieBanner'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
+import { captureUtms } from './lib/utm'
 import Layout from './components/layout/Layout'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import InstallBanner from './components/InstallBanner'
+import NotFound from './pages/NotFound'
 import Home from './pages/Home'
 import Solve from './pages/Solve'
 import Teach from './pages/Teach'
@@ -48,9 +55,22 @@ function AppRoutes() {
   const hasCompletedOnboarding = typeof window !== 'undefined'
     && localStorage.getItem('mg_onboarding_done') === '1'
 
+  useEffect(() => { captureUtms() }, [])
+
   return (
     <>
+      <a href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2
+                   focus:z-[100] focus:px-4 focus:py-2 focus:rounded-xl
+                   focus:bg-[var(--color-ink)] focus:text-[var(--color-paper)]
+                   focus:text-sm focus:font-bold">
+        Skip to content
+      </a>
+      <ScrollProgress />
       <InstallBanner />
+      <BackToTop />
+      <ContactFab />
+      <CookieBanner />
       <Routes>
         {/* Public auth pages — no layout */}
         <Route
@@ -176,8 +196,8 @@ function AppRoutes() {
         {/* Public routes — no login needed */}
         <Route path="/share/:userId" element={<ShareProfile />} />
 
-        {/* Catch-all — send logged-in users to dashboard, guests to landing */}
-        <Route path="*" element={<Navigate to={user ? "/dashboard" : "/"} replace />} />
+        {/* Catch-all — clean 404 page */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   )

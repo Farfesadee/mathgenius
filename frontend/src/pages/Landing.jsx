@@ -3,7 +3,8 @@ import { useAuth } from '../context/AuthContext'
 import { useEffect, useState, useRef } from 'react'
 import { askTutor, getApprovedTestimonials } from '../services/api'
 import { ExplanationBody } from '../utils/RenderMath'
-import { Lightbulb, Monitor, BarChart3, Flame, Calendar, BookOpen, Triangle, Rocket, Calculator, ArrowRight, FileText, Trophy, Star, Globe, AlertTriangle } from 'lucide-react'
+import { Lightbulb, Monitor, BarChart3, Flame, Calendar, BookOpen, Triangle, Rocket, Calculator, ArrowRight, FileText, Trophy, Star, Globe, AlertTriangle, ChevronDown, Send, Check } from 'lucide-react'
+import { supabase } from '../lib/supabase'
 
 const FEATURES = [
   {
@@ -235,10 +236,97 @@ const STATS = [
   { value: '100%', label: 'Free to Start' },
 ]
 
+function FaqItem({ q, a, open, onToggle }) {
+  return (
+    <div className="border-2 border-[var(--color-border)] rounded-2xl
+                    bg-white overflow-hidden transition-colors
+                    hover:border-[var(--color-ink)]">
+      <button onClick={onToggle} aria-expanded={open}
+        className="w-full flex items-center justify-between gap-3
+                   px-5 py-4 text-left">
+        <span className="font-bold text-sm text-[var(--color-ink)]">{q}</span>
+        <ChevronDown size={20}
+          className={`shrink-0 text-[var(--color-teal)] transition-transform duration-300
+                      ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {open && (
+        <p className="px-5 pb-5 text-sm leading-relaxed text-[var(--color-muted)]">
+          {a}
+        </p>
+      )}
+    </div>
+  )
+}
+
+function NewsletterForm() {
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState('idle') // idle | sending | done | error | taken
+
+  const subscribe = async (e) => {
+    e.preventDefault()
+    const clean = email.trim()
+    if (!clean || !clean.includes('@')) { setStatus('error'); return }
+    setStatus('sending')
+    try {
+      const { error } = await supabase
+        .from('newsletter_subscribers')
+        .insert({ email: clean })
+      if (error) {
+        setStatus(/duplicate|unique|already/i.test(error.message || '') ? 'taken' : 'error')
+      } else {
+        setStatus('done')
+      }
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  if (status === 'done') {
+    return (
+      <p className="flex items-center gap-2 text-sm font-semibold text-[var(--color-teal)]">
+        <Check size={18} /> You are on the list. Welcome aboard!
+      </p>
+    )
+  }
+
+  return (
+    <form onSubmit={subscribe} className="w-full max-w-sm">
+      <p className="font-bold text-sm text-[var(--color-ink)] mb-2">
+        Study tips, monthly. No spam.
+      </p>
+      <div className="flex gap-2">
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+          placeholder="you@example.com" aria-label="Email for newsletter"
+          className="flex-1 min-w-0 border-2 border-[var(--color-border)]
+                     focus:border-[var(--color-teal)] rounded-xl px-4 py-2.5
+                     text-sm transition-colors bg-white" />
+        <button type="submit" disabled={status === 'sending'}
+          className="px-4 py-2.5 rounded-xl text-sm font-bold shrink-0
+                     bg-[var(--color-ink)] text-[var(--color-paper)]
+                     hover:bg-[var(--color-teal)] transition-colors
+                     disabled:opacity-50">
+          <Send size={16} className="inline-block" />
+        </button>
+      </div>
+      {status === 'taken' && (
+        <p className="text-xs text-[var(--color-muted)] mt-2">
+          This email is already subscribed.
+        </p>
+      )}
+      {status === 'error' && (
+        <p className="text-xs text-red-600 mt-2">
+          Something went wrong. Check the email and try again.
+        </p>
+      )}
+    </form>
+  )
+}
+
 export default function Landing() {
   const { user } = useAuth()
   const navigate = useNavigate()
   const [scrolled, setScrolled] = useState(false)
+  const [faqOpen, setFaqOpen] = useState(-1)
   const [testimonials, setTestimonials]   = useState([])
   const [testimonialsLoading, setTestimonialsLoading] = useState(true)
 
@@ -268,7 +356,7 @@ export default function Landing() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-paper)]">
+    <div id="main-content" className="min-h-screen bg-[var(--color-paper)]">
 
       {/* ── NAV ──────────────────────────────────────────── */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300
@@ -566,6 +654,33 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ── FAQ ──────────────────────────────────────────── */}
+      <section className="py-24 px-6 bg-[var(--color-paper)]">
+        <div className="max-w-2xl mx-auto">
+          <p className="font-mono text-xs tracking-widest uppercase
+                        text-[var(--color-gold)] mb-2 text-center">
+            FAQ
+          </p>
+          <h2 className="font-serif font-black text-4xl tracking-tight
+                         text-center mb-10">
+            Questions, answered
+          </h2>
+          <div className="space-y-3">
+            {[
+              { q: 'Is MathGenius free?', a: 'Yes. Practice, Euler explanations, CBT exams and progress tracking are free. Just create an account and start learning.' },
+              { q: 'Which exams does it cover?', a: 'WAEC, NECO and JAMB mathematics, with real past questions, worked solutions and timed CBT simulations in the exact exam format.' },
+              { q: 'How does Euler, the AI tutor, work?', a: 'Ask Euler any maths question in plain language. It explains step by step, answers follow-up questions and adjusts to your level, from JSS1 to university.' },
+              { q: 'Do I need an account to try it?', a: 'You can try a few free explanations with no account. Creating a free account unlocks saved progress, streaks, XP, the leaderboard and personalised study plans.' },
+              { q: 'How do streaks and XP work?', a: 'You earn XP for every session and question. Practise daily to grow your streak, climb the leaderboard and unlock badges.' },
+              { q: 'Can parents and teachers monitor progress?', a: 'Yes. Link accounts to follow study time, scores, streaks and weak topics from the Monitor dashboard.' },
+            ].map((item, i) => (
+              <FaqItem key={item.q} q={item.q} a={item.a}
+                open={faqOpen === i} onToggle={() => setFaqOpen(faqOpen === i ? -1 : i)} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── CTA ──────────────────────────────────────────── */}
       <section className="py-24 px-6 bg-[var(--color-teal)]">
         <div className="max-w-2xl mx-auto text-center">
@@ -617,7 +732,12 @@ export default function Landing() {
               className="hover:text-[var(--color-ink)] transition-colors">
               Sign Up
             </Link>
+            <a href="mailto:help@mathgenius.guru"
+              className="hover:text-[var(--color-ink)] transition-colors">
+              Contact
+            </a>
           </div>
+          <NewsletterForm />
           <p className="text-xs text-[var(--color-muted)] font-mono">
             © {new Date().getFullYear()} MathGenius
           </p>

@@ -6,7 +6,7 @@ export default function Layout() {
   return (
     <div className="min-h-screen bg-[var(--color-paper)]">
       <Header />
-      <main>
+      <main id="main-content">
         <Outlet />
       </main>
       <FloatChat />

@@ -197,14 +197,46 @@ export async function recordCBTResult(userId, { score, total }) {
 }
 
 // ── Leaderboard ───────────────────────────────────────────
+// Merges user_stats (xp, level, streak) with profiles (username, full_name)
+// so every row has a displayable identity. Tolerates a profiles table that
+// does not have the username column yet (pre-migration).
 export async function getLeaderboard() {
   const { data } = await supabase
     .from('user_stats')
-    .select('user_id, xp, level')
+    .select('user_id, xp, level, streak_current')
     .order('xp', { ascending: false })
     .limit(20)
 
-  return data || []
+  const rows = data || []
+  const ids = rows.map(r => r.user_id)
+  let profMap = {}
+  if (ids.length > 0) {
+    try {
+      const res = await supabase
+        .from('profiles')
+        .select('id, username, full_name')
+        .in('id', ids)
+      if (res.error) throw res.error
+      profMap = Object.fromEntries((res.data || []).map(p => [p.id, p]))
+    } catch {
+      try {
+        const res = await supabase
+          .from('profiles')
+          .select('id, full_name')
+          .in('id', ids)
+        if (!res.error) {
+          profMap = Object.fromEntries((res.data || []).map(p => [p.id, p]))
+        }
+      } catch { /* profiles unreadable — rows still render anonymously */ }
+    }
+  }
+
+  return rows.map(r => ({
+    ...r,
+    id: r.user_id,
+    username: profMap[r.user_id]?.username || null,
+    full_name: profMap[r.user_id]?.full_name || null,
+  }))
 }
 
 // ── Topic Mastery ─────────────────────────────────────────

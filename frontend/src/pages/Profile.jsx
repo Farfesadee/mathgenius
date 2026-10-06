@@ -29,6 +29,8 @@ export default function Profile() {
   const [referralStats, setReferralStats] = useState(null)
 
   const [fullName,    setFullName]    = useState('')
+  const [username,    setUsername]    = useState('')
+  const [usernameError, setUsernameError] = useState('')
   const [school,      setSchool]      = useState('')
   const [bio,         setBio]         = useState('')
   const [examTarget,  setExamTarget]  = useState('WAEC')
@@ -61,6 +63,7 @@ export default function Profile() {
   useEffect(() => {
     if (user && profile) {
       setFullName(profile.full_name || '')
+      setUsername(profile.username || '')
       setSchool(profile.school || '')
       setBio(profile.bio || '')
       setExamTarget(profile.exam_target || 'WAEC')
@@ -108,18 +111,46 @@ export default function Profile() {
 
   const handleSave = async () => {
     setSaving(true)
-    await supabase
+    setUsernameError('')
+    const cleanUsername = (username || '').trim().toLowerCase()
+    if (cleanUsername) {
+      const { isValidUsername } = await import('../lib/username')
+      if (!isValidUsername(cleanUsername)) {
+        setUsernameError('3-20 chars: lowercase letters, numbers, . _ - only.')
+        setSaving(false)
+        return
+      }
+      try {
+        const { data: taken } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('username', cleanUsername)
+          .neq('id', user.id)
+          .limit(1)
+        if (taken && taken.length > 0) {
+          setUsernameError('That username is taken. Try another.')
+          setSaving(false)
+          return
+        }
+      } catch { /* pre-migration or RLS hiccup — try the save anyway */ }
+    }
+    const basePayload = {
+      full_name:    fullName,
+      school,
+      bio,
+      exam_target:  examTarget,
+      exam_date:    examDate || null,
+      avatar_color: avatarColor,
+      role,                          // ← saves teacher/parent/student
+    }
+    let res = await supabase
       .from('profiles')
-      .update({
-        full_name:    fullName,
-        school,
-        bio,
-        exam_target:  examTarget,
-        exam_date:    examDate || null,
-        avatar_color: avatarColor,
-        role,                          // ← saves teacher/parent/student
-      })
+      .update({ ...basePayload, username: cleanUsername || null })
       .eq('id', user.id)
+    if (res.error && /username/i.test(res.error.message || '')) {
+      // username column not migrated yet — save everything else
+      res = await supabase.from('profiles').update(basePayload).eq('id', user.id)
+    }
 
     try {
       await updateUserProfile(user.id, {
@@ -304,6 +335,24 @@ export default function Profile() {
                          focus:border-[var(--color-teal)] rounded-xl px-4 py-3
                          text-sm transition-colors"
               placeholder="Your full name" />
+          </div>
+
+          <div>
+            <label className="font-mono text-[10px] uppercase tracking-widest
+                               text-[var(--color-muted)] block mb-2">Username</label>
+            <input type="text" value={username}
+              onChange={e => { setUsername(e.target.value.toLowerCase()); setUsernameError('') }}
+              className="w-full border-2 border-[var(--color-border)]
+                         focus:border-[var(--color-teal)] rounded-xl px-4 py-3
+                         text-sm transition-colors font-mono"
+              placeholder="e.g. adaobi-4821 (auto-generated, editable)" />
+            {usernameError ? (
+              <p className="text-xs text-red-600 mt-1.5">{usernameError}</p>
+            ) : (
+              <p className="text-xs text-[var(--color-muted)] mt-1.5">
+                Shown on the leaderboard. 3-20 chars: lowercase letters, numbers, . _ -
+              </p>
+            )}
           </div>
 
           <div>

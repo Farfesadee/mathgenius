@@ -2,9 +2,10 @@ import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import NotificationBell from '../NotificationBell'
+import SearchPalette from '../SearchPalette'
 import { useTheme } from '../../context/ThemeContext'
 import { getStreak } from '../../lib/learning'
-import { Home, Settings, BookOpen, Monitor, Target, ClipboardList, BarChart3, User, Bookmark, Flame, Trophy, FileText, BookOpen as Book, Bot, Brain, Triangle, Microscope, Swords, Gamepad2, Users, School, Map, GraduationCap, StickyNote, Calendar, FolderArchive, DoorOpen, Moon, Sun, Banana, Presentation, Zap } from 'lucide-react'
+import { Home, Settings, BookOpen, Monitor, Target, ClipboardList, BarChart3, User, Bookmark, Flame, Trophy, FileText, BookOpen as Book, Bot, Brain, Triangle, Microscope, Swords, Gamepad2, Users, School, Map, GraduationCap, StickyNote, Calendar, FolderArchive, DoorOpen, Moon, Sun, Banana, Presentation, Zap, Search } from 'lucide-react'
 
 const NAV_LINKS = [
   { path: '/home',     label: 'Home',     icon: Home,      auth: false },
@@ -22,6 +23,7 @@ export default function Header() {
   const { user, profile, signOut } = useAuth()
   const [menuOpen, setMenuOpen] = useState(false)
   const [userMenu, setUserMenu] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const [streak,   setStreak]   = useState(null)
   const dropdownRef = useRef(null)
   const { isDark, toggleTheme } = useTheme()
@@ -51,6 +53,18 @@ export default function Header() {
     setMenuOpen(false)
     setUserMenu(false)
   }, [location.pathname])
+
+  // Ctrl+K / Cmd+K opens site search
+  useEffect(() => {
+    const onKey = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        setSearchOpen(true)
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [])
 
   const handleSignOut = async () => {
     await signOut()
@@ -106,6 +120,16 @@ export default function Header() {
                 </span>
               </Link>
             )}
+
+            {/* Site search */}
+            <button onClick={() => setSearchOpen(true)}
+              className="w-10 h-10 flex items-center justify-center rounded-xl
+                         border-2 border-[var(--color-border)]
+                         hover:border-[var(--color-ink)] transition-all
+                         bg-[var(--color-cream)]"
+              title="Search the site (Ctrl+K)" aria-label="Search the site">
+              <Search size={20} />
+            </button>
 
             {/* Dark mode toggle */}
             <button onClick={toggleTheme}
@@ -353,6 +377,7 @@ export default function Header() {
           </div>
         </div>
       )}
+      {searchOpen && <SearchPalette onClose={() => setSearchOpen(false)} />}
     </>
   )
 }

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { getFriendlyAuthMessage } from '../utils/authMessages'
+import { getUtm } from '../lib/utm'
 
 function EyeIcon({ open }) {
   return open ? (
@@ -147,6 +148,7 @@ export default function Login({ defaultTab = 'login' }) {
           first_name: firstName.trim(),
           surname: surname.trim(),
           level: grade,
+          utm: getUtm(),
         },
       },
     })

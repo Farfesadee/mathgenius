@@ -116,8 +116,9 @@ export default function Leaderboard() {
               const rank     = i + 1
               const isMe     = entry.id === user?.id
               const { level, progress } = xpProgress(entry.xp || 0)
-              const firstName = entry.full_name?.split(' ')[0] || 'Student'
-              const initials  = entry.full_name?.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() || '?'
+              const displayName = entry.username || entry.full_name?.split(' ')[0] || 'Student'
+              const initialsSource = entry.username || entry.full_name || '?'
+              const initials  = initialsSource.split(/[\s-_]+/).map(n => n[0]).join('').slice(0, 2).toUpperCase() || '?'
 
               const rankDisplay = rank === 1 ? <Medal size={32} className="inline-block" color="#FFD700" />
                 : rank === 2 ? <Medal size={32} className="inline-block" color="#C0C0C0" />
@@ -150,7 +151,7 @@ export default function Leaderboard() {
                     <div className="flex items-center gap-2 mb-1">
                       <p className={`font-semibold text-sm truncate
                         ${isMe ? 'text-[var(--color-teal)]' : 'text-[var(--color-ink)]'}`}>
-                        {firstName}
+                        {displayName}
                         {isMe && <span className="ml-1 text-[10px] font-mono
                                                    text-[var(--color-teal)]">(you)</span>}
                       </p>
