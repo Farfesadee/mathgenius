@@ -66,8 +66,12 @@ function LandingChat() {
   const bottomRef = useRef(null)
   const inputRef = useRef(null)
 
+  // Only auto-scroll after the user actually chats — never on page load,
+  // or refresh would yank visitors down to the demo on every visit.
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (messages.length > 0) {
+      bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
   }, [messages])
 
   const handleSend = async (text) => {
