@@ -1,6 +1,5 @@
 import json
 import os
-from pydantic import field_validator
 from pydantic_settings import BaseSettings
 
 
@@ -13,20 +12,25 @@ class Settings(BaseSettings):
     debug: bool = environment == "development"
 
     # CORS — override in production via ALLOWED_ORIGINS env var
-    # (accepts JSON array or comma-separated string).
-    allowed_origins: list[str] = ["http://localhost:5173", "http://localhost:3000"]
+    # (accepts a JSON array or a comma-separated string).
+    # NOTE: kept as plain str on purpose — pydantic-settings JSON-decodes
+    # env values for list fields *before* any validator runs, so a
+    # comma-separated value would crash the app at startup.
+    allowed_origins: str = ""
 
-    @field_validator("allowed_origins", mode="before")
-    @classmethod
-    def _split_origins(cls, v):
-        if isinstance(v, str):
-            v = v.strip()
-            if not v:
-                return ["http://localhost:5173", "http://localhost:3000"]
-            if v.startswith("["):
-                return json.loads(v)
-            return [o.strip() for o in v.split(",") if o.strip()]
-        return v
+    @property
+    def allowed_origin_list(self) -> list[str]:
+        raw = (self.allowed_origins or "").strip()
+        if not raw:
+            return ["http://localhost:5173", "http://localhost:3000"]
+        if raw.startswith("["):
+            try:
+                parsed = json.loads(raw)
+                if isinstance(parsed, list):
+                    return [str(o).strip() for o in parsed if str(o).strip()]
+            except (ValueError, TypeError):
+                pass
+        return [o.strip() for o in raw.split(",") if o.strip()]
 
     # Groq
     groq_api_key: str = os.getenv("GROQ_API_KEY", "")
