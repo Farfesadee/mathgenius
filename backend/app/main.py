@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -74,7 +75,9 @@ app.include_router(solution_router)
 app.include_router(study_plan_router)
 
 # ── Static Files ───────────────────────────────────────────────────────
-app.mount("/images", StaticFiles(directory="images"), name="images")
+_IMAGES_DIR = Path(__file__).resolve().parent.parent / "images"
+_IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+app.mount("/images", StaticFiles(directory=str(_IMAGES_DIR)), name="images")
 
 @app.get("/")
 async def root():

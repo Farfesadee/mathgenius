@@ -1,0 +1,27 @@
+# MathGenius backend — Render blueprint (free tier works).
+# Dashboard alternative: New + → Web Service → Root Directory = backend,
+# Build = pip install -r requirements-prod.txt,
+# Start = uvicorn app.main:app --host 0.0.0.0 --port $PORT
+services:
+  - type: web
+    name: mathgenius-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements-prod.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: RATE_LIMIT_PER_MINUTE
+        value: 100
+      - key: ALLOWED_ORIGINS
+        value: https://mathgenius.guru,https://www.mathgenius.guru
+      - key: GROQ_API_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false

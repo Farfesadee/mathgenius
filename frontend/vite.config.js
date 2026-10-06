@@ -55,7 +55,7 @@ export default defineConfig({
           },
           // Your FastAPI backend — network first, 1-day cache fallback
           {
-            urlPattern: /^http:\/\/localhost:8000\/.*/i,
+            urlPattern: /^https?:\/\/(localhost:8000|127\.0\.0\.1:8000|api\.mathgenius\.guru)\/.*/i,
             handler: 'NetworkFirst',
             options: {
               cacheName: 'backend-api',

@@ -64,3 +64,6 @@ backend/jamb/
 *.temp
 /tmp/
 .cache/
+
+# Local deploy packages (rebuilt by CI, never committed)
+deploy/

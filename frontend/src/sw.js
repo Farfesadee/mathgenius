@@ -7,6 +7,11 @@
 // vite-plugin-pwa will include it automatically via the `strategies: 'injectManifest'`
 // option (see note below).
 
+// ── Precache app shell (required for injectManifest strategy) ────
+// Workbox replaces self.__WB_MANIFEST with the build asset manifest.
+import { precacheAndRoute } from 'workbox-precaching'
+precacheAndRoute(self.__WB_MANIFEST)
+
 // ── Handle incoming push notifications ───────────────────────────
 self.addEventListener('push', (event) => {
   if (!event.data) return
