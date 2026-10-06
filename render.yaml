@@ -29,6 +29,8 @@ services:
         sync: false
       - key: SMTP_REPLY_TO
         value: help@mathgenius.guru
+      - key: ADMIN_EMAIL
+        value: help@mathgenius.guru
       - key: FRONTEND_URL
         value: https://mathgenius.guru
       - key: GROQ_API_KEY

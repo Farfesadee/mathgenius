@@ -8,7 +8,11 @@ from typing import Optional, List
 from dotenv import load_dotenv
 
 from app.dependencies import require_auth
-from app.services.email_service import render_welcome_email, send_email
+from app.services.email_service import (
+    render_welcome_email,
+    render_content_flag_email,
+    send_email,
+)
 
 load_dotenv()
 
@@ -263,6 +267,101 @@ async def send_welcome_email(user=Depends(require_auth)):
             },
         )
         return {"sent": True}
+
+
+class ContentFlagRequest(BaseModel):
+    question_text: str
+    topic: Optional[str] = ""
+    exam_type: Optional[str] = ""
+    source: Optional[str] = ""
+    level: Optional[str] = ""
+    reason: Optional[str] = ""
+    note: Optional[str] = ""
+
+
+# ════════════════════════════════════════════════════════════════════════════
+#  CONTENT FLAGS — user-reported questions → admin email
+# ════════════════════════════════════════════════════════════════════════════
+
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "help@mathgenius.guru").strip()
+
+
+@router.post("/content-flag")
+async def report_content_flag(req: ContentFlagRequest, user=Depends(require_auth)):
+    """Store a user-reported question problem and email the details to admin.
+
+    A confirmation also lands in the reporter's in-app notifications.
+    Never raises for mail/DB hiccups — always returns {ok: bool}.
+    """
+    user_id = getattr(user, "id", None)
+    reporter_email = (getattr(user, "email", "") or "").strip()
+    if not user_id or not req.question_text.strip():
+        return {"ok": False, "reason": "missing-data"}
+
+    reporter_name = ""
+    username = ""
+    try:
+        async with httpx.AsyncClient(timeout=10) as client:
+            prof = await client.get(
+                sb_url("profiles", f"id=eq.{user_id}&select=full_name,username&limit=1"),
+                headers=HEADERS,
+            )
+            if prof.status_code == 200 and prof.json():
+                reporter_name = prof.json()[0].get("full_name") or ""
+                username = prof.json()[0].get("username") or ""
+    except Exception:
+        pass
+
+    flag = {
+        "reporter_name": reporter_name or username or reporter_email,
+        "reporter_email": reporter_email,
+        "source": req.source or "",
+        "exam_type": req.exam_type or "",
+        "topic": req.topic or "",
+        "level": req.level or "",
+        "reason": req.reason or "",
+        "note": req.note or "",
+        "question_text": req.question_text.strip()[:2000],
+    }
+
+    # 1. Store for the record (best effort)
+    try:
+        async with httpx.AsyncClient(timeout=10) as client:
+            await client.post(
+                sb_url("question_flags"),
+                headers=HEADERS,
+                json={"user_id": user_id, "user_email": reporter_email,
+                      "username": username, **flag, "status": "open"},
+            )
+    except Exception:
+        pass
+
+    # 2. Email admin with everything needed to fix it
+    subject, html_body, text_body = render_content_flag_email(flag)
+    mailed = await asyncio.to_thread(
+        send_email, ADMIN_EMAIL, subject, html_body, text_body,
+        reporter_email or None,
+    )
+
+    # 3. Confirm to the reporter via the app notification bell
+    try:
+        async with httpx.AsyncClient(timeout=10) as client:
+            await client.post(
+                sb_url("notifications"),
+                headers=HEADERS,
+                json={
+                    "user_id": user_id,
+                    "type": "report",
+                    "title": "Thanks for the report!",
+                    "message": "Our team will review that question shortly.",
+                    "icon": "bell",
+                    "link": None,
+                },
+            )
+    except Exception:
+        pass
+
+    return {"ok": True, "emailed": mailed}
 
 
 # ════════════════════════════════════════════════════════════════════════════

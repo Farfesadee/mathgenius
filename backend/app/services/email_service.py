@@ -17,6 +17,7 @@ Optional:
 import logging
 import os
 import smtplib
+from html import escape as _esc
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -53,7 +54,8 @@ def _smtp_settings() -> dict:
     }
 
 
-def send_email(to_email: str, subject: str, html_body: str, text_body: str = "") -> bool:
+def send_email(to_email: str, subject: str, html_body: str, text_body: str = "",
+               reply_to: str = "") -> bool:
     """Send one HTML (+ optional plain-text) email. Returns True on success.
 
     Returns False (never raises) when SMTP is unconfigured or sending fails,
@@ -70,8 +72,9 @@ def send_email(to_email: str, subject: str, html_body: str, text_body: str = "")
     msg["Subject"] = subject
     msg["From"] = f'{cfg["from_name"]} <{cfg["from_email"]}>'
     msg["To"] = to_email
-    if cfg["reply_to"]:
-        msg["Reply-To"] = cfg["reply_to"]
+    rt = (reply_to or "").strip() or cfg["reply_to"]
+    if rt:
+        msg["Reply-To"] = rt
     if text_body:
         msg.attach(MIMEText(text_body, "plain", "utf-8"))
     msg.attach(MIMEText(html_body, "html", "utf-8"))
@@ -175,5 +178,67 @@ def render_welcome_email(first_name: str = "") -> tuple:
         f"Open your dashboard: {dashboard_url}\n\n"
         f"Need help? Reply to this email ({help_email}).\n"
         "© 2026 MathGenius · mathgenius.guru"
+    )
+    return subject, html_body, text_body
+
+
+def render_content_flag_email(flag: dict) -> tuple:
+    """Admin alert for a user-reported question. Returns (subject, html, text).
+
+    Expected keys: reporter_name, reporter_email, source, exam_type, topic,
+    level, reason, note, question_text.
+    """
+    exam = (flag.get("exam_type") or "General").strip() or "General"
+    topic = (flag.get("topic") or "Unspecified").strip() or "Unspecified"
+    subject = f"[MathGenius] Flagged {exam} question: {topic}"
+
+    def row(label, value):
+        v = _esc((value or "—").strip() or "—")
+        return (
+            f'<tr><td style="padding:8px 12px;font-size:13px;color:{MUTED};'
+            f'width:130px;vertical-align:top;">{label}</td>'
+            f'<td style="padding:8px 12px;font-size:14px;color:{INK};">{v}</td></tr>'
+        )
+
+    rows = "".join([
+        row("Reported by", f'{flag.get("reporter_name", "")} ({flag.get("reporter_email", "")})'),
+        row("Source", flag.get("source", "")),
+        row("Exam", exam),
+        row("Category", topic),
+        row("Level", flag.get("level", "")),
+        row("Reason", flag.get("reason", "")),
+        row("Note", flag.get("note", "")),
+    ])
+
+    html_body = f"""<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"></head>
+<body style="margin:0;padding:0;background-color:{CREAM};font-family:Arial,Helvetica,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:{CREAM};padding:32px 16px;">
+    <tr><td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:#ffffff;border-radius:16px;overflow:hidden;">
+        <tr><td style="background-color:{TEAL};padding:20px 32px;">
+          <div style="color:#ffffff;font-size:18px;font-weight:bold;">Flagged question needs review</div>
+          <div style="color:#d7e9e9;font-size:13px;">{_esc(exam)} · {_esc(topic)}</div>
+        </td></tr>
+        <tr><td style="padding:24px 32px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">{rows}</table>
+          <p style="font-size:13px;color:{MUTED};margin:20px 0 6px 0;">Question text:</p>
+          <div style="background-color:{PAPER};border-left:4px solid {GOLD};padding:12px 16px;font-size:14px;color:{INK};white-space:pre-wrap;">{_esc(flag.get("question_text", ""))}</div>
+          <p style="font-size:13px;color:{MUTED};margin:16px 0 0 0;">Reply to this email to follow up with the reporter directly.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>"""
+
+    text_body = (
+        f"Flagged {exam} question ({topic})\n\n"
+        f"Reported by: {flag.get('reporter_name', '')} ({flag.get('reporter_email', '')})\n"
+        f"Source: {flag.get('source', '')} | Level: {flag.get('level', '')}\n"
+        f"Reason: {flag.get('reason', '')}\n"
+        f"Note: {flag.get('note', '')}\n\n"
+        f"Question:\n{flag.get('question_text', '')}\n"
     )
     return subject, html_body, text_body

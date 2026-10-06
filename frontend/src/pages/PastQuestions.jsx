@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
-import { askExamQuestion, listExamPapers, ingestExamPaper } from '../services/api'
+import { askExamQuestion, listExamPapers, ingestExamPaper, reportContentFlag } from '../services/api'
+import ReportQuestionModal from '../components/ReportQuestionModal'
 import { ExplanationBody } from '../utils/RenderMath'
 import { saveBookmark } from '../lib/bookmarks'
-import { Target, Folder, Upload, Brain, Bookmark, Lightbulb, Clock, ClipboardList, TriangleAlert, Calculator, Sparkles, FileText, Check, X } from 'lucide-react'
+import { Target, Folder, Upload, Brain, Bookmark, Lightbulb, Clock, ClipboardList, TriangleAlert, Calculator, Sparkles, FileText, Check, X, Flag } from 'lucide-react'
 
 const EXAM_TYPES = ['WAEC', 'NECO', 'JAMB', 'OTHER']
 const YEARS      = Array.from({ length: 25 }, (_, i) => 2024 - i)
@@ -65,6 +66,37 @@ export default function PastQuestions() {
   const [response,   setResponse]   = useState('')
   const [loading,    setLoading]    = useState(false)
   const [bookmarked, setBookmarked] = useState(false)
+  const [reportOpen,    setReportOpen]    = useState(false)
+  const [reportSending, setReportSending] = useState(false)
+  const [reportSent,    setReportSent]    = useState(false)
+  const [reportError,   setReportError]   = useState('')
+
+  const openReport = () => {
+    setReportSent(false)
+    setReportError('')
+    setReportOpen(true)
+  }
+
+  const submitReport = async ({ reason, note }) => {
+    setReportSending(true)
+    setReportError('')
+    try {
+      await reportContentFlag({
+        question_text: question || '',
+        topic: '',
+        exam_type: examType || 'WAEC',
+        source: 'past-questions',
+        level: '',
+        reason,
+        note,
+      })
+      setReportSent(true)
+    } catch {
+      setReportError('Could not send. Check your connection and try again.')
+    } finally {
+      setReportSending(false)
+    }
+  }
   const [papers,     setPapers]     = useState([])
   const [tab,        setTab]        = useState('practice')  // practice | upload | papers
 
@@ -296,17 +328,26 @@ export default function PastQuestions() {
                     <Brain size={20} className="inline-block mr-1.5" /> Euler's Solution
                   </span>
                   {user && (
-                    <button
-                      onClick={handleBookmark}
-                      className={`text-xs px-3 py-1.5 rounded-lg font-medium
-                                  transition-all
-                        ${bookmarked
-                          ? 'bg-yellow-400 text-[var(--color-ink)]'
-                          : 'bg-white/20 hover:bg-white/30 text-white'
-                        }`}
-                    >
-                      {bookmarked ? <><Check size={14} className="inline-block mr-1" /> Saved!</> : <><Bookmark size={14} className="inline-block mr-1" /> Save</>}
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={openReport}
+                        title="Report a problem with this question"
+                        className="text-xs px-3 py-1.5 rounded-lg font-medium
+                                   transition-all bg-white/20 hover:bg-white/30 text-white">
+                        <Flag size={14} className="inline-block mr-1" /> Report
+                      </button>
+                      <button
+                        onClick={handleBookmark}
+                        className={`text-xs px-3 py-1.5 rounded-lg font-medium
+                                    transition-all
+                          ${bookmarked
+                            ? 'bg-yellow-400 text-[var(--color-ink)]'
+                            : 'bg-white/20 hover:bg-white/30 text-white'
+                          }`}
+                      >
+                        {bookmarked ? <><Check size={14} className="inline-block mr-1" /> Saved!</> : <><Bookmark size={14} className="inline-block mr-1" /> Save</>}
+                      </button>
+                    </div>
                   )}
                 </div>
                 <div className="bg-white p-6">
@@ -556,6 +597,12 @@ export default function PastQuestions() {
           </div>
         </div>
       )}
+      <ReportQuestionModal open={reportOpen}
+        onClose={() => setReportOpen(false)}
+        onSubmit={submitReport}
+        sending={reportSending}
+        sent={reportSent}
+        error={reportError} />
     </div>
   )
 }

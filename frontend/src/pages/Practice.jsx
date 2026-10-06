@@ -3,7 +3,8 @@ import { useLocalStorageState } from '../hooks/useLocalStorageState'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
 import { useSearchParams } from 'react-router-dom'
-import { generateQuestion, gradeAnswer, getWorkedExample, getRetryQuestion } from '../services/api'
+import { generateQuestion, gradeAnswer, getWorkedExample, getRetryQuestion, reportContentFlag } from '../services/api'
+import ReportQuestionModal from '../components/ReportQuestionModal'
 import { createSession, saveAttempt, completeSession, getSessionHistory } from '../lib/practice'
 import { submitAssignment, getMyAssignments, checkAndCreateStrugglingAlert } from '../lib/social2'
 import { getConversations } from '../lib/conversations'
@@ -493,6 +494,41 @@ export default function Practice() {
   // ── Progressive hints state ───────────────────────────────────────────
   const [hints,        setHints]        = useState([])   // array of up to 3 hint strings
   const [hintLevel,    setHintLevel]    = useState(0)    // 0=none, 1=hint1, 2=hint2, 3=hint3
+
+  // ── Report-a-problem state ────────────────────────────────────────────
+  const [reportOpen,    setReportOpen]    = useState(false)
+  const [reportSending, setReportSending] = useState(false)
+  const [reportSent,    setReportSent]    = useState(false)
+  const [reportError,   setReportError]   = useState('')
+
+  const openReport = () => {
+    setReportSent(false)
+    setReportError('')
+    setReportOpen(true)
+  }
+
+  const submitReport = async ({ reason, note }) => {
+    setReportSending(true)
+    setReportError('')
+    try {
+      await reportContentFlag({
+        question_text: question || '',
+        topic: topic || '',
+        exam_type: sessionMode === 'predicted'
+          ? (profile?.exam_target || 'WAEC')
+          : 'Practice',
+        source: 'practice',
+        level: selectedLevel || '',
+        reason,
+        note,
+      })
+      setReportSent(true)
+    } catch {
+      setReportError('Could not send. Check your connection and try again.')
+    } finally {
+      setReportSending(false)
+    }
+  }
 
   // ── Retry question state ──────────────────────────────────────────────
   const [retryQuestion,  setRetryQuestion]  = useState(null)   // {question, answer, hints}
@@ -1905,6 +1941,14 @@ Be warm, encouraging, and specific. Address the student directly.`
               <p className="text-[var(--color-ink)] text-base leading-relaxed font-medium">
                 {question}
               </p>
+              <div className="mt-3 flex justify-end">
+                <button onClick={openReport}
+                  className="text-[11px] font-mono uppercase tracking-widest
+                             text-[var(--color-muted)] hover:text-red-500
+                             transition-colors flex items-center gap-1">
+                  <Flag size={12} /> Report a problem
+                </button>
+              </div>
               {hints.length > 0 && !submitted && (
                 <div className="mt-4 space-y-2">
                   {/* Show revealed hints */}
@@ -2223,6 +2267,12 @@ Be warm, encouraging, and specific. Address the student directly.`
           )}
         </div>
       )}
+      <ReportQuestionModal open={reportOpen}
+        onClose={() => setReportOpen(false)}
+        onSubmit={submitReport}
+        sending={reportSending}
+        sent={reportSent}
+        error={reportError} />
     </div>
   )
 }
