@@ -819,3 +819,186 @@ async def get_public_profile(user_id: str):
         "top_topics":      topics[:3],
     }
 
+
+# ════════════════════════════════════════════════════════════════════════════
+#  SOLUTIONS ROOM — community-shared solutions (security-first)
+# ════════════════════════════════════════════════════════════════════════════
+# Rules enforced here (never trust the client):
+#  - every write requires a valid Supabase JWT (require_auth)
+#  - strict length caps; only plain text is stored (rendered safely by the
+#    frontend — no HTML is ever interpreted)
+#  - max 20 shares per user per day (spam cap)
+#  - likes are one-per-user (toggle); deletes are owner-only
+#  - reads go through the service key; tables stay RLS-locked (no policies)
+
+ROOM_MAX_SHARES_PER_DAY = 20
+
+
+class RoomShareRequest(BaseModel):
+    question_text: str
+    solution_text: str
+    topic: Optional[str] = ""
+    exam_type: Optional[str] = ""
+    source: Optional[str] = ""
+
+
+class RoomLikeRequest(BaseModel):
+    solution_id: str
+
+
+def _clean_text(value: str, limit: int) -> str:
+    return " ".join((value or "").split())[:limit]
+
+
+async def _room_username(client: httpx.AsyncClient, user_id: str) -> str:
+    try:
+        prof = await client.get(
+            sb_url("profiles", f"id=eq.{user_id}&select=username,full_name&limit=1"),
+            headers=HEADERS,
+        )
+        if prof.status_code == 200 and prof.json():
+            row = prof.json()[0]
+            return row.get("username") or (row.get("full_name") or "").split(" ")[0] or "Student"
+    except Exception:
+        pass
+    return "Student"
+
+
+@router.post("/room/share")
+async def room_share(req: RoomShareRequest, user=Depends(require_auth)):
+    user_id = getattr(user, "id", None)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Please sign in again.")
+    question = _clean_text(req.question_text, 2000)
+    solution = _clean_text(req.solution_text, 8000)
+    if len(question) < 10 or len(solution) < 10:
+        raise HTTPException(status_code=400, detail="Question and solution need a bit more detail.")
+    topic = _clean_text(req.topic, 80)
+    exam_type = _clean_text(req.exam_type, 20)
+    source = _clean_text(req.source, 30)
+
+    today = datetime.utcnow().date().isoformat()
+    async with httpx.AsyncClient(timeout=10) as client:
+        cnt = await client.get(
+            sb_url("room_solutions",
+                   f"user_id=eq.{user_id}&created_at=gte.{today}T00:00:00Z&select=id"),
+            headers={**HEADERS, "Prefer": "count=exact"},
+        )
+        try:
+            total = int(cnt.headers.get("Content-Range", "*/0").split("/")[-1])
+        except (ValueError, IndexError):
+            total = 0
+        if total >= ROOM_MAX_SHARES_PER_DAY:
+            raise HTTPException(status_code=429, detail="Daily sharing limit reached. Try again tomorrow.")
+        username = await _room_username(client, user_id)
+        ins = await client.post(
+            sb_url("room_solutions"),
+            headers=HEADERS,
+            json={"user_id": user_id, "username": username,
+                  "question_text": question, "solution_text": solution,
+                  "topic": topic, "exam_type": exam_type, "source": source,
+                  "likes_count": 0, "status": "open"},
+        )
+    if ins.status_code not in (200, 201):
+        raise HTTPException(status_code=500, detail="Could not share right now. Please try again.")
+    row = ins.json()
+    row = row[0] if isinstance(row, list) else row
+    return {"ok": True, "id": row.get("id")}
+
+
+@router.get("/room/feed")
+async def room_feed(topic: str = "", exam_type: str = "",
+                    limit: int = 20, offset: int = 0,
+                    user=Depends(require_auth)):
+    user_id = getattr(user, "id", None)
+    limit = max(1, min(limit, 50))
+    offset = max(0, offset)
+    # Strip wildcard chars so filters can't be widened maliciously
+    topic = (topic or "").replace("*", "").replace("%", "")[:80]
+    exam_type = (exam_type or "").replace("*", "").replace("%", "")[:20]
+    q = "select=id,user_id,username,question_text,solution_text,topic,exam_type,source,likes_count,created_at&order=created_at.desc"
+    q += f"&limit={limit}&offset={offset}"
+    if topic:
+        q += f"&topic=ilike.*{topic}*"
+    if exam_type:
+        q += f"&exam_type=eq.{exam_type}"
+    async with httpx.AsyncClient(timeout=10) as client:
+        resp = await client.get(sb_url("room_solutions", q), headers=HEADERS)
+        liked = set()
+        if user_id:
+            mine = await client.get(
+                sb_url("room_likes", f"user_id=eq.{user_id}&select=solution_id&limit=500"),
+                headers=HEADERS,
+            )
+            if mine.status_code == 200:
+                liked = {r.get("solution_id") for r in (mine.json() or [])}
+    rows = resp.json() if resp.status_code == 200 else []
+    for r in rows:
+        r["liked_by_me"] = r.get("id") in liked
+        r["mine"] = (r.get("user_id") == user_id)
+    return {"solutions": rows}
+
+
+@router.post("/room/like")
+async def room_like(req: RoomLikeRequest, user=Depends(require_auth)):
+    user_id = getattr(user, "id", None)
+    if not user_id or not req.solution_id:
+        raise HTTPException(status_code=401, detail="Please sign in again.")
+    async with httpx.AsyncClient(timeout=10) as client:
+        existing = await client.get(
+            sb_url("room_likes",
+                   f"user_id=eq.{user_id}&solution_id=eq.{req.solution_id}&select=solution_id&limit=1"),
+            headers=HEADERS,
+        )
+        has = existing.status_code == 200 and bool(existing.json())
+        if has:
+            await client.delete(
+                sb_url("room_likes",
+                       f"user_id=eq.{user_id}&solution_id=eq.{req.solution_id}"),
+                headers=HEADERS,
+            )
+            delta = -1
+        else:
+            await client.post(
+                sb_url("room_likes"),
+                headers=HEADERS,
+                json={"user_id": user_id, "solution_id": req.solution_id},
+            )
+            delta = 1
+        cur = await client.get(
+            sb_url("room_solutions", f"id=eq.{req.solution_id}&select=likes_count&limit=1"),
+            headers=HEADERS,
+        )
+        count = 0
+        if cur.status_code == 200 and cur.json():
+            count = max(0, (cur.json()[0].get("likes_count") or 0) + delta)
+            await client.patch(
+                sb_url("room_solutions", f"id=eq.{req.solution_id}"),
+                headers=HEADERS,
+                json={"likes_count": count},
+            )
+    return {"ok": True, "liked": not has, "likes_count": count}
+
+
+@router.delete("/room/solution/{solution_id}")
+async def room_delete(solution_id: str, user=Depends(require_auth)):
+    user_id = getattr(user, "id", None)
+    async with httpx.AsyncClient(timeout=10) as client:
+        row = await client.get(
+            sb_url("room_solutions", f"id=eq.{solution_id}&select=user_id&limit=1"),
+            headers=HEADERS,
+        )
+        if row.status_code != 200 or not row.json():
+            raise HTTPException(status_code=404, detail="Solution not found.")
+        if row.json()[0].get("user_id") != user_id:
+            raise HTTPException(status_code=403, detail="You can only delete your own shares.")
+        await client.delete(
+            sb_url("room_likes", f"solution_id=eq.{solution_id}"),
+            headers=HEADERS,
+        )
+        await client.delete(
+            sb_url("room_solutions", f"id=eq.{solution_id}"),
+            headers=HEADERS,
+        )
+    return {"ok": True}
+

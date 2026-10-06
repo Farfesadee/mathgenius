@@ -107,6 +107,14 @@ export const generateCBTReport = (questions, score, total, timeSecs, examType, t
 // ── TRACKING ───────────────────────────────────────────────
 export const reportContentFlag = (payload) =>
   API.post('/tracking/content-flag', payload)
+export const shareRoomSolution = (payload) =>
+  API.post('/tracking/room/share', payload)
+export const getRoomFeed = (params = {}) =>
+  API.get('/tracking/room/feed', { params })
+export const toggleRoomLike = (solutionId) =>
+  API.post('/tracking/room/like', { solution_id: solutionId })
+export const deleteRoomSolution = (solutionId) =>
+  API.delete(`/tracking/room/solution/${solutionId}`)
 export const sendContactMessage = (payload) =>
   API.post('/tracking/contact', payload)
 export const getUserProfile = (userId) =>

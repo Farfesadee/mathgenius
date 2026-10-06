@@ -16,6 +16,7 @@ const NAV_LINKS = [
   { path: '/practice', label: 'Practice', icon: Target,    auth: true  },
   { path: '/mock-exam',label: 'Mock Exam',icon: ClipboardList, auth: true  },
   { path: '/dashboard',label: 'Dashboard',icon: BarChart3, auth: true  },
+  { path: '/room',     label: 'Room',     icon: Users,     auth: true  },
 ]
 
 export default function Header() {

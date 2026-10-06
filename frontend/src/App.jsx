@@ -50,6 +50,7 @@ import Classroom from './pages/Classroom'
 import TeacherParentDashboard from './pages/TeacherParentDashboard'
 import Battle from './pages/Battle'
 import QuestionBank from './pages/QuestionBank'
+import SolutionsRoom from './pages/SolutionsRoom'
 
 function AppRoutes() {
   const { user } = useAuth()
@@ -188,6 +189,9 @@ function AppRoutes() {
           } />
           <Route path="/battle" element={
             <ProtectedRoute><Battle /></ProtectedRoute>
+          } />
+          <Route path="/room" element={
+            <ProtectedRoute><SolutionsRoom /></ProtectedRoute>
           } />
           <Route path="/question-bank" element={
             <ProtectedRoute><QuestionBank /></ProtectedRoute>

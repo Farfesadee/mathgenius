@@ -3,7 +3,7 @@ import { useLocalStorageState } from '../hooks/useLocalStorageState'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
 import { useSearchParams } from 'react-router-dom'
-import { generateQuestion, gradeAnswer, getWorkedExample, getRetryQuestion, reportContentFlag } from '../services/api'
+import { generateQuestion, gradeAnswer, getWorkedExample, getRetryQuestion, reportContentFlag, shareRoomSolution } from '../services/api'
 import ReportQuestionModal from '../components/ReportQuestionModal'
 import { createSession, saveAttempt, completeSession, getSessionHistory } from '../lib/practice'
 import { submitAssignment, getMyAssignments, checkAndCreateStrugglingAlert } from '../lib/social2'
@@ -15,7 +15,7 @@ import {
   updateSpacedRepetition, getDueTopics,
 } from '../lib/learning'
 import { updateTopicProgress } from '../lib/progress'
-import { Monitor, Target, Shuffle, Sparkles, Book, BookOpen, School, GraduationCap, Landmark, Check, X, ClipboardList, Zap, Clock, Lightbulb, Search, Map, Brain, RefreshCw, ArrowUp, ArrowRight, PartyPopper, Trophy, Award, Rocket, Bell, BarChart3, TrendingUp, Star, Mic, Bot, Repeat, Flag, Clapperboard, TriangleAlert } from 'lucide-react'
+import { Monitor, Target, Shuffle, Sparkles, Book, BookOpen, School, GraduationCap, Landmark, Check, X, ClipboardList, Zap, Clock, Lightbulb, Search, Map, Brain, RefreshCw, ArrowUp, ArrowRight, PartyPopper, Trophy, Award, Rocket, Bell, BarChart3, TrendingUp, Star, Mic, Bot, Repeat, Flag, Clapperboard, TriangleAlert, Share2 } from 'lucide-react'
 
 function formatPracticeTakenAt(timestamp) {
   if (!timestamp) return ''
@@ -500,6 +500,33 @@ export default function Practice() {
   const [reportSending, setReportSending] = useState(false)
   const [reportSent,    setReportSent]    = useState(false)
   const [reportError,   setReportError]   = useState('')
+  const [roomSharing,   setRoomSharing]   = useState(false)
+  const [roomShared,    setRoomShared]    = useState(false)
+  const [roomShareError, setRoomShareError] = useState('')
+
+  const shareToRoom = async () => {
+    if (!answer || roomSharing) return
+    setRoomSharing(true)
+    setRoomShareError('')
+    try {
+      await shareRoomSolution({
+        question_text: question || '',
+        solution_text: answer || '',
+        topic: topic || '',
+        exam_type: sessionMode === 'predicted'
+          ? (profile?.exam_target || 'WAEC')
+          : 'Practice',
+        source: 'practice',
+        level: selectedLevel || '',
+      })
+      setRoomShared(true)
+      setTimeout(() => setRoomShared(false), 4000)
+    } catch (err) {
+      setRoomShareError(err?.detail || err?.message || 'Could not share. Try again.')
+    } finally {
+      setRoomSharing(false)
+    }
+  }
 
   const openReport = () => {
     setReportSent(false)
@@ -1941,7 +1968,21 @@ Be warm, encouraging, and specific. Address the student directly.`
               <p className="text-[var(--color-ink)] text-base leading-relaxed font-medium">
                 {question}
               </p>
-              <div className="mt-3 flex justify-end">
+              <div className="mt-3 flex justify-end items-center gap-4">
+                {roomShareError && (
+                  <span className="text-[11px] text-red-500">{roomShareError}</span>
+                )}
+                {submitted && answer && (
+                  <button onClick={shareToRoom} disabled={roomSharing || roomShared}
+                    className="text-[11px] font-mono uppercase tracking-widest
+                               text-[var(--color-muted)] hover:text-[var(--color-teal)]
+                               transition-colors flex items-center gap-1
+                               disabled:opacity-60">
+                    {roomShared
+                      ? <><Check size={12} /> Shared to Room!</>
+                      : <><Share2 size={12} /> {roomSharing ? 'Sharing...' : 'Share to Room'}</>}
+                  </button>
+                )}
                 <button onClick={openReport}
                   className="text-[11px] font-mono uppercase tracking-widest
                              text-[var(--color-muted)] hover:text-red-500
