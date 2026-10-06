@@ -107,6 +107,8 @@ export const generateCBTReport = (questions, score, total, timeSecs, examType, t
 // ── TRACKING ───────────────────────────────────────────────
 export const reportContentFlag = (payload) =>
   API.post('/tracking/content-flag', payload)
+export const sendContactMessage = (payload) =>
+  API.post('/tracking/contact', payload)
 export const getUserProfile = (userId) =>
   API.get(`/tracking/profile/${userId}`)
 export const updateUserProfile = (userId, data) =>

@@ -182,6 +182,45 @@ def render_welcome_email(first_name: str = "") -> tuple:
     return subject, html_body, text_body
 
 
+def render_contact_email(contact: dict) -> tuple:
+    """Admin alert for a contact-page message. Returns (subject, html, text).
+
+    Expected keys: name, email, topic, message.
+    """
+    topic = (contact.get("topic") or "General").strip() or "General"
+    name = (contact.get("name") or "Someone").strip() or "Someone"
+    subject = f"[MathGenius] Contact: {topic} — {name}"
+
+    html_body = f"""<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"></head>
+<body style="margin:0;padding:0;background-color:{CREAM};font-family:Arial,Helvetica,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:{CREAM};padding:32px 16px;">
+    <tr><td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:#ffffff;border-radius:16px;overflow:hidden;">
+        <tr><td style="background-color:{TEAL};padding:20px 32px;">
+          <div style="color:#ffffff;font-size:18px;font-weight:bold;">New contact message</div>
+          <div style="color:#d7e9e9;font-size:13px;">{_esc(topic)} · from {_esc(name)}</div>
+        </td></tr>
+        <tr><td style="padding:24px 32px;">
+          <p style="font-size:14px;color:{INK};margin:0 0 4px 0;"><strong>From:</strong> {_esc(name)} ({_esc(contact.get("email", ""))})</p>
+          <p style="font-size:14px;color:{INK};margin:0 0 16px 0;"><strong>Topic:</strong> {_esc(topic)}</p>
+          <div style="background-color:{PAPER};border-left:4px solid {GOLD};padding:12px 16px;font-size:14px;color:{INK};white-space:pre-wrap;">{_esc(contact.get("message", ""))}</div>
+          <p style="font-size:13px;color:{MUTED};margin:16px 0 0 0;">Reply to this email to answer them directly.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>"""
+
+    text_body = (
+        f"New contact message ({topic}) from {name} <{contact.get('email', '')}>\n\n"
+        f"{contact.get('message', '')}\n"
+    )
+    return subject, html_body, text_body
+
+
 def render_content_flag_email(flag: dict) -> tuple:
     """Admin alert for a user-reported question. Returns (subject, html, text).
 

@@ -733,10 +733,10 @@ export default function Landing() {
               className="hover:text-[var(--color-ink)] transition-colors">
               Sign Up
             </Link>
-            <a href="mailto:help@mathgenius.guru"
+            <Link to="/contact"
               className="hover:text-[var(--color-ink)] transition-colors">
               Contact
-            </a>
+            </Link>
           </div>
           <NewsletterForm />
           <p className="text-xs text-[var(--color-muted)] font-mono">

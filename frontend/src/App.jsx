@@ -3,8 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import ErrorBoundary from './components/ErrorBoundary'
 import OfflineBanner from './components/OfflineBanner'
 import ScrollProgress from './components/ScrollProgress'
+import ScrollToTop from './components/ScrollToTop'
 import BackToTop from './components/BackToTop'
-import ContactFab from './components/ContactFab'
 import CookieBanner from './components/CookieBanner'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
@@ -44,6 +44,7 @@ import ShareProfile from './pages/ShareProfile'
 import Groups from './pages/Groups'
 import TheoryPractice from './pages/TheoryPractice'
 // ── New pages ──────────────────────────────────────────────────────
+import Contact from './pages/Contact'
 import MockExam from './pages/MockExam'
 import Classroom from './pages/Classroom'
 import TeacherParentDashboard from './pages/TeacherParentDashboard'
@@ -66,10 +67,10 @@ function AppRoutes() {
                    focus:text-sm focus:font-bold">
         Skip to content
       </a>
+      <ScrollToTop />
       <ScrollProgress />
       <InstallBanner />
       <BackToTop />
-      <ContactFab />
       <CookieBanner />
       <Routes>
         {/* Public auth pages — no layout */}
@@ -195,6 +196,12 @@ function AppRoutes() {
 
         {/* Public routes — no login needed */}
         <Route path="/share/:userId" element={<ShareProfile />} />
+
+        {/* Contact & Help — inside layout so header/nav stay visible */}
+        <Route element={<Layout />}>
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/help" element={<Contact />} />
+        </Route>
 
         {/* Catch-all — clean 404 page */}
         <Route path="*" element={<NotFound />} />

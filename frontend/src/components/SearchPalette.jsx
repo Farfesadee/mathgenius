@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Search, Home, Calculator, Bot, Monitor, Target, ClipboardList, BarChart3, Trophy, BookOpen, StickyNote, CalendarCheck, FileText, History, User, Zap, Flag } from 'lucide-react'
+import { Search, Home, Calculator, Bot, Monitor, Target, ClipboardList, BarChart3, Trophy, BookOpen, StickyNote, CalendarCheck, FileText, History, User, Zap, Flag, LifeBuoy } from 'lucide-react'
 
 // Site-wide destination index: label + route + match keywords.
 const INDEX = [
@@ -22,6 +22,7 @@ const INDEX = [
   { label: 'Daily Challenge', path: '/daily',         Icon: Zap,           keys: 'daily challenge streak' },
   { label: 'AI Quiz',         path: '/ai-quiz',       Icon: Flag,          keys: 'quiz ai generated' },
   { label: 'Bookmarks',       path: '/bookmarks',     Icon: BookOpen,      keys: 'bookmarks saved' },
+  { label: 'Contact & Help',  path: '/contact',       Icon: LifeBuoy,      keys: 'contact help support email message faq' },
 ]
 
 export default function SearchPalette({ onClose }) {

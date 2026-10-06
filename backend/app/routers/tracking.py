@@ -11,6 +11,7 @@ from app.dependencies import require_auth
 from app.services.email_service import (
     render_welcome_email,
     render_content_flag_email,
+    render_contact_email,
     send_email,
 )
 
@@ -277,6 +278,35 @@ class ContentFlagRequest(BaseModel):
     level: Optional[str] = ""
     reason: Optional[str] = ""
     note: Optional[str] = ""
+
+
+class ContactRequest(BaseModel):
+    name: str
+    email: str
+    topic: Optional[str] = ""
+    message: str
+
+
+@router.post("/contact")
+async def contact_message(req: ContactRequest):
+    """Contact-page form → email to admin. Open to guests (no auth).
+
+    Lightly validated and length-capped. Never raises — always {ok: bool}.
+    """
+    name = (req.name or "").strip()[:80]
+    email = (req.email or "").strip()[:120]
+    topic = (req.topic or "").strip()[:60]
+    message = (req.message or "").strip()[:2000]
+    if len(name) < 2 or "@" not in email or len(message) < 10:
+        return {"ok": False, "reason": "invalid"}
+
+    subject, html_body, text_body = render_contact_email(
+        {"name": name, "email": email, "topic": topic, "message": message}
+    )
+    mailed = await asyncio.to_thread(
+        send_email, ADMIN_EMAIL, subject, html_body, text_body, email or None
+    )
+    return {"ok": mailed}
 
 
 # ════════════════════════════════════════════════════════════════════════════
