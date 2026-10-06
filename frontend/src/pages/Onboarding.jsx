@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { Calculator, GraduationCap, Rocket, Flag, Settings, BookOpen, Target, FileText, Bookmark, BarChart3, Check, Lightbulb, Zap, School, Microscope, Brain, Monitor, ArrowLeft, ArrowRight } from 'lucide-react'
@@ -46,8 +46,31 @@ const FEATURES = [
 export default function Onboarding() {
   const navigate = useNavigate()
   const { updateProfile } = useAuth()
-  const [step, setStep] = useState(0)
-  const [level, setLevel] = useState('')
+  // Resume where the user left off — a refresh must never restart the flow.
+  const [step, setStep] = useState(() => {
+    const saved = parseInt(sessionStorage.getItem('mg_onboarding_step') || '0', 10)
+    if (Number.isNaN(saved)) return 0
+    return Math.min(Math.max(saved, 0), STEPS.length - 1)
+  })
+  const [level, setLevel] = useState(
+    () => sessionStorage.getItem('mg_onboarding_level') || ''
+  )
+
+  // Persist progress on every change (covers Next, Back, and refresh)
+  useEffect(() => {
+    sessionStorage.setItem('mg_onboarding_step', String(step))
+  }, [step])
+  useEffect(() => {
+    if (level) sessionStorage.setItem('mg_onboarding_level', level)
+  }, [level])
+
+  const finishOnboarding = () => {
+    sessionStorage.removeItem('mg_onboarding_step')
+    sessionStorage.removeItem('mg_onboarding_level')
+    sessionStorage.removeItem('onboarding_level')
+    localStorage.setItem('mg_onboarding_done', '1')
+    navigate('/signup')
+  }
 
   const handleNext = async () => {
     if (step === 1 && level) {
@@ -56,8 +79,7 @@ export default function Onboarding() {
     if (step < STEPS.length - 1) {
       setStep(s => s + 1)
     } else {
-      localStorage.setItem('mg_onboarding_done', '1')
-      navigate('/signup')
+      finishOnboarding()
     }
   }
 
@@ -234,10 +256,7 @@ export default function Onboarding() {
 
             {step < STEPS.length - 1 && (
               <button
-                onClick={() => {
-                  localStorage.setItem('mg_onboarding_done', '1')
-                  navigate('/signup')
-                }}
+                onClick={finishOnboarding}
                 className="w-full text-center text-xs text-[var(--color-muted)]
                            hover:text-[var(--color-ink)] mt-3 transition-colors"
               >
