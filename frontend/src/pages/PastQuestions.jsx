@@ -367,7 +367,7 @@ export default function PastQuestions() {
               </div>
               <div className="p-4 space-y-3">
                 {[
-                  'Always show your working — examiners award method marks',
+                  'Always show your working, examiners award method marks',
                   'Read each question twice before attempting',
                   'Circle key information in the question',
                   'Check your answer makes practical sense',
@@ -529,7 +529,7 @@ export default function PastQuestions() {
                                 text-[var(--color-teal)]">
                   <span className="w-4 h-4 border-2 border-[var(--color-teal)]
                                    border-t-transparent rounded-full animate-spin" />
-                  Uploading and ingesting — this may take a few minutes...
+                  Uploading and ingesting, this may take a few minutes...
                 </div>
               )}
 

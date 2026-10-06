@@ -442,7 +442,7 @@ export default function Profile() {
                 <button
                   onClick={() => navigator.share({
                     title: 'Join MathGenius',
-                    text: 'Study WAEC & JAMB maths with AI — use my referral link!',
+                    text: 'Study WAEC & JAMB maths with AI, use my referral link!',
                     url: getReferralLink(refCode),
                   })}
                   className="btn-secondary px-5 py-3 text-sm">
@@ -601,7 +601,7 @@ export default function Profile() {
             </div>
             {role !== 'student' && (
               <p className="mt-2 text-xs text-[var(--color-teal)] font-medium">
-                {role === 'teacher' ? <><Presentation size={16} className="inline-block mr-1" />Teacher</> : <><Users size={16} className="inline-block mr-1" />Parent</>} dashboard unlocked —{' '}
+                {role === 'teacher' ? <><Presentation size={16} className="inline-block mr-1" />Teacher</> : <><Users size={16} className="inline-block mr-1" />Parent</>} dashboard unlocked:{' '}
                 <a href="/monitor" className="underline hover:opacity-80">Go to Monitor →</a>
               </p>
             )}

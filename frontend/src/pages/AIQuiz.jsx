@@ -257,7 +257,7 @@ export default function AIQuiz() {
             <p className="mt-2 text-[10px] font-mono text-[var(--color-muted)] flex items-center gap-1.5">
               <span className="inline-block w-1.5 h-1.5 rounded-full"
                     style={{ backgroundColor: currentMeta.color }} />
-              Showing topics for <strong>{currentMeta.label}</strong> —
+              Showing topics for <strong>{currentMeta.label}</strong>,
               synced with your Teach level. Switch anytime.
             </p>
           </div>
@@ -410,7 +410,7 @@ export default function AIQuiz() {
                 <p className="font-serif font-bold text-lg text-[var(--color-ink)] mb-2">
                   {selected === question.correct_answer
                     ? <><PartyPopper size={24} className="inline-block mr-2" /> Correct!</>
-                    : <><X size={24} className="inline-block mr-2 text-red-500" /> Incorrect — Answer was {question.correct_answer}</>}
+                    : <><X size={24} className="inline-block mr-2 text-red-500" /> Incorrect: Answer was {question.correct_answer}</>}
                 </p>
                 {question.explanation && (
                   <div className="bg-white rounded-xl p-4 text-sm leading-relaxed">

@@ -92,7 +92,7 @@ export default function ImageSolver() {
           </p>
           <p className="text-[var(--color-muted)] text-sm leading-relaxed">
             Take a photo of your textbook, worksheet, or handwritten question.<br />
-            Supports JPG, PNG, WEBP — any image format.
+            Supports JPG, PNG, WEBP: any image format.
           </p>
           <div className="mt-5 inline-block bg-[var(--color-ink)] text-[var(--color-paper)]
                           px-6 py-2.5 rounded-xl font-semibold text-sm">

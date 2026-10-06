@@ -180,7 +180,7 @@ export default function FloatChat() {
                   Hi {firstName}! I'm Euler
                 </p>
                 <p className="text-xs text-[var(--color-muted)] leading-relaxed max-w-[200px] mx-auto">
-                  Pick a topic above or ask me any maths question — I track your progress as you learn!
+                  Pick a topic above or ask me any maths question, I track your progress as you learn!
                 </p>
               </div>
             )}

@@ -384,7 +384,7 @@ function StepBreakdown({ steps }) {
                 <p className="text-sm font-mono text-[var(--color-ink)] bg-white/60
                               rounded-lg px-3 py-1.5 border border-[var(--color-border)]
                               leading-relaxed break-words">
-                  {step.text || <span className="italic text-[var(--color-muted)]">— step not written —</span>}
+                  {step.text || <span className="italic text-[var(--color-muted)]">- step not written -</span>}
                 </p>
                 {/* Euler's note */}
                 {step.note && (
@@ -639,7 +639,7 @@ export default function Practice() {
           setGradeResult({
             result: 'INCORRECT', score: 0, is_correct: false,
             feedback: "Time's up! You ran out of the 60-second challenge window.",
-            motivation: "Speed comes with practice — keep going!",
+            motivation: "Speed comes with practice, keep going!",
           })
           return 0
         }
@@ -1299,7 +1299,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                     Mixed Session
                   </p>
                   <p className="text-xs text-purple-600 mt-0.5 leading-relaxed">
-                    One question from each of 5 random studied topics — tests breadth
+                    One question from each of 5 random studied topics, tests breadth
                   </p>
                 </div>
               </button>
@@ -1446,7 +1446,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                                        text-[var(--color-muted)] block mb-2">
                       Choose Topic
                       <span className="ml-2 normal-case font-sans font-normal">
-                        — only topics you've studied in Teach
+                        - only topics you've studied in Teach
                       </span>
                     </label>
                     <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto pr-1">
@@ -1512,7 +1512,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                         <Zap size={16} className="inline-block mr-1" /> Timed Challenge Mode
                       </p>
                       <p className="text-xs text-[var(--color-muted)] mt-0.5">
-                        60 seconds per question — tests speed & accuracy
+                        60 seconds per question: tests speed & accuracy
                       </p>
                     </div>
                     <div className={`w-10 h-6 rounded-full transition-colors relative shrink-0
@@ -1559,7 +1559,7 @@ Be warm, encouraging, and specific. Address the student directly.`
               {history.length === 0 ? (
                 <div className="p-8 text-center">
                   <p className="text-[var(--color-muted)] text-sm">
-                    No sessions yet — start your first practice!
+                    No sessions yet, start your first practice!
                   </p>
                 </div>
               ) : history.map(session => (
@@ -1753,7 +1753,7 @@ Be warm, encouraging, and specific. Address the student directly.`
         <div className="mb-4 flex items-center gap-3">
           <span className="font-mono text-[10px] uppercase tracking-widest
                            text-[var(--color-gold)]">
-            Before you start — worked example
+            Before you start: worked example
           </span>
         </div>
         <div className="card overflow-hidden">
@@ -1805,7 +1805,7 @@ Be warm, encouraging, and specific. Address the student directly.`
               onClick={() => setShowWorkedExample(false)}
               className="w-full btn-primary py-4 text-base justify-center
                          flex items-center gap-2">
-              <Check size={18} className="inline-block mr-1.5" /> I understand — Start Questions →
+              <Check size={18} className="inline-block mr-1.5" /> I understand - Start Questions →
             </button>
           </div>
         </div>
@@ -1822,12 +1822,12 @@ Be warm, encouraging, and specific. Address the student directly.`
         <div className="flex items-center justify-between mb-2">
           <span className="font-mono text-xs text-[var(--color-muted)] uppercase tracking-widest">
             {sessionMode === 'mixed' && mixedTopics[questionNumber - 1]
-              ? <><Shuffle size={14} className="inline-block mr-1" />Q{questionNumber}/5 — <span className="text-purple-600">{mixedTopics[questionNumber - 1].topic}</span></>
+              ? <><Shuffle size={14} className="inline-block mr-1" />Q{questionNumber}/5 - <span className="text-purple-600">{mixedTopics[questionNumber - 1].topic}</span></>
               : sessionMode === 'predicted' && predictedTopics[questionNumber - 1]
-              ? <><Sparkles size={14} className="inline-block mr-1" />Q{questionNumber}/5 — <span className="text-yellow-700">{predictedTopics[questionNumber - 1].topic}</span></>
+              ? <><Sparkles size={14} className="inline-block mr-1" />Q{questionNumber}/5 - <span className="text-yellow-700">{predictedTopics[questionNumber - 1].topic}</span></>
               : sessionMode === 'weak-drill'
-              ? <><Target size={14} className="inline-block mr-1" />Weak Drill — {topic}</>
-              : <>Question {questionNumber} of 5 — {topic}</>
+              ? <><Target size={14} className="inline-block mr-1" />Weak Drill - {topic}</>
+              : <>Question {questionNumber} of 5 - {topic}</>
             }
           </span>
           <div className="flex items-center gap-3">
@@ -1939,7 +1939,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                   )}
                   {hintLevel === hints.length && hintLevel > 0 && (
                     <p className="text-[10px] font-mono text-[var(--color-muted)] uppercase tracking-wide">
-                      All hints revealed — check the full solution after submitting
+                      All hints revealed, check the full solution after submitting
                     </p>
                   )}
                 </div>
@@ -2110,9 +2110,9 @@ Be warm, encouraging, and specific. Address the student directly.`
                   <div className="rounded-2xl border-2 border-blue-300 overflow-hidden">
                     <div className="bg-blue-500 px-4 py-3 flex items-center justify-between">
                       <div>
-                        <p className="font-bold text-white text-sm flex items-center gap-1.5"><Repeat size={16} />Retry — Simpler Version</p>
+                        <p className="font-bold text-white text-sm flex items-center gap-1.5"><Repeat size={16} />Retry - Simpler Version</p>
                         <p className="text-blue-100 text-xs mt-0.5">
-                          Same concept, easier numbers — build your confidence
+                          Same concept, easier numbers, build your confidence
                         </p>
                       </div>
                       <span className="text-blue-200 text-xs font-mono">Bonus question</span>
@@ -2177,7 +2177,7 @@ Be warm, encouraging, and specific. Address the student directly.`
                             : 'bg-red-50 border-red-200'}`}>
                           <p className={`font-bold text-sm mb-1
                             ${retryResult.is_correct ? 'text-green-700' : 'text-red-700'}`}>
-                            {retryResult.is_correct ? <><Check size={16} className="inline-block mr-1" />Correct! Well done!</> : <><X size={16} className="inline-block mr-1" />Not quite — see solution below</>}
+                            {retryResult.is_correct ? <><Check size={16} className="inline-block mr-1" />Correct! Well done!</> : <><X size={16} className="inline-block mr-1" />Not quite, see solution below</>}
                           </p>
                           <p className="text-xs text-[var(--color-muted)]">{retryResult.feedback}</p>
                           <button

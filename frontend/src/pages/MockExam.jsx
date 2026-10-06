@@ -231,7 +231,7 @@ export default function MockExam() {
         <div className="p-6 space-y-5">
           <div>
             <label className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-muted)] block mb-2">
-              Year (optional — blank = all years mixed)
+              Year (optional: blank = all years mixed)
             </label>
             <select value={year} onChange={e => setYear(e.target.value)}
               className="w-full border-2 border-[var(--color-border)] focus:border-[var(--color-teal)]
@@ -255,7 +255,7 @@ export default function MockExam() {
           </div>
 
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
-            <Clock size={16} className="inline-block mr-1 shrink-0" /> Once started the timer cannot be paused. Answer all questions — unanswered questions
+            <Clock size={16} className="inline-block mr-1 shrink-0" /> Once started the timer cannot be paused. Answer all questions, unanswered questions
             count as wrong. You can flag questions to review before submitting.
           </div>
 
@@ -466,7 +466,7 @@ export default function MockExam() {
                   {q.topic && <span className="ml-2 text-xs text-[var(--color-muted)] font-normal">{q.topic}</span>}
                 </span>
                 <span className={`font-bold text-sm ${isCorrect ? 'text-green-600' : isSkipped ? 'text-amber-600' : 'text-red-500'}`}>
-                  {isCorrect ? <><Check size={16} className="inline-block mr-1" />Correct</> : isSkipped ? '— Skipped' : <><X size={16} className="inline-block mr-1" />Wrong</>}
+                  {isCorrect ? <><Check size={16} className="inline-block mr-1" />Correct</> : isSkipped ? '- Skipped' : <><X size={16} className="inline-block mr-1" />Wrong</>}
                 </span>
               </div>
               <div className="px-5 py-4">

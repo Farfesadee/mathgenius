@@ -9,7 +9,7 @@ const FEATURES = [
   {
     icon: Lightbulb,
     title: 'AI Explanations',
-    desc: 'Ask Euler — our AI tutor — to explain any maths concept in simple terms, step by step.',
+    desc: 'Ask Euler, our AI tutor, to explain any maths concept in simple terms, step by step.',
   },
   {
     icon: Monitor,
@@ -34,7 +34,7 @@ const FEATURES = [
   {
     icon: BookOpen,
     title: 'Formula Sheet',
-    desc: '70+ WAEC & JAMB formulas in one searchable reference — always at your fingertips.',
+    desc: '70+ WAEC & JAMB formulas in one searchable reference, always at your fingertips.',
   },
 ]
 
@@ -104,7 +104,7 @@ function LandingChat() {
           <div className="w-10 h-10 rounded-full bg-white/20 flex items-center
                           justify-center font-serif font-black text-white text-lg">E</div>
           <div>
-            <p className="font-serif font-bold text-white">Euler — AI Maths Tutor</p>
+            <p className="font-serif font-bold text-white">Euler - AI Maths Tutor</p>
             <p className="text-white/70 text-xs">
               {limitReached ? 'Sign up for unlimited access' : `${remaining} free question${remaining !== 1 ? 's' : ''} remaining`}
             </p>
@@ -139,7 +139,7 @@ function LandingChat() {
           <div className="h-full flex flex-col items-center justify-center text-center gap-3">
             <Calculator size={48} strokeWidth={1.5} className="text-[var(--color-teal)]" />
             <p className="font-serif font-bold text-[var(--color-ink)] text-lg">
-              Try Euler — no account needed
+              Try Euler: no account needed
             </p>
             <p className="text-sm text-[var(--color-muted)] max-w-xs">
               Ask any WAEC, JAMB, NECO or BECE maths question and get a full step-by-step explanation.
@@ -369,14 +369,14 @@ export default function Landing() {
                           text-[var(--color-gold)] mb-3 flex items-center
                           justify-center gap-3">
               <span className="block w-8 h-px bg-[var(--color-gold)]" />
-              Try It Now — Free
+              Try It Now - Free
               <span className="block w-8 h-px bg-[var(--color-gold)]" />
             </p>
             <h2 className="font-serif font-black text-4xl sm:text-5xl tracking-tight">
               Ask Euler anything
             </h2>
             <p className="text-[var(--color-muted)] mt-3 max-w-lg mx-auto">
-              Get 5 free explanations right now — no sign up needed.
+              Get 5 free explanations right now, no sign up needed.
               Create a free account to unlock unlimited access.
             </p>
           </div>
@@ -532,7 +532,7 @@ export default function Landing() {
           {!testimonialsLoading && testimonials.length === 0 && (
             <div className="text-center py-10">
               <p className="text-white/50 text-sm">
-                No reviews yet — be the first to share your result after completing a mock exam!
+                No reviews yet, be the first to share your result after completing a mock exam!
               </p>
             </div>
           )}

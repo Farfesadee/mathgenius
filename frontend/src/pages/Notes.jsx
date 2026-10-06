@@ -319,7 +319,7 @@ Respond ONLY with this exact JSON (no markdown, no extra text):
                     {score === questions.length
                       ? <><PartyPopper size={16} className="inline-block" /> Perfect! Your notes are paying off!</>
                       : score >= questions.length / 2
-                      ? <><BookOpen size={16} className="inline-block" /> Good effort — review the red ones</>
+                      ? <><BookOpen size={16} className="inline-block" /> Good effort, review the red ones</>
                       : <><TriangleAlert size={16} className="inline-block" /> Review your notes again and try once more</>}
                   </p>
                 </div>
@@ -566,7 +566,7 @@ export default function Notes() {
           <div className="mb-4"><FileText size={48} /></div>
           <p className="text-[var(--color-muted)] text-lg mb-6">
             {notes.length === 0
-              ? 'No notes yet — create your first one!'
+              ? 'No notes yet, create your first one!'
               : 'No notes match your search.'}
           </p>
           {notes.length === 0 && (

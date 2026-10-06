@@ -238,7 +238,7 @@ export default function DailyChallenge() {
               <p className="font-bold text-lg mb-2">
                 {correct
                   ? `Correct! +${DAILY_XP} XP earned!`
-                  : `Incorrect — Correct answer: ${question.correct_answer}`}
+                  : `Incorrect: Correct answer: ${question.correct_answer}`}
               </p>
 
               {question.explanation && (

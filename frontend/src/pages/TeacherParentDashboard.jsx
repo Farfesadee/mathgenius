@@ -270,7 +270,7 @@ function StudentDetail({ student, stats, onBack, onDownloadPDF, downloadingPDF }
               {sessions.map(s => (
                 <div key={s.id} className="flex items-center justify-between px-5 py-3">
                   <div>
-                    <p className="font-medium text-sm text-[var(--color-ink)]">{s.topic || '—'}</p>
+                    <p className="font-medium text-sm text-[var(--color-ink)]">{s.topic || '-'}</p>
                     <p className="text-xs text-[var(--color-muted)]">
                       {s.difficulty} · {new Date(s.completed_at).toLocaleDateString('en-NG', {
                         day:'numeric', month:'short', year:'numeric'
@@ -441,7 +441,7 @@ export default function TeacherParentDashboard() {
         <p className="text-[var(--color-muted)] mt-2">
           {isTeacher
             ? 'Track every student\'s scores, mastery levels and weak topics across all your classes.'
-            : 'Monitor your child\'s learning journey — scores, streaks, and topic mastery at a glance.'}
+            : 'Monitor your child\'s learning journey: scores, streaks, and topic mastery at a glance.'}
         </p>
       </div>
 
@@ -519,7 +519,7 @@ export default function TeacherParentDashboard() {
               {[
                 { label: 'Students',   value: students.length },
                 { label: 'Class avg',  value: `${Math.round(students.reduce((s,x) => s + x.avgScore, 0) / students.length)}%` },
-                { label: 'Top scorer', value: students[0]?.name || '—' },
+                { label: 'Top scorer', value: students[0]?.name || '-' },
               ].map(s => (
                 <div key={s.label} className="flex items-center justify-between">
                   <span className="text-xs text-[var(--color-muted)]">{s.label}</span>

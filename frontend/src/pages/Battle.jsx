@@ -329,7 +329,7 @@ export default function Battle() {
             <Swords size={32} className="inline-block mr-2" /> Head-to-Head Battle
           </h1>
           <p className="text-[var(--color-muted)] mt-2">
-            Challenge another student — same 5 questions, first to finish with the higher score wins.
+            Challenge another student, same 5 questions, first to finish with the higher score wins.
           </p>
         </div>
 
@@ -533,7 +533,7 @@ export default function Battle() {
             <div className={`rounded-2xl px-5 py-4 border-2
               ${gradeResult?.is_correct ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
               <p className={`font-bold text-sm ${gradeResult?.is_correct ? 'text-green-700' : 'text-red-600'}`}>
-                {(gradeResult?.is_correct ? <><Check size={20} className="inline-block mr-1" /> Correct!</> : <><X size={20} className="inline-block mr-1" /> Wrong</>)} — {gradeResult?.feedback}
+                {(gradeResult?.is_correct ? <><Check size={20} className="inline-block mr-1" /> Correct!</> : <><X size={20} className="inline-block mr-1" /> Wrong</>)}: {gradeResult?.feedback}
               </p>
             </div>
 

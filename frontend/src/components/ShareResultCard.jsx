@@ -194,7 +194,7 @@ function drawCard(canvas, data) {
   const stats = [
     { label: 'SCORE',   value: `${pct}%`           },
     { label: 'STREAK',  value: `${streakDays || 0}` },
-    { label: 'MASTERY', value: masteryLevel || '—'  },
+    { label: 'MASTERY', value: masteryLevel || '-'  },
   ]
   stats.forEach((s, i) => {
     const sx = lx + i * 165
@@ -361,7 +361,7 @@ export default function ShareResultCard({
         <p className="text-center text-xs font-medium text-[var(--color-teal)]">
           {status === 'shared'     ? <><Check size={16} className="inline text-green-500" /> Shared successfully!</>
           : status === 'downloaded' ? <><Check size={16} className="inline text-green-500" /> Image saved to downloads!</>
-          : status === 'copy_failed' ? <><AlertTriangle size={16} className="inline text-red-500" /> Copy not supported — use Share instead</>
+          : status === 'copy_failed' ? <><AlertTriangle size={16} className="inline text-red-500" /> Copy not supported, use Share instead</>
           : null}
         </p>
       )}
@@ -388,7 +388,7 @@ export default function ShareResultCard({
           <div>
             <h2 className="font-serif font-black text-2xl">Share Your Result</h2>
             <p className="text-xs text-[var(--color-muted)] mt-0.5">
-              Your result card is ready — tap Share or save the image
+              Your result card is ready, tap Share or save the image
             </p>
           </div>
           {onClose && (

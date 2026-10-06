@@ -107,7 +107,7 @@ export default function Leaderboard() {
           <div className="bg-white p-12 text-center">
             <div className="text-4xl mb-3"><Trophy size={48} className="inline-block" /></div>
             <p className="text-[var(--color-muted)]">
-              No rankings yet — complete a CBT exam to appear here!
+              No rankings yet, complete a CBT exam to appear here!
             </p>
           </div>
         ) : (

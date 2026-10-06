@@ -19,7 +19,7 @@ export function TestimonialPrompt() {
       <div className="mt-4 flex items-center justify-between gap-3
                       bg-amber-50 border border-amber-200 rounded-2xl px-5 py-3">
         <p className="text-sm text-amber-800 font-medium">
-          <Star size={18} className="fill-yellow-500 text-yellow-500 inline mr-1" /> Enjoying MathGenius? Share your result — it helps other students!
+          <Star size={18} className="fill-yellow-500 text-yellow-500 inline mr-1" /> Enjoying MathGenius? Share your result, it helps other students!
         </p>
         <div className="flex items-center gap-2 shrink-0">
           <button
@@ -163,7 +163,7 @@ export default function TestimonialModal({ onClose }) {
               <textarea
                 value={body}
                 onChange={e => setBody(e.target.value)}
-                placeholder="Tell students how MathGenius helped you prepare — be specific about your results!"
+                placeholder="Tell students how MathGenius helped you prepare, be specific about your results!"
                 rows={4}
                 maxLength={300}
                 className="w-full border-2 border-[var(--color-border)] rounded-xl

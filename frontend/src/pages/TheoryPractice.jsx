@@ -270,7 +270,7 @@ Please mark with: SCORE, WHAT YOU GOT RIGHT, WHAT WAS MISSING, COMPLETE SOLUTION
         <div className="border-t border-[var(--color-border)] bg-[var(--color-cream)] p-5">
           <label className="font-mono text-[10px] uppercase tracking-widest
                              text-[var(--color-teal)] block mb-2">
-            Your Answer — show all workings
+            Your Answer: show all workings
           </label>
           <textarea
             value={answer}

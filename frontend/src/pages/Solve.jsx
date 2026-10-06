@@ -513,7 +513,7 @@ function CameraTab() {
               {/* Hint text */}
               <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent px-4 py-4">
                 <p className="text-white/80 text-xs text-center font-mono tracking-wide">
-                  Point at the question — keep steady
+                  Point at the question, keep steady
                 </p>
               </div>
             </div>
@@ -601,7 +601,7 @@ function CameraTab() {
             <div>
               <p className="font-semibold text-white text-sm flex items-center gap-1.5"><Pencil size={16} />Confirm the Question</p>
               <p className="text-white/70 text-xs mt-0.5">
-                Euler extracted this — correct any errors before solving
+                Euler extracted this, correct any errors before solving
               </p>
             </div>
             <button onClick={reset}
@@ -872,7 +872,7 @@ export default function Solve() {
         </p>
         <h1 className="font-serif font-black text-5xl tracking-tight">Scientific Calculator</h1>
         <p className="text-[var(--color-muted)] mt-2 text-lg">
-          Type an expression or upload a photo — Euler solves it across all modes instantly.
+          Type an expression or upload a photo, Euler solves it across all modes instantly.
         </p>
       </div>
 
@@ -1159,7 +1159,7 @@ export default function Solve() {
                   }
                 </p>
                 <p className="text-xs font-semibold mt-1.5" style={{ color: activeMode?.color }}>
-                  <Lightbulb size={14} className="inline-block mr-1" /> Switch modes anytime — re-evaluates instantly.
+                  <Lightbulb size={14} className="inline-block mr-1" /> Switch modes anytime, re-evaluates instantly.
                 </p>
               </div>
             </div>

@@ -230,7 +230,7 @@ function PredictionWidget({ stats, xpStats, masteryData, examTarget }) {
               <div>
                 <p className="font-mono text-[10px] uppercase tracking-widest
                                text-red-500 mb-2">
-                  <Circle size={14} className="inline-block mr-1 text-red-500 fill-red-500" /> High-impact weak topics — fix these first
+                  <Circle size={14} className="inline-block mr-1 text-red-500 fill-red-500" /> High-impact weak topics: fix these first
                 </p>
                 <div className="space-y-2">
                   {weakByImpact.map(t => (
@@ -328,7 +328,7 @@ function PredictionWidget({ stats, xpStats, masteryData, examTarget }) {
                   {weakByImpact.length > 0
                     ? <strong>{weakByImpact[0].topic}</strong>
                     : 'weak topics'
-                  } — bringing it from{' '}
+                  }, bringing it from{' '}
                   {weakByImpact.length > 0 ? `${weakByImpact[0].score}%` : 'current level'} to 80%
                   would add approximately{' '}
                   <strong>
@@ -651,7 +651,7 @@ export default function Dashboard() {
           <div className="bg-white p-6 space-y-4">
             {stats.weakTopics.length === 0 ? (
               <p className="text-green-600 font-medium text-center py-4">
-                <PartyPopper size={20} className="inline-block mr-1" /> No weak topics yet — keep practising!
+                <PartyPopper size={20} className="inline-block mr-1" /> No weak topics yet, keep practising!
               </p>
             ) : stats.weakTopics.map(t => {
               return (
@@ -718,7 +718,7 @@ export default function Dashboard() {
               <p className="text-white/80 text-sm mt-0.5">
                 {done
                   ? 'Great job! Come back tomorrow for a new question.'
-                  : 'Answer 1 question — earn 50 XP'}
+                  : 'Answer 1 question, earn 50 XP'}
               </p>
             </div>
             {done

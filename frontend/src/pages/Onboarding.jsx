@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { PartyPopper, Calculator, GraduationCap, Rocket, Sparkles, Flag, Settings, BookOpen, Target, FileText, Bookmark, BarChart3, Check, Lightbulb, Zap, School, Microscope, Brain, Monitor } from 'lucide-react'
+import { Calculator, GraduationCap, Rocket, Flag, Settings, BookOpen, Target, FileText, Bookmark, BarChart3, Check, Lightbulb, Zap, School, Microscope, Brain, Monitor, ArrowLeft, ArrowRight } from 'lucide-react'
 
 const STEPS = [
   {
     id: 'welcome',
     title: 'Welcome to MathGenius!',
     subtitle: 'Your personal AI mathematics tutor',
-    content: 'Euler is here to help you master mathematics — from basic arithmetic to university-level calculus. Let\'s get you set up in 3 quick steps.',
+    content: 'Euler is here to help you master mathematics, from basic arithmetic to university-level calculus. Let\'s get you set up in 3 quick steps.',
     Icon: Calculator,
   },
   {
@@ -30,13 +30,13 @@ const STEPS = [
     title: 'You\'re all set!',
     subtitle: 'Let\'s start learning',
     content: 'Euler is ready to help you tackle any mathematics problem. Start by exploring a topic or solving a question.',
-    Icon: Sparkles,
+    Icon: GraduationCap,
   },
 ]
 
 const FEATURES = [
   { Icon: Settings, title: 'Solve', desc: 'Solve equations, differentiate and integrate with full step-by-step working' },
-  { Icon: BookOpen, title: 'Teach', desc: 'Learn any topic with Euler — your AI tutor explains everything clearly' },
+  { Icon: BookOpen, title: 'Teach', desc: 'Learn any topic with Euler: your AI tutor explains everything clearly' },
   { Icon: Target, title: 'Practice', desc: 'Test yourself with questions Euler generates and grades for you' },
   { Icon: FileText, title: 'Past Questions', desc: 'Practice real WAEC, NECO and JAMB questions with worked solutions' },
   { Icon: Bookmark, title: 'Bookmarks', desc: 'Save important solutions and explanations for exam revision' },
@@ -124,11 +124,11 @@ export default function Onboarding() {
                 {[
                   {
                     value: 'secondary', Icon: School, label: 'Secondary School',
-                    desc: 'JSS1 to SS3 — WAEC and NECO preparation'
+                    desc: 'JSS1 to SS3: WAEC and NECO preparation'
                   },
                   {
                     value: 'university', Icon: GraduationCap, label: 'Undergraduate',
-                    desc: '100L to 400L — University mathematics'
+                    desc: '100L to 400L: University mathematics'
                   },
                   {
                     value: 'graduate', Icon: Microscope, label: 'Graduate',
@@ -207,12 +207,19 @@ export default function Onboarding() {
             )}
 
             <div className="flex gap-3 mt-8">
-              {step > 0 && (
+              {step > 0 ? (
                 <button
                   onClick={() => setStep(s => s - 1)}
-                  className="btn-secondary px-6 py-3 text-sm"
+                  className="btn-secondary px-6 py-3 text-sm flex items-center gap-1"
                 >
-                  ← Back
+                  <ArrowLeft size={16} /> Back
+                </button>
+              ) : (
+                <button
+                  onClick={() => navigate('/')}
+                  className="btn-secondary px-6 py-3 text-sm flex items-center gap-1"
+                >
+                  <ArrowLeft size={16} /> Back
                 </button>
               )}
               <button
@@ -221,7 +228,7 @@ export default function Onboarding() {
                 className="flex-1 btn-primary py-3.5 justify-center
                            flex items-center gap-2 disabled:opacity-50"
               >
-                {step === STEPS.length - 1 ? <><Rocket size={20} /> Start Learning</> : 'Next →'}
+                {step === STEPS.length - 1 ? <><Rocket size={20} /> Start Learning</> : <>Next <ArrowRight size={18} /></>}
               </button>
             </div>
 

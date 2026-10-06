@@ -50,7 +50,7 @@ export default function PushNotificationToggle({ userId }) {
         if (error.includes('denied')) {
           setStatusMsg('Notifications blocked. Go to your browser settings to allow them.')
         } else if (error.includes('VAPID')) {
-          setStatusMsg('Push not configured yet — come back soon!')
+          setStatusMsg('Push not configured yet, come back soon!')
         } else {
           setStatusMsg('Could not enable notifications: ' + error)
         }

@@ -40,7 +40,7 @@ export default function Home() {
           <p className="text-[var(--color-muted)] text-lg leading-relaxed
                         max-w-md mt-6 mb-10">
             Solve any equation instantly. Learn from the world's best
-            mathematics textbooks. Powered by AI — built for secondary school
+            mathematics textbooks. Powered by AI, built for secondary school
             and university students in Nigeria and beyond.
           </p>
 
@@ -100,17 +100,17 @@ export default function Home() {
             {
               Icon: Brain,
               title: 'AI Tutor',
-              desc: 'Powered by Groq LLaMA 4 — explains every topic step-by-step in language students can actually understand.',
+              desc: 'Powered by Groq LLaMA 4, explains every topic step-by-step in language students can actually understand.',
             },
             {
               Icon: Hash,
               title: 'Full Symbol Calculator',
-              desc: 'Every mathematical symbol at your fingertips — arithmetic, surds, bearings, integrals, Greek letters and more.',
+              desc: 'Every mathematical symbol at your fingertips: arithmetic, surds, bearings, integrals, Greek letters and more.',
             },
             {
               Icon: Triangle,
               title: 'Complete Curriculum',
-              desc: 'Covers SS1–SS3 fully — all the way to university Laplace Transforms and Differential Equations.',
+              desc: 'Covers SS1–SS3 fully, all the way to university Laplace Transforms and Differential Equations.',
             },
             {
               Icon: FileText,
@@ -125,7 +125,7 @@ export default function Home() {
             {
               Icon: BarChart3,
               title: 'Progress Tracking',
-              desc: 'Track weak topics, accuracy, streaks and practice history — all in one personalised dashboard.',
+              desc: 'Track weak topics, accuracy, streaks and practice history, all in one personalised dashboard.',
             },
           ].map(f => {
             const Icon = f.Icon
@@ -161,7 +161,7 @@ export default function Home() {
               {
                 step: '01',
                 title: 'Learn with Euler',
-                desc:  'Pick any topic and chat with Euler — your AI tutor. He explains clearly, answers follow-up questions, and adapts to your level.',
+                desc:  'Pick any topic and chat with Euler: your AI tutor. He explains clearly, answers follow-up questions, and adapts to your level.',
                 Icon:  BookOpen,
               },
               {

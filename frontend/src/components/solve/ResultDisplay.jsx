@@ -126,7 +126,7 @@ export default function ResultDisplay({ result, onExplain, explaining, explanati
           <div className="flex items-center justify-between mb-4">
             <p className="font-mono text-[10px] uppercase tracking-widest
                            text-[var(--color-muted)] flex items-center gap-2">
-              <Brain size={20} /> All Methods — Euler
+              <Brain size={20} /> All Methods - Euler
             </p>
             {user && (
               <button

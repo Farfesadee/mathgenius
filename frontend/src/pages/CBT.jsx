@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
-import { Dices, Circle, Check, X, FileText, TriangleAlert, Trophy, BarChart3, Flame, Settings, Book, Rocket, Flag, Brain, RefreshCw, Clock, ClipboardList } from 'lucide-react'
+import { Dices, Circle, Check, X, FileText, TriangleAlert, Trophy, BarChart3, Flame, Settings, Book, Rocket, Flag, Brain, RefreshCw, Clock, ClipboardList, ArrowLeft } from 'lucide-react'
 import {
   fetchCBTQuestions, createCBTSession, completeCBTSession,
   getCBTHistory, getAvailableTopics, getAvailableYears,
@@ -148,7 +148,7 @@ function SubmitModal({ answered, total, onConfirm, onCancel }) {
         )}
         <div className="flex gap-3">
           <button onClick={onCancel} className="flex-1 btn-secondary py-3 text-sm">
-            ← Go Back
+            <ArrowLeft size={16} className="inline-block mr-1" /> Go Back
           </button>
           <button onClick={onConfirm} className="flex-1 btn-primary py-3 text-sm justify-center">
             Submit Now
@@ -482,7 +482,7 @@ export default function CBT() {
           await createNotification(user.id, {
             type: 'streak',
             title: `${streakResult.newStreak}-day streak!`,
-            message: 'Keep it up — study again tomorrow to extend your streak.',
+            message: 'Keep it up, study again tomorrow to extend your streak.',
             icon: 'flame',
             link: '/mastery',
           })
@@ -603,7 +603,7 @@ export default function CBT() {
                     <Book size={18} className="inline-block mr-1" /> NABTEB is Theory Only
                   </p>
                   <p className="text-amber-700 text-xs leading-relaxed">
-                    NABTEB past questions are essay/theory format — there are no
+                    NABTEB past questions are essay/theory format, there are no
                     multiple-choice CBT questions for this exam type.
                   </p>
                   <a href="/theory"
@@ -619,7 +619,7 @@ export default function CBT() {
                   <div>
                     <label className="font-mono text-[10px] uppercase tracking-widest
                                        text-[var(--color-muted)] block mb-2">
-                      Topics — select one or more (blank = all topics)
+                      Topics: select one or more (blank = all topics)
                     </label>
                     {availTopics.length === 0 ? (
                       <p className="text-xs text-[var(--color-muted)] italic">
@@ -988,7 +988,7 @@ export default function CBT() {
           <div className={`${cfg.bg} px-8 py-8 text-center text-white`}>
             {report.autoSubmit && (
               <div className="bg-white/20 rounded-xl px-4 py-2 text-sm mb-4 inline-block">
-                <Clock size={18} className="inline-block mr-2" /> Time expired — auto submitted
+                <Clock size={18} className="inline-block mr-2" /> Time expired - auto submitted
               </div>
             )}
             <div className="font-serif font-black text-8xl mb-2">{grade}</div>

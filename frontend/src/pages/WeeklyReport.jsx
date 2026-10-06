@@ -91,7 +91,7 @@ export default function WeeklyReport() {
         B: 'Great work! Keep pushing for that A grade.',
         C: 'Decent week. Focus on your weak topics to improve.',
         D: 'You need more practice. Book daily drills.',
-        F: 'Tough week — but every master was once a beginner. Keep going!',
+        F: 'Tough week, but every master was once a beginner. Keep going!',
     }
 
     return (

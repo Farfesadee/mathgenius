@@ -52,7 +52,7 @@ const LEVEL_TOPICS = {
     ],
     'Basic Operations': [
       'Order of Operations (BODMAS/BIDMAS)',
-      'Word Problems — Basic Operations',
+      'Word Problems - Basic Operations',
       'Estimation and Rounding',
     ],
     'Algebra': [
@@ -61,7 +61,7 @@ const LEVEL_TOPICS = {
       'Simple Inequalities',
       'Substitution into Formulae',
       'Word Problems Leading to Equations',
-      'Factorisation — Common Factors',
+      'Factorisation - Common Factors',
       'Expansion of Brackets',
       'Introduction to Simultaneous Equations',
     ],
@@ -211,7 +211,7 @@ const LEVEL_TOPICS = {
     'Calculus I': [
       'Limits and L\'Hôpital\'s Rule',
       'Continuity and Differentiability',
-      'Differentiation — All Rules',
+      'Differentiation - All Rules',
       'Implicit and Parametric Differentiation',
       'Higher Order Derivatives',
       'Taylor and Maclaurin Series',
@@ -288,7 +288,7 @@ const LEVEL_TOPICS = {
       'Analysis of Variance (ANOVA)',
     ],
     'Engineering Mathematics': [
-      'Laplace Transforms (Full — K.A. Stroud)',
+      'Laplace Transforms (Full - K.A. Stroud)',
       'Z-Transforms',
       'Fourier Transforms',
       'Vector Analysis',

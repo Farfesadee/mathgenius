@@ -9,7 +9,7 @@ import {
   submitAssignment, getAssignmentResults, closeAssignment,
 } from '../lib/social2'
 import { useNavigate } from 'react-router-dom'
-import { Medal, X, Check, School, Trophy, Circle, ClipboardList, Target, Star } from 'lucide-react'
+import { Medal, X, Check, School, Trophy, Circle, ClipboardList, Target, Star, ArrowLeft } from 'lucide-react'
 
 const MEDAL_ICON = { 1: Medal, 2: Medal, 3: Medal }
 const MEDAL_COLOR = { 1: 'text-yellow-500', 2: 'text-gray-400', 3: 'text-orange-400' }
@@ -289,7 +289,7 @@ export default function Classroom() {
             <div>
               <button onClick={() => setSelectedStudent(null)}
                 className="mb-4 text-sm font-medium text-[var(--color-teal)] hover:underline flex items-center gap-1">
-                ← Back to Leaderboard
+                <ArrowLeft size={16} className="inline-block mr-1" /> Back to Leaderboard
               </button>
               <div className="card overflow-hidden">
                 <div className="bg-[var(--color-ink)] px-6 py-4">
@@ -602,7 +602,7 @@ export default function Classroom() {
                                       ${(s.score || 0) >= 70 ? 'text-green-600'
                                         : (s.score || 0) >= 50 ? 'text-amber-600'
                                         : 'text-red-500'}`}>
-                                      {s.score ?? '—'}%
+                                      {s.score ?? '-'}%
                                     </span>
                                   </div>
                                 ))}

@@ -166,7 +166,7 @@ function TakeChallenge({ seed, examType }) {
                     <p className="text-[var(--color-muted)] flex items-center justify-center gap-2">
                         {scorePct >= 80 ? <><PartyPopper size={24} /> Excellent! You dominated this challenge!</>
                             : scorePct >= 60 ? <><Dumbbell size={24} /> Good! Challenge someone else to beat this score.</>
-                                : <><BookOpen size={24} /> Keep studying — review the questions below and try again.</>}
+                                : <><BookOpen size={24} /> Keep studying, review the questions below and try again.</>}
                     </p>
                     <div className="flex gap-3 justify-center flex-wrap">
                         <button onClick={() => { navigator.clipboard.writeText(shareMsg); setCopied(true) }}
@@ -185,7 +185,7 @@ function TakeChallenge({ seed, examType }) {
                         <div key={q.id} className={`card p-4 text-sm ${isRight ? 'border-l-4 border-green-500' : 'border-l-4 border-red-400'}`}>
                             <p className="font-medium mb-1">{i + 1}. {q.question_text?.slice(0, 100)}...</p>
                             <p className="text-xs text-[var(--color-muted)]">
-                                Your answer: <strong>{answers[i] || '—'}</strong>  ·  Correct: <strong className="text-green-600">{q.correct_answer}</strong>
+                                Your answer: <strong>{answers[i] || '-'}</strong>  ·  Correct: <strong className="text-green-600">{q.correct_answer}</strong>
                             </p>
                         </div>
                     )

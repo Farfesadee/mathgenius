@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
-import { FileText, BarChart3, Trophy, Check, X, Rocket, ClipboardList, Clock } from 'lucide-react'
+import { FileText, BarChart3, Trophy, Check, X, Rocket, ClipboardList, Clock, ArrowLeft } from 'lucide-react'
 
 function getGrade(pct) {
   if (pct >= 75) return { grade: 'A', color: 'text-green-600',  bg: 'bg-green-500'  }
@@ -97,7 +97,7 @@ export default function CBTHistory() {
           </div>
           <button onClick={() => navigate('/cbt')}
             className="btn-secondary px-4 py-3 text-sm rounded-xl">
-            ← Back to CBT
+            <ArrowLeft size={16} className="inline-block mr-1" /> Back to CBT
           </button>
         </div>
         <p className="text-[var(--color-muted)]">
@@ -291,7 +291,7 @@ export default function CBTHistory() {
                                   <div className="flex gap-3 mt-1 text-[10px]">
                                     <span className={a.is_correct
                                       ? 'text-green-600' : 'text-red-500'}>
-                                      You: {a.student_answer || '—'}
+                                      You: {a.student_answer || '-'}
                                     </span>
                                     {!a.is_correct && (
                                       <span className="text-green-600">
