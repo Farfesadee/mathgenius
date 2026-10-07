@@ -8,7 +8,10 @@ from fastapi import APIRouter, Depends, Request
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 from app.services.groq_service import ask_groq, ask_groq_stream
+from app.services.email_service import render_feedback_email, send_email
 from app.dependencies import require_auth
+
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "help@mathgenius.guru").strip()
 from app.schemas import TeachRequest
 from app.errors import ValidationError, ExternalServiceError
 
@@ -331,4 +334,29 @@ async def submit_feedback(request: FeedbackRequest, user=Depends(require_auth)):
         "comment":          request.comment,
     }
     result = sb.table("teach_feedback").insert(row).execute()
+
+    # Thumbs-down → email admin so weak topics get fixed. Best-effort.
+    if request.rating == "down":
+        try:
+            reporter_email = ""
+            try:
+                u = sb.auth.admin.get_user_by_id(user.id)
+                reporter_email = (u.user.email if u and u.user else "") or ""
+            except Exception:
+                pass
+            subject, html_body, text_body = render_feedback_email({
+                "reporter_email": reporter_email,
+                "topic": request.topic,
+                "level": request.level,
+                "question": request.question,
+                "preview": (request.response_preview or "")[:1000],
+                "comment": request.comment,
+            })
+            await asyncio.to_thread(
+                send_email, ADMIN_EMAIL, subject, html_body, text_body,
+                reporter_email or None,
+            )
+        except Exception:
+            pass
+
     return {"success": True, "id": result.data[0]["id"] if result.data else None}

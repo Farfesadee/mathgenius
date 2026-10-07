@@ -221,6 +221,49 @@ def render_contact_email(contact: dict) -> tuple:
     return subject, html_body, text_body
 
 
+def render_feedback_email(fb: dict) -> tuple:
+    """Admin alert for a thumbs-down on an Euler answer. Returns (subject, html, text).
+
+    Expected keys: reporter_email, topic, level, question, preview, comment.
+    """
+    topic = (fb.get("topic") or "General").strip() or "General"
+    subject = f"[MathGenius] Thumbs-down: {topic}"
+
+    html_body = f"""<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"></head>
+<body style="margin:0;padding:0;background-color:{CREAM};font-family:Arial,Helvetica,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:{CREAM};padding:32px 16px;">
+    <tr><td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:#ffffff;border-radius:16px;overflow:hidden;">
+        <tr><td style="background-color:{TEAL};padding:20px 32px;">
+          <div style="color:#ffffff;font-size:18px;font-weight:bold;">A student flagged an Euler answer</div>
+          <div style="color:#d7e9e9;font-size:13px;">{_esc(topic)} · {_esc(fb.get("level", ""))}</div>
+        </td></tr>
+        <tr><td style="padding:24px 32px;">
+          <p style="font-size:14px;color:{INK};margin:0 0 4px 0;"><strong>Reporter:</strong> {_esc(fb.get("reporter_email", ""))}</p>
+          <p style="font-size:14px;color:{INK};margin:0 0 4px 0;"><strong>Question asked:</strong> {_esc(fb.get("question", ""))}</p>
+          <p style="font-size:14px;color:{INK};margin:0 0 16px 0;"><strong>Student note:</strong> {_esc(fb.get("comment", "") or "(none)")}</p>
+          <p style="font-size:13px;color:{MUTED};margin:0 0 6px 0;">Euler's answer (preview):</p>
+          <div style="background-color:{PAPER};border-left:4px solid {GOLD};padding:12px 16px;font-size:14px;color:{INK};white-space:pre-wrap;">{_esc(fb.get("preview", ""))}</div>
+          <p style="font-size:13px;color:{MUTED};margin:16px 0 0 0;">This topic may need a prompt or content fix.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>"""
+
+    text_body = (
+        f"Thumbs-down on {topic} ({fb.get('level', '')})\n"
+        f"Reporter: {fb.get('reporter_email', '')}\n"
+        f"Question: {fb.get('question', '')}\n"
+        f"Note: {fb.get('comment', '') or '(none)'}\n\n"
+        f"Answer preview:\n{fb.get('preview', '')}\n"
+    )
+    return subject, html_body, text_body
+
+
 def render_content_flag_email(flag: dict) -> tuple:
     """Admin alert for a user-reported question. Returns (subject, html, text).
 

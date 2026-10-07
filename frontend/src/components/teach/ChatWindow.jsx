@@ -8,6 +8,7 @@ import { supabase } from '../../lib/supabase'
 import { saveBookmark } from '../../lib/bookmarks'
 import { friendlyError } from '../../utils/friendlyError'
 import { ExplanationBody } from '../../utils/RenderMath'
+import { createNotification } from '../../lib/notifications'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 const overviewSentFor = new Set()
@@ -86,9 +87,29 @@ function MessageBubble({ msg, topic, level, lastUserQuestion, onFeedbackSent }) 
   const [note,       setNote]       = useState('')
   const [bookmarked, setBookmarked] = useState(false)
   const [bookmarking,setBookmarking]= useState(false)
+  const [bookmarkError, setBookmarkError] = useState('')
+  const notifiedRef = useRef(new Set())
 
   const isUser = msg.role === 'user'
   const isStreaming = msg.streaming === true
+
+  // Bell confirmation for ratings (once per message) + admin is emailed
+  // on thumbs-down by the backend feedback endpoint.
+  const notifyRating = async (thumb) => {
+    if (!user || notifiedRef.current.has(msg.id)) return
+    notifiedRef.current.add(msg.id)
+    try {
+      await createNotification(user.id, {
+        type: 'feedback',
+        title: thumb === 'up' ? 'Thanks for the feedback!' : 'Feedback received',
+        message: thumb === 'up'
+          ? 'Glad Euler helped. Keep the streak going!'
+          : 'Thanks — our team will review this topic.',
+        icon: 'bell',
+        link: '/teach',
+      })
+    } catch { /* non-fatal */ }
+  }
 
   const handleThumb = async (thumb) => {
     if (rating) return   // already rated
@@ -105,6 +126,7 @@ function MessageBubble({ msg, topic, level, lastUserQuestion, onFeedbackSent }) 
       comment:         '',
     })
     if (thumb === 'down') setShowNote(true)
+    await notifyRating(thumb)
     onFeedbackSent?.()
   }
 
@@ -132,16 +154,20 @@ function MessageBubble({ msg, topic, level, lastUserQuestion, onFeedbackSent }) 
   const handleBookmark = async () => {
     if (bookmarked || bookmarking || !user) return
     setBookmarking(true)
+    setBookmarkError('')
     try {
-      await saveBookmark({
+      const { error } = await saveBookmark({
         userId:  user.id,
         type:    'explanation',
         title:   lastUserQuestion ? lastUserQuestion.slice(0, 80) : (topic || 'Teach note'),
         content: msg.content,
         topic:   topic || '',
       })
+      if (error) throw error
       setBookmarked(true)
-    } catch { /* silent */ }
+    } catch {
+      setBookmarkError("Couldn't save. Check your connection and try again.")
+    }
     finally { setBookmarking(false) }
   }
 
@@ -246,6 +272,9 @@ function MessageBubble({ msg, topic, level, lastUserQuestion, onFeedbackSent }) 
             <span className="text-xs text-[var(--color-muted)] ml-1">
               {rating === 'up' ? <span className="inline-flex items-center gap-1">Thanks! <PartyPopper size={18} /></span> : 'Got it, thanks.'}
             </span>
+          )}
+          {bookmarkError && (
+            <span className="text-xs text-red-500 ml-1">{bookmarkError}</span>
           )}
         </div>
       )}

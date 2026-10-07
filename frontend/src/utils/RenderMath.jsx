@@ -21,11 +21,16 @@ function SafeBlock({ math }) {
 }
 
 function SafeInline({ math }) {
-  if (!math?.trim()) return null
+  const clean = (math || '')
+    // A line-break inside INLINE math is meaningless (it belongs to display
+    // blocks) — turn it into a comma so readers never see raw "\\".
+    .replace(/\\\\/g, ', ')
+    .trim()
+  if (!clean) return null
   try {
-    return <InlineMath math={math.trim()} />
+    return <InlineMath math={clean} />
   } catch {
-    return <code className="text-sm text-[var(--color-teal)] bg-[var(--color-cream)] px-1 rounded">{math}</code>
+    return <code className="text-sm text-[var(--color-teal)] bg-[var(--color-cream)] px-1 rounded">{clean}</code>
   }
 }
 
@@ -112,6 +117,10 @@ function preprocess(raw) {
   if (!raw) return ''
   return normalizeMathDelimiters(raw)
     .replace(/\r\n/g, '\n')
+    // Join [math]...[/math] pairs the model splits across lines
+    .replace(/\[math\]\s*\n([\s\S]*?)\n\s*\[\/math\]/g, (m, g) => `[math]${g.trim()}[/math]`)
+    // Drop orphan tag lines the model sometimes leaves behind
+    .replace(/^\s*\[\/?math\]\s*$/gm, '')
     // Ensure [math] blocks always have blank lines around them
     .replace(/([^\n])\[math\]/g, '$1\n\n[math]')
     .replace(/\[\/math\]([^\n])/g, '[/math]\n\n$1')
@@ -156,24 +165,40 @@ export function ExplanationBody({ text }) {
           )
         }
 
+        // ── Horizontal rule the model emits as --- or ***
+        const trimmedBlock = block.trim()
+        if (trimmedBlock === '---' || trimmedBlock === '***') {
+          return <hr key={i} className="border-[var(--color-border)] my-3" />
+        }
+
         // ── Standalone [math] block
         if (block.startsWith('[math]') && block.endsWith('[/math]')) {
           return <SafeBlock key={i} math={block.slice(6, -7)} />
         }
 
-        // ── Numbered step: "1. text"
+        // ── Numbered steps: "1. ..." (also split "1. A 2. B 3. C"
+        // packed onto one block so every step gets its own line)
         const stepMatch = block.match(/^(\d+)\.\s+([\s\S]+)/)
         if (stepMatch) {
+          const pieces = block.split(/\s+(?=\d+\.\s+)/g)
           return (
-            <div key={i} className="flex gap-3 items-start py-1.5">
-              <span className="shrink-0 w-7 h-7 rounded-full bg-[var(--color-teal)]
-                               text-white text-xs font-bold flex items-center
-                               justify-center mt-0.5">
-                {stepMatch[1]}
-              </span>
-              <div className="flex-1 pt-0.5">
-                <RenderMath text={stepMatch[2]} />
-              </div>
+            <div key={i} className="space-y-1">
+              {pieces.map((piece, k) => {
+                const m = piece.match(/^(\d+)\.\s+([\s\S]+)/)
+                if (!m) return <p key={k}><RenderMath text={piece} /></p>
+                return (
+                  <div key={k} className="flex gap-3 items-start py-1.5">
+                    <span className="shrink-0 w-7 h-7 rounded-full bg-[var(--color-teal)]
+                                     text-white text-xs font-bold flex items-center
+                                     justify-center mt-0.5">
+                      {m[1]}
+                    </span>
+                    <div className="flex-1 pt-0.5">
+                      <RenderMath text={m[2]} />
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           )
         }
