@@ -43,6 +43,9 @@ export function AuthProvider({ children }) {
           await fetchProfile(session.user.id)
           // Redirect new users to onboarding — but never hijack admins
           // heading to the control room (their profiles predate onboarding).
+          // If this device already finished onboarding, sync that fact to the
+          // profile instead of redirecting (prevents the post-login loop
+          // back to Step 1 for users who onboarded before signing up).
           if (event === 'SIGNED_IN' && window.location.pathname !== '/admin') {
             // Branded welcome email (backend dedupes — safe on every login).
             // Fire-and-forget: must never block or break login.
@@ -59,8 +62,24 @@ export function AuthProvider({ children }) {
               .select('onboarded')
               .eq('id', session.user.id)
               .single()
+            const deviceDone = (() => {
+              try { return localStorage.getItem('mg_onboarding_done') === '1' }
+              catch { return false }
+            })()
             if (data && !data.onboarded) {
-              window.location.href = '/onboarding'
+              if (deviceDone) {
+                // Onboarded here before signing up — record it, stay put.
+                supabase
+                  .from('profiles')
+                  .update({ onboarded: true })
+                  .eq('id', session.user.id)
+                  .then(() => {
+                    setProfile(p => (p ? { ...p, onboarded: true } : p))
+                  })
+                  .catch(() => {})
+              } else {
+                window.location.href = '/onboarding'
+              }
             }
           }
         } else {
