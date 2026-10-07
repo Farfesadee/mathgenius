@@ -133,9 +133,9 @@ export default function Header() {
               </Link>
             )}
 
-            {/* Site search */}
+            {/* Site search — in the drawer on phones */}
             <button onClick={() => setSearchOpen(true)}
-              className="w-10 h-10 flex items-center justify-center rounded-xl
+              className="w-10 h-10 hidden sm:flex items-center justify-center rounded-xl
                          border-2 border-[var(--color-border)]
                          hover:border-[var(--color-ink)] transition-all
                          bg-[var(--color-cream)]"
@@ -143,9 +143,9 @@ export default function Header() {
               <Search size={20} />
             </button>
 
-            {/* Dark mode toggle */}
+            {/* Dark mode toggle — in the drawer on phones */}
             <button onClick={toggleTheme}
-              className="w-10 h-10 flex items-center justify-center rounded-xl
+              className="w-10 h-10 hidden sm:flex items-center justify-center rounded-xl
                          border-2 border-[var(--color-border)]
                          hover:border-[var(--color-ink)] transition-all
                          bg-[var(--color-cream)] text-lg"
@@ -308,6 +308,25 @@ export default function Header() {
                 </Link>
               ))}
 
+              {/* Search + theme live here on phones (hidden in the bar) */}
+              <div className="sm:hidden">
+                <button
+                  onClick={() => { setMenuOpen(false); setSearchOpen(true) }}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl
+                             text-sm font-medium text-[var(--color-ink)]
+                             hover:bg-[var(--color-cream)] transition-all">
+                  <Search size={22} /> Search the site
+                </button>
+                <button
+                  onClick={() => { toggleTheme(); setMenuOpen(false) }}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl
+                             text-sm font-medium text-[var(--color-ink)]
+                             hover:bg-[var(--color-cream)] transition-all">
+                  {isDark ? <Sun size={22} /> : <Moon size={22} />}
+                  {isDark ? 'Light mode' : 'Dark mode'}
+                </button>
+              </div>
+
               {/* Extra mobile links */}
               {user && (
                 <>
@@ -320,12 +339,12 @@ export default function Header() {
                       }`}>
                     <School size={22} /> Classroom
                   </Link>
-                  <Link to="/battle" onClick={() => setMobileOpen(false)}
+                  <Link to="/battle" onClick={() => setMenuOpen(false)}
                     className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm
                                hover:bg-[var(--color-paper)] text-[var(--color-ink)]">
                     <Swords size={22} /> Battle
                   </Link>
-                  <Link to="/question-bank" onClick={() => setMobileOpen(false)}
+                  <Link to="/question-bank" onClick={() => setMenuOpen(false)}
                     className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm
                                hover:bg-[var(--color-paper)] text-[var(--color-ink)]">
                     <BookOpen size={22} /> Question Bank
