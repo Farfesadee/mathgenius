@@ -6,18 +6,61 @@ import SearchPalette from '../SearchPalette'
 import LogoutModal from '../LogoutModal'
 import { useTheme } from '../../context/ThemeContext'
 import { getStreak } from '../../lib/learning'
-import { Home, Settings, BookOpen, Monitor, Target, ClipboardList, BarChart3, User, Bookmark, Flame, Trophy, FileText, BookOpen as Book, Bot, Brain, Triangle, Microscope, Swords, Gamepad2, Users, School, Map, GraduationCap, StickyNote, Calendar, FolderArchive, DoorOpen, Moon, Sun, Banana, Presentation, Zap, Search } from 'lucide-react'
+import { Home, Settings, BookOpen, Monitor, Target, ClipboardList, BarChart3, User, Bookmark, Flame, Trophy, FileText, BookOpen as Book, Bot, Brain, Triangle, Microscope, Swords, Gamepad2, Users, School, Map, GraduationCap, StickyNote, Calendar, FolderArchive, DoorOpen, Moon, Sun, Banana, Presentation, Zap, Search, LifeBuoy } from 'lucide-react'
 
 const NAV_LINKS = [
   { path: '/home',     label: 'Home',     icon: Home,      auth: false },
   { path: '/solve',    label: 'Solve',    icon: Settings,  auth: false },
   { path: '/teach',    label: 'Teach',    icon: BookOpen,  auth: true  },
   { path: '/cbt',      label: 'CBT',      icon: Monitor,   auth: true  },
-  { path: '/practice', label: 'Practice', icon: Target,    auth: true  },
+  { path: '/practice', label: 'Practice', icon: Target,   auth: true  },
   { path: '/mock-exam',label: 'Mock Exam',icon: ClipboardList, auth: true  },
   { path: '/dashboard',label: 'Dashboard',icon: BarChart3, auth: true  },
   { path: '/room',     label: 'Room',     icon: Users,     auth: true  },
 ]
+
+// Mobile drawer grouping: Start → Learn → Test → Community → Account → Tools
+const DRAWER_SECTIONS = [
+  { title: 'Start', links: [
+    { path: '/home',      label: 'Home',      icon: Home,      auth: false },
+    { path: '/dashboard', label: 'Dashboard', icon: BarChart3, auth: true  },
+  ]},
+  { title: 'Learn', links: [
+    { path: '/solve',         label: 'Solve',         icon: Settings,      auth: false },
+    { path: '/teach',         label: 'Teach',         icon: BookOpen,      auth: true  },
+    { path: '/practice',      label: 'Practice',      icon: Target,        auth: true  },
+    { path: '/question-bank', label: 'Question Bank', icon: FolderArchive, auth: true  },
+  ]},
+  { title: 'Test yourself', links: [
+    { path: '/cbt',       label: 'CBT',       icon: Monitor,       auth: true },
+    { path: '/mock-exam', label: 'Mock Exam', icon: ClipboardList, auth: true },
+    { path: '/battle',    label: 'Battle',    icon: Swords,        auth: true },
+  ]},
+  { title: 'Community', links: [
+    { path: '/room',        label: 'Room',        icon: Users,  auth: true },
+    { path: '/classroom',   label: 'Classroom',   icon: School, auth: true },
+    { path: '/leaderboard', label: 'Leaderboard', icon: Trophy, auth: true },
+  ]},
+  { title: 'Account', links: [
+    { path: '/profile', label: 'My Profile',    icon: User,     auth: true },
+    { path: '/contact', label: 'Contact & Help', icon: LifeBuoy, auth: false },
+  ]},
+]
+
+function DrawerLink({ to, icon: Icon, label, highlighted, onNavigate }) {
+  return (
+    <Link to={to} onClick={onNavigate}
+      className={`flex items-center gap-3 px-4 py-3 rounded-xl
+                  text-sm font-medium transition-all
+        ${highlighted
+          ? 'bg-[var(--color-ink)] text-[var(--color-paper)]'
+          : 'text-[var(--color-ink)] hover:bg-[var(--color-cream)]'
+        }`}>
+      <Icon size={22} />
+      {label}
+    </Link>
+  )
+}
 
 export default function Header() {
   const location  = useLocation()
@@ -293,75 +336,63 @@ export default function Header() {
                           border-b-2 border-[var(--color-ink)] shadow-xl"
                onClick={e => e.stopPropagation()}>
 
-            <nav className="p-4 space-y-1">
-              {visibleLinks.map(link => (
-                <Link key={link.path} to={link.path}
-                  onClick={() => setMenuOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl
-                              text-sm font-medium transition-all
-                    ${active(link.path)
-                      ? 'bg-[var(--color-ink)] text-[var(--color-paper)]'
-                      : 'text-[var(--color-ink)] hover:bg-[var(--color-cream)]'
-                    }`}>
-                  <link.icon size={22} />
-                  {link.label}
-                </Link>
-              ))}
+            <nav className="p-4 space-y-4 max-h-[calc(100dvh-10rem)] overflow-y-auto">
+              {DRAWER_SECTIONS.map(section => {
+                const links = section.links.filter(l => !l.auth || user)
+                if (links.length === 0) return null
+                return (
+                  <div key={section.title}>
+                    <p className="font-mono text-[10px] uppercase tracking-widest
+                                  text-[var(--color-muted)] px-4 mb-1">
+                      {section.title}
+                    </p>
+                    <div className="space-y-1">
+                      {links.map(link => (
+                        <DrawerLink key={link.path} to={link.path}
+                          icon={link.icon} label={link.label}
+                          highlighted={active(link.path)}
+                          onNavigate={() => setMenuOpen(false)} />
+                      ))}
+                      {section.title === 'Community' && isTeacherOrParent && (
+                        <Link to="/monitor" onClick={() => setMenuOpen(false)}
+                          className={`flex items-center gap-3 px-4 py-3 rounded-xl
+                                      text-sm font-semibold transition-all
+                            ${active('/monitor')
+                              ? 'bg-[var(--color-ink)] text-[var(--color-paper)]'
+                              : 'text-[var(--color-teal)] hover:bg-[#e8f4f4]'
+                            }`}>
+                          <Presentation size={22} /> Monitor Students
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
 
-              {/* Search + theme live here on phones (hidden in the bar) */}
+              {/* Tools live here on phones (hidden in the bar) */}
               <div className="sm:hidden">
-                <button
-                  onClick={() => { setMenuOpen(false); setSearchOpen(true) }}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl
-                             text-sm font-medium text-[var(--color-ink)]
-                             hover:bg-[var(--color-cream)] transition-all">
-                  <Search size={22} /> Search the site
-                </button>
-                <button
-                  onClick={() => { toggleTheme(); setMenuOpen(false) }}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl
-                             text-sm font-medium text-[var(--color-ink)]
-                             hover:bg-[var(--color-cream)] transition-all">
-                  {isDark ? <Sun size={22} /> : <Moon size={22} />}
-                  {isDark ? 'Light mode' : 'Dark mode'}
-                </button>
+                <p className="font-mono text-[10px] uppercase tracking-widest
+                              text-[var(--color-muted)] px-4 mb-1">
+                  Tools
+                </p>
+                <div className="space-y-1">
+                  <button
+                    onClick={() => { setMenuOpen(false); setSearchOpen(true) }}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl
+                               text-sm font-medium text-[var(--color-ink)]
+                               hover:bg-[var(--color-cream)] transition-all">
+                    <Search size={22} /> Search the site
+                  </button>
+                  <button
+                    onClick={() => { toggleTheme(); setMenuOpen(false) }}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl
+                               text-sm font-medium text-[var(--color-ink)]
+                               hover:bg-[var(--color-cream)] transition-all">
+                    {isDark ? <Sun size={22} /> : <Moon size={22} />}
+                    {isDark ? 'Light mode' : 'Dark mode'}
+                  </button>
+                </div>
               </div>
-
-              {/* Extra mobile links */}
-              {user && (
-                <>
-                  <Link to="/classroom" onClick={() => setMenuOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl
-                                text-sm font-medium transition-all
-                      ${active('/classroom')
-                        ? 'bg-[var(--color-ink)] text-[var(--color-paper)]'
-                        : 'text-[var(--color-ink)] hover:bg-[var(--color-cream)]'
-                      }`}>
-                    <School size={22} /> Classroom
-                  </Link>
-                  <Link to="/battle" onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm
-                               hover:bg-[var(--color-paper)] text-[var(--color-ink)]">
-                    <Swords size={22} /> Battle
-                  </Link>
-                  <Link to="/question-bank" onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm
-                               hover:bg-[var(--color-paper)] text-[var(--color-ink)]">
-                    <BookOpen size={22} /> Question Bank
-                  </Link>
-                  {isTeacherOrParent && (
-                    <Link to="/monitor" onClick={() => setMenuOpen(false)}
-                      className={`flex items-center gap-3 px-4 py-3 rounded-xl
-                                  text-sm font-semibold transition-all
-                        ${active('/monitor')
-                          ? 'bg-[var(--color-ink)] text-[var(--color-paper)]'
-                          : 'text-[var(--color-teal)] hover:bg-[#e8f4f4]'
-                        }`}>
-                      <Presentation size={22} /> Monitor Students
-                    </Link>
-                  )}
-                </>
-              )}
             </nav>
 
             <div className="px-4 pb-4 border-t border-[var(--color-border)] pt-3">
