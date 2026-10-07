@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BookOpen, School, GraduationCap, Landmark } from 'lucide-react'
+import { BookOpen, School, GraduationCap, Landmark, ChevronDown } from 'lucide-react'
 
 const LEVEL_TOPICS = {
   primary: {
@@ -309,6 +309,8 @@ const LEVELS = [
 
 export default function TopicSidebar({ selectedTopic, selectedLevel, onTopicSelect, onLevelChange }) {
   const [openGroups, setOpenGroups] = useState({ 'Algebra': true })
+  // Mobile: list starts collapsed (desktop always shows it via xl:contents)
+  const [listOpen, setListOpen] = useState(false)
 
   const toggleGroup = (group) => {
     setOpenGroups(prev => ({ ...prev, [group]: !prev[group] }))
@@ -317,13 +319,22 @@ export default function TopicSidebar({ selectedTopic, selectedLevel, onTopicSele
   const topics = LEVEL_TOPICS[selectedLevel] || LEVEL_TOPICS['secondary']
 
   return (
-    <div className="card flex flex-col" style={{ maxHeight: 'calc(100vh - 120px)', position: 'sticky', top: '90px' }}>
+    <div className="card flex flex-col xl:sticky xl:top-[90px] xl:max-h-[calc(100vh-120px)]">
 
-      {/* Header */}
+      {/* Header — tappable toggle on mobile */}
       <div className="bg-[var(--color-teal)] px-5 py-4 shrink-0">
-        <p className="font-serif font-bold text-white text-lg flex items-center gap-2"><BookOpen size={24} /> Topics</p>
+        <button onClick={() => setListOpen(o => !o)}
+          className="w-full font-serif font-bold text-white text-lg
+                     flex items-center gap-2 text-left xl:pointer-events-none"
+          aria-expanded={listOpen}>
+          <BookOpen size={24} className="shrink-0" /> Topics
+          <ChevronDown size={20}
+            className={`ml-auto shrink-0 transition-transform duration-200 xl:hidden
+                        ${listOpen ? 'rotate-180' : ''}`} />
+        </button>
       </div>
 
+      <div className={`${listOpen ? '' : 'hidden'} xl:contents`}>
       {/* Level switcher — 4 tabs in 2×2 grid */}
       <div className="grid grid-cols-2 border-b-2 border-[var(--color-ink)] shrink-0">
         {LEVELS.map(lvl => (
@@ -386,6 +397,7 @@ export default function TopicSidebar({ selectedTopic, selectedLevel, onTopicSele
             )}
           </div>
         ))}
+      </div>
       </div>
     </div>
   )

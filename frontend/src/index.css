@@ -84,6 +84,7 @@
     border: 2px solid var(--color-ink);
     border-radius: 16px;
     overflow: hidden;
+    background-color: #ffffff;
   }
 }
 
