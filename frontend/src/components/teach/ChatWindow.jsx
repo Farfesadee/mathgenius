@@ -518,13 +518,45 @@ export default function ChatWindow({ topic, level, conversation, onConversationU
         setStreaming(false)
         onConversationUpdate?.()
       },
-      onError: (err) => {
+      onError: async (streamErr) => {
+        // Streaming failed (buffering proxy, old browser, dropped
+        // connection) — fall back to the plain endpoint once before
+        // giving up, so users still get their answer.
+        try {
+          const { data: { session } } = await supabase.auth.getSession()
+          const res = await fetch(`${API_BASE}/teach/ask`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
+            },
+            body: JSON.stringify({
+              question: content,
+              topic: topic || 'General Mathematics',
+              level: level || 'sss',
+              conversation_history: history,
+              user_id: user?.id || null,
+            }),
+          })
+          if (res.ok) {
+            const data = await res.json()
+            const reply = data.response || data.answer || ''
+            if (reply) {
+              setMessages(prev => prev.map(m =>
+                m.id === aiId ? { ...m, content: reply, streaming: false } : m
+              ))
+              setStreaming(false)
+              onConversationUpdate?.()
+              return
+            }
+          }
+        } catch { /* fall through to the error state below */ }
         setMessages(prev => prev.map(m =>
           m.id === aiId
             ? { ...m, content: 'Sorry, something went wrong. Please try again.', streaming: false }
             : m
         ))
-        setError(err)
+        setError(streamErr)
         setStreaming(false)
       },
     })
