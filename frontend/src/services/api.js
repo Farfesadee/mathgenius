@@ -123,6 +123,24 @@ export const generateCBTReport = (questions, score, total, timeSecs, examType, t
     exam_type: examType,
     topic,
   })
+// ── ADMIN (control room, allow-listed emails only) ───────────
+export const adminMe = () =>
+  API.get('/admin/me')
+export const adminStats = () =>
+  API.get('/admin/stats')
+export const adminFlags = (status = 'open') =>
+  API.get('/admin/flags', { params: { status } })
+export const adminFlagStatus = (id, status) =>
+  API.patch(`/admin/flags/${id}`, { status })
+export const adminFeedback = (rating = '') =>
+  API.get('/admin/feedback', { params: { rating } })
+export const adminRoom = () =>
+  API.get('/admin/room')
+export const adminRoomDelete = (id) =>
+  API.delete(`/admin/room/${id}`)
+export const adminUsers = (search = '') =>
+  API.get('/admin/users', { params: { search } })
+
 // ── TRACKING ───────────────────────────────────────────────
 export const reportContentFlag = (payload) =>
   API.post('/tracking/content-flag', payload)

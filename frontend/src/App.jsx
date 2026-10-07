@@ -45,6 +45,7 @@ import Groups from './pages/Groups'
 import TheoryPractice from './pages/TheoryPractice'
 // ── New pages ──────────────────────────────────────────────────────
 import Contact from './pages/Contact'
+import Admin from './pages/Admin'
 import MockExam from './pages/MockExam'
 import Classroom from './pages/Classroom'
 import TeacherParentDashboard from './pages/TeacherParentDashboard'
@@ -205,6 +206,10 @@ function AppRoutes() {
         <Route element={<Layout />}>
           <Route path="/contact" element={<Contact />} />
           <Route path="/help" element={<Contact />} />
+          {/* Admin control room — backend allow-list enforced, not linked in nav */}
+          <Route path="/admin" element={
+            <ProtectedRoute><Admin /></ProtectedRoute>
+          } />
         </Route>
 
         {/* Catch-all — clean 404 page */}

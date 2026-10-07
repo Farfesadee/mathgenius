@@ -18,6 +18,7 @@ from app.routers.tracking import router as tracking_router
 from app.routers.past_questions import router as past_questions_router
 from app.routers.study_plan import router as study_plan_router
 from app.routers.health import router as health_router
+from app.routers.admin import router as admin_router
 from solution_generator import router as solution_router
 
 setup_logging()
@@ -76,6 +77,7 @@ app.include_router(tracking_router)
 app.include_router(past_questions_router)
 app.include_router(solution_router)
 app.include_router(study_plan_router)
+app.include_router(admin_router)
 
 # ── Static Files ───────────────────────────────────────────────────────
 _IMAGES_DIR = Path(__file__).resolve().parent.parent / "images"
