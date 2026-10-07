@@ -144,11 +144,11 @@ async def ask_groq_stream(
 # ── Internal helpers ──────────────────────────────────────────────────
 
 def _model(image_base64):
-    return (
-        "meta-llama/llama-4-scout-17b-16e-instruct"
-        if image_base64
-        else "llama-3.3-70b-versatile"
-    )
+    # Groq retired the old Llama models — the current key only serves the
+    # models below (verified live). Overridable via env without a code push.
+    if image_base64:
+        return os.getenv("GROQ_VISION_MODEL", "openai/gpt-oss-20b")
+    return os.getenv("GROQ_MODEL", "openai/gpt-oss-20b")
 
 
 async def _build_messages(
