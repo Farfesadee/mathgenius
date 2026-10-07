@@ -6,7 +6,7 @@ import SearchPalette from '../SearchPalette'
 import LogoutModal from '../LogoutModal'
 import { useTheme } from '../../context/ThemeContext'
 import { getStreak } from '../../lib/learning'
-import { Home, Settings, BookOpen, Monitor, Target, ClipboardList, BarChart3, User, Bookmark, Flame, Trophy, FileText, BookOpen as Book, Bot, Brain, Triangle, Microscope, Swords, Gamepad2, Users, School, Map, GraduationCap, StickyNote, Calendar, FolderArchive, DoorOpen, Moon, Sun, Banana, Presentation, Zap, Search, LifeBuoy } from 'lucide-react'
+import { Home, Settings, BookOpen, Monitor, Target, ClipboardList, BarChart3, User, Bookmark, Flame, Trophy, FileText, BookOpen as Book, Bot, Brain, Triangle, Microscope, Swords, Gamepad2, Users, School, Map, GraduationCap, StickyNote, Calendar, FolderArchive, DoorOpen, Moon, Sun, Banana, Presentation, Zap, Search, LifeBuoy, UsersRound } from 'lucide-react'
 
 const NAV_LINKS = [
   { path: '/home',     label: 'Home',     icon: Home,      auth: false },
@@ -19,30 +19,50 @@ const NAV_LINKS = [
   { path: '/room',     label: 'Room',     icon: Users,     auth: true  },
 ]
 
-// Mobile drawer grouping: Start → Learn → Test → Community → Account → Tools
+// Mobile drawer grouping: every page lives here, grouped by journey
 const DRAWER_SECTIONS = [
   { title: 'Start', links: [
     { path: '/home',      label: 'Home',      icon: Home,      auth: false },
     { path: '/dashboard', label: 'Dashboard', icon: BarChart3, auth: true  },
   ]},
   { title: 'Learn', links: [
-    { path: '/solve',         label: 'Solve',         icon: Settings,      auth: false },
-    { path: '/teach',         label: 'Teach',         icon: BookOpen,      auth: true  },
-    { path: '/practice',      label: 'Practice',      icon: Target,        auth: true  },
-    { path: '/question-bank', label: 'Question Bank', icon: FolderArchive, auth: true  },
+    { path: '/solve',          label: 'Solve',           icon: Settings,  auth: false },
+    { path: '/teach',          label: 'Teach',           icon: BookOpen,  auth: true  },
+    { path: '/practice',       label: 'Practice',        icon: Target,    auth: true  },
+    { path: '/question-bank',  label: 'Question Bank',   icon: FolderArchive, auth: true },
+    { path: '/past-questions', label: 'Past Questions',  icon: FileText,  auth: true  },
+    { path: '/theory',         label: 'Theory Practice', icon: Book,      auth: true  },
+    { path: '/ai-quiz',        label: 'AI Quiz',         icon: Bot,       auth: true  },
+    { path: '/review',         label: 'Spaced Review',   icon: Brain,     auth: true  },
+    { path: '/wiki/Quadratic+Equations', label: 'Topic Wiki', icon: Microscope, auth: true },
+    { path: '/formulas',       label: 'Formula Sheet',   icon: Triangle,  auth: false },
   ]},
   { title: 'Test yourself', links: [
-    { path: '/cbt',       label: 'CBT',       icon: Monitor,       auth: true },
-    { path: '/mock-exam', label: 'Mock Exam', icon: ClipboardList, auth: true },
-    { path: '/battle',    label: 'Battle',    icon: Swords,        auth: true },
+    { path: '/cbt',       label: 'CBT',             icon: Monitor,       auth: true },
+    { path: '/mock-exam', label: 'Mock Exam',       icon: ClipboardList, auth: true },
+    { path: '/battle',    label: 'Battle',          icon: Swords,        auth: true },
+    { path: '/challenge', label: 'Challenge Friend', icon: Gamepad2,     auth: true },
+    { path: '/daily',     label: 'Daily Challenge', icon: Flame,         auth: true },
+  ]},
+  { title: 'My library', links: [
+    { path: '/notes',     label: 'My Notes',     icon: StickyNote, auth: true },
+    { path: '/bookmarks', label: 'My Bookmarks', icon: Bookmark,   auth: true },
+  ]},
+  { title: 'My progress', links: [
+    { path: '/mastery',       label: 'Mastery Map',   icon: Map,           auth: true },
+    { path: '/weekly-report', label: 'Weekly Report', icon: BarChart3,     auth: true },
+    { path: '/certificate',   label: 'Certificate',   icon: GraduationCap, auth: true },
+    { path: '/cbt-history',   label: 'CBT History',   icon: FolderArchive, auth: true },
+    { path: '/planner',       label: 'Study Planner', icon: Calendar,      auth: true },
   ]},
   { title: 'Community', links: [
-    { path: '/room',        label: 'Room',        icon: Users,  auth: true },
-    { path: '/classroom',   label: 'Classroom',   icon: School, auth: true },
-    { path: '/leaderboard', label: 'Leaderboard', icon: Trophy, auth: true },
+    { path: '/room',        label: 'Room',          icon: Users,      auth: true },
+    { path: '/classroom',   label: 'Classroom',     icon: School,     auth: true },
+    { path: '/groups',      label: 'Study Groups',  icon: UsersRound, auth: true },
+    { path: '/leaderboard', label: 'Leaderboard',   icon: Trophy,     auth: true },
   ]},
   { title: 'Account', links: [
-    { path: '/profile', label: 'My Profile',    icon: User,     auth: true },
+    { path: '/profile', label: 'My Profile',     icon: User,     auth: true },
     { path: '/contact', label: 'Contact & Help', icon: LifeBuoy, auth: false },
   ]},
 ]
@@ -243,35 +263,12 @@ export default function Header() {
                       )}
                     </div>
 
-                    {/* Scrollable links */}
+                    {/* Scrollable links — account items only.
+                        Every page lives in the hamburger menu. */}
                     <div className="overflow-y-auto flex-1">
                       {[
-                        // ── Account ──────────────────────────────────
-                        { path: '/profile',       icon: User,        label: 'My Profile'       },
-                        { path: '/bookmarks',     icon: Bookmark,    label: 'My Bookmarks'     },
-                        // ── Daily engagement ─────────────────────────
-                        { path: '/daily',         icon: Flame,       label: 'Daily Challenge'  },
-                        { path: '/leaderboard',   icon: Trophy,      label: 'Leaderboard'      },
-                        // ── Study tools ──────────────────────────────
-                        { path: '/past-questions',icon: FileText,    label: 'Past Questions'   },
-                        { path: '/theory',        icon: Book,        label: 'Theory Practice'  },
-                        { path: '/ai-quiz',       icon: Bot,         label: 'AI Quiz'          },
-                        { path: '/review',        icon: Brain,       label: 'Spaced Review'    },
-                        { path: '/question-bank', icon: BookOpen,    label: 'Question Bank'    },
-                        { path: '/formulas',      icon: Triangle,    label: 'Formula Sheet'    },
-                        { path: '/wiki/Quadratic+Equations', icon: Microscope, label: 'Topic Wiki' },
-                        // ── Social / competitive ──────────────────────
-                        { path: '/battle',        icon: Swords,      label: 'Battle'           },
-                        { path: '/challenge',     icon: Gamepad2,    label: 'Challenge Friend' },
-                        { path: '/groups',        icon: Users,       label: 'Study Groups'     },
-                        { path: '/classroom',     icon: School,      label: 'Classroom'        },
-                        // ── Progress & extras ─────────────────────────
-                        { path: '/mastery',       icon: Map,         label: 'Mastery Map'      },
-                        { path: '/weekly-report', icon: BarChart3,   label: 'Weekly Report'    },
-                        { path: '/certificate',   icon: GraduationCap, label: 'Certificate'    },
-                        { path: '/notes',         icon: StickyNote,  label: 'My Notes'         },
-                        { path: '/planner',       icon: Calendar,    label: 'Study Planner'    },
-                        { path: '/cbt-history',   icon: FolderArchive, label: 'CBT History'    },
+                        { path: '/profile', icon: User,     label: 'My Profile & Settings' },
+                        { path: '/contact', icon: LifeBuoy, label: 'Contact & Help'        },
                         // ── Teacher / Parent only ─────────────────────
                         ...(isTeacherOrParent ? [
                           { path: '/monitor', icon: Presentation, label: 'Monitor Students', highlight: true },
