@@ -9,6 +9,7 @@ import { createSession, saveAttempt, completeSession, getSessionHistory } from '
 import { submitAssignment, getMyAssignments, checkAndCreateStrugglingAlert } from '../lib/social2'
 import { getConversations } from '../lib/conversations'
 import { ExplanationBody } from '../utils/RenderMath'
+import { friendlyError } from '../utils/friendlyError'
 import {
   updateStreak, getStreak,
   updateTopicMastery, getTopicMastery,
@@ -522,7 +523,7 @@ export default function Practice() {
       setRoomShared(true)
       setTimeout(() => setRoomShared(false), 4000)
     } catch (err) {
-      setRoomShareError(err?.detail || err?.message || 'Could not share. Try again.')
+      setRoomShareError(friendlyError(err, 'Could not share. Try again.'))
     } finally {
       setRoomSharing(false)
     }
@@ -945,7 +946,7 @@ Be warm, encouraging, and specific. Address the student directly.`
         }
       }
     } catch {
-      setEulerExplanation('Could not reach Euler. Make sure the backend is running.')
+      setEulerExplanation('Could not reach Euler. Check your connection and try again.')
     } finally {
       setAskingEuler(false)
     }

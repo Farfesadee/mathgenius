@@ -130,7 +130,7 @@ export default function PastQuestions() {
       const res = await askExamQuestion(question, examType, year)
       setResponse(res.data.response)
     } catch {
-      setResponse('Could not connect to backend. Make sure it is running.')
+          setResponse('Euler is having trouble connecting. Check your connection and try again.')
     }
     setLoading(false)
   }
@@ -171,7 +171,7 @@ export default function PastQuestions() {
           setUploadTitle('')
           await loadPapers()
         } catch (err) {
-          setUploadError(<><X size={16} className="inline-block mr-1" /> Upload failed. Check that the backend is running.</>)
+          setUploadError(<><X size={16} className="inline-block mr-1" /> Upload failed. Check your connection and try again.</>)
         }
         setUploading(false)
       }

@@ -4,6 +4,7 @@ import {
   shareRoomSolution, getRoomFeed, toggleRoomLike, deleteRoomSolution,
 } from '../services/api'
 import { ExplanationBody } from '../utils/RenderMath'
+import { friendlyError } from '../utils/friendlyError'
 import ReportQuestionModal from '../components/ReportQuestionModal'
 import { reportContentFlag } from '../services/api'
 import {
@@ -84,7 +85,7 @@ export default function SolutionsRoom() {
       setShowForm(false)
       load()
     } catch (err) {
-      setShareMsg(err?.detail || err?.message || 'Could not share. Please try again.')
+      setShareMsg(friendlyError(err, 'Could not share. Please try again.'))
     } finally {
       setSharing(false)
     }

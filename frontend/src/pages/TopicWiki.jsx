@@ -51,7 +51,7 @@ export default function TopicWiki() {
             setContent(data.content)
             cacheSet(topic, data)
         } catch {
-            setError(<><TriangleAlert size={16} className="inline-block" /> Could not load wiki. Make sure the backend is running.</>)
+            setError(<><TriangleAlert size={16} className="inline-block" /> Could not load this topic. Check your connection and try again.</>)
         }
         setLoading(false)
     }

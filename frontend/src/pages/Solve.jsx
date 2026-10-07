@@ -272,7 +272,7 @@ function ImageTab() {
         (token) => setResult(prev => prev + token)
       )
     } catch {
-      setError('Could not connect to backend. Make sure it is running on port 8000.')
+      setError('Euler is having trouble connecting. Check your connection and try again.')
     } finally {
       setLoading(false)
     }
@@ -421,7 +421,7 @@ function CameraTab() {
       setExtracted(text.trim())
       setPhase('edit')
     } catch {
-      setError('Could not read the image. Make sure the backend is running.')
+      setError('Could not read the image. Check the photo is clear and try again.')
       setPhase('preview')
     }
   }
@@ -448,7 +448,7 @@ function CameraTab() {
       )
       setPhase('result')
     } catch {
-      setError('Could not solve the question. Make sure the backend is running.')
+      setError('Euler could not solve this one. Check your connection and try again.')
       setPhase('edit')
     }
   }

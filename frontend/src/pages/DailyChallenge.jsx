@@ -269,7 +269,17 @@ export default function DailyChallenge() {
 
       {!loading && !question && (
         <div className="card bg-white p-10 text-center">
-          <TriangleAlert size={20} className="inline-block" /> Could not load today's challenge. Make sure the backend is running.
+          <p className="text-[var(--color-ink)] font-semibold mb-2">
+            <TriangleAlert size={20} className="inline-block mr-1" />
+            Today's challenge is taking a break.
+          </p>
+          <p className="text-sm text-[var(--color-muted)] mb-5">
+            Check your connection and try again.
+          </p>
+          <button onClick={() => loadChallenge(examType)}
+            className="btn-primary px-8 py-3 text-sm">
+            Retry
+          </button>
         </div>
       )}
     </div>

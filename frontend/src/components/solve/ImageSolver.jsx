@@ -49,7 +49,7 @@ export default function ImageSolver() {
       const res = await solveFromImage(base64, imageType, instruction || null)
       setResult(res.data.explanation)
     } catch {
-      setError('Could not connect to backend. Make sure it is running on port 8000.')
+      setError('Euler is having trouble connecting. Check your connection and try again.')
     } finally {
       setLoading(false)
     }

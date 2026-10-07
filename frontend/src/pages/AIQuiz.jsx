@@ -187,7 +187,7 @@ export default function AIQuiz() {
       const res = await generateMCQ(topic.trim(), difficulty, apiLevel)
       setQuestion(res.data)
     } catch {
-      setError('Could not generate question. Make sure the backend is running.')
+      setError('Could not bring a question. Check your connection and try again.')
     }
     setGenerating(false)
   }
