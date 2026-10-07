@@ -121,7 +121,9 @@ Topic: {request.topic}
 Student's question: {request.question}
 
 Please explain thoroughly with step-by-step working.
-Use LaTeX for all mathematical expressions (e.g. \\(x^2\\) inline, $$....$$ for display).
+MATH FORMAT (follow exactly): for ALL mathematics use [m]...[/m] for inline
+expressions (e.g. [m]x^2[/m]) and put each display equation on its own lines
+inside [math]...[/math] tags. Never use \\(...\\), \\[...\\], $ or $$.
 Be encouraging and patient."""
 
         response = await ask_groq(
@@ -162,8 +164,10 @@ async def ask_tutor_stream(request: TeachRequest, http_request: Request, user=De
         f"Textbook reference: {textbook}\n\n"
         f"Topic: {request.topic}\n\n"
         "Explain thoroughly with step-by-step working. "
-        "Use LaTeX for all mathematical expressions "
-        "(inline: \\(...\\), display: $$...$$). "
+        "For ALL mathematics use [m]...[/m] for inline expressions "
+        "(e.g. [m]x^2[/m]) and put each display equation on its own lines "
+        "inside [math]...[/math] tags. "
+        "Never use \\(...\\), \\[...\\], $ or $$. "
         "Be encouraging and patient."
     )
 
@@ -284,7 +288,9 @@ Brief plain-English explanation (2–3 sentences max).
 - Bullet list of the most important ideas
 
 ## Core Formulas
-List each formula with a short label. Use LaTeX (e.g. $$x = \\frac{{-b \\pm \\sqrt{{b^2-4ac}}}}{{2a}}$$).
+List each formula with a short label. For ALL mathematics use [m]...[/m]
+for inline and [math]...[/math] on its own lines for display equations.
+Never use \\(...\\), \\[...\\], $ or $$.
 
 ## Worked Example
 One clear step-by-step worked example with a final boxed answer.

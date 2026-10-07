@@ -84,10 +84,33 @@ export function RenderMath({ text }) {
   )
 }
 
+// ── Normalize every math dialect to [m]/[math] tags ─────────────────────
+// Models emit \(...\), \[...\], $...$ and $$...$$ interchangeably;
+// our renderers only speak [m] (inline) and [math] (display).
+export function normalizeMathDelimiters(raw) {
+  if (!raw) return ''
+  let t = String(raw)
+  // Display \[...\] (may span lines)
+  t = t.replace(/\\\[([\s\S]+?)\\\]/g, (m, g) => `[math]${g}[/math]`)
+  // Display $$...$$ (may span lines)
+  t = t.replace(/\$\$([\s\S]+?)\$\$/g, (m, g) => `[math]${g}[/math]`)
+  // Inline \(...\)
+  t = t.replace(/\\\((.+?)\\\)/g, (m, g) => `[m]${g}[/m]`)
+  // Inline $...$ (single line only, must look like math so that
+  // currency like "$5 and $10" is left alone)
+  t = t.replace(/\$([^$\n]+?)\$/g, (m, g) => {
+    const c = g.replace(/\s+/g, '')
+    const isVar = /^[a-zA-Z]+$/.test(c) // single variable like $y$
+    const isExpr = /[\\^_{}()=+\-*/<>,|]/.test(c) && /[a-zA-Z0-9]/.test(c)
+    return (isVar || isExpr) ? `[m]${g}[/m]` : m
+  })
+  return t
+}
+
 // ── Pre-process raw AI response ───────────────────────────────────────────────
 function preprocess(raw) {
   if (!raw) return ''
-  return raw
+  return normalizeMathDelimiters(raw)
     .replace(/\r\n/g, '\n')
     // Ensure [math] blocks always have blank lines around them
     .replace(/([^\n])\[math\]/g, '$1\n\n[math]')

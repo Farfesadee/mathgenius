@@ -7,6 +7,7 @@ import { useAuth } from '../../context/AuthContext'
 import { supabase } from '../../lib/supabase'
 import { saveBookmark } from '../../lib/bookmarks'
 import { friendlyError } from '../../utils/friendlyError'
+import { ExplanationBody } from '../../utils/RenderMath'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 const overviewSentFor = new Set()
@@ -74,130 +75,9 @@ async function submitFeedback({ messageId, userId, topic, level, question, respo
   } catch {}   // silent fail — feedback is non-critical
 }
 
-// ── Improved Markdown renderer ─────────────────────────────────────────────────
-// Handles **bold**, `code`, $inline math$, numbered/bullet lists,
-// heading levels 1–3, horizontal rules, and $$...$$ display math blocks.
-function renderMessage(text) {
-  if (!text) return null
-  const lines = text.split('\n')
-  const elements = []
-  let key = 0
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i]
-
-    // Blank line → slightly larger spacer for readability
-    if (!line.trim()) {
-      elements.push(<div key={key++} className="h-3" />)
-      continue
-    }
-
-    // Horizontal rule
-    if (line.trim() === '---' || line.trim() === '***') {
-      elements.push(<hr key={key++} className="border-[var(--color-border)] my-2" />)
-      continue
-    }
-
-    // H1 heading  #
-    const h1Match = line.match(/^# (.+)/)
-    if (h1Match) {
-      elements.push(
-        <p key={key++} className="font-bold text-base text-[var(--color-ink)] mt-3 mb-1">
-          {h1Match[1]}
-        </p>
-      )
-      continue
-    }
-
-    // H2 heading  ##
-    const h2Match = line.match(/^## (.+)/)
-    if (h2Match) {
-      elements.push(
-        <p key={key++} className="font-semibold text-sm text-[var(--color-ink)] mt-2.5 mb-1
-                                  border-b border-[var(--color-border)] pb-0.5">
-          {h2Match[1]}
-        </p>
-      )
-      continue
-    }
-
-    // H3 heading  ###
-    const h3Match = line.match(/^### (.+)/)
-    if (h3Match) {
-      elements.push(
-        <p key={key++} className="font-semibold text-sm text-[var(--color-teal)] mt-2 mb-0.5">
-          {h3Match[1]}
-        </p>
-      )
-      continue
-    }
-
-    // Numbered list  1. ...
-    const numMatch = line.match(/^(\d+)\.\s+(.*)/)
-    if (numMatch) {
-      elements.push(
-        <div key={key++} className="flex gap-2.5 text-sm leading-relaxed ml-1">
-          <span className="shrink-0 font-bold text-[var(--color-teal)] w-5 pt-px">{numMatch[1]}.</span>
-          <span dangerouslySetInnerHTML={{ __html: inlineFormat(numMatch[2]) }} />
-        </div>
-      )
-      continue
-    }
-
-    // Bullet list  - ... / * ... / • ...
-    const bulletMatch = line.match(/^[-*•]\s+(.*)/)
-    if (bulletMatch) {
-      elements.push(
-        <div key={key++} className="flex gap-2.5 text-sm leading-relaxed ml-1">
-          <span className="shrink-0 text-[var(--color-teal)] mt-1 text-xs">▪</span>
-          <span dangerouslySetInnerHTML={{ __html: inlineFormat(bulletMatch[1]) }} />
-        </div>
-      )
-      continue
-    }
-
-    // LaTeX display block $$...$$ — styled highlighted box
-    if (line.trim().startsWith('$$')) {
-      elements.push(
-        <div key={key++}
-          className="my-3 px-4 py-3 rounded-xl bg-[var(--color-ink)]/5
-                     border border-[var(--color-border)] font-mono text-sm text-center
-                     overflow-x-auto text-[var(--color-ink)] tracking-wide">
-          {line.trim()}
-        </div>
-      )
-      continue
-    }
-
-    // Normal paragraph
-    elements.push(
-      <p key={key++} className="text-sm leading-relaxed"
-        dangerouslySetInnerHTML={{ __html: inlineFormat(line) }} />
-    )
-  }
-
-  return <div className="space-y-1.5">{elements}</div>
-}
-
-function escapeHtml(s) {
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-}
-
-function inlineFormat(text) {
-  // Escape first so AI/user content can never inject HTML (XSS),
-  // then apply our own safe markup.
-  return escapeHtml(text)
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g,     '<em>$1</em>')
-    .replace(/`([^`]+)`/g,     '<code class="px-1.5 py-0.5 rounded-md bg-[var(--color-teal)]/10 font-mono text-xs text-[var(--color-teal)]">$1</code>')
-    .replace(/\$([^$\n]+)\$/g, '<span class="font-mono text-[var(--color-ink)] bg-[var(--color-ink)]/5 px-1 rounded text-xs border border-[var(--color-border)]">$1</span>')
-}
-
 // ── Message bubble ────────────────────────────────────────────────────────────
+// Assistant messages render through the shared ExplanationBody renderer
+// (headings, steps, bullets, KaTeX math) — see utils/RenderMath.
 function MessageBubble({ msg, topic, level, lastUserQuestion, onFeedbackSent }) {
   const { user } = useAuth()
   const [rating,     setRating]     = useState(msg.rating || null)
@@ -289,7 +169,7 @@ function MessageBubble({ msg, topic, level, lastUserQuestion, onFeedbackSent }) 
         {/* Bubble */}
         <div className="flex-1 min-w-0 rounded-2xl rounded-tl-sm border
                         border-[var(--color-border)] bg-[var(--color-paper)] px-4 py-3">
-          {renderMessage(msg.content)}
+          <ExplanationBody text={msg.content} />
           {isStreaming && (
             <span className="inline-block w-2 h-4 bg-[var(--color-teal)]
                              ml-0.5 animate-pulse align-text-bottom rounded-sm" />
