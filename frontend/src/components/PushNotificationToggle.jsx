@@ -19,9 +19,9 @@ export default function PushNotificationToggle({ userId }) {
   const [statusMsg,   setStatusMsg]   = useState('')
 
   useEffect(() => {
-    const supported = isPushSupported()
-    setSupported(supported)
-    setPermission(getPushPermission())
+    const perm = getPushPermission()
+    setSupported(isPushSupported() && perm !== 'unsupported')
+    setPermission(perm)
     if (supported) {
       isSubscribed().then(sub => {
         setSubscribed(sub)

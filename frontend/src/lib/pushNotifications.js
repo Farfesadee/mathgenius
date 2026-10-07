@@ -18,11 +18,20 @@ function urlBase64ToUint8Array(base64String) {
 
 // ── Check if push is supported ────────────────────────────────────
 export function isPushSupported() {
-  return 'serviceWorker' in navigator && 'PushManager' in window
+  return (
+    typeof navigator !== 'undefined' &&
+    'serviceWorker' in navigator &&
+    typeof window !== 'undefined' &&
+    'PushManager' in window &&
+    typeof Notification !== 'undefined'
+  )
 }
 
 // ── Get current permission state ──────────────────────────────────
 export function getPushPermission() {
+  // Guarded: some browsers expose PushManager without Notification —
+  // a bare reference would throw ReferenceError and crash the page.
+  if (typeof Notification === 'undefined') return 'unsupported'
   return Notification.permission  // 'default' | 'granted' | 'denied'
 }
 
