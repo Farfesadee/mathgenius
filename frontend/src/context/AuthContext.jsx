@@ -41,8 +41,9 @@ export function AuthProvider({ children }) {
         setUser(session?.user ?? null)
         if (session?.user) {
           await fetchProfile(session.user.id)
-          // Redirect new users to onboarding
-          if (event === 'SIGNED_IN') {
+          // Redirect new users to onboarding — but never hijack admins
+          // heading to the control room (their profiles predate onboarding).
+          if (event === 'SIGNED_IN' && window.location.pathname !== '/admin') {
             // Branded welcome email (backend dedupes — safe on every login).
             // Fire-and-forget: must never block or break login.
             try {
