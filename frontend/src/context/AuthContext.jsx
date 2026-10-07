@@ -10,11 +10,29 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let cancelled = false
+    // Failsafe: auth init must never hang forever (slow storage, VPN or a
+    // stalled token refresh would otherwise trap users on Loading...).
+    // A late session self-corrects via onAuthStateChange below.
+    const failsafe = setTimeout(() => {
+      if (!cancelled) {
+        setUser(null)
+        setProfile(null)
+        setLoading(false)
+      }
+    }, 8000)
+
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      if (cancelled) return
+      clearTimeout(failsafe)
       setUser(session?.user ?? null)
       if (session?.user) fetchProfile(session.user.id)
       else setLoading(false)
+    }).catch(() => {
+      if (cancelled) return
+      clearTimeout(failsafe)
+      setLoading(false)
     })
 
     // Listen for auth changes
@@ -51,16 +69,23 @@ export function AuthProvider({ children }) {
       }
     )
 
-    return () => subscription.unsubscribe()
+    return () => {
+      cancelled = true
+      clearTimeout(failsafe)
+      subscription.unsubscribe()
+    }
   }, [])
 
   const fetchProfile = async (userId) => {
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 8000)
     try {
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', userId)
         .single()
+        .abortSignal(controller.signal)
 
       if (!error) {
         setProfile(data)
@@ -69,6 +94,7 @@ export function AuthProvider({ children }) {
     } catch (err) {
       console.error('Error fetching profile:', err)
     } finally {
+      clearTimeout(timeout)
       setLoading(false)
     }
   }
