@@ -79,13 +79,15 @@ def send_email(to_email: str, subject: str, html_body: str, text_body: str = "",
         msg.attach(MIMEText(text_body, "plain", "utf-8"))
     msg.attach(MIMEText(html_body, "html", "utf-8"))
 
+    # Generous timeout: shared-hosting mail servers are slow to greet
+    # (20s+ greeting delays observed) — short timeouts cause false failures.
     try:
         if cfg["port"] == 465:
-            with smtplib.SMTP_SSL(cfg["host"], cfg["port"], timeout=20) as smtp:
+            with smtplib.SMTP_SSL(cfg["host"], cfg["port"], timeout=60) as smtp:
                 smtp.login(cfg["user"], cfg["password"])
                 smtp.send_message(msg)
         else:
-            with smtplib.SMTP(cfg["host"], cfg["port"], timeout=20) as smtp:
+            with smtplib.SMTP(cfg["host"], cfg["port"], timeout=60) as smtp:
                 smtp.ehlo()
                 smtp.starttls()
                 smtp.ehlo()
