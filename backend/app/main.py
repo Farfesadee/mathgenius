@@ -46,6 +46,9 @@ app.add_middleware(ErrorHandlingMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.allowed_origin_list,
+    # Safety net: any mathgenius.guru subdomain (apex, www, previews) is
+    # always allowed, even if ALLOWED_ORIGINS is misconfigured or empty.
+    allow_origin_regex=r"https://([a-z0-9-]+\.)*mathgenius\.guru",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
