@@ -4,8 +4,13 @@ import { supabase } from '../lib/supabase'
 export const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 const API = axios.create({
   baseURL: API_BASE,
-  headers: { 'Content-Type': 'application/json' }
+  headers: { 'Content-Type': 'application/json' },
+  // Generous timeout: the free-tier backend sleeps when idle and needs
+  // up to ~60s to wake on the first request (cold start).
+  timeout: 60000,
 })
+
+const sleep = (ms) => new Promise(r => setTimeout(r, ms))
 
 // ── Automatically attach the logged-in user's token to every request ─
 API.interceptors.request.use(async (config) => {
@@ -26,7 +31,21 @@ API.interceptors.response.use(
     // Extract data from response — some endpoints return {success, data} or {data}
     return response.data || response
   },
-  (error) => {
+  async (error) => {
+    // Cold-start recovery: if the server never answered (network error or
+    // timeout — typical when the free-tier backend is waking up), retry GETs
+    // once after a short wait. POSTs are never auto-retried: a timed-out
+    // write may already have succeeded, and replaying it could duplicate
+    // actions such as likes or reports.
+    const config = error.config || {}
+    const noResponse = !error.response
+    const isGet = (config.method || 'get').toLowerCase() === 'get'
+    if (noResponse && isGet && !config.__retried) {
+      config.__retried = true
+      await sleep(3000)
+      return API(config)
+    }
+
     // Standardize error response
     const status = error.response?.status
     const detail = error.response?.data?.detail || error.response?.data?.error || error.message
