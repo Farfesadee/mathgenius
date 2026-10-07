@@ -161,11 +161,16 @@ async def _build_messages(
 ):
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
 
-    # RAG context — only for text questions
+    # RAG context — only for text questions. Best-effort: the production
+    # install intentionally omits torch/qdrant (too heavy for the free tier),
+    # so the retriever may not even be importable there. AI must work regardless.
     retrieval_query = (rag_query or user_message or "").strip()
     if not image_base64 and retrieval_query:
-        from app.rag.retriever import retrieve_context
-        context = retrieve_context(retrieval_query, level=rag_level)
+        try:
+            from app.rag.retriever import retrieve_context
+            context = retrieve_context(retrieval_query, level=rag_level)
+        except Exception:
+            context = None
         if context:
             messages.append({"role": "system", "content": context})
 
